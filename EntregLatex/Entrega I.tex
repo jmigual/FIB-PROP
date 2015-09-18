@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[catalan]{babel}
+\usepackage{fontspec}
+\usepackage{fullpage}
+\usepackage[a4paper, margin=2cm]{geometry} % To change the margins
+\usepackage{graphicx} % Insert images
+\usepackage[hidelinks]{hyperref} % Links color
+\usepackage{import}
+\usepackage{ragged2e}
+\usepackage{wrapfig} %To Text wrap
+\usepackage{listings} % Add code
+\usepackage{tikz}
+\usepackage{calc}
+\usetikzlibrary{shapes}
+\tikzstyle{data} = [rectangle split, rectangle split parts=2, draw,text centered]
+
+\begin{document}
+\title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
+\author{Marc Asenjo i Ponce de León \and
+	Arnau Canyadell i Miquel \and
+	Joan Marcè i Igual \and
+	Iñigo Moreno i Caireta \and
+	Esteve Tarragó i Sanchís}
+
+\date{\today}
+\maketitle
+
+El nostre grup ha escollit fer el treball de PROP sobre el Ken-Ken. (explicació sobre el Ken-Ken?). 
+
+En aquest cas l'usuari podrà gestionar Ken-Kens generats per ell o també podrà deixar que la maquina li generi un. 
+Per als Ken-Ken que l'usuari crei el programa comprovarà que hi hagi una solució possible sinó, el donara com a 
+\emph{no vàlid} i no el deixarà introduir. 
+
+En tots dos casos l'usuari podrà intentar resoldre el Ken-Ken desitjat amb l'assistència del programa que anirà comprovant
+el compliment de les regles del joc, en el cas que no es complís alguna norma es mostrarà un avís.
+
+
+
+\begin{tikzpicture}[node distance=1cm, auto, align=center]
+	\node[data](Application){Application \nodepart{second} null};
+\end{tikzpicture}
+
+\end{document}
