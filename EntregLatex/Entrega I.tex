@@ -12,8 +12,12 @@
 \usepackage{listings} % Add code
 \usepackage{tikz}
 \usepackage{calc}
+
+%Tikz defines
 \usetikzlibrary{shapes, arrows, positioning}
-\tikzstyle{data} = [rectangle split, rectangle split parts=2, draw,text centered]
+\tikzstyle{UML} = [rectangle split, rectangle split parts=2, draw,text centered]
+\tikzstyle{cas} = [ellipse, draw, text centered]
+\tikzstyle{arrow} = [thick,-,>=stealth]
 
 \begin{document}
 \title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
@@ -49,14 +53,52 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
 \vspace{2cm}
 
-\begin{tikzpicture}[node distance=1cm, auto, align=center]
-	\node[data](Application){Application \nodepart{second} };
-	\node[data, below = of Application](Ranking){Ranking};
-	\node[data, left = of Ranking](Player){Player};
-	\node[data, right = of Ranking](Game){Game};
-	\node[data, right = of Game](BoardCollection){BoardCollection};
-%	\node[data, ]
-	
+%ADD ARROWS
+\begin{tikzpicture}[node distance=1cm and 1cm, auto, align=center]
+\node[UML](Application){Application \nodepart{second} };
+\node[UML, below = of Application](Ranking){Ranking};
+\node[UML, left = of Ranking](Player){Player};
+\node[UML, right = of Ranking](Game){Game};
+\node[UML, right = of Game](BoardCollection){BoardCollection};
+\node[UML, below = of Game](Board){Board};
+\node[UML, left = of Board](Cell){Cell};
+\node[UML, below = of Cell](Region){Region};
+\node[UML, below = of Board](KKBoard){KKBoard};
+\node[UML, below = of KKBoard](ConstructionKKBoard){ConstructionKKBoard};
+\node[UML, right = of KKBoard](BoardEditor){BoardEditor};
+\end{tikzpicture}
+
+\vspace{2cm}
+
+%ADD ARROWS
+%ADD BLOCKS
+\begin{tikzpicture}[node distance=1cm and 1cm, auto, align=center]
+\node[cas](User){User};
+\node[cas, right = of User](Ranking){Veure\\rànquing};
+\node[cas, above = of Ranking](Start){Començar\\a jugar};
+\node[cas, below = of Ranking](Admin){Administrar\\base de dades};
+
+\node[cas, above right = of Start](Database){Base de dades};
+\node[cas, right = of Start](Created){Generat};
+
+\node[cas, right = of Ranking](RRanking){Reset\\rànquing};
+
+\node[cas, right = of Admin](Consult){Consultar};
+\node[cas, below right = of Admin](Delete){Eliminar};
+
+\node[cas, right = of Created](Play){Jugar};
+
+
+\draw [arrow] (User) -- (Start);
+\draw [arrow] (User) -- (Ranking);
+\draw [arrow] (User) -- (Admin);
+\draw [arrow] (Start) -- (Database);
+\draw [arrow] (Start) -- (Created);
+\draw [arrow] (Ranking) -- (RRanking);
+\draw [arrow] (Admin) -- (Consult);
+\draw [arrow] (Admin) -- (Delete);
+\draw [arrow] (Database) -- (Play);
+\draw [arrow] (Created) -- (Play);
 \end{tikzpicture}
 
 \end{document}
