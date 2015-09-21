@@ -14,11 +14,10 @@
 \usepackage{calc}
 
 %Tikz defines
-\usetikzlibrary{shapes, arrows, positioning}
-\tikzstyle{UML} = [rectangle split, rectangle split parts=2, draw,text centered]
+\usetikzlibrary{shapes, arrows, positioning, automata}
+\tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered, every two node part/.style={align=left}]
 \tikzstyle{cas} = [ellipse, draw, text centered]
-\tikzstyle{arrow} = [thick,-,>=stealth]
-
+\tikzstyle{arrow} = [thick,-]
 \begin{document}
 \title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
 \author{Marc Asenjo i Ponce de León \and
@@ -53,32 +52,17 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
 \vspace{2cm}
 
-%ADD ARROWS
-\begin{tikzpicture}[node distance=1cm and 1cm, auto, align=center]
-\node[UML](Application){Application \nodepart{second} };
-\node[UML, below = of Application](Ranking){Ranking};
-\node[UML, left = of Ranking](Player){Player};
-\node[UML, right = of Ranking](Game){Game};
-\node[UML, right = of Game](BoardCollection){BoardCollection};
-\node[UML, below = of Game](Board){Board};
-\node[UML, left = of Board](Cell){Cell};
-\node[UML, below = of Cell](Region){Region};
-\node[UML, below = of Board](KKBoard){KKBoard};
-\node[UML, below = of KKBoard](ConstructionKKBoard){ConstructionKKBoard};
-\node[UML, right = of KKBoard](BoardEditor){BoardEditor};
-\end{tikzpicture}
-
-\vspace{2cm}
-
+\section{Casos d'ús}
 %ADD ARROWS
 %ADD BLOCKS
+\begin{center}
 \begin{tikzpicture}[node distance=1cm and 1cm, auto, align=center]
 \node[cas](User){User};
 \node[cas, right = of User](Ranking){Veure\\rànquing};
 \node[cas, above = of Ranking](Start){Començar\\a jugar};
 \node[cas, below = of Ranking](Admin){Administrar\\base de dades};
 
-\node[cas, above right = of Start](Database){Base de dades};
+\node[cas, above right = of Start](Database){Base\\de dades};
 \node[cas, right = of Start](Created){Generat};
 
 \node[cas, right = of Ranking](RRanking){Reset\\rànquing};
@@ -100,5 +84,45 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \draw [arrow] (Database) -- (Play);
 \draw [arrow] (Created) -- (Play);
 \end{tikzpicture}
+\end{center}
 
+\vspace{2cm}
+
+\section{Diagrama de classes}
+%ADD ARROWS
+\begin{center}
+\begin{tikzpicture}[node distance=1cm and 2cm, auto, align=center]
+\node[UML](Application){Application \nodepart{two} };
+\node[UML, below = of Application](Player){Player};
+\node[UML, left = of Player](Ranking){Ranking \nodepart{two} -Name\\-Highscore};
+\node[UML, right = of Player](Game){Game};
+\node[UML, right = of Game](BoardCollection){BoardCollection};
+\node[UML, below = of Game](Board){Board};
+\node[UML, left = of Board](Cell){Cell};
+\node[UML, below = of Cell](Region){Region};
+\node[UML, below = of Board](KKBoard){KKBoard};
+\node[UML, below = of KKBoard](ConstructionKKBoard){ConstructionKKBoard};
+\node[UML, right = of KKBoard](BoardEditor){BoardEditor};
+
+
+\draw [arrow] (Player.north) |- (Application.south);
+\draw [arrow] (Player.west) |- (Ranking.east) 
+	node[above left, at start]{*} 
+	node[above right, at end]{1};
+\draw [arrow] (Player.east) |- (Game.west);
+\draw [arrow] (Ranking.south) --++ (0, -0.4)  --++ (7, 0) |- (Game.south);
+\draw [arrow] (Ranking.north) |- (Application.west);
+\draw [arrow] (Game.south) |- (Board.north);
+\draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
+%\draw [arrow] (Board) -- (KKBoard);
+%\draw [arrow] (Cell) -- (Board);
+%\draw [arrow] (Cell) -- (Region);
+%\draw [arrow] (Region) -- (KKBoard);
+%\draw [arrow] (KKBoard) -- (ConstructionKKBoard);
+%\draw [arrow] (ConstructionKKBoard.east) |- (BoardEditor.south);
+%\draw [arrow] (KKBoard) |- (BoardCollection);
+%\draw [arrow] (BoardEditor) -- (BoardCollection);
+\draw [arrow] (BoardCollection) |- ([yshift=1cm]Application);
+\end{tikzpicture}
+\end{center}
 \end{document}
