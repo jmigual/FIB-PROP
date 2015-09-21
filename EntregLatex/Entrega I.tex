@@ -18,7 +18,7 @@
 \usetikzlibrary{shapes, arrows, positioning, automata}
 \tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered,
 				   every two node part/.style={align=left}, font=\small]
-\tikzstyle{cas} = [ellipse, draw, text centered, font=\footnotesize]
+\tikzstyle{cas} = [ellipse, draw, text centered, font=\scriptsize]
 \tikzstyle{arrow} = [thick,-]
 \begin{document}
 \title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
@@ -58,41 +58,75 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 %ADD ARROWS
 %ADD BLOCKS
 \begin{center}
-\begin{tikzpicture}[node distance=1cm and 0.8cm, auto, align=center]
-\node(User){\includegraphics[width=1.3cm]{./Images/stickman}};
+\begin{tikzpicture}[node distance=0.7cm and 0.8cm, auto, align=center]
+\node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
+\node[cas, right = of StartApp](User){Entrar\\usuari};
 \node[cas, right = of User](Ranking){Veure\\rànquing};
-\node[cas, above = of Ranking](Start){Començar\\a jugar};
+\node[cas, above = of Ranking, yshift=5.5cm](Start){Començar\\a jugar};
 \node[cas, below = of Ranking](Admin){Veure co\lgem ecció\\de Ken-Kens};
-\node[cas, below = of Admin](Exit){Sortir};
+\node[cas, below = of User](Exit){Sortir};
 
-\node[cas, right = of Start](Created){Generat};
-\node[cas, above = of Created](Database){Seleccionar\\tauler de la\\co\lgem ecció};
+%Començar a jugar
+\node[cas, right = of Start](Database){Seleccionar\\tauler de la\\co\lgem ecció};
+\node[cas, above = of Database, xshift=1cm](Load){Carregar\\joc};
+\node[cas, below = of Database, xshift=-1cm](CreateCPU){Generar i\\jugar};
 
+%Rànquing
 \node[cas, right = of Ranking](RRanking){Netejar\\dades};
 
+%Veure col·lecció
 \node[cas, right = of Admin](SelectKK){Seleccionar\\Ken-Ken};
-\node[cas, below right = of Admin](Create){Crear\\Ken-Ken};
+\node[cas, below = of Admin](Create){Crear\\Ken-Ken};
 
-\node[cas, right = of Created](Play){Jugar};
+\node[cas, right = of CreateCPU, xshift=0.5cm](Play){Jugar};
 
+%Generar i jugar
+\node[cas, below = of CreateCPU](SelectSize){Seleccionar\\Mida};
+\node[cas, below = of SelectSize](SelectRegions){Seleccionar núm.\\ i mida regions};
+
+%Jugar
 \node[cas, right = of Play](Hint){Pista};
 \node[cas, above = of Hint](SelectCel){Seleccionar\\ce\lgem a};
 \node[cas, below = of Hint](Save){Guardar};
 \node[cas, below = of Save](Surrender){Rendir-se};
 
+%Seleccionar cel·la
 \node[cas, above right = of SelectCel](ChangeNum){Canviar\\nombre};
 \node[cas, right = of SelectCel](DeleteNum){Eliminar\\nombre};
 \node[cas, below right = of SelectCel](Notify){Notificació};
 
-\foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/Created,
+%Seleccionar Ken-Ken
+\node[cas, right = of SelectKK](EditKK){Editar\\Ken-Ken};
+\node[cas, above right = of SelectKK](DeleteKK){Eliminar\\Ken-Ken};
+\node[cas, below right = of SelectKK](ViewSolution){Veure\\Solució};
+
+%Crear Ken-Ken
+\node[cas, left = of Create](ChooseSize){Triar\\mida};
+
+%Triar mida
+\node[cas, below = of ChooseSize, yshift=-4cm](FromZero){De zero};
+\node[cas, right = of FromZero, xshift=1cm](CreateRegion){Crear Regió};
+\node[cas, above = of CreateRegion](SelectCell){Seleccionar\\ce\lgem a};
+\node[cas, above = of SelectCell](FillRandom){Emplenar de\\nombres aleatoris\\correctes};
+\node[cas, below = of CreateRegion](SelectRegion){Seleccionar\\regió};
+\node[cas, below = of SelectRegion](ViewSolutionable){Veure si\\té solució};
+\node[cas, below = of ViewSolutionable](ViewUniqueSolution){Veure si té\\solució única};
+\node[cas, below = of FromZero, yshift=-2cm](Solve){Solucionar};
+
+\foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/CreateCPU,
 				   Ranking/RRanking, Admin/SelectKK, Admin/Create, Database/Play, 
-				   Created/Play, Play/SelectCel, Play/Surrender.north west, Play/Hint, SelectCel/ChangeNum, SelectCel/DeleteNum, SelectCel/Notify, Play/Save,
-				   SelectKK/Play} 
+				   Play/SelectCel, Play/Surrender.north west, Play/Hint, SelectCel/ChangeNum, 
+				   SelectCel/DeleteNum, SelectCel/Notify, Play/Save, SelectKK/Play, Start/Load.west, 
+				   Load.south east/Play, User/Exit, CreateCPU/SelectSize, SelectKK/ViewSolution,
+				   SelectSize/SelectRegions, SelectRegions.north east/Play, StartApp/User,
+				   SelectKK/DeleteKK, SelectKK/EditKK, Create/ChooseSize, ChooseSize/FromZero, 
+				   FromZero/FillRandom.south west, FromZero/CreateRegion, FromZero/SelectCell, 
+				   FromZero/SelectRegion, FromZero/ViewSolutionable, FromZero/ViewUniqueSolution, 
+				   FromZero/Solve} 
 {
 \draw[thick, ->] (\x) -- (\y);
 };
 
-\path[->] (User) edge [bend right] (Exit);
 \end{tikzpicture}
 \end{center}
 
