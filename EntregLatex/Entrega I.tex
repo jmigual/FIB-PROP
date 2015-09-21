@@ -13,10 +13,12 @@
 \usepackage{tikz}
 \usepackage{calc}
 
+
 %Tikz defines
 \usetikzlibrary{shapes, arrows, positioning, automata}
-\tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered, every two node part/.style={align=left}]
-\tikzstyle{cas} = [ellipse, draw, text centered]
+\tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered,
+				   every two node part/.style={align=left}, font=\small]
+\tikzstyle{cas} = [ellipse, draw, text centered, font=\footnotesize]
 \tikzstyle{arrow} = [thick,-]
 \begin{document}
 \title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
@@ -56,33 +58,41 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 %ADD ARROWS
 %ADD BLOCKS
 \begin{center}
-\begin{tikzpicture}[node distance=1cm and 1cm, auto, align=center]
-\node[cas](User){User};
+\begin{tikzpicture}[node distance=1cm and 0.8cm, auto, align=center]
+\node(User){\includegraphics[width=1.3cm]{./Images/stickman}};
 \node[cas, right = of User](Ranking){Veure\\rànquing};
 \node[cas, above = of Ranking](Start){Començar\\a jugar};
-\node[cas, below = of Ranking](Admin){Administrar\\base de dades};
+\node[cas, below = of Ranking](Admin){Veure co\lgem ecció\\de Ken-Kens};
+\node[cas, below = of Admin](Exit){Sortir};
 
-\node[cas, above right = of Start](Database){Base\\de dades};
 \node[cas, right = of Start](Created){Generat};
+\node[cas, above = of Created](Database){Seleccionar\\tauler de la\\co\lgem ecció};
 
-\node[cas, right = of Ranking](RRanking){Reset\\rànquing};
+\node[cas, right = of Ranking](RRanking){Netejar\\dades};
 
-\node[cas, right = of Admin](Consult){Consultar};
-\node[cas, below right = of Admin](Delete){Eliminar};
+\node[cas, right = of Admin](SelectKK){Seleccionar\\Ken-Ken};
+\node[cas, below right = of Admin](Create){Crear\\Ken-Ken};
 
 \node[cas, right = of Created](Play){Jugar};
 
+\node[cas, right = of Play](Hint){Pista};
+\node[cas, above = of Hint](SelectCel){Seleccionar\\ce\lgem a};
+\node[cas, below = of Hint](Save){Guardar};
+\node[cas, below = of Save](Surrender){Rendir-se};
 
-\draw [arrow] (User) -- (Start);
-\draw [arrow] (User) -- (Ranking);
-\draw [arrow] (User) -- (Admin);
-\draw [arrow] (Start) -- (Database);
-\draw [arrow] (Start) -- (Created);
-\draw [arrow] (Ranking) -- (RRanking);
-\draw [arrow] (Admin) -- (Consult);
-\draw [arrow] (Admin) -- (Delete);
-\draw [arrow] (Database) -- (Play);
-\draw [arrow] (Created) -- (Play);
+\node[cas, above right = of SelectCel](ChangeNum){Canviar\\nombre};
+\node[cas, right = of SelectCel](DeleteNum){Eliminar\\nombre};
+\node[cas, below right = of SelectCel](Notify){Notificació};
+
+\foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/Created,
+				   Ranking/RRanking, Admin/SelectKK, Admin/Create, Database/Play, 
+				   Created/Play, Play/SelectCel, Play/Surrender.north west, Play/Hint, SelectCel/ChangeNum, SelectCel/DeleteNum, SelectCel/Notify, Play/Save,
+				   SelectKK/Play} 
+{
+\draw[thick, ->] (\x) -- (\y);
+};
+
+\path[->] (User) edge [bend right] (Exit);
 \end{tikzpicture}
 \end{center}
 
@@ -93,25 +103,33 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \begin{center}
 \begin{tikzpicture}[node distance=1cm and 2cm, auto, align=center]
 \node[UML](Application){Application \nodepart{two} };
-\node[UML, below = of Application](Player){Player};
-\node[UML, left = of Player](Ranking){Ranking \nodepart{two} -Name\\-Highscore};
-\node[UML, right = of Player](Game){Game};
+\node[UML, below = of Application](Ranking){Ranking \nodepart{two}};
+\node[UML, left = of Ranking, text width=3cm](Player){Player \nodepart{two}
+	- Name \\
+	- Highscore};
+\node[UML, right = of Ranking](Game){Game};
 \node[UML, right = of Game](BoardCollection){BoardCollection};
-\node[UML, below = of Game](Board){Board};
+\node[UML, below = of Game, yshift = -1cm](Board){Board};
 \node[UML, left = of Board](Cell){Cell};
 \node[UML, below = of Cell](Region){Region};
 \node[UML, below = of Board](KKBoard){KKBoard};
 \node[UML, below = of KKBoard](ConstructionKKBoard){ConstructionKKBoard};
 \node[UML, right = of KKBoard](BoardEditor){BoardEditor};
+\node[below = of Ranking, yshift=0.5cm](A){};
+\node[right = of BoardCollection](B){};
 
-
-\draw [arrow] (Player.north) |- (Application.south);
-\draw [arrow] (Player.west) |- (Ranking.east) 
-	node[above left, at start]{*} 
-	node[above right, at end]{1};
-\draw [arrow] (Player.east) |- (Game.west);
-\draw [arrow] (Ranking.south) --++ (0, -0.4)  --++ (7, 0) |- (Game.south);
-\draw [arrow] (Ranking.north) |- (Application.west);
+\draw [arrow, -diamond] (Player.north) |- (Application.west)
+	node[above left, at start]{*}
+	node[above left, at end]{1};
+\draw [arrow] (Player.east) |- (Ranking.west) 
+	node[above right, at start]{*} 
+	node[above left, at end]{1};
+\draw [arrow] (Player.south) |- node[below left, at start]{1} (A.center) -| ([xshift=-0.5cm]Game.south)
+	node[below left, at end]{1};
+\draw [arrow] (Ranking.east) |-  (Game.west) 
+	node[above right, at start]{1}
+	node[above left, at end]{*};
+\draw [arrow, dashed] (Ranking.north) |- (Application.south);
 \draw [arrow] (Game.south) |- (Board.north);
 \draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
 %\draw [arrow] (Board) -- (KKBoard);
@@ -122,7 +140,8 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 %\draw [arrow] (ConstructionKKBoard.east) |- (BoardEditor.south);
 %\draw [arrow] (KKBoard) |- (BoardCollection);
 %\draw [arrow] (BoardEditor) -- (BoardCollection);
-\draw [arrow] (BoardCollection) |- ([yshift=1cm]Application);
+\draw [arrow, dashed] (BoardCollection) |- ([yshift=1cm]Application);
+%\draw [arrow, ]
 \end{tikzpicture}
 \end{center}
 \end{document}
