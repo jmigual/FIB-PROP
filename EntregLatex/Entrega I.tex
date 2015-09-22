@@ -58,7 +58,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 %ADD ARROWS
 %ADD BLOCKS
 \begin{center}
-\begin{tikzpicture}[node distance=0.7cm and 0.8cm, auto, align=center]
+\begin{tikzpicture}[node distance=0.6cm and 0.6cm, auto, align=center]
 \node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
 \node[cas, right = of StartApp](User){Entrar\\usuari};
 \node[cas, right = of User](Ranking){Veure\\rànquing};
@@ -108,10 +108,23 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \node[cas, right = of FromZero, xshift=1cm](CreateRegion){Crear Regió};
 \node[cas, above = of CreateRegion](SelectCell){Seleccionar\\ce\lgem a};
 \node[cas, above = of SelectCell](FillRandom){Emplenar de\\nombres aleatoris\\correctes};
-\node[cas, below = of CreateRegion](SelectRegion){Seleccionar\\regió};
-\node[cas, below = of SelectRegion](ViewSolutionable){Veure si\\té solució};
+\node[cas, below = of CreateRegion, xshift=1cm](SelectRegion){Seleccionar\\regió};
+\node[cas, below = of SelectRegion, xshift=1cm](ViewSolutionable){Veure si\\té solució};
 \node[cas, below = of ViewSolutionable](ViewUniqueSolution){Veure si té\\solució única};
+\node[cas, left = of ViewUniqueSolution](SaveNew){Guardar};
 \node[cas, below = of FromZero, yshift=-2cm](Solve){Solucionar};
+
+%Seleccionar cel·la
+\node[cas, right = of SelectCell, yshift=1cm, xshift=2cm](SetNum){Anotar nombre\\correcte};
+\node[cas, above= of SetNum, yshift=-0.5cm](RandomNum){Nombre aleatori\\correcte};
+
+%Crear regió
+\node[cas, right = of CreateRegion, yshift=1cm, xshift=2cm](ChangeNum2){Canviar nombre\\ i/o resultat};
+\node[cas, below = of ChangeNum2, yshift=0.5cm](SelectCells){Seleccionar\\ce\lgem es};
+
+%Seleccionar regió\\
+\node[cas, right = of SelectRegion, xshift=2.2cm](ChangeCells){Modificar\\ce\lgem es};
+\node[cas, below = of ChangeCells, yshift=0.5cm](ChangeNumRes){Modificar nombre\\i/o resultat};
 
 \foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/CreateCPU,
 				   Ranking/RRanking, Admin/SelectKK, Admin/Create, Database/Play, 
@@ -122,7 +135,9 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 				   SelectKK/DeleteKK, SelectKK/EditKK, Create/ChooseSize, ChooseSize/FromZero, 
 				   FromZero/FillRandom.south west, FromZero/CreateRegion, FromZero/SelectCell, 
 				   FromZero/SelectRegion, FromZero/ViewSolutionable, FromZero/ViewUniqueSolution, 
-				   FromZero/Solve} 
+				   FromZero/Solve, SelectCell/RandomNum.south west, SelectCell/SetNum.west, 
+				   CreateRegion/ChangeNum2.west, CreateRegion/SelectCells.west, 
+				   SelectRegion/ChangeCells, SelectRegion/ChangeNumRes, FromZero/SaveNew} 
 {
 \draw[thick, ->] (\x) -- (\y);
 };
