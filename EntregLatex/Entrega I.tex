@@ -57,8 +57,8 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \vspace{2cm}
 
 \section{Casos d'ús}
-%ADD ARROWS
-%ADD BLOCKS
+
+\subsection{Diagrama}
 \begin{center}
 \begin{tikzpicture}[node distance=0.6cm and 0.6cm, auto, align=center]
 \node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
@@ -103,18 +103,17 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \node[cas, below right = of SelectKK](ViewSolution){Veure\\Solució};
 
 %Crear Ken-Ken
-\node[cas, left = of Create](ChooseSize){Triar\\mida};
+\node[cas, below left = of Create, yshift=-3.5cm](ChooseSize){Triar\\mida};
 
 %Triar mida
-\node[cas, below = of ChooseSize, yshift=-4cm](FromZero){De zero};
-\node[cas, right = of FromZero, xshift=1cm](CreateRegion){Crear Regió};
+\node[cas, right = of ChooseSize, xshift=1cm](CreateRegion){Crear Regió};
 \node[cas, above = of CreateRegion](SelectCell){Seleccionar\\ce\lgem a};
 \node[cas, above = of SelectCell](FillRandom){Emplenar de\\nombres aleatoris\\correctes};
 \node[cas, below = of CreateRegion, xshift=1cm](SelectRegion){Seleccionar\\regió};
 \node[cas, below = of SelectRegion, xshift=1cm](ViewSolutionable){Veure si\\té solució};
 \node[cas, below = of ViewSolutionable](ViewUniqueSolution){Veure si té\\solució única};
 \node[cas, left = of ViewUniqueSolution](SaveNew){Guardar};
-\node[cas, below = of FromZero, yshift=-2cm](Solve){Solucionar};
+\node[cas, below = of ChooseSize, yshift=-2cm](Solve){Solucionar};
 
 %Seleccionar cel·la
 \node[cas, right = of SelectCell, yshift=1cm, xshift=2cm](SetNum){Anotar nombre\\correcte};
@@ -134,12 +133,12 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 				   SelectCel/DeleteNum, SelectCel/Notify, Play/Save, SelectKK/Play, Start/Load.west, 
 				   Load.south east/Play, User/Exit, CreateCPU/SelectSize, SelectKK/ViewSolution,
 				   SelectSize/SelectRegions, SelectRegions.north east/Play, StartApp/User,
-				   SelectKK/DeleteKK, SelectKK/EditKK, Create/ChooseSize, ChooseSize/FromZero, 
-				   FromZero/FillRandom.south west, FromZero/CreateRegion, FromZero/SelectCell, 
-				   FromZero/SelectRegion, FromZero/ViewSolutionable, FromZero/ViewUniqueSolution, 
-				   FromZero/Solve, SelectCell/RandomNum.south west, SelectCell/SetNum.west, 
+				   SelectKK/DeleteKK, SelectKK/EditKK, Create/ChooseSize, 
+				   ChooseSize/FillRandom.south west, ChooseSize/CreateRegion, ChooseSize/SelectCell, 
+				   ChooseSize/SelectRegion, ChooseSize/ViewSolutionable, ChooseSize/ViewUniqueSolution, 
+				   ChooseSize/Solve, SelectCell/RandomNum.south west, SelectCell/SetNum.west, 
 				   CreateRegion/ChangeNum2.west, CreateRegion/SelectCells.west, 
-				   SelectRegion/ChangeCells, SelectRegion/ChangeNumRes, FromZero/SaveNew} 
+				   SelectRegion/ChangeCells, SelectRegion/ChangeNumRes, ChooseSize/SaveNew} 
 {
 \draw[thick, ->] (\x) -- (\y);
 };
@@ -147,44 +146,17 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \end{tikzpicture}
 \end{center}
 
-\vspace{2cm}
+\subsection{Descripció}
 
+
+\paragraph{Nom:} Entrar Usuari %Set name here
+\paragraph{Descripció:} 
+%Add descripcion here
+
+\newpage
 \section{Diagrama de classes}
 %ADD ARROWS
 \begin{center}
-<<<<<<< HEAD
-\begin{tikzpicture}[node distance=1cm and 2cm, auto, align=center]
-\node[UML](Application){Application \nodepart{two} };
-\node[UML, below = of Application](Ranking){Ranking \nodepart{two}};
-\node[UML, left = of Ranking, text width=3cm](Player){Player \nodepart{two}
-	- Name \\
-	- Highscore};
-\node[UML, right = of Ranking](Game){Game};
-\node[UML, right = of Game](BoardCollection){BoardCollection};
-\node[UML, below = of Game, yshift = -1cm](Board){Board};
-\node[UML, left = of Board](Cell){Cell};
-\node[UML, below = of Cell](Region){Region};
-\node[UML, below = of Board](KKBoard){KKBoard};
-\node[UML, below = of KKBoard](ConstructionKKBoard){ConstructionKKBoard};
-\node[UML, right = of KKBoard](BoardEditor){BoardEditor};
-\node[below = of Ranking, yshift=0.5cm](A){};
-\node[right = of BoardCollection](B){};
-
-\draw [arrow, -diamond] (Player.north) |- (Application.west)
-	node[above left, at start]{*}
-	node[above left, at end]{1};
-\draw [arrow] (Player.east) |- (Ranking.west) 
-	node[above right, at start]{*} 
-	node[above left, at end]{1};
-\draw [arrow] (Player.south) |- node[below left, at start]{1} (A.center) -| ([xshift=-0.5cm]Game.south)
-	node[below left, at end]{1};
-\draw [arrow] (Ranking.east) |-  (Game.west) 
-	node[above right, at start]{1}
-	node[above left, at end]{*};
-\draw [arrow, dashed] (Ranking.north) |- (Application.south);
-\draw [arrow] (Game.south) |- (Board.north);
-\draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
-=======
 \begin{tikzpicture}[node distance=1cm and 1.3cm, auto, align=center]
 \node[UML](Application){Application \nodepart{two} };
 \node[UML, below = of Application](KanKun){KanKun};
@@ -192,7 +164,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
 \node[UML, right = of Application, xshift=0.6cm](DB){DB};
 \node[UML, right = of DB](Table){Table};
-\node[UML, below = of Table](Data){Data \nodepart{three} Save\\Load};
+\node[UML, below = of Table](Data){Data \nodepart{three} +save()\\+load()};
 \node[UML, right = of Table](Ranking){Ranking};
 \node[UML, right = of Data](Game){Game \nodepart{two}
 	IdGame\\
@@ -238,33 +210,6 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \draw [arrow, -latex'] (BoardCPUGenerator) -- (BoardCreator);
 \draw [arrow, -latex', dashed] (BoardHumanEditor.south) -- ++ (0, -0.5) -| (A.center) |- (KanKun.west);
 \draw [arrow, -latex', dashed] (BoardCPUGenerator) -| (GameLauncher);
-
-
-%\draw [arrow, -diamond] (Player.north) |- (Application.west)
-%	node[above left, at start]{*}
-%	node[above left, at end]{1};
-%\draw [arrow] (Player.east) |- (Ranking.west) 
-%	node[above right, at start]{*} 
-%	node[above left, at end]{1};
-%\draw [arrow] (Player.south) |- node[below left, at start]{1} (A.center) -| ([xshift=-0.5cm]Game.south)
-%	node[below left, at end]{1};
-%\draw [arrow] (Ranking.east) |-  (Game.west) 
-%	node[above right, at start]{1}
-%	node[above left, at end]{*};
-%\draw [arrow, dashed] (Ranking.north) |- (Application.south);
-%\draw [arrow] (Game.south) |- (Board.north);
-%\draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
->>>>>>> 803ab9a6c18bd24418336135bcffab263d674f36
-%\draw [arrow] (Board) -- (KKBoard);
-%\draw [arrow] (Cell) -- (Board);
-%\draw [arrow] (Cell) -- (Region);
-%\draw [arrow] (Region) -- (KKBoard);
-%\draw [arrow] (KKBoard) -- (ConstructionKKBoard);
-%\draw [arrow] (ConstructionKKBoard.east) |- (BoardEditor.south);
-%\draw [arrow] (KKBoard) |- (BoardCollection);
-%\draw [arrow] (BoardEditor) -- (BoardCollection);
-\draw [arrow, dashed] (BoardCollection) |- ([yshift=1cm]Application);
-%\draw [arrow, ]
 \end{tikzpicture}
 \end{center}
 \end{document}
