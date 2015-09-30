@@ -123,7 +123,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
 %Seleccionar regió\\
 \node[cas, right = of SelectRegion, xshift=2.2cm](ChangeCells){Modificar\\ce\lgem es};
-\node[cas, below = of ChangeCells, yshift=0.5cm](ChangeNumRes){Modificar nombre\\i/o resultat};
+\node[cas, below = of ChangeCells, yshift=0.5cm](ChangeNumRes){Modificar operació\\i/o resultat};
 
 \foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/CreateCPU,
 				   Ranking/RRanking, Admin/SelectKK, Admin/Create, Database/Play, 
@@ -216,6 +216,37 @@ Es guarda el progrés de la partida en la co\lgem ecció de Ken-Kens
 \textbf{Descripció:} 
 Permet abandonar la partida i tornar a l'inici de l'aplicació.
 
+
+%--Arnau--
+\paragraph{Nom:} Seleccionar regió\\
+\textbf{Descripció:}
+Selecciona una regió per editar-la.
+
+\paragraph{Nom:} Modificar cel·les\\
+\textbf{Descripció:}
+Permet afegir i eliminar cel·les de la regió seleccionada.
+
+\paragraph{Nom:} Modificar operació i/o resultat\\
+\textbf{Descripció:}
+Permet modificar la operació de la regió i el resultat que ha de donar.
+
+\paragraph{Nom:} Veure si té solució\\
+\textbf{Descripció:} 
+L'aplicació comprova si el Kenken que hi ha proposat té solució.
+
+\paragraph{Nom:} Veure si té solució única\\
+\textbf{Descripció:} 
+L'aplicació comprova si el Kenken que hi ha proposat té solució i si 
+aquesta és única.
+
+\paragraph{Nom:} Guardar\\
+\textbf{Descripció:} 
+Guarda el Kenken a la base de dades.
+
+\paragraph{Nom:} Solucionar\\
+\textbf{Descripció:} 
+L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una solució).
+%--end--Arnau--
 
 
 %Add descripcion here
