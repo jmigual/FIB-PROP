@@ -19,7 +19,7 @@
 \tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered,
 				   every two node part/.style={align=left, font=\scriptsize}, 
 				   every three node part/.style={align=left, font=\scriptsize},
-				   font=\small]
+				   font=\scriptsize\bf]
 \tikzstyle{cas} = [ellipse, draw, text centered, font=\scriptsize]
 \tikzstyle{arrow} = [thick,-]
 \begin{document}
@@ -54,13 +54,11 @@ i també dels errors comesos per l'usuari durant aquesta.
 A part també hi haurà un rànquing on quedaran registrades les millors puntuacions,
 hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
-\vspace{2cm}
-
 \section{Casos d'ús}
 
 \subsection{Diagrama}
 \begin{center}
-\begin{tikzpicture}[node distance=0.6cm and 0.6cm, auto, align=center]
+\begin{tikzpicture}[node distance=0.5cm and 0.6cm, auto, align=center]
 \node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
 \node[cas, right = of StartApp](User){Entrar\\usuari};
 \node[cas, right = of User](Ranking){Veure\\rànquing};
@@ -149,8 +147,40 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \subsection{Descripció}
 
 
-\paragraph{Nom:} Entrar Usuari %Set name here
-\paragraph{Descripció:} 
+\paragraph{Nom:} Entrar Usuari \\%Set name here
+\textbf{Descripció:}
+Permet introduir el nom d'usuari perquè es comprovi a la base de dades si ja hi ha un usuari i sinó crear-ne un.
+
+\paragraph{Nom:}  Començar a jugar \\
+\textbf{Descripció:} 
+Obre la pantalla de selecció dels Ken-Ken per carregar un joc anterior, generar un nou tauler o seleccionar-ne un de ja creat.
+
+\paragraph{Nom:} Carregar joc \\
+\textbf{Descripció:}
+Permet continuar jugant una partida guardada anteriorment.
+
+\paragraph{Nom:} Seleccionar tauler de la co\lgem ecció \\
+\textbf{Descripció:}
+Començar una nova partida utilitzant un tauler dels que hi ha a la co\lgem ecció de taulers.
+
+\paragraph{Nom:} Generar i jugar \\
+\textbf{Descripció:}
+El programa genera un nou Ken-Ken a partir dels paràmetres especificats de l'usuari després el podrà començar a jugar. Farà avançar el menú per poder escollir la mida del tauler.
+
+\paragraph{Nom:} Seleccionar mida \\
+\textbf{Descripció:}
+Permet escollir la mida que s'utilitzarà per generar un nou Ken-Ken ($3x3, 4x4, 5x5... 9x9$).
+Permetrà continuar el menú per poder escollir el número i mida de les regions.
+
+\paragraph{Nom:} Seleccionar número i mida regions \\
+\textbf{Descripció:} 
+Permetrà escollir de quina mida seran les regions del Ken-Ken generat ($1 - 5$) i després ja passarà a crear el tauler i que l'usuari el comenci a jugar.
+
+\paragraph{Nom:} Veure rànquing\\
+\textbf{Descripció:} 
+Permet veure el rànquing amb els millors usuaris i les seves puntuacions i estadístiques.
+
+
 %Add descripcion here
 
 \newpage
@@ -188,7 +218,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \draw [arrow, dashed, -latex'] (GameLauncher) -- (KanKun);
 \draw [arrow, dashed, -latex'] ($(DB.south west)+(0, 0.4)$) -- ++ (-1, 0) |- (GameLauncher.east);
 \draw [arrow, dashed, -latex'] (DB) -- (Application)
-	node[above right, xshift=1cm]{<<static>>};
+	node[font=\scriptsize, above right, xshift=1cm]{<<static>>};
 \draw [arrow, -diamond] (Table.west) -- (DB.east);
 \draw [arrow, -latex'] (Ranking.west) -- (Table.east);
 \draw [arrow, -diamond] (Data) -- (Table);
@@ -196,15 +226,15 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \draw [arrow, -diamond] (Game.north) -- ++ (0, 0) -| (Ranking.south);
 \draw [arrow] (Player.west) -- ++ (-0.5, 0) |- (Data.east);
 \draw [arrow] (Player) -- (Game)
-	node[above right, at start]{1}
-	node[below right, at end]{*};
+	node[font=\scriptsize, above right, at start]{1}
+	node[font=\scriptsize, below right, at end]{*};
 \draw [arrow, -latex'] (Board) |- (Data);
 \draw [arrow, -diamond] (Cell) -- (Board);
 \draw [arrow, -latex'] (KKBoard) -- (Board);
 \draw [arrow, -diamond] (Region) -- (KKBoard);
 \draw [arrow] (Region.north) --  ++(0, 0.5) -| (Cell) 
-	node[above right, at start, yshift=-0.5cm]{1}
-	node[below right, at end]{*};
+	node[font=\scriptsize, above right, at start, yshift=-0.5cm]{1}
+	node[font=\scriptsize, below right, at end]{*};
 \draw [arrow, dashed, -latex'] (KKBoard) -- (BoardCreator);
 \draw [arrow, -latex'] (BoardHumanEditor) |- (BoardCreator);
 \draw [arrow, -latex'] (BoardCPUGenerator) -- (BoardCreator);
