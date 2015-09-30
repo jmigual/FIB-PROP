@@ -15,9 +15,11 @@
 
 
 %Tikz defines
-\usetikzlibrary{shapes, arrows, positioning, automata}
+\usetikzlibrary{shapes, arrows, positioning, automata, calc}
 \tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered,
-				   every two node part/.style={align=left}, font=\small]
+				   every two node part/.style={align=left, font=\scriptsize}, 
+				   every three node part/.style={align=left, font=\scriptsize},
+				   font=\small]
 \tikzstyle{cas} = [ellipse, draw, text centered, font=\scriptsize]
 \tikzstyle{arrow} = [thick,-]
 \begin{document}
@@ -150,6 +152,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \section{Diagrama de classes}
 %ADD ARROWS
 \begin{center}
+<<<<<<< HEAD
 \begin{tikzpicture}[node distance=1cm and 2cm, auto, align=center]
 \node[UML](Application){Application \nodepart{two} };
 \node[UML, below = of Application](Ranking){Ranking \nodepart{two}};
@@ -181,6 +184,77 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 \draw [arrow, dashed] (Ranking.north) |- (Application.south);
 \draw [arrow] (Game.south) |- (Board.north);
 \draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
+=======
+\begin{tikzpicture}[node distance=1cm and 1.3cm, auto, align=center]
+\node[UML](Application){Application \nodepart{two} };
+\node[UML, below = of Application](KanKun){KanKun};
+\node[UML, below = of KanKun](GameLauncher){GameLauncher};
+
+\node[UML, right = of Application, xshift=0.6cm](DB){DB};
+\node[UML, right = of DB](Table){Table};
+\node[UML, below = of Table](Data){Data \nodepart{three} Save\\Load};
+\node[UML, right = of Table](Ranking){Ranking};
+\node[UML, right = of Data](Game){Game \nodepart{two}
+	IdGame\\
+	Score\\
+	Status};
+\node[UML, below = of Game](Player){Player \nodepart{two} Nom};
+
+\node[UML, below left = of Data](Board){Board};
+\node[UML, below = of Board, yshift = -0.5cm](KKBoard){KKBoard};
+\node[UML, right = of Board](Cell){Cell};
+\node[UML, right = of KKBoard](Region){Region};
+
+\node[UML, below = of KKBoard](BoardCreator){BoardCreator};
+\node[UML, below right = of BoardCreator](BoardHumanEditor){BoardHumanEditor};
+\node[UML, below = of BoardCreator](BoardCPUGenerator){BoardCPUGenerator};
+
+\node[left = of GameLauncher, xshift = 1cm](A){};
+
+
+\draw [arrow, -latex'] (KanKun) -- (Application);
+\draw [arrow, dashed, -latex'] (GameLauncher) -- (KanKun);
+\draw [arrow, dashed, -latex'] ($(DB.south west)+(0, 0.4)$) -- ++ (-1, 0) |- (GameLauncher.east);
+\draw [arrow, dashed, -latex'] (DB) -- (Application)
+	node[above right, xshift=1cm]{<<static>>};
+\draw [arrow, -diamond] (Table.west) -- (DB.east);
+\draw [arrow, -latex'] (Ranking.west) -- (Table.east);
+\draw [arrow, -diamond] (Data) -- (Table);
+\draw [arrow, -latex'] (Game) -- (Data);
+\draw [arrow, -diamond] (Game.north) -- ++ (0, 0) -| (Ranking.south);
+\draw [arrow] (Player.west) -- ++ (-0.5, 0) |- (Data.east);
+\draw [arrow] (Player) -- (Game)
+	node[above right, at start]{1}
+	node[below right, at end]{*};
+\draw [arrow, -latex'] (Board) |- (Data);
+\draw [arrow, -diamond] (Cell) -- (Board);
+\draw [arrow, -latex'] (KKBoard) -- (Board);
+\draw [arrow, -diamond] (Region) -- (KKBoard);
+\draw [arrow] (Region.north) --  ++(0, 0.5) -| (Cell) 
+	node[above right, at start, yshift=-0.5cm]{1}
+	node[below right, at end]{*};
+\draw [arrow, dashed, -latex'] (KKBoard) -- (BoardCreator);
+\draw [arrow, -latex'] (BoardHumanEditor) |- (BoardCreator);
+\draw [arrow, -latex'] (BoardCPUGenerator) -- (BoardCreator);
+\draw [arrow, -latex', dashed] (BoardHumanEditor.south) -- ++ (0, -0.5) -| (A.center) |- (KanKun.west);
+\draw [arrow, -latex', dashed] (BoardCPUGenerator) -| (GameLauncher);
+
+
+%\draw [arrow, -diamond] (Player.north) |- (Application.west)
+%	node[above left, at start]{*}
+%	node[above left, at end]{1};
+%\draw [arrow] (Player.east) |- (Ranking.west) 
+%	node[above right, at start]{*} 
+%	node[above left, at end]{1};
+%\draw [arrow] (Player.south) |- node[below left, at start]{1} (A.center) -| ([xshift=-0.5cm]Game.south)
+%	node[below left, at end]{1};
+%\draw [arrow] (Ranking.east) |-  (Game.west) 
+%	node[above right, at start]{1}
+%	node[above left, at end]{*};
+%\draw [arrow, dashed] (Ranking.north) |- (Application.south);
+%\draw [arrow] (Game.south) |- (Board.north);
+%\draw [arrow] (Game.north) |- ([yshift=-0.5cm]Application.east);
+>>>>>>> 803ab9a6c18bd24418336135bcffab263d674f36
 %\draw [arrow] (Board) -- (KKBoard);
 %\draw [arrow] (Cell) -- (Board);
 %\draw [arrow] (Cell) -- (Region);
