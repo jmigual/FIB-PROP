@@ -254,13 +254,13 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 
 \begin{tikzpicture}[node distance=0.5cm and 1cm, auto, align=center]
 \node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
-\node[cas, right = of StartApp, xshift=2cm](Create){Crear\\partida};
+\node[cas, right = of StartApp, xshift=2cm](Create){Crear\\tauler};
 \node[cas, above = of Create](Ranking){Veure\\rànquing};
 \node[cas, above = of Ranking](Users){Administrar\\usuaris};
 \node[cas, above = of Users, xshift=-1cm](KenKen){Administrar\\base de dades};
-\node[cas, above right = of Create](CreateUser){Creada\\per l'usuari};
-\node[cas, right = of Create](CreateMachine){Creada per\\la màquina};
-\node[cas, below = of Create](Solve){Resoldre\\partida};
+\node[cas, above right = of Create](CreateUser){Creat\\per l'usuari};
+\node[cas, right = of Create](CreateMachine){Creat per\\la màquina};
+\node[cas, below = of Create](Solve){Resoldre\\tauler};
 \node[cas, right = of Solve](AutoSolve){Resoldre\\automàticament};
 \node[cas, below right = of Solve](UserSolve){Usuari};
 
@@ -271,7 +271,18 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 	\draw[thick, ->] (\x) -- (\y);
 };
 \end{tikzpicture}
+%MARCAR MILLOR LES PARTS OPCIONALS (CURSIVA O NEGRITA)
+\paragraph{Veure rànquing:} 
+L'usuari podrà veure una llista de les millors partides, organitzades per puntuació o temps en resoldre. A cada partida que aparegui en el rànquing es podran veure a quin usuari correspon i en quin tauler s'ha jugat. (Opcionalment es podran filtrar les partides per la mida del tauler).
 
+\paragraph{Crear tauler/Creat per l'usuari:}
+Quan un usuari vulgui crear un tauler  podrà escollir la seva mida (opcional). L'aplicació permetrà que l'usuari assigni nombres a les ce\lgem es o omplir el tauler de nombres aleatoris correctes. També podrà crear una regió a partir d'una selecció de ce\lgem es o crear regions automàticament a partir d'alguns paràmetres com la mida i la topologia de les regions (opcional). Finalment l'aplicació comprovarà si el tauler té alguna solució possible.
+
+\paragraph{Crear tauler/Creat per la màquina:}
+L'aplicació crearà un tauler a partir de paràmetres introduïts per l'usuari com la mida del tauler o la forma i topologia de les regions (paràmetres opcionals).
+
+\paragraph{Resoldre tauler/Usuari:}
+L'usuari podrà resoldre els taulers amb el monitoratge de l'aplicació, que notificarà els errors més obvis. Opcionalment, també podrà anotar la possibilitat que un nombre pugui estar en una ce\lgem a.
 
 \newpage
 \section{Diagrama de classes}
