@@ -56,7 +56,7 @@ hi haurà el nom de l'usuari i la puntuació que aquest ha fet.
 
 \section{Casos d'ús}
 
-\subsection{Diagrama}
+\subsection{Diagrama de flux}
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm and 0.6cm, auto, align=center]
 \node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
@@ -248,8 +248,30 @@ Guarda el Kenken a la base de dades.
 L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una solució).
 %--end--Arnau--
 
+\newpage
+\section{Casos d'ús}
+\subsection{Diagrama}
 
-%Add descripcion here
+\begin{tikzpicture}[node distance=0.5cm and 1cm, auto, align=center]
+\node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
+\node[cas, right = of StartApp, xshift=2cm](Create){Crear\\partida};
+\node[cas, above = of Create](Ranking){Veure\\rànquing};
+\node[cas, above = of Ranking](Users){Administrar\\usuaris};
+\node[cas, above = of Users, xshift=-1cm](KenKen){Administrar\\base de dades};
+\node[cas, above right = of Create](CreateUser){Creada\\per l'usuari};
+\node[cas, right = of Create](CreateMachine){Creada per\\la màquina};
+\node[cas, below = of Create](Solve){Resoldre\\partida};
+\node[cas, right = of Solve](AutoSolve){Resoldre\\automàticament};
+\node[cas, below right = of Solve](UserSolve){Usuari};
+
+\foreach \x/\y in {StartApp/Create, StartApp/Ranking, StartApp/Users, 
+				   StartApp/KenKen, StartApp/Solve, Create/CreateUser,
+				   Create/CreateMachine, Solve/AutoSolve, Solve/UserSolve} 
+{
+	\draw[thick, ->] (\x) -- (\y);
+};
+\end{tikzpicture}
+
 
 \newpage
 \section{Diagrama de classes}
@@ -264,22 +286,26 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 \node[UML, right = of DB](Table){Table};
 \node[UML, below = of Table](Data){Data \nodepart{three} +save()\\+load()};
 \node[UML, right = of Table](Ranking){Ranking};
-\node[UML, right = of Data](Game){Game \nodepart{two}
-	IdGame\\
+\node[UML, right = of Data](Match){Match \nodepart{two}
+	IdMatch\\
 	Score\\
 	Status};
-\node[UML, below = of Game](Player){Player \nodepart{two} Nom};
+\node[UML, below = of Match](Player){Player \nodepart{two} Nom};
+\node[right = of Player](MatchRelation){};
+\node[UML, right = of MatchRelation](Game){Game};
 
 \node[UML, below left = of Data](Board){Board};
-\node[UML, below = of Board, yshift = -0.5cm](KKBoard){KKBoard};
+\node[UML, below = of Board, yshift = -2cm](KKBoard){KKBoard};
 \node[UML, right = of Board](Cell){Cell};
-\node[UML, right = of KKBoard](Region){Region};
+\node[UML, below = of Cell](Region){Region};
 
 \node[UML, below = of KKBoard](BoardCreator){BoardCreator};
 \node[UML, below right = of BoardCreator](BoardHumanEditor){BoardHumanEditor};
 \node[UML, below = of BoardCreator](BoardCPUGenerator){BoardCPUGenerator};
 
 \node[left = of GameLauncher, xshift = 1cm](A){};
+\node[below = of Player, yshift=0.8cm](B){};
+\node[left = of Player, xshift=0.8cm](C){};
 
 
 \draw [arrow, -latex'] (KanKun) -- (Application);
@@ -290,16 +316,17 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 \draw [arrow, -diamond] (Table.west) -- (DB.east);
 \draw [arrow, -latex'] (Ranking.west) -- (Table.east);
 \draw [arrow, -diamond] (Data) -- (Table);
-\draw [arrow, -latex'] (Game) -- (Data);
-\draw [arrow, -diamond] (Game.north) -- ++ (0, 0) -| (Ranking.south);
-\draw [arrow] (Player.west) -- ++ (-0.5, 0) |- (Data.east);
-\draw [arrow] (Player) -- (Game)
-	node[font=\scriptsize, above right, at start]{1}
+\draw [arrow, -latex'] (Match) -- (Data);
+\draw [arrow, -diamond] (Match.north) -- ++ (0, 0) -| (Ranking.south);
+\draw [arrow] (Player.west) -- (C.center);
+\draw [arrow, dashed] (MatchRelation.center) |- (Match)
 	node[font=\scriptsize, below right, at end]{*};
+\draw [arrow] (Player) -- (MatchRelation.center);
+\draw [arrow] (MatchRelation.center) -- (Game);
 \draw [arrow, -latex'] (Board) |- (Data);
 \draw [arrow, -diamond] (Cell) -- (Board);
 \draw [arrow, -latex'] (KKBoard) -- (Board);
-\draw [arrow, -diamond] (Region) -- (KKBoard);
+\draw [arrow, -diamond] (Region) -| ($(KKBoard.north east) - (0.2,0)$);
 \draw [arrow] (Region.north) --  ++(0, 0.5) -| (Cell) 
 	node[font=\scriptsize, above right, at start, yshift=-0.5cm]{1}
 	node[font=\scriptsize, below right, at end]{*};
@@ -308,6 +335,10 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 \draw [arrow, -latex'] (BoardCPUGenerator) -- (BoardCreator);
 \draw [arrow, -latex', dashed] (BoardHumanEditor.south) -- ++ (0, -0.5) -| (A.center) |- (KanKun.west);
 \draw [arrow, -latex', dashed] (BoardCPUGenerator) -| (GameLauncher);
+\draw [arrow, -latex', dashed] (KKBoard.east) -| (Game.south);
+\draw [arrow] ($(Game.south west) + (0.2, 0)$) |- (B.center);
+\draw [arrow] (B.center) -| (C.center);
+\draw [arrow] (C.center) |- (Data.west);
 \end{tikzpicture}
 \end{center}
 \end{document}
