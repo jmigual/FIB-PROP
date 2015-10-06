@@ -1,4 +1,4 @@
-package com.company;
+package domini;
 
 public class KenKen extends App {
 

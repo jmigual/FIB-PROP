@@ -363,4 +363,61 @@ L'usuari podrà resoldre els taulers amb el monitoratge de l'aplicació, que not
 \draw [arrow] (C.center) |- (Data.east);
 \end{tikzpicture}
 \end{center}
+
+\subsection*{KanKun}
+\textbf{Atributs:}
+\begin{itemize}
+	\item[-] CurrentUser
+\end{itemize}
+\textbf{Mètodes:}
+\begin{itemize}
+	\item[+]\verb|void main()|
+\end{itemize}
+
+\subsection*{DB}
+\textbf{Mètodes:}
+\begin{itemize}
+	\item[+] \verb|void createTable(String name)|
+	\item[+] \verb|void save()|
+	\item[+] \verb|void load()|
+\end{itemize}
+
+\subsection*{Cell}
+\textbf{Atributs:}
+\begin{itemize}
+	\item[-] Number
+	\item[-] Annotations
+	\item[-] MaxNumber
+\end{itemize}
+\textbf{Mètodes:}
+\begin{itemize}
+	\item[+] \verb|Cell(int maxNumber)|
+	\item[+] \verb|int getNumber()|
+	\item[+] \verb|void setNumber(int n)|
+	\item[+] \verb|bool getAnnotation(int n)|
+	\item[+] \verb|void setAnnotation(int n, bool b)|
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.8cm and 0.8cm, auto, align=center]
+\node[UML]{Application};
+\node[UML, below = of Application]{KanKun
+	\nodepart{three}
+	+void main()
+};
+
+\node[UML, below = of KanKun]{Cell 
+	\nodepart{two}
+	Number\\
+	Annotations [0..*] \\
+	MaxNumber
+	\nodepart{three}
+	+Cell(int maxNumber)\\
+	+int getNumber()\\
+	+void setNumber(int n)\\
+	+bool getAnnotation(int n)\\
+	+void setAnnotation(int n, bool b)};
+\end{tikzpicture}
+\end{center}
+
 \end{document}
