@@ -12,6 +12,7 @@
 \usepackage{listings} % Add code
 \usepackage{tikz}
 \usepackage{calc}
+\usepackage{makeidx}
 
 
 %Tikz defines
@@ -23,241 +24,40 @@
 \tikzstyle{cas} = [ellipse, draw, text centered, font=\scriptsize]
 \tikzstyle{arrow} = [thick,-]
 \begin{document}
-\title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
-\author{Marc Asenjo i Ponce de León \and
-	Arnau Canyadell i Miquel \and
-	Joan Marcè i Igual \and
-	Iñigo Moreno i Caireta \and
-	Esteve Tarragó i Sanchís}
+%\title{\textsc{Ken-Ken} \\ \large 1a entrega PROP}
+%\author{Marc Asenjo i Ponce de León \and
+%	Arnau Canyadell i Miquel \and
+%	Joan Marcè i Igual \and
+%	Iñigo Moreno i Caireta \and
+%	Esteve Tarragó i Sanchís}
 
-\date{\today}
-\maketitle
+%\date{\today}
+%\maketitle
 
-El nostre grup ha escollit fer el treball de PROP sobre el Ken-Ken.
-\textit{El Ken-Ken és un trencaclosques similar al Sudoku.
+%\makeindex
+\newpage
+
+\section{Enunciat ampliat}
+
+
+El nostre grup ha escollit fer el treball de PROP sobre el Ken-Ken. Segons Wikipedia, ``el Ken-Ken és un trencaclosques similar al Sudoku.
  Les regles són no repetir cap número en files o columnes i les regions marcades de formes diverses han 
  d'estar ocupades per números que formin la xifra exacta mitjançant les operacions indicades: suma, 
  resta, multiplicació o divisió. Els dígits poden repetir-se dins d'una regió, sempre que no es trobin 
- en la mateixa fila o columna.} \\ 
-\href{https://ca.wikipedia.org/wiki/Kenken}{https://ca.wikipedia.org/wiki/Kenken}
+ en la mateixa fila o columna.''
+\href{https://ca.wikipedia.org/wiki/Kenken}{(Enllaç a la Wikipèdia)}
 \\
 
 
-En aquest cas l'usuari podrà jugar Ken-Kens generats per ell, selecinoar-ne un de la base de dades o també podrà
-deixar que la maquina li generi un. 
-Per als Ken-Ken que l'usuari crei el programa comprovarà que hi hagi una solució
-possible sinó, el donara com a \emph{no vàlid} i no el deixarà introduir. Els Ken-Ken generats 
-pel programa podran tenir uns patrons predefinits tals com la mida del tauler, la forma de les 
-regions (hi haurà una llista on es podran escollir les que es volen i les que no) o el nombre 
-de nombres ja co\lgem ocats. Opcionalment es crearà una eina que ajudi a l'usuari a crear el seu Ken-Ken.
+En aquesta aplicació l'usuari podrà resoldre Ken-Kens amb l'assistència del programa o bé si ho prefereix podrà fer que la màquina el resolgui (fent que no pugui obtenir puntuació si en el futur decideix resoldre'l). Mentre l'usuari resolgui un Ken-Ken l'aplicació anirà comprovant el compliment de les regles del joc i en el cas que no se'n complís alguna es mostrarà un avís. Es permetrà a l'usuari desfer els moviments recents, així com, opcionalment, afegir anotacions que ajudin a recordar possibles valors d'una casella. S'atorgarà una puntuació al jugador en funció del temps que hagi durat la partida i també dels errors comesos durant aquesta. Es podrà guardar la partida a mig fer i reprendre-la en un altre moment.
 \\
 
 
-En tots els casos l'usuari podrà intentar resoldre el Ken-Ken desitjat amb
-l'assistència del programa que anirà comprovant el compliment de les regles del
-joc, en el cas que no es complís alguna norma es mostrarà un avís, o bé si ho prefereix podrà fer que la màquina el resolgui. Durant el
-desenvolupament del joc es tindran en compte les accions de l'usuari per
-atorgar-li una puntuació en funció del temps que hagi durat la partida
-i també dels errors comesos per l'usuari durant aquesta.
+Hi haurà una base de dades de taulers de Ken-Ken creats per l'ordinador o per un usuari. Pels taulers que l'usuari creï el programa comprovarà que hi hagi una solució possible. Si no, el donarà com a \emph{no vàlid}. Opcionalment, l'aplicació tindrà eines que ajudin a l'usuari a crear el seu Ken-Ken, e.g. que ompli el tauler de nombres aleatoris que compleixin les restriccions de fila i columna, o que donada una regió amb uns nombres l'aplicació calculi les operacions i resultats possibles. Els Ken-Ken generats pel programa podran tenir uns patrons predefinits tals com la mida del tauler o la forma de les regions (hi haurà una llista on es podran escollir les que es volen i les que no). Opcionalment, també es podrà escollir nivell de dificultat del Ken-Ken tenint en compte factors com les operacions que poden utilitzar les regions o la quantitat de possibles combinacions de nombres que encaixen en cada regió individualment.
 \\
 
 
-A mes a mes l'usuari podrà consultar un rànquing on quedaran registrades les millors puntuacions,
-assossiades a cada tauler i jugador amb la pertinent gestio d'usuaris.
-
-\section{Casos d'ús}
-
-\subsection{Diagrama de flux}
-\begin{center}
-\begin{tikzpicture}[node distance=0.5cm and 0.6cm, auto, align=center]
-\node(StartApp){\includegraphics[width=1.3cm]{./Images/stickman}};
-\node[cas, right = of StartApp](User){Entrar\\usuari};
-\node[cas, right = of User](Ranking){Veure\\rànquing};
-\node[cas, above = of Ranking, yshift=5.5cm](Start){Començar\\a jugar};
-\node[cas, below = of Ranking](Admin){Veure co\lgem ecció\\de Ken-Kens};
-\node[cas, below = of User](Exit){Sortir};
-
-%Començar a jugar
-\node[cas, right = of Start](Database){Seleccionar\\tauler de la\\co\lgem ecció};
-\node[cas, above = of Database, xshift=1cm](Load){Carregar\\joc};
-\node[cas, below = of Database, xshift=-1cm](CreateCPU){Generar i\\jugar};
-
-%Rànquing
-\node[cas, right = of Ranking](RRanking){Netejar\\dades};
-
-%Veure col·lecció
-\node[cas, right = of Admin](SelectKK){Seleccionar\\Ken-Ken};
-\node[cas, below = of Admin](Create){Crear\\Ken-Ken};
-
-\node[cas, right = of CreateCPU, xshift=0.5cm](Play){Jugar};
-
-%Generar i jugar
-\node[cas, below = of CreateCPU](SelectSize){Seleccionar\\Mida};
-\node[cas, below = of SelectSize](SelectRegions){Seleccionar núm.\\ i mida regions};
-
-%Jugar
-\node[cas, right = of Play](Hint){Pista};
-\node[cas, above = of Hint](SelectCel){Seleccionar\\ce\lgem a};
-\node[cas, below = of Hint](Save){Guardar};
-\node[cas, below = of Save](Surrender){Rendir-se};
-
-%Seleccionar cel·la
-\node[cas, above right = of SelectCel](ChangeNum){Canviar\\nombre};
-\node[cas, right = of SelectCel](DeleteNum){Eliminar\\nombre};
-\node[cas, below right = of SelectCel](Notify){Notificació};
-
-%Seleccionar Ken-Ken
-\node[cas, right = of SelectKK](EditKK){Editar\\Ken-Ken};
-\node[cas, above right = of SelectKK](DeleteKK){Eliminar\\Ken-Ken};
-\node[cas, below right = of SelectKK](ViewSolution){Veure\\Solució};
-
-%Crear Ken-Ken
-\node[cas, below left = of Create, yshift=-3.5cm](ChooseSize){Triar\\mida};
-
-%Triar mida
-\node[cas, right = of ChooseSize, xshift=1cm](CreateRegion){Crear Regió};
-\node[cas, above = of CreateRegion](SelectCell){Seleccionar\\ce\lgem a};
-\node[cas, above = of SelectCell](FillRandom){Emplenar de\\nombres aleatoris\\correctes};
-\node[cas, below = of CreateRegion, xshift=1cm](SelectRegion){Seleccionar\\regió};
-\node[cas, below = of SelectRegion, xshift=1cm](ViewSolutionable){Veure si\\té solució};
-\node[cas, below = of ViewSolutionable](ViewUniqueSolution){Veure si té\\solució única};
-\node[cas, left = of ViewUniqueSolution](SaveNew){Guardar};
-\node[cas, below = of ChooseSize, yshift=-2cm](Solve){Solucionar};
-
-%Seleccionar cel·la
-\node[cas, right = of SelectCell, yshift=1cm, xshift=2cm](SetNum){Anotar nombre\\correcte};
-\node[cas, above= of SetNum, yshift=-0.5cm](RandomNum){Nombre aleatori\\correcte};
-
-%Crear regió
-\node[cas, right = of CreateRegion, yshift=1cm, xshift=2cm](ChangeNum2){Canviar nombre\\ i/o resultat};
-\node[cas, below = of ChangeNum2, yshift=0.5cm](SelectCells){Seleccionar\\ce\lgem es};
-
-%Seleccionar regió\\
-\node[cas, right = of SelectRegion, xshift=2.2cm](ChangeCells){Modificar\\ce\lgem es};
-\node[cas, below = of ChangeCells, yshift=0.5cm](ChangeNumRes){Modificar operació\\i/o resultat};
-
-\foreach \x/\y in {User/Start, User/Ranking, User/Admin, Start/Database, Start/CreateCPU,
-				   Ranking/RRanking, Admin/SelectKK, Admin/Create, Database/Play, 
-				   Play/SelectCel, Play/Surrender.north west, Play/Hint, SelectCel/ChangeNum, 
-				   SelectCel/DeleteNum, SelectCel/Notify, Play/Save, SelectKK/Play, Start/Load.west, 
-				   Load.south east/Play, User/Exit, CreateCPU/SelectSize, SelectKK/ViewSolution,
-				   SelectSize/SelectRegions, SelectRegions.north east/Play, StartApp/User,
-				   SelectKK/DeleteKK, SelectKK/EditKK, Create/ChooseSize, 
-				   ChooseSize/FillRandom.south west, ChooseSize/CreateRegion, ChooseSize/SelectCell, 
-				   ChooseSize/SelectRegion, ChooseSize/ViewSolutionable, ChooseSize/ViewUniqueSolution, 
-				   ChooseSize/Solve, SelectCell/RandomNum.south west, SelectCell/SetNum.west, 
-				   CreateRegion/ChangeNum2.west, CreateRegion/SelectCells.west, 
-				   SelectRegion/ChangeCells, SelectRegion/ChangeNumRes, ChooseSize/SaveNew} 
-{
-\draw[thick, ->] (\x) -- (\y);
-};
-
-\end{tikzpicture}
-\end{center}
-
-\subsection{Descripció}
-
-
-\paragraph{Nom:} Entrar Usuari \\%Set name here
-\textbf{Descripció:}
-Permet introduir el nom d'usuari perquè es comprovi a la base de dades si ja hi ha un usuari i sinó crear-ne un.
-
-\paragraph{Nom:}  Començar a jugar \\
-\textbf{Descripció:} 
-Obre la pantalla de selecció dels Ken-Ken per carregar un joc anterior, generar un nou tauler o seleccionar-ne un de ja creat.
-
-\paragraph{Nom:} Carregar joc \\
-\textbf{Descripció:}
-Permet continuar jugant una partida guardada anteriorment.
-
-\paragraph{Nom:} Seleccionar tauler de la co\lgem ecció \\
-\textbf{Descripció:}
-Començar una nova partida utilitzant un tauler dels que hi ha a la co\lgem ecció de taulers.
-
-\paragraph{Nom:} Generar i jugar \\
-\textbf{Descripció:}
-El programa genera un nou Ken-Ken a partir dels paràmetres especificats de l'usuari després el podrà començar a jugar. Farà avançar el menú per poder escollir la mida del tauler.
-
-\paragraph{Nom:} Seleccionar mida \\
-\textbf{Descripció:}
-Permet escollir la mida que s'utilitzarà per generar un nou Ken-Ken ($3x3, 4x4, 5x5... 9x9$).
-Permetrà continuar el menú per poder escollir el número i mida de les regions.
-
-\paragraph{Nom:} Seleccionar número i mida regions \\
-\textbf{Descripció:} 
-Permetrà escollir de quina mida seran les regions del Ken-Ken generat ($1 - 5$) i després ja passarà a crear el tauler i que l'usuari el comenci a jugar.
-
-\paragraph{Nom:} Veure rànquing\\
-\textbf{Descripció:} 
-Permet veure el rànquing amb els millors usuaris i les seves puntuacions i estadístiques.
-
-\paragraph{Nom:} Jugar\\
-\textbf{Descripció:} 
-Permet veure el tauler actual, amb els nombres i possibilitats que ja estan co\lgem ocades, seleccionar una ce\lgem a, i accedir a altres opcions.
-
-\paragraph{Nom:} Seleccionar ce\lgem a\\
-\textbf{Descripció:} 
-La ce\lgem a seleccionada queda destacada i es podrà escollir que fer amb ella: canviar el seu valor, deixar-la sense o afegir possibilitats.
-
-
-\paragraph{Nom:} Canviar nombre\\
-\textbf{Descripció:} 
-Queda marcat el valor de la ce\lgem a al tauler.
-
-
-\paragraph{Nom:} Eliminar nombre\\
-\textbf{Descripció:} 
-Queda eliminat el valor de la ce\lgem a.
-
-\paragraph{Nom:} Notificació\\ %CANVIAR NOM?
-\textbf{Descripció:} 
-Permet anotar la possibilitat que un nombre pugui estar en la ce\lgem a seleccionada.
-
-\paragraph{Nom:} Pista\\
-\textbf{Descripció:} 
-Es resol una ce\lgem a automàticament.
-
-
-\paragraph{Nom:} Guardar\\
-\textbf{Descripció:} 
-Es guarda el progrés de la partida en la co\lgem ecció de Ken-Kens
-
-
-\paragraph{Nom:} Rendir-se\\
-\textbf{Descripció:} 
-Permet abandonar la partida i tornar a l'inici de l'aplicació.
-
-
-%--Arnau--
-\paragraph{Nom:} Seleccionar regió\\
-\textbf{Descripció:}
-Selecciona una regió per editar-la.
-
-\paragraph{Nom:} Modificar cel·les\\
-\textbf{Descripció:}
-Permet afegir i eliminar cel·les de la regió seleccionada.
-
-\paragraph{Nom:} Modificar operació i/o resultat\\
-\textbf{Descripció:}
-Permet modificar la operació de la regió i el resultat que ha de donar.
-
-\paragraph{Nom:} Veure si té solució\\
-\textbf{Descripció:} 
-L'aplicació comprova si el Kenken que hi ha proposat té solució.
-
-\paragraph{Nom:} Veure si té solució única\\
-\textbf{Descripció:} 
-L'aplicació comprova si el Kenken que hi ha proposat té solució i si 
-aquesta és única.
-
-\paragraph{Nom:} Guardar\\
-\textbf{Descripció:} 
-Guarda el Kenken a la base de dades.
-
-\paragraph{Nom:} Solucionar\\
-\textbf{Descripció:} 
-L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una solució).
-%--end--Arnau--
+Finalment, hi haurà una base de dades de jugadors, taulers i partides que servirà per guardar la informació en diferents instàncies de l'aplicació. Es podrà fer log in com a usuari (opcionalment s'enllaçarà aquest usuari amb xarxes socials). Hi haurà un rànquing de totes les partides i un altre rànquing de les partides de l'usuari ordenades per puntuació o temps de resolució. La base de dades de taulers contindrà tant els creats per la màquina com els creats pels usuaris.
 
 \newpage
 \section{Casos d'ús}
@@ -284,16 +84,18 @@ L'aplicació busca una solució pel Kenken i la transmet a l'usuari (només una 
 \end{tikzpicture}
 %MARCAR MILLOR LES PARTS OPCIONALS (CURSIVA O NEGRITA)
 \paragraph{Veure rànquing:} 
-L'usuari podrà veure una llista de les millors partides, organitzades per puntuació o temps en resoldre. A cada partida que aparegui en el rànquing es podran veure a quin usuari correspon i en quin tauler s'ha jugat. (Opcionalment es podran filtrar les partides per la mida del tauler).
+L'usuari podrà veure una llista de les seves partides i de les millors dels altres jugadors, organitzades per puntuació o temps en resoldre, i podrà veure en quin tauler s'ha jugat cada una. Opcionalment es podran filtrar les partides per la mida del tauler i dificultat. 
 
 \paragraph{Crear tauler/Creat per l'usuari:}
-Quan un usuari vulgui crear un tauler  podrà escollir la seva mida (opcional). L'aplicació permetrà que l'usuari assigni nombres a les ce\lgem es o omplir el tauler de nombres aleatoris correctes. També podrà crear una regió a partir d'una selecció de ce\lgem es o crear regions automàticament a partir d'alguns paràmetres com la mida i la topologia de les regions (opcional). Finalment l'aplicació comprovarà si el tauler té alguna solució possible.
+L'usuari seleccionarà una mida de tauler i crearà regions amb operació i resultat. A més, podrà emplenar les caselles amb números com a anotacions i, finalment, veure si el tauler té solució i si és única.
+
+%Quan un usuari vulgui crear un tauler podrà escollir la seva mida. L'aplicació permetrà que l'usuari assigni nombres a les ce\lgem es o omplir el tauler de nombres aleatoris correctes. També podrà crear una regió a partir d'una selecció de ce\lgem es o crear regions automàticament a partir d'alguns paràmetres com la mida i la topologia de les regions (opcional). Finalment l'aplicació comprovarà si el tauler té alguna solució possible.
 
 \paragraph{Crear tauler/Creat per la màquina:}
-L'aplicació crearà un tauler a partir de paràmetres introduïts per l'usuari com la mida del tauler o la forma i topologia de les regions (paràmetres opcionals).
+L'aplicació crearà un tauler a partir de paràmetres introduïts per l'usuari com la mida del tauler, la forma, mida i operació de les regions i la quantitat de cada tipus de regió.
 
 \paragraph{Resoldre tauler/Usuari:}
-L'usuari podrà resoldre els taulers amb el monitoratge de l'aplicació, que notificarà els errors més obvis. Opcionalment, també podrà anotar la possibilitat que un nombre pugui estar en una ce\lgem a.
+L'usuari podrà resoldre els taulers amb el monitoratge de l'aplicació, que notificarà els errors trivials. Es tindrà l'opció de desfer els moviments més recents. Opcionalment, es podrà anotar la possibilitat que un nombre pugui estar en una determinada ce\lgem a i es podrà demanar ajuda a la màquina a canvi de perdre punts.
 
 \newpage
 \section{Diagrama de classes}
