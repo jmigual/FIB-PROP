@@ -14,7 +14,6 @@
 \usepackage{calc}
 \usepackage{makeidx}
 
-
 %Tikz defines
 \usetikzlibrary{shapes, arrows, positioning, automata, calc}
 \tikzstyle{UML} = [rectangle split, rectangle split parts=3, draw,text centered,
@@ -89,8 +88,6 @@ L'usuari podrà veure una llista de les seves partides i de les millors dels alt
 \paragraph{Crear tauler/Creat per l'usuari:}
 L'usuari seleccionarà una mida de tauler i crearà regions amb operació i resultat. A més, podrà emplenar les caselles amb números com a anotacions i, finalment, veure si el tauler té solució i si és única.
 
-%Quan un usuari vulgui crear un tauler podrà escollir la seva mida. L'aplicació permetrà que l'usuari assigni nombres a les ce\lgem es o omplir el tauler de nombres aleatoris correctes. També podrà crear una regió a partir d'una selecció de ce\lgem es o crear regions automàticament a partir d'alguns paràmetres com la mida i la topologia de les regions (opcional). Finalment l'aplicació comprovarà si el tauler té alguna solució possible.
-
 \paragraph{Crear tauler/Creat per la màquina:}
 L'aplicació crearà un tauler a partir de paràmetres introduïts per l'usuari com la mida del tauler, la forma, mida i operació de les regions i la quantitat de cada tipus de regió.
 
@@ -99,127 +96,23 @@ L'usuari podrà resoldre els taulers amb el monitoratge de l'aplicació, que not
 
 \newpage
 \section{Diagrama de classes}
-%ADD ARROWS
-\begin{center}
-\begin{tikzpicture}[node distance=1cm and 1.3cm, auto, align=center]
-\node[UML](Application){Application \nodepart{two} };
-\node[UML, below = of Application](KanKun){KanKun};
-\node[UML, below = of KanKun](GameLauncher){GameLauncher};
+\includegraphics[width=22cm]{./Diagrama1.eps}
 
-\node[UML, right = of Application, xshift=0.6cm](DB){DB};
-\node[UML, right = of DB](Table){Table};
-\node[UML, below = of Table](Data){Data \nodepart{three} +save()\\+load()};
-\node[UML, right = of Table](Ranking){Ranking};
-\node[UML, right = of Data](Match){Match \nodepart{two}
-	IdMatch\\
-	Score\\
-	Status};
-\node[UML, below = of Match](Player){Player \nodepart{two} Nom};
-\node[right = of Player](MatchRelation){};
-\node[UML, right = of MatchRelation](Game){Game};
+\newpage
+\paragraph{Game:}
+És la classe principal del programa que administra la BD, procedeix a l’autentificació dels usuaris, permet veure el rànquing, crear un tauler i jugar una partida.
 
-\node[UML, below left = of Data](Board){Board};
-\node[UML, below = of Board, yshift = -2cm](KKBoard){KKBoard};
-\node[UML, right = of Board](Cell){Cell};
-\node[UML, below = of Cell](Region){Region};
+\paragraph{DB:}És un contenidor de taules que s’encarrega de la gestió de fitxers i permet crear, carregar i guardar les taules.
 
-\node[UML, below = of KKBoard](BoardCreator){BoardCreator};
-\node[UML, below right = of BoardCreator](BoardHumanEditor){BoardHumanEditor};
-\node[UML, below = of BoardCreator](BoardCPUGenerator){BoardCPUGenerator};
+\paragraph{Table:}És un contenidor de Data, que és una classe abstracta que obliga els seus fills a implementar les funcions save i load.
 
-\node[left = of GameLauncher, xshift = 1cm](A){};
-\node[below = of Player, yshift=0.8cm](B){};
-\node[left = of Player, xshift=0.8cm](C){};
+\paragraph{Match:}És una subclasse de Data que conté informació sobre l’estat d’una partida, que no té perquè estar acabada.
 
+\paragraph{KKMatch:}S’encarrega de que es compleixin les restriccions durant la partida.
 
-\draw [arrow, -latex'] (KanKun) -- (Application);
-\draw [arrow, dashed, -latex'] (GameLauncher) -- (KanKun);
-\draw [arrow, dashed, -latex'] ($(DB.south west)+(0, 0.4)$) -- ++ (-1, 0) |- (GameLauncher.east);
-\draw [arrow, dashed, -latex'] (DB) -- (Application)
-	node[font=\scriptsize, above right, xshift=1cm]{<<static>>};
-\draw [arrow, -diamond] (Table.west) -- (DB.east);
-\draw [arrow, -latex'] (Ranking.west) -- (Table.east);
-\draw [arrow, -diamond] (Data) -- (Table);
-\draw [arrow, -latex'] (Match) -- (Data);
-\draw [arrow, -diamond] (Match.north) -- ++ (0, 0) -| (Ranking.south);
-\draw [arrow] (Player.west) -- (C.center);
-\draw [arrow, dashed] (MatchRelation.center) |- (Match)
-	node[font=\scriptsize, below right, at end]{*};
-\draw [arrow] (Player) -- (MatchRelation.center);
-\draw [arrow] (MatchRelation.center) -- (Game);
-\draw [arrow, -latex'] (Board) |- (Data);
-\draw [arrow, -diamond] (Cell) -- (Board);
-\draw [arrow, -latex'] (KKBoard) -- (Board);
-\draw [arrow, -diamond] (Region) -| ($(KKBoard.north east) - (0.2,0)$);
-\draw [arrow] (Region.north) --  ++(0, 0.5) -| (Cell) 
-	node[font=\scriptsize, above right, at start, yshift=-0.5cm]{1}
-	node[font=\scriptsize, below right, at end]{*};
-\draw [arrow, dashed, -latex'] (KKBoard) -- (BoardCreator);
-\draw [arrow, -latex'] (BoardHumanEditor) |- (BoardCreator);
-\draw [arrow, -latex'] (BoardCPUGenerator) -- (BoardCreator);
-\draw [arrow, -latex', dashed] (BoardHumanEditor.south) -- ++ (0, -0.5) -| (A.center) |- (KanKun.west);
-\draw [arrow, -latex', dashed] (BoardCPUGenerator) -| (GameLauncher);
-\draw [arrow, -latex', dashed] (KKBoard.east) -| (Game.south);
-\draw [arrow] ($(Game.south west) + (0.2, 0)$) |- (B.center);
-\draw [arrow] (B.center) -| (C.center);
-\draw [arrow] (C.center) |- (Data.east);
-\end{tikzpicture}
-\end{center}
+\paragraph{BoardCPUCreator:}És la classe encarregada de crear un tauler donades certes premisses de l’usuari.
 
-\subsection*{KanKun}
-\textbf{Atributs:}
-\begin{itemize}
-	\item[-] CurrentUser
-\end{itemize}
-\textbf{Mètodes:}
-\begin{itemize}
-	\item[+]\verb|void main()|
-\end{itemize}
+\paragraph{BoardHumanCreator:}Permet a l’usuari construir un tauler des de zero.
 
-\subsection*{DB}
-\textbf{Mètodes:}
-\begin{itemize}
-	\item[+] \verb|void createTable(String name)|
-	\item[+] \verb|void save()|
-	\item[+] \verb|void load()|
-\end{itemize}
-
-\subsection*{Cell}
-\textbf{Atributs:}
-\begin{itemize}
-	\item[-] Number
-	\item[-] Annotations
-	\item[-] MaxNumber
-\end{itemize}
-\textbf{Mètodes:}
-\begin{itemize}
-	\item[+] \verb|Cell(int maxNumber)|
-	\item[+] \verb|int getNumber()|
-	\item[+] \verb|void setNumber(int n)|
-	\item[+] \verb|bool getAnnotation(int n)|
-	\item[+] \verb|void setAnnotation(int n, bool b)|
-\end{itemize}
-
-\begin{center}
-\begin{tikzpicture}[node distance=0.8cm and 0.8cm, auto, align=center]
-\node[UML]{Application};
-\node[UML, below = of Application]{KanKun
-	\nodepart{three}
-	+void main()
-};
-
-\node[UML, below = of KanKun]{Cell 
-	\nodepart{two}
-	Number\\
-	Annotations [0..*] \\
-	MaxNumber
-	\nodepart{three}
-	+Cell(int maxNumber)\\
-	+int getNumber()\\
-	+void setNumber(int n)\\
-	+bool getAnnotation(int n)\\
-	+void setAnnotation(int n, bool b)};
-\end{tikzpicture}
-\end{center}
-
+\paragraph{KKBoard:}A més de ser una classe contenidora de cel·les, files, columnes i regions, conté mètodes per saber si té solució i resoldre el Ken-Ken.
 \end{document}
