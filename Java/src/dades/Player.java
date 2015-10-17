@@ -15,9 +15,9 @@ public class Player implements Serializable {
     /**
      * Contains the player's password hash with SHA-512
      */
-    private String hashPassword;
+    private byte[] hashPassword;
 
-    public Player(String playerName, String hashPassword)
+    public Player(String playerName, byte[] hashPassword)
     {
         this.playerName = playerName;
         this.hashPassword = hashPassword;
@@ -34,7 +34,7 @@ public class Player implements Serializable {
 
     public void setPlayerName(String playerName) { this.playerName = playerName; }
 
-    public String getHashPassword() { return hashPassword; }
+    public byte[] getHashPassword() { return hashPassword; }
 
-    public void setHashPassword(String hashPassword) { this.hashPassword = hashPassword; }
+    public void setHashPassword(byte[] hashPassword) { this.hashPassword = hashPassword; }
 }
