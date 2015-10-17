@@ -12,10 +12,20 @@ public class PlayersAdmin {
 
     Table<Player> _players;
 
+    /**
+     * PlayersAdmin constructor, creates a player administrator
+     * @param players Table containing all players
+     */
     public PlayersAdmin(Table<Player> players) {
         _players = players;
     }
 
+    /**
+     * Creates a new player
+     * @param name Player's name, must be unique
+     * @param password Player's, password
+     * @return <b>True</b> if the player is added successfully
+     */
     public boolean createPlayer(String name, String password) {
         try {
             // Create the password's hash and the player to check
@@ -34,6 +44,14 @@ public class PlayersAdmin {
         return false;
     }
 
+    /**
+     * Changes the password from a player
+     * @param name Player's name
+     * @param currentPassword Current player's password
+     * @param newPassword New player's password
+     * @return <b>True</b> if the player is found and the password is changed successfully, otherwise returns
+     * <b>False</b>
+     */
     public boolean changePassword(String name, String currentPassword, String newPassword) {
         try {
             byte[] hash = getHash(newPassword);
@@ -57,6 +75,13 @@ public class PlayersAdmin {
         return false;
     }
 
+    /**
+     * Checks if a player exists and has the selected password
+     * @param name Player's name
+     * @param password Player's password
+     * @return <b>True</b> if the Player exists and has the selected password
+     * @throws Exception General exception with the error message
+     */
     public boolean checkLogin(String name, String password) throws Exception {
         Player p = new Player(name);
 
@@ -72,10 +97,22 @@ public class PlayersAdmin {
         return false;
     }
 
+    /**
+     * Checks if a player exists
+     * @param name Player's name
+     * @return <b>True</b> if the player exists, otherwise returns False
+     */
     public boolean exists(String name) {
         return _players.contains(new Player(name));
     }
 
+    /**
+     * Removes the Player from the database permanently
+     * @param name Player's name
+     * @param password Player's password
+     * @return <b>True</b> if the player is removed
+     * @throws Exception General exception with the error message
+     */
     public boolean removePlayer(String name, String password) throws Exception {
         byte[] hash;
         try {
@@ -96,7 +133,7 @@ public class PlayersAdmin {
     }
 
 
-    public byte[] getHash(String s) throws Exception {
+    private byte[] getHash(String s) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         return md.digest(s.getBytes("UTF-8"));
     }
