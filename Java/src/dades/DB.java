@@ -1,14 +1,13 @@
 package dades;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
- * Created by Joan on 15/10/2015.
+ * Abstract DB class used to store get the default table Input/Output Object Streams
  */
 public abstract class DB {
 
-
+    final String dataPath = "./data/";
 
     /**
      * Constructs an empty DB
@@ -19,8 +18,29 @@ public abstract class DB {
 
     public abstract void save();
 
-    private ObjectOutputStream getOutputStream(String name)
+    public ObjectOutputStream getOutputStream(String name)
     {
-        FileOutputStream f = new FileOutputStream(name + ".db");
+        try
+        {
+            FileOutputStream f = new FileOutputStream(dataPath + name + ".db");
+            return new ObjectOutputStream(f);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ObjectInputStream getInputStream(String name)
+    {
+        try {
+            FileInputStream f = new FileInputStream(dataPath + name + ".db");
+            return new ObjectInputStream(f);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }

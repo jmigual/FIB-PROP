@@ -9,7 +9,8 @@ import java.util.Collection;
 
 @SuppressWarnings("unchecked")
 
-/** Table class used to store elements and load and save data from Serializable objects
+/**
+ * Table class used to store elements and load and save data from Serializable objects
  */
 public class Table<E extends Serializable> extends ArrayList<E> {
 
