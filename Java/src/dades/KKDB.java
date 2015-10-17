@@ -5,7 +5,17 @@ package dades;
  */
 public class KKDB extends DB{
 
-    public Table<Player> _players;
+    private Table<Player> _players;
+
+    public KKDB()
+    {
+        load();
+    }
+
+    public PlayersAdmin getPlayersAdmin()
+    {
+        return new PlayersAdmin(_players);
+    }
 
     public void save()
     {

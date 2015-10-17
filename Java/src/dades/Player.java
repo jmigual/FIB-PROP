@@ -3,7 +3,7 @@ package dades;
 import java.io.Serializable;
 
 /**
- * Created by Joan on 17/10/2015.
+ * Player's class to store their name and password
  */
 public class Player implements Serializable {
 
@@ -17,11 +17,22 @@ public class Player implements Serializable {
      */
     private String hashPassword;
 
+    public Player(String playerName, String hashPassword)
+    {
+        this.playerName = playerName;
+        this.hashPassword = hashPassword;
+    }
+
+    public Player(String playerName)
+    {
+        this.playerName = playerName;
+    }
+
     public boolean equals(Player p) { return p.playerName.equals(this.playerName); }
 
-    public String getPlayerNameName() { return playerName; }
+    public String getPlayerName() { return playerName; }
 
-    public void setPlayerNameName(String playerName) { this.playerName = playerName; }
+    public void setPlayerName(String playerName) { this.playerName = playerName; }
 
     public String getHashPassword() { return hashPassword; }
 
