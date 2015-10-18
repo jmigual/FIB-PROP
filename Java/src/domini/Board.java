@@ -14,6 +14,9 @@ public class Board {
     public abstract int numSolotions();
     public abstract Board getSoltution();
     public abstract void Solve();
+    public Region[] getRegions(){
+        return Regions;
+    }
 
 
     private Cell[][] BoardInfo;
