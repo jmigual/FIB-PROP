@@ -3,11 +3,11 @@ package domini;
 public class Board {
 
     public Cell getCell(int i, int j) {
-        return BoardInfo[i][j];
+        return _boardInfo[i][j];
     }
 
     public void setCell(int i, int j, Cell C){
-        BoardInfo[i][j] = C;
+        _boardInfo[i][j] = C;
     }
 
     public abstract boolean hasSoltuion();
@@ -15,12 +15,16 @@ public class Board {
     public abstract Board getSoltution();
     public abstract void Solve();
     public Region[] getRegions(){
-        return Regions;
+        return _regions;
     }
-
-
-    private Cell[][] BoardInfo;
-    private Region[] Regions;
-    private Column[] Columns;
-    private Row[] Rows;
+    public Column[] getColumns(){
+        return _columns;
+    }
+    public Row[] getRows(){
+        return _rows;
+    }
+    private Cell[][] _boardInfo;
+    private Region[] _regions;
+    private Column[] _columns;
+    private Row[] _rows;
 }
