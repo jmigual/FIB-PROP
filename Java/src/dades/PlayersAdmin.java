@@ -10,6 +10,7 @@ import java.util.Arrays;
  */
 public class PlayersAdmin {
 
+    /** Contains all the players from the DB */
     Table<Player> _players;
 
     /**
