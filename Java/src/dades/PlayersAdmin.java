@@ -63,9 +63,9 @@ public class PlayersAdmin {
                 Player p2 = _players.get(_players.indexOf(p));
 
                 // Check if the password matches
-                if (!Arrays.equals(p2.getHashPassword(), getHash(currentPassword))) return false;
+                if (!Arrays.equals(p2.getHash(), getHash(currentPassword))) return false;
                 // Change the password (hash)
-                p2.setHashPassword(hash);
+                p2.setHash(hash);
                 return true;
             }
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class PlayersAdmin {
         if (_players.contains(p)) {
             try {
                 // Check if the introduced password's hash and the user hash match
-                return Arrays.equals(_players.get(_players.indexOf(p)).getHashPassword(), getHash(password));
+                return Arrays.equals(_players.get(_players.indexOf(p)).getHash(), getHash(password));
             } catch (Exception e){
                 System.err.println(e.getMessage());
                 e.printStackTrace();
@@ -123,7 +123,7 @@ public class PlayersAdmin {
         if (_players.contains(p)) {
             int index = _players.indexOf(p);
             // Check if the password's hash matches
-            if (Arrays.equals(_players.get(index).getHashPassword(), hash)) {
+            if (Arrays.equals(_players.get(index).getHash(), hash)) {
                 // Delete the player
                 _players.remove(index);
                 return true;
