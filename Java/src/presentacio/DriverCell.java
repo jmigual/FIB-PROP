@@ -18,8 +18,8 @@ public class DriverCell {
     private static Region region;
 
     public static void main(String[] args) {
-        row = new Row();
-        column = new Column();
+        row = new Row(9);
+        column = new Column(9);
         region = new Region();
         cell = new Cell(9, region, column, row);
 

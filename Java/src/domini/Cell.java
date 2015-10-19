@@ -47,8 +47,8 @@ public class Cell {
         return possibilities[value - 1];
     }
 
-    public void setPossibility(int value, boolean annotation) {
-        this.possibilities[value - 1] = annotation;
+    public void setPossibility(int value, boolean possibility) {
+        this.possibilities[value - 1] = possibility;
     }
 
     public boolean getAnnotation(int value) {
