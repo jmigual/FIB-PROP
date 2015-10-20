@@ -1,5 +1,8 @@
 package domini;
 
+import domini.CellLine.Column;
+import domini.CellLine.Row;
+
 public class Board {
     public Board(int size) {
         size = size;

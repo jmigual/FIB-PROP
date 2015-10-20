@@ -1,9 +1,9 @@
 package presentacio;
 
 import domini.Cell;
-import domini.Column;
+import domini.CellLine.Column;
 import domini.Region;
-import domini.Row;
+import domini.CellLine.Row;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -16,6 +16,7 @@ public class DriverColumn {
 
         PrintStream out = System.out;
         Scanner in = new Scanner(System.in);
+
 
 
         int size;

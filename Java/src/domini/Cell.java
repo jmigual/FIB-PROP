@@ -1,5 +1,8 @@
 package domini;
 
+import domini.CellLine.Column;
+import domini.CellLine.Row;
+
 /**
  * Created by Joan on 19/10/2015.
  */
