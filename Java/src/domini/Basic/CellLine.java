@@ -1,7 +1,7 @@
-package domini.CellLine;
+package domini.Basic;
 
-import domini.Cell;
-import domini.ItemPossibilities;
+import domini.Basic.Cell;
+import domini.Basic.ItemPossibilities;
 
 /**
  * Created by Inigo on 19/10/2015.

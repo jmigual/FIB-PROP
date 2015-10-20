@@ -1,4 +1,4 @@
-package domini;
+package domini.Basic;
 
 /**
  * Class used to store the possibilities from an item, it's useful when there's an extensive computation

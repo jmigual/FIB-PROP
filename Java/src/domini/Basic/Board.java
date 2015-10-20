@@ -1,7 +1,4 @@
-package domini;
-
-import domini.CellLine.Column;
-import domini.CellLine.Row;
+package domini.Basic;
 
 public class Board {
     public Board(int size) {

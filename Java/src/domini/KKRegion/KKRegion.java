@@ -1,7 +1,7 @@
 package domini.KKRegion;
 
-import domini.Cell;
-import domini.Region;
+import domini.Basic.Cell;
+import domini.Basic.Region;
 
 /**
  * Region from a Ken-Ken board

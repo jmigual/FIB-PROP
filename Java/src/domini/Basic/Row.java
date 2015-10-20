@@ -1,6 +1,4 @@
-package domini.CellLine;
-
-import domini.CellLine.CellLine;
+package domini.Basic;
 
 /**
  * Created by Joan on 15/10/2015.

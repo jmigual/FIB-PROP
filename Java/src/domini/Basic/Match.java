@@ -1,4 +1,4 @@
-package domini;
+package domini.Basic;
 
 import java.io.Serializable;
 

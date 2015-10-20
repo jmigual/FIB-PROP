@@ -1,6 +1,6 @@
 package dades;
 
-import domini.Match;
+import domini.Basic.Match;
 
 /**
  * Class used only in the Ken-Ken program to store the program data dynamically and statically
