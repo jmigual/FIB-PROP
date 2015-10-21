@@ -7,13 +7,13 @@ import domini.Basic.Cell;
  */
 public class KKRegionDivision extends KKRegion{
 
-    public KKRegionDivision(int size) {
-        super(size);
+    public KKRegionDivision(int size,int maxCellValue, int value) {
+        super(size, maxCellValue, value);
         this.opType = OperationType.DIVISION;
     }
 
-    public KKRegionDivision(Cell[] cells) {
-        super(cells);
+    public KKRegionDivision(Cell[] cells, int maxCellValue, int value) {
+        super(cells, maxCellValue, value);
         this.opType = OperationType.DIVISION;
     }
 

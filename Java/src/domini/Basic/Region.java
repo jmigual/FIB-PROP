@@ -5,16 +5,19 @@ package domini.Basic;
  */
 public abstract class Region extends ItemPossibilities {
 
-    Cell[] cells;
+    protected Cell[] cells;
+    protected int maxCellValue;
 
-    public Region(int size) {
-        super(size);
+    public Region(int size, int maxCellValue) {
+        super(maxCellValue);
         cells = new Cell[size];
+        this.maxCellValue=maxCellValue;
     }
 
-    public Region(Cell[] cells) {
-        super(cells.length);
+    public Region(Cell[] cells, int maxCellValue) {
+        super(maxCellValue);
         this.cells = cells;
+        this.maxCellValue=maxCellValue;
     }
 
     public Cell[] getCells() {
