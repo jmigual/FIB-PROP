@@ -7,7 +7,7 @@ import domini.Basic.Cell;
  */
 public class KKRegionProduct extends KKRegion {
 
-    KKRegionProduct(int size,int maxCellValue, int value) {
+    public KKRegionProduct(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);
         this.opType = OperationType.PRODUCT;
     }
@@ -19,6 +19,15 @@ public class KKRegionProduct extends KKRegion {
 
     @Override
     public void calculatePossibilities() {
-
+        int prod = operationValue;
+        int count = cells.length - 1;
+        for (Cell b : cells)
+            if (b.getValue() != 0) {
+                prod /= b.getValue();
+                count--;
+            }
+        int min=(int) Math.ceil(prod / Math.pow(maxValue, count));
+        for (int i = 1; i <= maxValue; i++)
+            possibilities[i - 1] = (prod % i == 0 && i>=min);
     }
 }

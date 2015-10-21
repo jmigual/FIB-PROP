@@ -5,6 +5,7 @@ import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
 import domini.KKRegion.KKRegionAddition;
+import domini.KKRegion.KKRegionProduct;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -30,7 +31,7 @@ public class DriverRegion {
         result = in.nextInt();
 
         Row row = new Row(maxCellValue, 0);
-        Region region = new KKRegionAddition(size,maxCellValue,result);
+        Region region = new KKRegionProduct(size,maxCellValue,result);
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
