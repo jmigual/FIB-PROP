@@ -7,7 +7,7 @@ import domini.Basic.Cell;
  */
 public class KKRegionSubtraction extends KKRegion {
 
-    public KKRegionSubtraction(int size,int maxCellValue, int value) {
+    public KKRegionSubtraction(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);
         this.opType = OperationType.SUBTRACTION;
     }
@@ -19,6 +19,14 @@ public class KKRegionSubtraction extends KKRegion {
 
     @Override
     public void calculatePossibilities() {
+        for (int i = 0; i < maxValue; ++i) possibilities[i] = false;
 
+        for (int i = 1; i <= maxValue - operationValue; ++i) {
+            possibilities[i - 1] = possibilities[i + operationValue - 1] = true;
+        }
+
+        for (int i = 0; i < cells.length; ++i) {
+            if (cells[i].getValue() > 0) possibilities[cells[i].getValue() - 1] = false;
+        }
     }
 }
