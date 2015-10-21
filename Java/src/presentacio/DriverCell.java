@@ -4,6 +4,7 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
+import domini.KKRegion.KKRegionAddition;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class DriverCell {
     public static void main(String[] args) {
         row = new Row(9);
         column = new Column(9);
-        region = new Region();
+        region = new KKRegionAddition(9);
         cell = new Cell(9, region, column, row);
 
         PrintStream out = System.out;
