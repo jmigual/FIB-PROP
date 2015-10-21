@@ -26,8 +26,9 @@ public class KKRegionAddition extends KKRegion {
                 sum -= b.getValue();
                 count--;
             }
-        int min = Math.max(1, sum - count);
-        int max = Math.min(maxCellValue, sum - maxCellValue * count);
-        for (int i = 0; i < maxCellValue; i++) possibilities[i]=(i>min && i<max);
+        int min = Math.max(1, sum - maxCellValue * count);
+        int max = Math.min(maxCellValue, sum - count);
+        System.out.println(Integer.toString(min)+" "+Integer.toString(max));
+        for (int i = 1; i <= maxCellValue; i++) possibilities[i-1]=(i>=min && i<=max);
     }
 }
