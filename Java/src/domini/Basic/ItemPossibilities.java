@@ -6,7 +6,12 @@ package domini.Basic;
 public abstract class ItemPossibilities {
     protected boolean[] possibilities;
 
-    public ItemPossibilities(int n) { possibilities = new boolean[n]; }
+    protected int maxValue;
+
+    public ItemPossibilities(int n) {
+        possibilities = new boolean[n];
+        this.maxValue = n;
+    }
 
     public boolean getPossibility(int value) {
         return possibilities[value - 1];
@@ -16,9 +21,13 @@ public abstract class ItemPossibilities {
         this.possibilities[value - 1] = possibility;
     }
 
-    public boolean[] getPossibilities() { return this.possibilities; }
+    public boolean[] getPossibilities() {
+        return this.possibilities;
+    }
 
-    public void setPossibilities(boolean[] p) { this.possibilities = p; }
+    public void setPossibilities(boolean[] p) {
+        this.possibilities = p;
+    }
 
     public abstract void calculatePossibilities();
 }

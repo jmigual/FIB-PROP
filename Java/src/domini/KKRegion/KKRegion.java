@@ -17,7 +17,7 @@ public abstract class KKRegion extends Region {
 
         int type;
 
-        OperationType(int t) { this.type = type; }
+        OperationType(int t) { this.type = t; }
     }
 
     protected OperationType opType = OperationType.NONE;
@@ -25,6 +25,5 @@ public abstract class KKRegion extends Region {
     public KKRegion(int size) { super(size); }
 
     public KKRegion(Cell[] cells) { super(cells); }
-
 
 }

@@ -27,6 +27,7 @@ public class DriverColumn {
         Row row = new Row(size, 0);
         Region region = new KKRegionAddition(size);
         Column column = new Column(size, 0);
+
         for (int i = 0; i < size; i++) {
             column.setCell(i, new Cell(size, region, column, row));
         }
