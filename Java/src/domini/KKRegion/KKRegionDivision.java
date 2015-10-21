@@ -19,6 +19,14 @@ public class KKRegionDivision extends KKRegion{
 
     @Override
     public void calculatePossibilities() {
+        for (int i = 0; i < maxValue; ++i) possibilities[i] = false;
 
+        for (int i = 1; i <= maxValue/operationValue; ++i) {
+            possibilities[i] = possibilities[operationValue*i] = true;
+        }
+
+        for (int i = 1; i < cells.length; ++i) {
+            if (cells[i].getValue() > 0) possibilities[cells[i].getValue() - 1] = false;
+        }
     }
 }
