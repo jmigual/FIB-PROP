@@ -25,5 +25,5 @@ public abstract class KKRegion extends Region {
     public KKRegion(int size) { super(size); }
 
     public KKRegion(Cell[] cells) { super(cells); }
-    
+
 }

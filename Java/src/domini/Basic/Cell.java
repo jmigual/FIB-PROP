@@ -4,15 +4,15 @@ package domini.Basic;
  * Created by Joan on 19/10/2015.
  */
 
-public class Cell {
+public class Cell extends ItemPossibilities {
     int value;
-    boolean[] possibilities;
     boolean[] annotations;
     Region region;
     Column column;
     Row row;
 
     public Cell(int max, Region region, Column column, Row row) {
+        super(max);
         this.region = region;
         this.column = column;
         this.row = row;
@@ -43,14 +43,6 @@ public class Cell {
         return row;
     }
 
-    public boolean getPossibility(int value) {
-        return possibilities[value - 1];
-    }
-
-    public void setPossibility(int value, boolean possibility) {
-        this.possibilities[value - 1] = possibility;
-    }
-
     public boolean getAnnotation(int value) {
         return annotations[value - 1];
     }
@@ -63,4 +55,20 @@ public class Cell {
         this.annotations[value - 1] = annotation;
     }
 
+    @Override
+    public void calculatePossibilities() {
+        boolean[] pos = this.possibilities;
+
+        // Get region possibilities
+        boolean[] aux = region.getPossibilities();
+        System.arraycopy(aux, 0, pos, 0, pos.length);
+
+        // Get column possibilities
+        aux = column.getPossibilities();
+        for (int i = 0; i < pos.length; ++i) pos[i] &= aux[i];
+
+        // Get row possibilities
+        aux = row.getPossibilities();
+        for (int i = 0; i < pos.length; ++i) pos[i] &= aux[i];
+    }
 }
