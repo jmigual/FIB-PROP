@@ -8,18 +8,14 @@ import domini.Basic.ItemPossibilities;
  */
 public class CellLine extends ItemPossibilities {
     protected Cell[] cells;
+    protected int pos;
 
-    /* public CellLine(){
-         int size = 9;
-         cells = new Cell[size];
-         possibilities = new boolean[size];
-         for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
-     }*/
-    public CellLine(int size) {
+    public CellLine(int size, int pos) {
         super(size);
         cells = new Cell[size];
         possibilities = new boolean[size];
         for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
+        this.pos=pos;
     }
 
     public Cell getCell(int pos) {
@@ -30,6 +26,9 @@ public class CellLine extends ItemPossibilities {
         cells[pos] = cell;
     }
 
+    public int getPos() {
+        return pos;
+    }
 
     public void calculatePossibilities() {
         for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
@@ -37,6 +36,7 @@ public class CellLine extends ItemPossibilities {
             int pos = cells[i].getValue() - 1;
             if (pos != -1) possibilities[pos] = false;
         }
+
     }
 
     public boolean isCorrect() {

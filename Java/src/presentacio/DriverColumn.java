@@ -4,6 +4,7 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
+import domini.KKRegion.KKRegionAddition;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -23,9 +24,9 @@ public class DriverColumn {
         out.print("Introdueix el tamany de la columna: ");
         size = in.nextInt();
 
-        Row row = new Row(size);
-        Region region = new Region();
-        Column column = new Column(size);
+        Row row = new Row(size, 0);
+        Region region = new KKRegionAddition(size);
+        Column column = new Column(size, 0);
         for (int i = 0; i < size; i++) {
             column.setCell(i, new Cell(size, region, column, row));
         }
