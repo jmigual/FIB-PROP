@@ -12,12 +12,15 @@ public abstract class KKRegion extends Region {
         ADDITION(0),
         SUBSTRACTION(1),
         PRODUCT(2),
-        DIVISION(3);
+        DIVISION(3),
+        NONE(4);
 
         int type;
 
         OperationType(int t) { this.type = type; }
     }
+
+    protected OperationType opType = OperationType.NONE;
 
     public KKRegion(int size) { super(size); }
 
