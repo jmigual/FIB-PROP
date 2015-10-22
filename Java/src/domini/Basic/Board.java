@@ -6,11 +6,12 @@ public class Board {
     }
 
     public Cell getCell(int i, int j) {
-        return BoardInfo[i][j];
+        return _boardInfo[i][j];
     }
 
-    public void setCell(int i, int j, Cell C) {
-        BoardInfo[i][j] = C;
+    public void setCell(int i, int j, Cell C){
+        _boardInfo[i][j] = C;
+
     }
 /*
     public abstract boolean hasSoltuion();
@@ -18,8 +19,20 @@ public class Board {
     public abstract Board getSoltution();
     public abstract void Solve();
     public Region[] getRegions(){
-        return Regions;
+        return _regions;
     }
+<<<<<<< HEAD:Java/src/domini/Board.java
+    public Column[] getColumns(){
+        return _columns;
+    }
+    public Row[] getRows(){
+        return _rows;
+    }
+    private Cell[][] _boardInfo;
+    private Region[] _regions;
+    private Column[] _columns;
+    private Row[] _rows;
+=======
 */
 
     public int getSize() {
@@ -27,8 +40,8 @@ public class Board {
     }
 
 
-    private Cell[][] BoardInfo;
-    private Region[] Regions;
-    private Column[] Columns;
-    private Row[] Rows;
+    private Cell[][] _boardInfo;
+    private Region[] _regions;
+    private Column[] _columns;
+    private Row[] _rows;
 }
