@@ -6,24 +6,16 @@ import domini.Basic.ItemPossibilities;
 /**
  * Created by Inigo on 19/10/2015.
  */
-public class CellLine extends ItemPossibilities {
+public class CellLine extends Region {
     protected Cell[] cells;
     protected int pos;
 
     public CellLine(int size, int pos) {
-        super(size);
+        super(size, size);
         cells = new Cell[size];
         possibilities = new boolean[size];
         for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
         this.pos=pos;
-    }
-
-    public Cell getCell(int pos) {
-        return cells[pos];
-    }
-
-    public void setCell(int pos, Cell cell) {
-        cells[pos] = cell;
     }
 
     public int getPos() {

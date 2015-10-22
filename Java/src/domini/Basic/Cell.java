@@ -61,7 +61,7 @@ public class Cell extends ItemPossibilities {
 
         // Get region possibilities
         boolean[] aux = region.getPossibilities();
-        System.arraycopy(aux, 0, pos, 0, pos.length);
+        for (int i = 0; i < pos.length; ++i) pos[i] &= aux[i];
 
         // Get column possibilities
         aux = column.getPossibilities();
