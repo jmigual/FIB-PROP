@@ -7,34 +7,75 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
-    /**
-     * Contains the player name
-     */
-    private String playerName;
+    /** Contains the player name */
+    private String _name;
+
+    /** Contains the player's password hash with SHA-512 */
+    private byte[] _hash;
+
+    /////////////
+    // METHODS //
+    /////////////
 
     /**
-     * Contains the player's password hash with SHA-512
+     * Constructs a new player with the password's hash and name
+     * @param name Player's name
+     * @param _hash Player's password hash with SHA-512
      */
-    private byte[] hashPassword;
-
-    public Player(String playerName, byte[] hashPassword)
+    public Player(String name, byte[] _hash)
     {
-        this.playerName = playerName;
-        this.hashPassword = hashPassword;
+        this._name = name;
+        this._hash = _hash;
     }
 
-    public Player(String playerName)
+    /**
+     * Constructs a new Player with the specified name
+     * @param name Player's name
+     */
+    public Player(String name)
     {
-        this.playerName = playerName;
+        this._name = name;
     }
 
-    public boolean equals(Player p) { return p.playerName.equals(this.playerName); }
+    /**
+     * Compare if two players are the same, only compares their names
+     * @param p Player to compare with
+     * @return Returns <b>True</b> if the players have the same name, otherwise returns <b>False</b>
+     */
+    public boolean equals(Player p) {
+        return (this == p) || (_name.equals(p._name));
+    }
 
-    public String getPlayerName() { return playerName; }
+    /**
+     * Get the Player's hashCode
+     * @return An int containing the Player's hashCode
+     */
+    @Override
+    public int hashCode() {
+        return _name.hashCode();
+    }
 
-    public void setPlayerName(String playerName) { this.playerName = playerName; }
+    /**
+     * To get the player's password hash
+     * @return Returns the password's hash
+     */
+    public byte[] getHash() { return _hash; }
 
-    public byte[] getHashPassword() { return hashPassword; }
+    /**
+     * To set the player's password hash
+     * @param _hash Player's password hash with SHA-512
+     */
+    public void setHash(byte[] _hash) { this._hash = _hash; }
 
-    public void setHashPassword(byte[] hashPassword) { this.hashPassword = hashPassword; }
+    /**
+     * To get the Player's name
+     * @return Player's name
+     */
+    public String getName() { return _name; }
+
+    /**
+     * To set the Player's name
+     * @param _name Player's name to set
+     */
+    public void setName(String _name) { this._name = _name; }
 }
