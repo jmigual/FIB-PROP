@@ -11,6 +11,18 @@ public class Cell extends ItemPossibilities {
     Column column;
     Row row;
 
+    //Intentem fer primer Row i despres column amb tot -- Esteve
+    public Cell(int max,  Row row, Column column) {
+        super(max);
+        this.column = column;
+        this.row = row;
+        value = 0;
+        possibilities = new boolean[max];
+        annotations = new boolean[max];
+        for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
+        for (int i = 0; i < possibilities.length; i++) annotations[i] = false;
+    }
+
     public Cell(int max, Region region, Column column, Row row) {
         super(max);
         this.region = region;
