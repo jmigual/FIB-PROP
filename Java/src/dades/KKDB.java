@@ -5,7 +5,7 @@ import domini.Basic.Match;
 /**
  * Class used only in the Ken-Ken program to store the program data dynamically and statically
  */
-public class KKDB extends DB{
+public class KKDB extends DB {
 
     /** Contains all the players */
     private Table<Player> _players;
@@ -16,7 +16,8 @@ public class KKDB extends DB{
     /** Class constructor, by default loads all the data */
     public KKDB()
     {
-        load();
+        _players = new Table<>();
+        _matches = new Table<>();
     }
 
     /** Returns the Players Administration class */
