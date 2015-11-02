@@ -2,6 +2,8 @@ package dades;
 
 import domini.Basic.Match;
 
+import java.io.IOException;
+
 /**
  * Class used only in the Ken-Ken program to store the program data dynamically and statically
  */
@@ -36,8 +38,16 @@ public class KKDB extends DB {
     /** Load all data from disc */
     public void load()
     {
-        _players.load(getInputStream("players"));
-        _matches.load(getInputStream("matches"));
+        try {
+            _players.load(getInputStream("players"));
+        } catch (IOException e) {
+            System.err.println("Table not found");
+        }
+        try {
+            _matches.load(getInputStream("matches"));
+        } catch (IOException e) {
+            System.err.println("Table not found");
+        }
     }
 
     /**

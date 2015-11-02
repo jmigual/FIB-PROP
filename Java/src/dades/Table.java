@@ -32,7 +32,7 @@ public class Table<E extends Serializable> extends ArrayList<E> {
     public void load(ObjectInputStream in)
     {
         this.clear();
-        int size = 0;
+        int size;
         try {
             size = in.readInt();
             this.ensureCapacity(size);
@@ -42,7 +42,6 @@ public class Table<E extends Serializable> extends ArrayList<E> {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            System.err.println(e.getMessage());
         }
     }
 
@@ -54,6 +53,7 @@ public class Table<E extends Serializable> extends ArrayList<E> {
         try {
             out.writeInt(this.size());
             for(E aux : this) out.writeObject(aux);
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println(e.getMessage());

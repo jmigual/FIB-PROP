@@ -2,6 +2,7 @@ package dades;
 
 import java.io.*;
 import java.nio.file.*;
+import static java.nio.file.StandardOpenOption.*;
 
 /**
  * Abstract DB class used to get the default table Input/Output Object Streams
@@ -39,8 +40,7 @@ public abstract class DB {
     {
         try
         {
-            OpenOption[] options = { StandardOpenOption.CREATE, StandardOpenOption.WRITE };
-            OutputStream o = Files.newOutputStream(Paths.get(dataPath + name + ".db"), options);
+            OutputStream o = Files.newOutputStream(Paths.get(dataPath + name + ".db"), CREATE, WRITE);
             return new ObjectOutputStream(o);
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -54,17 +54,10 @@ public abstract class DB {
      * @param name Name of the stream to get
      * @return A stream where the data can be read, it must be closed before the object is destroyed
      */
-    public ObjectInputStream getInputStream(String name)
+    public ObjectInputStream getInputStream(String name) throws IOException
     {
-        try {
-            OpenOption[] options = { StandardOpenOption.CREATE, StandardOpenOption.READ };
-            InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), options);
-            return new ObjectInputStream(i);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-
+        Files.exists(Paths.get(dataPath + name + ".db"));
+        InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), READ);
+        return new ObjectInputStream(i);
     }
 }

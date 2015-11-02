@@ -2,13 +2,11 @@ package presentacio;
 
 import dades.KKDB;
 import dades.PlayersAdmin;
-
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
- * Created by Joan on 29/10/2015.
+ * Driver to test AdminPlayers and DB
  */
 public class DriverAdminPlayers {
 
@@ -26,7 +24,7 @@ public class DriverAdminPlayers {
         db.save();
     }
 
-    public DriverAdminPlayers(PlayersAdmin p) { this._pAdmin = p; }
+    public DriverAdminPlayers(PlayersAdmin p) { this._pAdmin = p; _currentPlayer = ""; }
 
     public void run() {
         PrintStream out = System.out;
@@ -39,14 +37,70 @@ public class DriverAdminPlayers {
                     "3) Iniciar sessió\n" +
                     "4) Canviar contrasenya\n" +
                     "5) Comprovar si existeix un jugador\n" +
-                    "6) Tancar sessió" +
+                    "6) Tancar sessió\n" +
                     "7) Sortir");
 
             if (! in.hasNextInt()) break;
 
             switch (in.nextInt()) {
+                // Add player
+                case 1:
+                {
+                    boolean correct = false;
+                    String name;
+                    String pass;
+                    while (! correct) {
+                        out.print("Entra el nom d'usuari: ");
+                        name = in.next();
+                        out.print("Entra la contrasenya: ");
+                        pass = in.next();
 
+                        out.println("Nom: " + name + " contrasenya: " + pass);
+                        out.print("És correcte (S/N)? ");
+                        String temp = in.next();
+                        temp = temp.toLowerCase();
+
+                        correct =  temp.equals("s") || temp.equals("y") || temp.equals("si") || temp.equals("yes");
+                    }
+
+                    break;
+                }
+                // Delete player
+                case 2:
+                {
+                    break;
+                }
+                // Log in
+                case 3:
+                {
+                    break;
+                }
+                // Change password
+                case 4:
+                {
+                    break;
+                }
+                // Check login
+                case 5:
+                {
+                    break;
+                }
+                // Close session
+                case 6:
+                {
+                    break;
+                }
+                // Exit
+                case 7:
+                {
+
+                    return;
+                }
             }
         }
+    }
+
+    public String getCurrentPlayer() {
+        return _currentPlayer;
     }
 }
