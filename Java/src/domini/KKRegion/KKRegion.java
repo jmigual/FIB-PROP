@@ -3,6 +3,8 @@ package domini.KKRegion;
 import domini.Basic.Cell;
 import domini.Basic.Region;
 
+import java.util.ArrayList;
+
 /**
  * Region from a Ken-Ken board
  */
@@ -30,9 +32,13 @@ public abstract class KKRegion extends Region {
         operationValue = value;
     }
 
-    public KKRegion(Cell[] cells, int maxCellValue, int value) {
+    public KKRegion(ArrayList<Cell> cells, int maxCellValue, int value) {
         super(cells, maxCellValue);
         operationValue = value;
+    }
+
+    public OperationType getOperation (){
+        return opType;
     }
 
 }
