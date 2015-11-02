@@ -39,11 +39,18 @@ public class Player implements Serializable {
 
     /**
      * Compare if two players are the same, only compares their names
-     * @param p Player to compare with
+     * @param o Player to compare with
      * @return Returns <b>True</b> if the players have the same name, otherwise returns <b>False</b>
      */
-    public boolean equals(Player p) {
-        return (this == p) || (_name.equals(p._name));
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return _name.equals(player._name);
+
     }
 
     /**
