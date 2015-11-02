@@ -1,6 +1,8 @@
 package dades;
 
 import java.io.*;
+import java.nio.file.*;
+import static java.nio.file.StandardOpenOption.*;
 
 /**
  * Abstract DB class used to get the default table Input/Output Object Streams
@@ -11,7 +13,17 @@ public abstract class DB {
     final String dataPath = "./data/";
 
     /** Constructs an empty DB */
-    public DB() {}
+    public DB() {
+        Path p = Paths.get(dataPath);
+
+        if (Files.notExists(p)) {
+            try {
+                Files.createDirectories(p);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /** Loads all the data from disc */
     public abstract void load();
@@ -28,8 +40,8 @@ public abstract class DB {
     {
         try
         {
-            FileOutputStream f = new FileOutputStream(dataPath + name + ".db");
-            return new ObjectOutputStream(f);
+            OutputStream o = Files.newOutputStream(Paths.get(dataPath + name + ".db"), CREATE, WRITE);
+            return new ObjectOutputStream(o);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -42,16 +54,10 @@ public abstract class DB {
      * @param name Name of the stream to get
      * @return A stream where the data can be read, it must be closed before the object is destroyed
      */
-    public ObjectInputStream getInputStream(String name)
+    public ObjectInputStream getInputStream(String name) throws IOException
     {
-        try {
-            FileInputStream f = new FileInputStream(dataPath + name + ".db");
-            return new ObjectInputStream(f);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-
+        Files.exists(Paths.get(dataPath + name + ".db"));
+        InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), READ);
+        return new ObjectInputStream(i);
     }
 }

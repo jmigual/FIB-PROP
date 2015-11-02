@@ -69,10 +69,7 @@ public class PlayersAdmin {
                 p2.setHash(hash);
                 return true;
             }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
         return false;
     }
 
@@ -83,18 +80,14 @@ public class PlayersAdmin {
      * @return <b>True</b> if the Player exists and has the selected password
      * @throws Exception General exception with the error message
      */
-    public boolean checkLogin(String name, String password) throws Exception {
-        Player p = new Player(name);
-
-        if (_players.contains(p)) {
-            try {
+    public boolean checkLogin(String name, String password) {
+        try {
+            Player p = new Player(name);
+            if (_players.contains(p)) {
                 // Check if the introduced password's hash and the user hash match
                 return Arrays.equals(_players.get(_players.indexOf(p)).getHash(), getHash(password));
-            } catch (Exception e){
-                System.err.println(e.getMessage());
-                e.printStackTrace();
             }
-        }
+        } catch (Exception e){ e.printStackTrace(); }
         return false;
     }
 
@@ -114,25 +107,34 @@ public class PlayersAdmin {
      * @return <b>True</b> if the player is removed
      * @throws Exception General exception with the error message
      */
-    public boolean removePlayer(String name, String password) throws Exception {
+    public boolean removePlayer(String name, String password) {
         byte[] hash;
+        Player p;
         try {
             hash = getHash(password);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) { throw new Exception(e); }
-        Player p = new Player(name, hash);
+            p = new Player(name, hash);
 
-        if (_players.contains(p)) {
-            int index = _players.indexOf(p);
-            // Check if the password's hash matches
-            if (Arrays.equals(_players.get(index).getHash(), hash)) {
-                // Delete the player
-                _players.remove(index);
-                return true;
+            if (_players.contains(p)) {
+                int index = _players.indexOf(p);
+                // Check if the password's hash matches
+                if (Arrays.equals(_players.get(index).getHash(), hash)) {
+                    // Delete the player
+                    _players.remove(index);
+                    return true;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return false;
     }
 
+    public void viewAllPlayers() {
+        for (Player p : _players) {
+            System.out.println(p.getName() + " " + p.getHash().toString());
+        }
+    }
 
     private byte[] getHash(String s) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
