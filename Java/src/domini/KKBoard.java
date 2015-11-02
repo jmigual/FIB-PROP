@@ -2,6 +2,7 @@ package domini;
 
 import domini.Basic.Board;
 import domini.Basic.Region;
+import domini.KKRegion.KKRegion;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,8 @@ public class KKBoard extends Board {
     public ArrayList<Region> get_regions() {
         return _regions;
     }
-    public void set_regions(ArrayList<Region> regions) {
-        this._regions = regions;
+    public void set_regions(ArrayList<KKRegion> regions) {
+        this._regions = (ArrayList<Region>) ((ArrayList<?>) regions);
     }
     private ArrayList<Region> _regions;
 }

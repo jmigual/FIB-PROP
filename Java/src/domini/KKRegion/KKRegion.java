@@ -35,4 +35,8 @@ public abstract class KKRegion extends Region {
         operationValue = value;
     }
 
+    public OperationType getOperation (){
+        return opType;
+    }
+
 }
