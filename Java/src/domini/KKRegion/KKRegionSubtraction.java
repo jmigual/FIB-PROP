@@ -2,6 +2,8 @@ package domini.KKRegion;
 
 import domini.Basic.Cell;
 
+import java.util.ArrayList;
+
 /**
  * Created by Joan on 21/10/2015.
  */
@@ -17,6 +19,11 @@ public class KKRegionSubtraction extends KKRegion {
         this.opType = OperationType.SUBTRACTION;
     }
 
+    public KKRegionSubtraction(ArrayList<Cell> cells, int maxCellValue, int value) {
+        super(cells, maxCellValue, value);
+        this.opType = OperationType.SUBTRACTION;
+    }
+
     @Override
     public void calculatePossibilities() {
         for (int i = 0; i < maxValue; ++i) possibilities[i] = false;
@@ -25,8 +32,8 @@ public class KKRegionSubtraction extends KKRegion {
             possibilities[i - 1] = possibilities[i + operationValue - 1] = true;
         }
 
-        for (int i = 0; i < cells.length; ++i) {
-            if (cells[i].getValue() > 0) possibilities[cells[i].getValue() - 1] = false;
+        for (Cell b : cells) {
+            if (b.getValue() > 0) possibilities[b.getValue() - 1] = false;
         }
     }
 }

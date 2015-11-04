@@ -1,8 +1,6 @@
 package dades;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 /**
@@ -10,11 +8,14 @@ import java.util.Arrays;
  */
 public class PlayersAdmin {
 
-    /** Contains all the players from the DB */
+    /**
+     * Contains all the players from the DB
+     */
     Table<Player> _players;
 
     /**
      * PlayersAdmin constructor, creates a player administrator
+     *
      * @param players Table containing all players
      */
     public PlayersAdmin(Table<Player> players) {
@@ -23,7 +24,8 @@ public class PlayersAdmin {
 
     /**
      * Creates a new player
-     * @param name Player's name, must be unique
+     *
+     * @param name     Player's name, must be unique
      * @param password Player's, password
      * @return <b>True</b> if the player is added successfully
      */
@@ -47,9 +49,10 @@ public class PlayersAdmin {
 
     /**
      * Changes the password from a player
-     * @param name Player's name
+     *
+     * @param name            Player's name
      * @param currentPassword Current player's password
-     * @param newPassword New player's password
+     * @param newPassword     New player's password
      * @return <b>True</b> if the player is found and the password is changed successfully, otherwise returns
      * <b>False</b>
      */
@@ -69,13 +72,16 @@ public class PlayersAdmin {
                 p2.setHash(hash);
                 return true;
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     /**
      * Checks if a player exists and has the selected password
-     * @param name Player's name
+     *
+     * @param name     Player's name
      * @param password Player's password
      * @return <b>True</b> if the Player exists and has the selected password
      * @throws Exception General exception with the error message
@@ -87,12 +93,15 @@ public class PlayersAdmin {
                 // Check if the introduced password's hash and the user hash match
                 return Arrays.equals(_players.get(_players.indexOf(p)).getHash(), getHash(password));
             }
-        } catch (Exception e){ e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     /**
      * Checks if a player exists
+     *
      * @param name Player's name
      * @return <b>True</b> if the player exists, otherwise returns False
      */
@@ -102,7 +111,8 @@ public class PlayersAdmin {
 
     /**
      * Removes the Player from the database permanently
-     * @param name Player's name
+     *
+     * @param name     Player's name
      * @param password Player's password
      * @return <b>True</b> if the player is removed
      * @throws Exception General exception with the error message

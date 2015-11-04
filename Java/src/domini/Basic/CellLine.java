@@ -1,8 +1,5 @@
 package domini.Basic;
 
-import domini.Basic.Cell;
-import domini.Basic.ItemPossibilities;
-
 /**
  * Created by Inigo on 19/10/2015.
  */
@@ -15,7 +12,7 @@ public class CellLine extends Region {
         cells = new Cell[size];
         possibilities = new boolean[size];
         for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
-        this.pos=pos;
+        this.pos = pos;
     }
 
     public int getPos() {

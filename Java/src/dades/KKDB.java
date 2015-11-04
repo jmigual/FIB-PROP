@@ -9,35 +9,43 @@ import java.io.IOException;
  */
 public class KKDB extends DB {
 
-    /** Contains all the players */
+    /**
+     * Contains all the players
+     */
     private Table<Player> _players;
 
-    /** Contains all the matches in progress and finished */
+    /**
+     * Contains all the matches in progress and finished
+     */
     private Table<Match> _matches;
 
-    /** Class constructor, by default loads all the data */
-    public KKDB()
-    {
+    /**
+     * Class constructor, by default loads all the data
+     */
+    public KKDB() {
         _players = new Table<>();
         _matches = new Table<>();
     }
 
-    /** Returns the Players Administration class */
-    public PlayersAdmin getPlayersAdmin()
-    {
+    /**
+     * Returns the Players Administration class
+     */
+    public PlayersAdmin getPlayersAdmin() {
         return new PlayersAdmin(_players);
     }
 
-    /** Saves all data on disc */
-    public void save()
-    {
+    /**
+     * Saves all data on disc
+     */
+    public void save() {
         _players.save(getOutputStream("players"));
         _matches.save(getOutputStream("matches"));
     }
 
-    /** Load all data from disc */
-    public void load()
-    {
+    /**
+     * Load all data from disc
+     */
+    public void load() {
         try {
             _players.load(getInputStream("players"));
         } catch (IOException e) {
@@ -52,13 +60,19 @@ public class KKDB extends DB {
 
     /**
      * To get all Matches
+     *
      * @return Returns all stored matches
      */
-    public Table<Match> getMatches() { return _matches; }
+    public Table<Match> getMatches() {
+        return _matches;
+    }
 
     /**
      * To replace the matches
+     *
      * @param m Matches to replace the current data
      */
-    public void setMatches(Table<Match> m) { this._matches = m; }
+    public void setMatches(Table<Match> m) {
+        this._matches = m;
+    }
 }

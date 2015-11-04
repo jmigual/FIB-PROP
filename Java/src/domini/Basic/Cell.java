@@ -12,7 +12,7 @@ public class Cell extends ItemPossibilities {
     Row row;
 
     //Intentem fer primer Row i despres column amb tot -- Esteve
-    public Cell(int max,  Row row, Column column) {
+    public Cell(int max, Row row, Column column) {
         super(max);
         this.column = column;
         this.row = row;
@@ -43,12 +43,12 @@ public class Cell extends ItemPossibilities {
         this.value = value;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
-    }
-
     public Region getRegion() {
         return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public Column getColumn() {

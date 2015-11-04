@@ -4,7 +4,6 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
-import domini.KKRegion.KKRegionAddition;
 import domini.KKRegion.KKRegionProduct;
 
 import java.io.PrintStream;
@@ -21,7 +20,6 @@ public class DriverRegion {
         Scanner in = new Scanner(System.in);
 
 
-
         int size, maxCellValue, result;
         out.print("Introdueix el tamany de la regio: ");
         size = in.nextInt();
@@ -31,7 +29,7 @@ public class DriverRegion {
         result = in.nextInt();
 
         Row row = new Row(maxCellValue, 0);
-        Region region = new KKRegionProduct(size,maxCellValue,result);
+        Region region = new KKRegionProduct(size, maxCellValue, result);
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
@@ -57,7 +55,7 @@ public class DriverRegion {
                         region.getCell(modifiedCell).setValue(in.nextInt());
                         break;
                     case 2:
-                        for (int i=0; i<size; i++)out.print (Integer.toString(region.getCell(i).getValue())+" ");
+                        for (int i = 0; i < size; i++) out.print(Integer.toString(region.getCell(i).getValue()) + " ");
                         out.println();
                         break;
                     case 3:
@@ -67,12 +65,14 @@ public class DriverRegion {
                         region.setPossibility(modifiedValue, in.nextBoolean());
                         break;
                     case 4:
-                        for (int i=0; i<maxCellValue; i++)out.print (Boolean.toString(region.getPossibility(i+1))+" ");
+                        for (int i = 0; i < maxCellValue; i++)
+                            out.print(Boolean.toString(region.getPossibility(i + 1)) + " ");
                         out.println();
                         break;
                     case 5:
                         region.calculatePossibilities();
-                        for (int i=0; i<maxCellValue; i++)out.print (Boolean.toString(region.getPossibility(i+1))+" ");
+                        for (int i = 0; i < maxCellValue; i++)
+                            out.print(Boolean.toString(region.getPossibility(i + 1)) + " ");
                         out.println();
                         break;
 

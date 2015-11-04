@@ -1,6 +1,6 @@
 package domini.Basic;
 
-import dades.*;
+import dades.Table;
 
 /**
  * Shows the different users ordered by different parameters
@@ -8,8 +8,7 @@ import dades.*;
 public class Ranking {
     Table<Match> _matches;
 
-    Ranking(Table<Match> m)
-    {
+    Ranking(Table<Match> m) {
         this._matches = m;
     }
 }

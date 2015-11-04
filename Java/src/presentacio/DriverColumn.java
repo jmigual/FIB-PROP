@@ -19,13 +19,12 @@ public class DriverColumn {
         Scanner in = new Scanner(System.in);
 
 
-
         int size;
         out.print("Introdueix el tamany de la columna: ");
         size = in.nextInt();
 
         Row row = new Row(size, 0);
-        Region region = new KKRegionAddition(4,size,12);
+        Region region = new KKRegionAddition(4, size, 12);
         Column column = new Column(size, 0);
 
         for (int i = 0; i < size; i++) {
@@ -52,7 +51,7 @@ public class DriverColumn {
                         column.getCell(modifiedCell).setValue(in.nextInt());
                         break;
                     case 2:
-                        for (int i=0; i<size; i++)out.print (Integer.toString(column.getCell(i).getValue())+" ");
+                        for (int i = 0; i < size; i++) out.print(Integer.toString(column.getCell(i).getValue()) + " ");
                         out.println();
                         break;
                     case 3:
@@ -62,16 +61,16 @@ public class DriverColumn {
                         column.setPossibility(modifiedValue, in.nextBoolean());
                         break;
                     case 4:
-                        for (int i=0; i<size; i++)out.print (Boolean.toString(column.getPossibility(i+1))+" ");
+                        for (int i = 0; i < size; i++) out.print(Boolean.toString(column.getPossibility(i + 1)) + " ");
                         out.println();
                         break;
                     case 5:
                         column.calculatePossibilities();
-                        for (int i=0; i<size; i++)out.print (Boolean.toString(column.getPossibility(i+1))+" ");
+                        for (int i = 0; i < size; i++) out.print(Boolean.toString(column.getPossibility(i + 1)) + " ");
                         out.println();
                         break;
                     case 6:
-                        if (column.isCorrect())out.println("The column is correct");
+                        if (column.isCorrect()) out.println("The column is correct");
                         else out.println("The column is incorrect");
                         break;
 

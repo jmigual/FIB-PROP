@@ -17,7 +17,7 @@ public class DriverCell {
     public static void main(String[] args) {
         Row row = new Row(9, 0);
         Column column = new Column(9, 0);
-        Region region = new KKRegionAddition(4,9,12);
+        Region region = new KKRegionAddition(4, 9, 12);
         Cell cell = new Cell(9, region, column, row);
 
         PrintStream out = System.out;

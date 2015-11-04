@@ -35,5 +35,7 @@ public abstract class Region extends ItemPossibilities {
         cells.set(n, c);
     }
 
-    public int size() { return cells.size(); }
+    public int size() {
+        return cells.size();
+    }
 }

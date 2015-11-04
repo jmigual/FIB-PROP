@@ -2,6 +2,7 @@ package presentacio;
 
 import dades.KKDB;
 import dades.PlayersAdmin;
+
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -14,6 +15,11 @@ public class DriverAdminPlayers {
 
     String _currentPlayer;
 
+    public DriverAdminPlayers(PlayersAdmin p) {
+        this._pAdmin = p;
+        _currentPlayer = "";
+    }
+
     public static void main(String[] args) {
 
         KKDB db = new KKDB();
@@ -23,8 +29,6 @@ public class DriverAdminPlayers {
         pa.run();
         db.save();
     }
-
-    public DriverAdminPlayers(PlayersAdmin p) { this._pAdmin = p; _currentPlayer = ""; }
 
     public void run() {
         PrintStream out = System.out;
@@ -41,16 +45,15 @@ public class DriverAdminPlayers {
                     "7) Veure tots els usuaris\n" +
                     "8) Sortir");
 
-            if (! in.hasNextInt()) break;
+            if (!in.hasNextInt()) break;
 
             switch (in.nextInt()) {
                 // Add player
-                case 1:
-                {
+                case 1: {
                     boolean correct = false;
                     String name = "";
                     String pass = "";
-                    while (! correct) {
+                    while (!correct) {
                         while (name.length() == 0) {
                             out.print("Entra el nom d'usuari: ");
                             name = in.next();
@@ -69,7 +72,7 @@ public class DriverAdminPlayers {
                         String temp = in.next();
                         temp = temp.toLowerCase();
 
-                        correct =  temp.equals("s") || temp.equals("y") || temp.equals("si") || temp.equals("yes");
+                        correct = temp.equals("s") || temp.equals("y") || temp.equals("si") || temp.equals("yes");
                     }
 
                     _pAdmin.createPlayer(name, pass);
@@ -77,21 +80,19 @@ public class DriverAdminPlayers {
                     break;
                 }
                 // Delete player
-                case 2:
-                {
+                case 2: {
                     out.print("Nom d'usuari: ");
                     String name = in.next();
                     out.print("Contrasenya: ");
                     String pass = in.next();
 
-                    if (! _pAdmin.removePlayer(name, pass)) {
+                    if (!_pAdmin.removePlayer(name, pass)) {
                         System.err.println("Error eliminant l'usuari, nom o contrasenya incorrectes");
                     }
                     break;
                 }
                 // Change password
-                case 3:
-                {
+                case 3: {
                     out.print("Nom d'usuari: ");
                     String name = in.next();
                     out.print("Contrasenya: ");
@@ -101,12 +102,12 @@ public class DriverAdminPlayers {
                     out.print("Repeteix la nova contrasenya: ");
                     String nPass2 = in.next();
 
-                    if (! nPass1.equals(nPass2)) {
+                    if (!nPass1.equals(nPass2)) {
                         System.err.println("La nova contrasenya no coincideix en els dos casos");
                         break;
                     }
 
-                    if (! _pAdmin.changePassword(name, pass, nPass1)) {
+                    if (!_pAdmin.changePassword(name, pass, nPass1)) {
                         System.err.println("No s'ha pogut canviar la contrasenya comprova que el nom d'usuari i la\n" +
                                 "contrasenya són correctes");
                     }
@@ -114,8 +115,7 @@ public class DriverAdminPlayers {
                     break;
                 }
                 // Check player
-                case 4:
-                {
+                case 4: {
                     out.print("Nom d'usuari: ");
                     String name = in.next();
 
@@ -125,14 +125,13 @@ public class DriverAdminPlayers {
                     break;
                 }
                 // Log in
-                case 5:
-                {
+                case 5: {
                     out.print("Nom d'usuari: ");
                     String name = in.next();
                     out.print("Contrasenya: ");
                     String pass = in.next();
 
-                    if (! _pAdmin.checkLogin(name, pass)) {
+                    if (!_pAdmin.checkLogin(name, pass)) {
                         System.err.println("No s'ha pogut iniciar sessió nom d'usuari o contrasenya incorrectes");
                     }
 
@@ -140,19 +139,16 @@ public class DriverAdminPlayers {
                     break;
                 }
                 // Close session
-                case 6:
-                {
+                case 6: {
                     _currentPlayer = "";
                     break;
                 }
                 // View all players
-                case 7:
-                {
+                case 7: {
                     _pAdmin.viewAllPlayers();
                     break;
                 }
-                case 8:
-                {
+                case 8: {
                     return;
                 }
             }
