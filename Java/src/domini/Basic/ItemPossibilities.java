@@ -13,6 +13,7 @@ public abstract class ItemPossibilities {
     public ItemPossibilities(int n) {
         possibilities = new boolean[n];
         this.maxValue = n;
+        for (int i = 0; i < possibilities.length; i++) possibilities[i] = true;
     }
 
     public boolean getPossibility(int value) {

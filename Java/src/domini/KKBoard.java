@@ -16,6 +16,7 @@ public class KKBoard extends Board {
 
     public KKBoard(int size) {
         super(size);
+        _kkregions=new ArrayList<>(_size*_size/2);
     }
 
     public Board getSolution() {

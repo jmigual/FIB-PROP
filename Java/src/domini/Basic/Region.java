@@ -24,7 +24,8 @@ public abstract class Region extends ItemPossibilities {
     }
 
     public void setCells(ArrayList<Cell> cells) {
-        this.cells = cells;
+        this.cells.clear();
+        for (int i=0; i<cells.size(); i++)this.cells.add(cells.get(i));
     }
 
     public Cell getCell(int n) {
@@ -34,6 +35,8 @@ public abstract class Region extends ItemPossibilities {
     public void setCell(int n, Cell c) {
         cells.set(n, c);
     }
+
+    public void addCell(int n, Cell c) { cells.add(n, c); }
 
     public int size() {
         return cells.size();
