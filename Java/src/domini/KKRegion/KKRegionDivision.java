@@ -29,7 +29,7 @@ public class KKRegionDivision extends KKRegion {
         for (int i = 0; i < maxValue; ++i) possibilities[i] = false;
 
         for (int i = 1; i <= maxValue / operationValue; ++i) {
-            possibilities[i] = possibilities[operationValue * i] = true;
+            possibilities[i-1] = possibilities[operationValue * i-1] = true;
         }
         for (Cell b : cells) {
             if (b.getValue() > 0) {

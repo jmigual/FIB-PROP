@@ -21,9 +21,8 @@ public class DriverKKBoard {
 
         ArrayList<Cell> C = new ArrayList<Cell>(4*4);
 
-        b.getCell(0,0).setValue(4);
 
-        C.add(b.getCell(0,0));
+        C.add(b.getCell(0, 0));
         C.add(b.getCell(0, 1));
         b.createRegion(C, KKRegion.OperationType.ADDITION, 7);
         C.clear();
@@ -31,7 +30,7 @@ public class DriverKKBoard {
         C.add(b.getCell(0, 3));
         b.createRegion(C, KKRegion.OperationType.DIVISION, 2);
         C.clear();
-        C.add(b.getCell(1,0));
+        C.add(b.getCell(1, 0));
         C.add(b.getCell(1, 1));
         b.createRegion(C, KKRegion.OperationType.PRODUCT, 4);
         C.clear();
@@ -55,8 +54,12 @@ public class DriverKKBoard {
         C.add(b.getCell(3, 3));
         b.createRegion(C, KKRegion.OperationType.SUBTRACTION, 3);
 
-
-
+        b.solve();
+        for (int i=0;i<4;i++){
+            for (Cell c: b.getRows().get(i).getCells())out.print(c.getValue());
+            out.println(' ');
+        }
+        for (boolean bo: b.getCell(0,0).getPossibilities())out.print (bo);
 
 
     }

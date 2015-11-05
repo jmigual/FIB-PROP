@@ -16,7 +16,8 @@ public abstract class Region extends ItemPossibilities {
 
     public Region(ArrayList<Cell> cells, int maxCellValue) {
         super(maxCellValue);
-        this.cells = cells;
+        this.cells = new ArrayList<>(cells.size());
+        for (int i=0; i<cells.size(); i++)this.cells.add(cells.get(i));
     }
 
     public ArrayList<Cell> getCells() {

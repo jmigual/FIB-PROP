@@ -25,7 +25,8 @@ public class KKBoard extends Board {
 
     @Override
     public void solve() {
-        recursive_solve(0, 0);
+        boolean b = recursive_solve(0, 0);
+        System.out.println(b);
     }
 
     private boolean recursive_solve(int i, int j) {
@@ -47,12 +48,15 @@ public class KKBoard extends Board {
 
         if (getCell(i, j).getPossibilities().length == 0) return false;
         boolean ret = false;
-        for (int a = 0; a < this.getSize(); ++a) {
-            if (this.getCell(i, j).getPossibilities()[a]) this.getCell(i, j).setValue(a + 1);
-            ret = ret || recursive_solve(i_f, j_f);
-            if (ret) return ret;
+        for (int a = 1; a <= this.getSize(); ++a) {
+            if (this.getCell(i, j).getPossibility(a)) {
+                this.getCell(i, j).setValue(a);
+                ret = ret || recursive_solve(i_f, j_f);
+                if(!ret)this.getCell(i,j).setValue(0);
+                if (ret) return ret;
+            }
         }
-        return ret;
+        return false;
     }
 
     @Override
