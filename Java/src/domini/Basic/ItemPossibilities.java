@@ -1,5 +1,7 @@
 package domini.Basic;
 
+import java.util.ArrayList;
+
 /**
  * Class used to store the possibilities from an item, it's useful when there's an extensive computation
  */
@@ -27,6 +29,12 @@ public abstract class ItemPossibilities {
 
     public void setPossibilities(boolean[] p) {
         this.possibilities = p;
+    }
+
+    public ArrayList<Boolean> getPossibilitiesList() {
+        ArrayList<Boolean> res = new ArrayList<>(possibilities.length);
+        for (int i = 0; i < possibilities.length; i++) res.set(i, possibilities[i]);
+        return res;
     }
 
     public abstract void calculatePossibilities();

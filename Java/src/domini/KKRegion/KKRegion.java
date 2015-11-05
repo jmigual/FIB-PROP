@@ -12,6 +12,7 @@ public abstract class KKRegion extends Region {
 
     protected OperationType opType = OperationType.NONE;
     protected int operationValue;
+
     public KKRegion(int size, int maxCellValue, int value) {
         super(size, maxCellValue);
         operationValue = value;
