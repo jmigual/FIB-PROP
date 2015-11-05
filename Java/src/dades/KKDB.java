@@ -1,6 +1,7 @@
 package dades;
 
 import domini.Basic.Match;
+import domini.KKBoard;
 
 import java.io.IOException;
 
@@ -22,9 +23,11 @@ public class KKDB extends DB {
     /**
      * Class constructor, by default loads all the data
      */
+    private Table<KKBoard> _boards;
     public KKDB() {
         _players = new Table<>();
         _matches = new Table<>();
+        _boards = new Table<>();
     }
 
     /**
@@ -40,6 +43,7 @@ public class KKDB extends DB {
     public void save() {
         _players.save(getOutputStream("players"));
         _matches.save(getOutputStream("matches"));
+        _boards.save(getOutputStream("boards"));
     }
 
     /**
@@ -53,6 +57,11 @@ public class KKDB extends DB {
         }
         try {
             _matches.load(getInputStream("matches"));
+        } catch (IOException e) {
+            System.err.println("Table not found");
+        }
+        try {
+            _matches.load(getInputStream("boards"));
         } catch (IOException e) {
             System.err.println("Table not found");
         }
@@ -74,5 +83,23 @@ public class KKDB extends DB {
      */
     public void setMatches(Table<Match> m) {
         this._matches = m;
+    }
+
+    /**
+     * To get all Boards
+     *
+     * @return Returns all stored boards
+     */
+    public Table<KKBoard> getBoards() {
+        return _boards;
+    }
+
+    /**
+     * To replace the matches
+     *
+     * @param m Matches to replace the current data
+     */
+    public void setBoards(Table<KKBoard> m) {
+        this._boards = m;
     }
 }

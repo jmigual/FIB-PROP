@@ -4,12 +4,13 @@ import domini.Basic.Board;
 import domini.Basic.Cell;
 import domini.KKRegion.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Joan on 20/10/2015.
  */
-public class KKBoard extends Board {
+public class KKBoard extends Board implements Serializable{
 
     private ArrayList<KKRegion> _kkregions;
 

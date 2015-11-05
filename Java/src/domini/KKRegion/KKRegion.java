@@ -3,12 +3,13 @@ package domini.KKRegion;
 import domini.Basic.Cell;
 import domini.Basic.Region;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Region from a Ken-Ken board
  */
-public abstract class KKRegion extends Region {
+public abstract class KKRegion extends Region implements Serializable{
 
     protected OperationType opType = OperationType.NONE;
     protected int operationValue;

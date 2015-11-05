@@ -1,11 +1,12 @@
 package domini.Basic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Contains some cells
  */
-public abstract class Region extends ItemPossibilities {
+public abstract class Region extends ItemPossibilities implements Serializable{
 
     protected ArrayList<Cell> cells;
 

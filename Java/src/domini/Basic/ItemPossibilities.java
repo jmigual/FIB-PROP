@@ -1,11 +1,12 @@
 package domini.Basic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class used to store the possibilities from an item, it's useful when there's an extensive computation
  */
-public abstract class ItemPossibilities {
+public abstract class ItemPossibilities implements Serializable{
     protected boolean[] possibilities;
 
     protected int maxValue;
