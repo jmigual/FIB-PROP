@@ -3,10 +3,10 @@ package domini.Basic;
 import java.util.ArrayList;
 
 public abstract class Board {
-    private ArrayList<ArrayList<Cell>> _boardInfo;
-    private ArrayList<Column> _columns;
-    private ArrayList<Row> _rows;
-    private int _size;
+    protected ArrayList<ArrayList<Cell>> _boardInfo;
+    protected ArrayList<Column> _columns;
+    protected ArrayList<Row> _rows;
+    protected int _size;
 
     /**
      * To initialize a empty Board of size x size
@@ -15,9 +15,9 @@ public abstract class Board {
      */
     public Board(int size) {
         _size = size;
-        ArrayList<ArrayList<Cell>> _boardInfo = new ArrayList<ArrayList<Cell>>(_size);
-        ArrayList<Row> _rows = new ArrayList<Row>(_size);
-        ArrayList<Column> _columns = new ArrayList<Column>(_size);
+        ArrayList<ArrayList<Cell>> _boardInfo = new ArrayList<>(_size);
+        ArrayList<Row> _rows = new ArrayList<>(_size);
+        ArrayList<Column> _columns = new ArrayList<>(_size);
         for (int i = 0; i < _size; ++i) {
             _boardInfo.set(i, new ArrayList<Cell>(size));
             _rows.set(i, new Row(_size, i));

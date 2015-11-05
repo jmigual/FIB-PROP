@@ -14,7 +14,7 @@ public class KKBoard extends Board {
     private ArrayList<KKRegion> _kkregions;
 
 
-    KKBoard(int size) {
+    public KKBoard(int size) {
         super(size);
     }
 
@@ -30,6 +30,9 @@ public class KKBoard extends Board {
     private boolean recursive_solve(int i, int j) {
         if (j == this.getSize()) return true;
 
+        this.getCell(i, j).getColumn().calculatePossibilities();
+        this.getCell(i, j).getRow().calculatePossibilities();
+        this.getCell(i, j).getRegion().calculatePossibilities();
         this.getCell(i, j).calculatePossibilities();
 
         int j_f, i_f;
@@ -82,7 +85,7 @@ public class KKBoard extends Board {
             _kkregions.add(new KKRegionAddition(cells, this.getSize(), opValue));
         else return false;
         for (int i = 0; i < cells.size(); ++i) cells.get(i).setRegion(_kkregions.get(_kkregions.size() - 1));
-        _kkregions.get(_kkregions.size() - 1);
+        //_kkregions.get(_kkregions.size() - 1);
         return true;
     }
 }
