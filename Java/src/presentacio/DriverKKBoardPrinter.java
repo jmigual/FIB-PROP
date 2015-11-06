@@ -2,6 +2,7 @@ package presentacio;
 
 import dades.KKDB;
 import dades.Table;
+import domini.Basic.Cell;
 import domini.Basic.Driver;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
@@ -41,6 +42,7 @@ public class DriverKKBoardPrinter implements Driver {
 
         if (in.hasNextInt()) {
             DriverKKBoardPrinter driver = new DriverKKBoardPrinter(boards.get(in.nextInt()), out);
+            driver.run();
         }
     }
 
@@ -51,11 +53,40 @@ public class DriverKKBoardPrinter implements Driver {
      * @param out   PrintStream where the KKBoard can be printed
      */
     public static void printBoard(KKBoard board, PrintStream out) {
+        int size = board.getSize();
+        Integer sizeI = size;
+        out.println("Tauler de tamany " + sizeI.toString() + "x" + sizeI.toString());
 
+        int sizeV = 2*size + 1;
+        int sizeH = 3*size + 1;
+        char[][] outC = new char[sizeV][sizeH];
+
+        for (int i = 0; i < sizeV; ++i) {
+            outC[i][0] = '|';
+            outC[i][sizeH - 1] = '|';
+        }
+        for (int i = 1; i < sizeH - 1; ++i) {
+            outC[0][i] = '-';
+            outC[sizeV][i] = '-';
+        }
+
+        // Print the final matrix with all the data
+        for (int i = 0; i < sizeV; ++i) {
+            for (int j = 0; j < sizeH; ++j) {
+                out.print(outC[i][j]);
+            }
+            out.println();
+        }
     }
 
     public static void printRegion(KKRegion region, PrintStream out) {
+        out.println("L'operació d'aquesta regió és " + region.getOperation().toString());
+        out.println("El valor d'aquesta operació és " + Integer.toString(region.getOperationValue()));
 
+        for (int i = 0; i < region.size(); ++i) {
+            Cell c = region.getCell(i);
+            out.println("Cel·la " + Integer.toString(i) + " Valor: " + Integer.toString(c.getValue()));
+        }
     }
 
     public DriverKKBoardPrinter() {}
