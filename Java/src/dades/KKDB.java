@@ -20,10 +20,15 @@ public class KKDB extends DB {
      */
     private Table<Match> _matches;
 
+
+    /**
+     * Contains all the boards
+     */
+    private Table<KKBoard> _boards;
+
     /**
      * Class constructor, by default loads all the data
      */
-    private Table<KKBoard> _boards;
     public KKDB() {
         _players = new Table<>();
         _matches = new Table<>();
@@ -61,7 +66,7 @@ public class KKDB extends DB {
             System.err.println("Table not found");
         }
         try {
-            _matches.load(getInputStream("boards"));
+            _boards.load(getInputStream("boards"));
         } catch (IOException e) {
             System.err.println("Table not found");
         }

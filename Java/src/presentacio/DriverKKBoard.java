@@ -3,6 +3,7 @@ package presentacio;
 import dades.KKDB;
 import dades.Table;
 import domini.Basic.Cell;
+import domini.Basic.Driver;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 
@@ -13,7 +14,11 @@ import java.util.Scanner;
 /**
  * Created by ets19 on 5/11/2015.
  */
-public class DriverKKBoard {
+public class DriverKKBoard implements Driver {
+
+    private KKBoard b;
+
+    public DriverKKBoard(KKBoard b) { this.b = b; }
 
     public static void main(String[] args) {
         KKDB db = new KKDB();
@@ -26,7 +31,7 @@ public class DriverKKBoard {
         if (taula.size()!=0 && in.next().equals("y")){
             out.println("Hi han aquestes: ");
             for (int i=0; i<taula.size(); i++){
-                out.println(Integer.toString(i) + ": de tamany" + Integer.toString(taula.get(i).getSize()));
+                out.println(Integer.toString(i) + ": de tamany " + Integer.toString(taula.get(i).getSize()));
             }
             out.println("Quina taula vols? ");
             b= taula.get(in.nextInt());
@@ -77,45 +82,12 @@ public class DriverKKBoard {
             }
 
             out.print("Vols guardar el tauler a la DB? (y/n): ");
-            if (in.next().equals("y")){
+            if (in.next().equals("y")) {
                 Table<KKBoard> aux = db.getBoards();
                 aux.add(b);
-                db.setBoards(aux);
+                db.save();
             }
         }
-      /*  C.add(b.getCell(0, 0));
-        C.add(b.getCell(0, 1));
-        b.createRegion(C, KKRegion.OperationType.ADDITION, 7);
-        C.clear();
-        C.add(b.getCell(0, 2));
-        C.add(b.getCell(0, 3));
-        b.createRegion(C, KKRegion.OperationType.DIVISION, 2);
-        C.clear();
-        C.add(b.getCell(1, 0));
-        C.add(b.getCell(1, 1));
-        b.createRegion(C, KKRegion.OperationType.PRODUCT, 4);
-        C.clear();
-        C.add(b.getCell(1, 2));
-        C.add(b.getCell(2, 2));
-        b.createRegion(C, KKRegion.OperationType.PRODUCT, 12);
-        C.clear();
-        C.add(b.getCell(1, 3));
-        C.add(b.getCell(2, 3));
-        b.createRegion(C, KKRegion.OperationType.SUBTRACTION, 1);
-        C.clear();
-        C.add(b.getCell(2, 0));
-        C.add(b.getCell(3, 0));
-        b.createRegion(C, KKRegion.OperationType.PRODUCT, 6);
-        C.clear();
-        C.add(b.getCell(2, 1));
-        C.add(b.getCell(3, 1));
-        b.createRegion(C, KKRegion.OperationType.DIVISION, 2);
-        C.clear();
-        C.add(b.getCell(3, 2));
-        C.add(b.getCell(3, 3));
-        b.createRegion(C, KKRegion.OperationType.SUBTRACTION, 3);*/
-
-        //b.solve();
 
         /*
             2
@@ -132,12 +104,20 @@ public class DriverKKBoard {
             1 1
 
          */
+        DriverKKBoard driver = new DriverKKBoard(b);
+        driver.run();
+    }
+
+    public void run() {
+        PrintStream out = System.out;
+        Scanner in = new Scanner(System.in);
+
         boolean keepAsking = true;
         while (keepAsking) {
             out.println();
-            out.println("What do you wish to do?");
-            out.println("1: Solve the board");
-            out.println("2: Print the board");
+            out.println("Què vols fer?");
+            out.println("1) Solucionar el tauler");
+            out.println("2) Imprimir el tauler");
             if (in.hasNextInt()) {
                 switch (in.nextInt()) {
                     case 1:

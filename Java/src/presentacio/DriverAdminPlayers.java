@@ -2,6 +2,7 @@ package presentacio;
 
 import dades.KKDB;
 import dades.PlayersAdmin;
+import domini.Basic.Driver;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 /**
  * Driver to test AdminPlayers and DB
  */
-public class DriverAdminPlayers {
+public class DriverAdminPlayers implements Driver {
 
     PlayersAdmin _pAdmin;
 
