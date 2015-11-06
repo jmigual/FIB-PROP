@@ -18,7 +18,9 @@ public class DriverKKBoard implements Driver {
 
     private KKBoard b;
 
-    public DriverKKBoard(KKBoard b) { this.b = b; }
+    public DriverKKBoard(KKBoard b) {
+        this.b = b;
+    }
 
     public static void main(String[] args) {
         KKDB db = new KKDB();
@@ -27,17 +29,16 @@ public class DriverKKBoard implements Driver {
         Scanner in = new Scanner(System.in);
         KKBoard b;
         Table<KKBoard> taula = db.getBoards();
-        if (taula.size()!=0)out.print("Vols carregar un tauler de la DB? (y/n): ");
-        if (taula.size()!=0 && in.next().equals("y")){
+        if (taula.size() != 0) out.print("Vols carregar un tauler de la DB? (y/n): ");
+        if (taula.size() != 0 && in.next().equals("y")) {
             out.println("Hi han aquestes: ");
-            for (int i=0; i<taula.size(); i++){
+            for (int i = 0; i < taula.size(); i++) {
                 out.println(Integer.toString(i) + ": de tamany " + Integer.toString(taula.get(i).getSize()));
             }
             out.println("Quina taula vols? ");
-            b= taula.get(in.nextInt());
+            b = taula.get(in.nextInt());
 
-        }
-        else {
+        } else {
             out.print("Introdueix el tamany: ");
             b = new KKBoard(in.nextInt());
 
@@ -106,6 +107,7 @@ public class DriverKKBoard implements Driver {
          */
         DriverKKBoard driver = new DriverKKBoard(b);
         driver.run();
+        db.save();
     }
 
     public void run() {
@@ -118,6 +120,7 @@ public class DriverKKBoard implements Driver {
             out.println("Què vols fer?");
             out.println("1) Solucionar el tauler");
             out.println("2) Imprimir el tauler");
+            out.println("3) Tornar");
             if (in.hasNextInt()) {
                 switch (in.nextInt()) {
                     case 1:
@@ -128,6 +131,9 @@ public class DriverKKBoard implements Driver {
                             for (Cell c : b.getRows().get(i).getCells()) out.print(c.getValue());
                             out.println(' ');
                         }
+                        break;
+                    case 3:
+                        keepAsking = false;
                         break;
 
                 }

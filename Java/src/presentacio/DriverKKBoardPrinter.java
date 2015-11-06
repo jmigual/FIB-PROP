@@ -8,6 +8,7 @@ import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -41,7 +42,12 @@ public class DriverKKBoardPrinter implements Driver {
         Scanner in = new Scanner(System.in);
 
         if (in.hasNextInt()) {
-            DriverKKBoardPrinter driver = new DriverKKBoardPrinter(boards.get(in.nextInt()), out);
+            int index = in.nextInt();
+            if (index < 0 || index >= boards.size()) {
+                out.println("El valor introduit no és correcte");
+                return;
+            }
+            DriverKKBoardPrinter driver = new DriverKKBoardPrinter(boards.get(index), out);
             driver.run();
         }
     }
@@ -57,17 +63,57 @@ public class DriverKKBoardPrinter implements Driver {
         Integer sizeI = size;
         out.println("Tauler de tamany " + sizeI.toString() + "x" + sizeI.toString());
 
-        int sizeV = 2*size + 1;
-        int sizeH = 3*size + 1;
+        int sizeV = 2 * size + 1;
+        int sizeH = 3 * size + 1;
         char[][] outC = new char[sizeV][sizeH];
 
-        for (int i = 0; i < sizeV; ++i) {
+        // Fill all with white lines
+        for (int i = 0; i < sizeV; ++i) Arrays.fill(outC[i], ' ');
+
+        // Create borders
+        outC[0][0] = outC[0][sizeH - 1] = outC[sizeV - 1][0] = outC[sizeV - 1][sizeH - 1] = '+';
+        for (int i = 1; i < sizeV - 1; ++i) {
             outC[i][0] = '|';
             outC[i][sizeH - 1] = '|';
         }
         for (int i = 1; i < sizeH - 1; ++i) {
             outC[0][i] = '-';
-            outC[sizeV][i] = '-';
+            outC[sizeV - 1][i] = '-';
+        }
+
+        // Fill with numbers and region separators
+        for (int i = 0; i < size; ++i) {
+            // Horizontal lines separators
+            if (i != 0) {
+                for (int j = 0; j < size; ++j) {
+                    if (board.getCell(i - 1, j).getRegion() != board.getCell(i, j).getRegion()) {
+                        outC[2 * i][3 * j + 1] = outC[2 * i][3 * j + 2] = '-';
+                    }
+                }
+            }
+            // Vertical line separators and numbers
+            for (int j = 0; j < size; ++j) {
+                Cell c = board.getCell(i, j);
+                if (j != 0 && board.getCell(i, j - 1).getRegion() != c.getRegion()) {
+                    outC[2 * i + 1][3 * j] = '|';
+                    if (outC[2 * i + 2][3 * j] == ' ') outC[2 * i + 2][3 * j] = '|';
+                }
+
+                // Numbers check first and second digits
+                outC[2 * i + 1][3 * j + 1] = c.getValue() < 10 ? ' ' : (char) ((c.getValue() / 10) + '0');
+                outC[2 * i + 1][3 * j + 2] = c.getValue() == 0 ? ' ' : (char) (c.getValue() % 10 + '0');
+            }
+        }
+
+        // Replace some separators with '+' and '-'
+        for (int i = 1; i < sizeV - 1; ++i) {
+            for (int j = 1; j < sizeH - 1; ++j) {
+                if (outC[i][j] == ' ' && outC[i][j - 1] == '-' && outC[i][j + 1] == '-') outC[i][j] = '-';
+                if ((outC[i - 1][j] == '|' || outC[i + 1][j] == '|') &&
+                        (outC[i][j - 1] == '-' || outC[i][j + 1] == '-')) {
+                    outC[i][j] = '+';
+                }
+            }
         }
 
         // Print the final matrix with all the data
@@ -89,11 +135,17 @@ public class DriverKKBoardPrinter implements Driver {
         }
     }
 
-    public DriverKKBoardPrinter() {}
+    public DriverKKBoardPrinter() {
+    }
 
-    public DriverKKBoardPrinter(KKBoard board) { this.board = board; }
+    public DriverKKBoardPrinter(KKBoard board) {
+        this.board = board;
+    }
 
-    public DriverKKBoardPrinter(KKBoard board, PrintStream out) { this.board = board; this.out = out; }
+    public DriverKKBoardPrinter(KKBoard board, PrintStream out) {
+        this.board = board;
+        this.out = out;
+    }
 
     public void setStream(PrintStream stream) {
         this.out = stream;
@@ -134,8 +186,11 @@ public class DriverKKBoardPrinter implements Driver {
 
                     // Print the region
                     printRegion((KKRegion) board.getCell(i, j).getRegion());
+                    break;
                 }
-
+                case 3: {
+                    return;
+                }
             }
         }
     }
