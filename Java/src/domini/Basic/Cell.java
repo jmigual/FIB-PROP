@@ -1,10 +1,12 @@
 package domini.Basic;
 
+import java.io.Serializable;
+
 /**
  * Created by Joan on 19/10/2015.
  */
 
-public class Cell extends ItemPossibilities {
+public class Cell extends ItemPossibilities implements Serializable{
     int value;
     boolean[] annotations;
     Region region;

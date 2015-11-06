@@ -2,12 +2,13 @@ package domini.KKRegion;
 
 import domini.Basic.Cell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Joan on 21/10/2015.
  */
-public class KKRegionDivision extends KKRegion {
+public class KKRegionDivision extends KKRegion implements Serializable{
 
     public KKRegionDivision(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);

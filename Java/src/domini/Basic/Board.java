@@ -1,8 +1,9 @@
 package domini.Basic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Board {
+public abstract class Board implements Serializable {
     protected ArrayList<ArrayList<Cell>> _boardInfo;
     protected ArrayList<Column> _columns;
     protected ArrayList<Row> _rows;
@@ -25,7 +26,7 @@ public abstract class Board {
                 if (i == 0) _columns.add(j, new Column(_size, j));
                 _boardInfo.get(i).add(j, new Cell(_size, _rows.get(i), _columns.get(j)));
                 _rows.get(i).addCell(j,_boardInfo.get(i).get(j));
-                _columns.get(j).addCell(i,_boardInfo.get(i).get(j));
+                _columns.get(j).addCell(i, _boardInfo.get(i).get(j));
             }
         }
     }

@@ -1,9 +1,11 @@
 package domini.Basic;
 
+import java.io.Serializable;
+
 /**
  * Created by Inigo on 19/10/2015.
  */
-public class CellLine extends Region {
+public class CellLine extends Region implements Serializable{
     protected int pos;
 
     public CellLine(int size, int pos) {
