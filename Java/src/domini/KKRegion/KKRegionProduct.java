@@ -36,7 +36,7 @@ public class KKRegionProduct extends KKRegion implements Serializable{
             }
         int min = (int) Math.ceil(prod / Math.pow(maxValue, count));
         for (int i = 1; i <= maxValue; i++)
-            possibilities[i - 1] = (prod % i == 0 && i >= min);
+            possibilities[i-1] = (prod % i == 0 && i >= min);
     }
 
     @Override

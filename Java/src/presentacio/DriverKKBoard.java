@@ -107,7 +107,6 @@ public class DriverKKBoard implements Driver {
          */
         DriverKKBoard driver = new DriverKKBoard(b);
         driver.run();
-        db.save();
     }
 
     public void run() {

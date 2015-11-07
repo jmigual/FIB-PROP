@@ -26,13 +26,14 @@ public class DriverRegion {
         int size, maxCellValue, result;
         out.print("Introdueix el tamany de la regio: ");
         size = in.nextInt();
-        out.print("Introdueix el valor maxim de les celles: ");
+        /*out.print("Introdueix el valor maxim de les celles: ");
         maxCellValue = in.nextInt();
         out.print("Introdueix el valor resultant de la suma : ");
-        result = in.nextInt();
-
+        result = in.nextInt();*/
+        maxCellValue=size;
         Row row = new Row(maxCellValue, 0);
-        Region region = new KKRegionAddition(size, maxCellValue, result);
+        //Region region = new KKRegionProduct(size, maxCellValue, result);
+        Region region = new Column(size,0);
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
