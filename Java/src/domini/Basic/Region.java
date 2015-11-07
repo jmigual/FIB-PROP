@@ -83,4 +83,6 @@ public abstract class Region extends ItemPossibilities implements Serializable{
     public int size() {
         return cells.size();
     }
+
+    public abstract boolean isCorrect();
 }

@@ -42,4 +42,23 @@ public class KKRegionSubtraction extends KKRegion implements Serializable{
             possibilities[i - 1] = possibilities[i + operationValue - 1] = true;
         }
     }
+
+
+    @Override
+    public boolean isCorrect() {
+        boolean isEmpty=true;
+        boolean isFull=true;
+        boolean ret=false;
+        for (Cell b: cells){
+            if (b.getValue()>0){
+                isEmpty=false;
+                if (b.getValue()-operationValue>0)ret=true;
+                if (b.getValue()+operationValue<=possibilities.length)ret=true;
+            }
+            else isFull=false;
+        }
+        if (isEmpty)return true;
+        if (!isFull)return ret;
+        return (Math.abs(cells.get(0).getValue()-cells.get(1).getValue())==operationValue);
+    }
 }

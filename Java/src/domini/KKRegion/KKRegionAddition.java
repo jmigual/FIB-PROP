@@ -38,4 +38,22 @@ public class KKRegionAddition extends KKRegion implements Serializable{
         int max = Math.min(maxValue, sum - count);
         for (int i = 1; i <= maxValue; i++) possibilities[i - 1] = (i >= min && i <= max);
     }
+
+    @Override
+    public boolean isCorrect() {
+
+        int sum = operationValue;
+        int count = cells.size() - 1;
+        for (Cell b : cells)
+            if (b.getValue() != 0) {
+                sum -= b.getValue();
+                count--;
+            }
+        if (sum<0)return false;
+        if (count==-1)return sum==0;
+        int min = Math.max(1, sum - maxValue * count);
+        int max = Math.min(maxValue, sum - count);
+        if (min>9 || max<0)return false;
+        return true;
+    }
 }

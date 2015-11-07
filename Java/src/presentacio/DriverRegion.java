@@ -4,7 +4,10 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
+import domini.KKRegion.KKRegionAddition;
+import domini.KKRegion.KKRegionDivision;
 import domini.KKRegion.KKRegionProduct;
+import domini.KKRegion.KKRegionSubtraction;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -33,7 +36,7 @@ public class DriverRegion {
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
-            region.setCell(i, new Cell(size, region, column, row));
+            region.addCell(i, new Cell(size, region, column, row));
         }
 
         boolean keepAsking = true;
@@ -45,6 +48,7 @@ public class DriverRegion {
             out.println("3: Enter a possibility");
             out.println("4: Get all possibilities");
             out.println("5: Calculate possibilities");
+            out.println("6: It is correct?");
             if (in.hasNextInt()) {
                 int modifiedCell;
                 switch (in.nextInt()) {
@@ -75,6 +79,8 @@ public class DriverRegion {
                             out.print(Boolean.toString(region.getPossibility(i + 1)) + " ");
                         out.println();
                         break;
+                    case 6:
+                        out.println (Boolean.toString(region.isCorrect()));
 
                 }
             } else keepAsking = false;
