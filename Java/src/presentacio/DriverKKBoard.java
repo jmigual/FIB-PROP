@@ -107,11 +107,11 @@ public class DriverKKBoard implements Driver {
          */
         DriverKKBoard driver = new DriverKKBoard(b);
         driver.run();
-        db.save();
     }
 
     public void run() {
         PrintStream out = System.out;
+        DriverKKBoardPrinter KKp = new DriverKKBoardPrinter(b,out);
         Scanner in = new Scanner(System.in);
 
         boolean keepAsking = true;
@@ -127,10 +127,7 @@ public class DriverKKBoard implements Driver {
                         b.solve();
                         break;
                     case 2:
-                        for (int i = 0; i < b.getSize(); i++) {
-                            for (Cell c : b.getRows().get(i).getCells()) out.print(c.getValue());
-                            out.println(' ');
-                        }
+                        KKp.printBoard();
                         break;
                     case 3:
                         keepAsking = false;

@@ -28,7 +28,7 @@ public class DriverColumn {
         Column column = new Column(size, 0);
 
         for (int i = 0; i < size; i++) {
-            column.setCell(i, new Cell(size, region, column, row));
+            column.addCell(i, new Cell(size, region, column, row));
         }
 
         boolean keepAsking = true;
