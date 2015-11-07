@@ -2,6 +2,7 @@ package domini;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
+import domini.Basic.Column;
 import domini.KKRegion.*;
 
 import java.io.Serializable;
@@ -26,17 +27,100 @@ public class KKBoard extends Board implements Serializable{
 
     @Override
     public void solve() {
-        boolean b = recursive_solve(0, 0);
+        boolean b = precalculate();
+        if (b) b = recursive_solve(0, 0);
         System.out.println(b);
     }
 
+    private boolean precalculate(){
+        for (int i=0; i<_kkregions.size(); i++){
+            KKRegion r = _kkregions.get(i);
+            if(r.size()==1)r.getCell(0).setValue(r.getOperationValue());
+        }
+        boolean changed = true;
+        while (changed) {
+            changed=false;
+            for (int i = 0; i < _kkregions.size(); i++) {
+                _kkregions.get(i).calculatePossibilities();
+            }
+            for (int i = 0; i < _columns.size(); i++) {
+                _columns.get(i).calculatePossibilities();
+            }
+            for (int i = 0; i < _rows.size(); i++) {
+                _rows.get(i).calculatePossibilities();
+            }
+
+            //mira si hi ha alguna cella amb 1 sola possibilitat
+            for (int i = 0; i < _size; i++) {
+                for (int j = 0; j < _size; j++){
+                    Cell c=_boardInfo.get(i).get(j);
+                    if (c.getValue()==0) {
+                        c.calculatePossibilities();
+                        int value = 0;
+                        for (int k = 1; k <= c.getPossibilities().length & value != -1; k++) {
+                            if (c.getPossibility(k)) {
+                                if (value == 0) value = k;
+                                else value = -1;
+                            }
+                        }
+                        if (value == 0)  return false;
+
+                        if (value != -1) {
+                            c.setValue(value);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+
+            //mira si hi ha alguna fila on un numero determinat nomes pot anar en una cella
+            for (int i=0; i<_size; i++){
+                for (int k = 1; k <= _size; k++){
+                    if (_rows.get(i).getPossibility(k)){
+                        int value=0;
+                        for (int j=0; j<_size & value!=-1; j++){
+                            Cell c=_boardInfo.get(i).get(j);
+                            if (c.getPossibility(k)){
+                                if (value==0)value=j;
+                                else value=-1;
+                            }
+                        }
+                        if (value==0)return false;
+
+                        if (value !=-1){
+                            _boardInfo.get(i).get(value).setValue(k);
+                            changed=true;
+                        }
+                    }
+                }
+            }
+
+            //mira si hi ha alguna columna on un numero determinat nomes pot anar en una cella
+            for (int j=0; j<_size; j++){
+                for (int k = 1; k <= _size; k++){
+                    if (_columns.get(j).getPossibility(k)){
+                        int value=0;
+                        for (int i=0; i<_size & value!=-1; i++){
+                            Cell c=_boardInfo.get(i).get(j);
+                            if (c.getPossibility(k)){
+                                if (value==0)value=i;
+                                else value=-1;
+                            }
+                        }
+                        if (value==0)return false;
+
+                        if (value !=-1){
+                            _boardInfo.get(value).get(j).setValue(k);
+                            changed=true;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
     private boolean recursive_solve(int i, int j) {
         if (j == this.getSize()) return true;
-
-        this.getCell(i, j).getColumn().calculatePossibilities();
-        this.getCell(i, j).getRow().calculatePossibilities();
-        this.getCell(i, j).getRegion().calculatePossibilities();
-        this.getCell(i, j).calculatePossibilities();
 
         int j_f, i_f;
         i_f = i + 1;
@@ -45,6 +129,17 @@ public class KKBoard extends Board implements Serializable{
             i_f = 0;
             j_f = j + 1;
         }
+
+        if (this.getCell(i, j).getValue()!=0){
+            return recursive_solve(i_f,j_f);
+        }
+
+        this.getCell(i, j).getColumn().calculatePossibilities();
+        this.getCell(i, j).getRow().calculatePossibilities();
+        this.getCell(i, j).getRegion().calculatePossibilities();
+        this.getCell(i, j).calculatePossibilities();
+
+
 
 
         if (getCell(i, j).getPossibilities().length == 0) return false;
@@ -59,6 +154,7 @@ public class KKBoard extends Board implements Serializable{
         }
         return false;
     }
+
 
     @Override
     public boolean hasSolution() {

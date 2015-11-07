@@ -88,4 +88,8 @@ public abstract class KKRegion extends Region implements Serializable{
         }
     }
 
+    public void setIndividualPossibilities (Cell c){
+        //TODO
+    }
+
 }
