@@ -28,7 +28,7 @@ public class KKBoard extends Board implements Serializable{
     @Override
     public void solve() {
         boolean b = precalculate();
-        if (b) b = recursive_solve(0, 0);
+        //if (b) b = recursive_solve(0, 0);
         System.out.println(b);
     }
 
@@ -50,6 +50,15 @@ public class KKBoard extends Board implements Serializable{
                 _rows.get(i).calculatePossibilities();
             }
 
+            for (int i = 0; i < _kkregions.size(); i++) {
+                _kkregions.get(i).calculateIndividualPossibilities();
+            }
+            for (int i = 0; i < _columns.size(); i++) {
+                _columns.get(i).calculateIndividualPossibilities();
+            }
+            for (int i = 0; i < _rows.size(); i++) {
+                _rows.get(i).calculateIndividualPossibilities();
+            }
             //mira si hi ha alguna cella amb 1 sola possibilitat
             for (int i = 0; i < _size; i++) {
                 for (int j = 0; j < _size; j++){
@@ -72,7 +81,7 @@ public class KKBoard extends Board implements Serializable{
                     }
                 }
             }
-
+/*
             //mira si hi ha alguna fila on un numero determinat nomes pot anar en una cella
             for (int i=0; i<_size; i++){
                 for (int k = 1; k <= _size; k++){
@@ -116,6 +125,7 @@ public class KKBoard extends Board implements Serializable{
                     }
                 }
             }
+            */
         }
         return true;
     }

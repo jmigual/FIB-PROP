@@ -85,4 +85,23 @@ public abstract class Region extends ItemPossibilities implements Serializable{
     }
 
     public abstract boolean isCorrect();
+
+    public void calculateIndividualPossibilities(){
+        dfs(0);
+    }
+    private boolean dfs (int i){
+        if (i==cells.size()) return true;
+        Cell c=cells.get(i);
+        for (int j=1; j<=c.getPossibilities().length; j++){
+            if (c.getPossibility(j)){
+                c.setValue(j);
+                if (this.isCorrect() & dfs(i+1)){
+                    return true;
+                }
+                else c.setPossibility(j,false);
+                c.setValue(0);
+            }
+        }
+        return false;
+    }
 }

@@ -32,11 +32,11 @@ public class DriverRegion {
         result = in.nextInt();
 
         Row row = new Row(maxCellValue, 0);
-        Region region = new KKRegionProduct(size, maxCellValue, result);
+        Region region = new KKRegionAddition(size, maxCellValue, result);
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
-            region.addCell(i, new Cell(size, region, column, row));
+            region.addCell(i, new Cell(maxCellValue, region, column, row));
         }
 
         boolean keepAsking = true;
@@ -49,8 +49,11 @@ public class DriverRegion {
             out.println("4: Get all possibilities");
             out.println("5: Calculate possibilities");
             out.println("6: It is correct?");
+            out.println("7: Set Individual possibility");
+            out.println("8: Get Individual possibilities");
+            out.println("9: Calculate Individual possibilities");
             if (in.hasNextInt()) {
-                int modifiedCell;
+                int modifiedCell,modifiedValue;
                 switch (in.nextInt()) {
                     case 1:
                         out.print("Which cell do you want to set the value of? ");
@@ -64,7 +67,7 @@ public class DriverRegion {
                         break;
                     case 3:
                         out.println("For which value do you wish to modify the possibility?");
-                        int modifiedValue = in.nextInt();
+                        modifiedValue = in.nextInt();
                         out.print("Is it possible that there is a " + Integer.toString(modifiedValue) + "?");
                         region.setPossibility(modifiedValue, in.nextBoolean());
                         break;
@@ -77,11 +80,29 @@ public class DriverRegion {
                         region.calculatePossibilities();
                         for (int i = 0; i < maxCellValue; i++)
                             out.print(Boolean.toString(region.getPossibility(i + 1)) + " ");
+                        for (Cell c: region.getCells())c.calculatePossibilities();
                         out.println();
                         break;
                     case 6:
                         out.println (Boolean.toString(region.isCorrect()));
-
+                        break;
+                    case 7:
+                        out.print("Which cell do you want to set the possibility of? ");
+                        modifiedCell = in.nextInt();
+                        out.println("For which value do you wish to modify the possibility?");
+                        modifiedValue = in.nextInt();
+                        out.print("Is it possible that there is a " + Integer.toString(modifiedValue) + "?");
+                        region.getCells().get(modifiedCell).setPossibility(modifiedValue, in.nextBoolean());
+                        break;
+                    case 8:
+                        out.print("Which cell do you want to get the possibilities of? ");
+                        modifiedCell = in.nextInt();
+                        for (int i = 0; i < maxCellValue; i++)
+                            out.print(Boolean.toString(region.getCells().get(modifiedCell).getPossibility(i + 1)) + " ");
+                        break;
+                    case 9:
+                        region.calculateIndividualPossibilities();;
+                        break;
                 }
             } else keepAsking = false;
         }
