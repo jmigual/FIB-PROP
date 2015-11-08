@@ -8,15 +8,20 @@ import domini.KKBoard;
 
 public class BoardCreator {
 
-    private KKBoard mBoard;
+    protected  int mSize;
+    protected KKBoard mBoard;
 
+    public KKBoard getBoard() {
+        return mBoard;
+    }
+
+    public void setBoard(KKBoard mBoard) {
+        this.mBoard = mBoard;
+    }
 
     public BoardCreator(int size){
         mBoard = new KKBoard(size);
-    }
-
-    public KKBoard getBoard(){
-        return mBoard;
+        mSize = size;
     }
 
 
