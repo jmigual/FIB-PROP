@@ -11,14 +11,10 @@ import java.util.Scanner;
  */
 public class DriverBoardCreator {
 
-    private BoardCreator mBC;
     private static PrintStream out = System.out;
     private static Scanner in = new Scanner(System.in);
 
-
-    public DriverBoardCreator(){
-
-    }
+    public DriverBoardCreator(){    }
 
     public static void main(String[] args){
 
@@ -59,7 +55,7 @@ public class DriverBoardCreator {
                     "3) Generar un taulell\n" +
                     "4) Veure el taulell\n" +
                     "5) Guardar el taulell\n" +
-                    "6) Sortir\n");
+                    "6) Sortir");
 
             if (!in.hasNextInt()) break;
 
@@ -68,7 +64,7 @@ public class DriverBoardCreator {
                     out.println("Introdueix la mida màxima de les regions:");
                     int m = in.nextInt();
                     CBC.setMaxRegionSize(m);
-                    out.println("Mida màxima canviada a " + m + ".\n");
+                    out.println("Mida màxima canviada a " + m + ".");
                     break;
                 }
                 case 2: {
@@ -76,6 +72,22 @@ public class DriverBoardCreator {
                     break;
                 }
                 case 3: {
+                    try {
+                        CBC.createBoard();
+                    } catch (Exception e) {
+                        out.println(e.getMessage());
+                    }
+                    break;
+                }
+                case 4: {
+                    DriverKKBoardPrinter.printBoard(CBC.getBoard(), out);
+                    break;
+                }
+                case 5: {
+                    out.println("Feature not available yet :P\n");
+                    break;
+                }
+                case 6: {
                     return;
                 }
             }
@@ -84,9 +96,9 @@ public class DriverBoardCreator {
 
     protected static  void editWeights(CpuBoardCreator CBC){
         while (true) {
-            out.println("Pesos de les mides de regions: (mida)-->(pes)\n");
+            out.println("Pesos de les mides de regions: (mida)-->(pes)");
             for (int i = 0; i < CBC.getMaxRegionSize(); ++i) {
-                out.println(i + "-->" + CBC.getSizesWeights().get(i) + "\n");
+                out.println(i+1 + "-->" + CBC.getSizesWeights().get(i));
             }
             out.println("Total:" + CBC.getTotalSizesWeight() + "\n" +
                     "Pesos de les operacions en les regions:\n" +
@@ -96,15 +108,21 @@ public class DriverBoardCreator {
                     "Suma (s): " + CBC.getAddWeight() + "\n" +
                     "Total: " + CBC.getTotalOpWeight() + "\n" +
                     "\n" +
-                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú anterior " +
-                    "(t) o sortir (s)?\n" +
+                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú " +
+                    "anterior (t)?\n" +
                     "Nota: els pesos de les operacions estan condicionats als de les mides.\n");
             boolean b = true;
             while (b) {
                 switch (in.next()) {
                     case "m":
                         out.println("Escriu la mida i després el pes:");
-                        CBC.getSizesWeights().set(in.nextInt(),in.nextInt());
+//                        CBC.getSizesWeights().set(in.nextInt()-1,in.nextInt());
+                        try {
+                            CBC.setSizeWeight(in.nextInt(), in.nextInt());
+                        } catch (Exception e) {
+                            out.println(e.getMessage());
+                            return;
+                        }
                         b = false;
                         break;
                     case "o":
@@ -126,9 +144,6 @@ public class DriverBoardCreator {
                         b = false;
                         break;
                     case "t":
-                        b = false;
-                        break;
-                    case "s":
                         return;
                 }
             }
