@@ -60,6 +60,10 @@ public class CpuBoardCreator extends BoardCreator {
         this.mDivWeight = DivWeight;
     }
 
+    public ArrayList<Integer> getSizesWeights() { return mSizesWeights; }
+
+    public void setSizesWeights(ArrayList<Integer> mSizesWeights) { this.mSizesWeights = mSizesWeights; }
+
     public CpuBoardCreator(int size){
         super(size);
         mMaxRegionSize = 5;

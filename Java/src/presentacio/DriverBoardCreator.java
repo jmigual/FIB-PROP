@@ -1,6 +1,7 @@
 package presentacio;
 
 import domini.BoardCreator.BoardCreator;
+import domini.BoardCreator.CpuBoardCreator;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -33,12 +34,10 @@ public class DriverBoardCreator {
             switch (in.nextInt()){
                 case 1: {
                     runCBC();
-
                     break;
                 }
                 case 2: {
                     runHBC();
-
                     break;
                 }
                 case 3: {
@@ -48,8 +47,89 @@ public class DriverBoardCreator {
         }
     }
 
-    public static void runCBC(){
-        out.println();
+    protected static void runCBC(){
+        out.println("Introdueix la mida del taulell:");
+        int size = in.nextInt();
+        CpuBoardCreator CBC = new CpuBoardCreator(size);
+
+        while (true){
+            out.println("Selecciona una opció:\n" +
+                    "1) Canviar mida màxima de les regions" +
+                    "2) Canviar pesos\n" +
+                    "3) Generar un taulell\n" +
+                    "4) Veure el taulell\n" +
+                    "5) Guardar el taulell\n" +
+                    "6) Sortir\n");
+
+            if (!in.hasNextInt()) break;
+
+            switch (in.nextInt()){
+                case 1: {
+                    out.println("Introdueix la mida màxima de les regions:");
+                    int m = in.nextInt();
+                    CBC.setMaxRegionSize(m);
+                    out.println("Mida màxima canviada a " + m + ".\n");
+                    break;
+                }
+                case 2: {
+                    editWeights(CBC);
+                    break;
+                }
+                case 3: {
+                    return;
+                }
+            }
+        }
+    }
+
+    protected static  void editWeights(CpuBoardCreator CBC){
+        while (true) {
+            out.println("Pesos de les mides de regions: (mida)-->(pes)\n");
+            for (int i = 0; i < CBC.getMaxRegionSize(); ++i) {
+                out.println(i + "-->" + CBC.getSizesWeights().get(i) + "\n");
+            }
+            out.println("Pesos de les operacions en les regions:\n" +
+                    "Divisió (d): " + CBC.getDivWeight() + "\n" +
+                    "Resta (r): " + CBC.getSubsWeight() + "\n" +
+                    "Producte (p): " + CBC.getProdWeight() + "\n" +
+                    "Suma (s): " + CBC.getAddWeight() + "\n" +
+                    "\n" +
+                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú anterior (t) o sortir (s)?\n" +
+                    "Nota: els pesos de les operacions estan condicionats als de les mides.\n");
+            boolean b = true;
+            while (b) {
+                switch (in.next()) {
+                    case "m":
+                        out.println("Escriu la mida i després el pes:");
+                        CBC.getSizesWeights().set(in.nextInt(),in.nextInt());
+                        b = false;
+                        break;
+                    case "o":
+                        out.println("Escriu la lletra que identifica l'operació (d,r,p,s) i després el seu pes:");
+                        switch (in.next()){
+                            case "d":
+                                CBC.setDivWeight(in.nextInt());
+                                break;
+                            case "r":
+                                CBC.setSubsWeight(in.nextInt());
+                                break;
+                            case "p":
+                                CBC.setProdWeight(in.nextInt());
+                                break;
+                            case "s":
+                                CBC.setAddWeight(in.nextInt());
+                                break;
+                        }
+                        b = false;
+                        break;
+                    case "t":
+                        b = false;
+                        break;
+                    case "s":
+                        return;
+                }
+            }
+        }
     }
 
     public static void runHBC(){
