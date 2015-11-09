@@ -25,7 +25,7 @@ public class DriverBoardCreator {
         while (true) {
             out.println("Benvingut al creador de taulells de Kenken!\n" +
                     "Seleciona una opció:\n" +
-                    "1) Crear un taulell manualment." +
+                    "1) Crear un taulell manualment.\n" +
                     "2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.\n" +
                     "3) Sortir\n");
 
@@ -33,11 +33,11 @@ public class DriverBoardCreator {
 
             switch (in.nextInt()){
                 case 1: {
-                    runCBC();
+                    runHBC();
                     break;
                 }
                 case 2: {
-                    runHBC();
+                    runCBC();
                     break;
                 }
                 case 3: {
@@ -54,7 +54,7 @@ public class DriverBoardCreator {
 
         while (true){
             out.println("Selecciona una opció:\n" +
-                    "1) Canviar mida màxima de les regions" +
+                    "1) Canviar la mida màxima de les regions\n" +
                     "2) Canviar pesos\n" +
                     "3) Generar un taulell\n" +
                     "4) Veure el taulell\n" +
@@ -88,13 +88,16 @@ public class DriverBoardCreator {
             for (int i = 0; i < CBC.getMaxRegionSize(); ++i) {
                 out.println(i + "-->" + CBC.getSizesWeights().get(i) + "\n");
             }
-            out.println("Pesos de les operacions en les regions:\n" +
+            out.println("Total:" + CBC.getTotalSizesWeight() + "\n" +
+                    "Pesos de les operacions en les regions:\n" +
                     "Divisió (d): " + CBC.getDivWeight() + "\n" +
                     "Resta (r): " + CBC.getSubsWeight() + "\n" +
                     "Producte (p): " + CBC.getProdWeight() + "\n" +
                     "Suma (s): " + CBC.getAddWeight() + "\n" +
+                    "Total: " + CBC.getTotalOpWeight() + "\n" +
                     "\n" +
-                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú anterior (t) o sortir (s)?\n" +
+                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú anterior " +
+                    "(t) o sortir (s)?\n" +
                     "Nota: els pesos de les operacions estan condicionats als de les mides.\n");
             boolean b = true;
             while (b) {

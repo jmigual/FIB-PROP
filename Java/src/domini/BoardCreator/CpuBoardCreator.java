@@ -17,52 +17,68 @@ public class CpuBoardCreator extends BoardCreator {
     private int mTotalSizesWeight;
 
     // Operation Weights
-    private int mAddWeight, mSubsWeight, mProdWeight, mDivWeight, mTotalOpWeight;
+    private int mAddWeight;
+    private int mSubsWeight;
+    private int mProdWeight;
+    private int mDivWeight;
+    private int mTotalOpWeight;
 
+
+    public int getTotalOpWeight() { return mTotalOpWeight; }
+
+    public int getTotalSizesWeight() { return mTotalSizesWeight; }
 
     public int getMaxRegionSize() {
         return mMaxRegionSize;
     }
-
     public void setMaxRegionSize(int MaxRegionSize) {
-        this.mMaxRegionSize = MaxRegionSize;
+        while (mMaxRegionSize < MaxRegionSize){
+            this.mSizesWeights.add(mMaxRegionSize,0);
+        }
+        mTotalSizesWeight = 0;
+        for (int i : mSizesWeights){
+            mTotalSizesWeight += i;
+        }
     }
 
     public int getAddWeight() {
         return mAddWeight;
     }
-
     public void setAddWeight(int AddWeight) {
+        mTotalOpWeight += AddWeight - mAddWeight;
         this.mAddWeight = AddWeight;
     }
 
     public int getSubsWeight() {
         return mSubsWeight;
     }
-
     public void setSubsWeight(int SubsWeight) {
+        mTotalOpWeight += SubsWeight - mSubsWeight;
         this.mSubsWeight = SubsWeight;
     }
 
     public int getProdWeight() {
         return mProdWeight;
     }
-
     public void setProdWeight(int ProdWeight) {
+        mTotalOpWeight += ProdWeight - mProdWeight;
         this.mProdWeight = ProdWeight;
     }
 
     public int getDivWeight() {
         return mDivWeight;
     }
-
     public void setDivWeight(int DivWeight) {
+        mTotalOpWeight += DivWeight - mDivWeight;
         this.mDivWeight = DivWeight;
     }
 
-    public ArrayList<Integer> getSizesWeights() { return mSizesWeights; }
-
-    public void setSizesWeights(ArrayList<Integer> mSizesWeights) { this.mSizesWeights = mSizesWeights; }
+    public ArrayList<Integer> getSizesWeights() { return new ArrayList<>(mSizesWeights); }
+    public void setSizeWeight(int size, int weight) throws Exception {
+        if (size > mTotalSizesWeight) throw new Exception("CBC: Tried to set the weight of a region size with a size " +
+                "bigger than the maximum.");
+        this.mSizesWeights.add(size-1, weight);
+    }
 
     public CpuBoardCreator(int size){
         super(size);
@@ -70,8 +86,6 @@ public class CpuBoardCreator extends BoardCreator {
         mAddWeight = mSubsWeight = mProdWeight = mDivWeight = 10;
         mTotalOpWeight = 40;
         mSizesWeights = new ArrayList<Integer>(mMaxRegionSize);
-
-
     }
 
     /* 0 -> up
