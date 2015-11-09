@@ -2,12 +2,13 @@ package domini.KKRegion;
 
 import domini.Basic.Cell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Joan on 21/10/2015.
  */
-public class KKRegionAddition extends KKRegion {
+public class KKRegionAddition extends KKRegion implements Serializable{
 
     public KKRegionAddition(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);
@@ -35,7 +36,24 @@ public class KKRegionAddition extends KKRegion {
             }
         int min = Math.max(1, sum - maxValue * count);
         int max = Math.min(maxValue, sum - count);
-        System.out.println(Integer.toString(min) + " " + Integer.toString(max));
         for (int i = 1; i <= maxValue; i++) possibilities[i - 1] = (i >= min && i <= max);
+    }
+
+    @Override
+    public boolean isCorrect() {
+
+        int sum = operationValue;
+        int count = cells.size() - 1;
+        for (Cell b : cells)
+            if (b.getValue() != 0) {
+                sum -= b.getValue();
+                count--;
+            }
+        if (sum<0)return false;
+        if (count==-1)return sum==0;
+        int min = Math.max(1, sum - maxValue * count);
+        int max = Math.min(maxValue, sum - count);
+        if (min>9 || max<0)return false;
+        return true;
     }
 }

@@ -2,12 +2,13 @@ package domini.KKRegion;
 
 import domini.Basic.Cell;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Joan on 21/10/2015.
  */
-public class KKRegionProduct extends KKRegion {
+public class KKRegionProduct extends KKRegion implements Serializable{
 
     public KKRegionProduct(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);
@@ -35,6 +36,22 @@ public class KKRegionProduct extends KKRegion {
             }
         int min = (int) Math.ceil(prod / Math.pow(maxValue, count));
         for (int i = 1; i <= maxValue; i++)
-            possibilities[i - 1] = (prod % i == 0 && i >= min);
+            possibilities[i-1] = (prod % i == 0 && i >= min);
+    }
+
+    @Override
+    public boolean isCorrect() {
+        float prod = operationValue;
+        int count = cells.size() - 1;
+        for (Cell b : cells)
+            if (b.getValue() != 0) {
+                prod /= (float)b.getValue();
+                count--;
+            }
+        if (count==-1)return prod==1;
+        if (prod%1!=0) return false;
+        int min = (int) Math.ceil(prod / Math.pow(maxValue, count));
+        for (int i = min; i <= maxValue; i++)if(prod % i == 0) return true;
+        return false;
     }
 }

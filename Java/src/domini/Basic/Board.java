@@ -1,8 +1,9 @@
 package domini.Basic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Board {
+public abstract class Board implements Serializable {
     protected ArrayList<ArrayList<Cell>> _boardInfo;
     protected ArrayList<Column> _columns;
     protected ArrayList<Row> _rows;
@@ -15,15 +16,17 @@ public abstract class Board {
      */
     public Board(int size) {
         _size = size;
-        ArrayList<ArrayList<Cell>> _boardInfo = new ArrayList<>(_size);
-        ArrayList<Row> _rows = new ArrayList<>(_size);
-        ArrayList<Column> _columns = new ArrayList<>(_size);
+        _boardInfo = new ArrayList<>(_size);
+        _rows = new ArrayList<>(_size);
+        _columns = new ArrayList<>(_size);
         for (int i = 0; i < _size; ++i) {
-            _boardInfo.set(i, new ArrayList<Cell>(size));
-            _rows.set(i, new Row(_size, i));
+            _boardInfo.add(i, new ArrayList<Cell>(size));
+            _rows.add(i, new Row(_size, i));
             for (int j = 0; j < _size; ++j) {
-                if (i == 0) _columns.set(j, new Column(_size, j));
-                _boardInfo.get(i).set(j, new Cell(_size, _rows.get(i), _columns.get(j)));
+                if (i == 0) _columns.add(j, new Column(_size, j));
+                _boardInfo.get(i).add(j, new Cell(_size, _rows.get(i), _columns.get(j)));
+                _rows.get(i).addCell(j,_boardInfo.get(i).get(j));
+                _columns.get(j).addCell(i, _boardInfo.get(i).get(j));
             }
         }
     }
@@ -85,4 +88,6 @@ public abstract class Board {
     public int getSize() {
         return _size;
     }
+
+
 }
