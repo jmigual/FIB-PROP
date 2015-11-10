@@ -10,18 +10,19 @@ import javafx.scene.control.Tab;
 
 public class BoardCreator {
 
-    protected  int mSize;
-    protected KKBoard mBoard;
-    private Table<KKBoard> mTableKKB;
+    protected static int mSize;
+    protected static KKBoard mBoard;
+    private static Table<KKBoard> mTableKKB;
 
 
-    public KKBoard getBoard() {
+    public static KKBoard getBoard() {
         return mBoard;
     }
 
-    public void setBoard(KKBoard mBoard) {
-        this.mBoard = mBoard;
+    public static void setBoard(KKBoard board) {
+        mBoard = board;
     }
+
 
     public BoardCreator(int size, Table<KKBoard> tableKKB){
         mBoard = new KKBoard(size);
@@ -29,7 +30,13 @@ public class BoardCreator {
         mTableKKB = tableKKB;
     }
 
-    public void saveBoard(String name){
+    public static void setBoardCreator(int size, Table<KKBoard> tableKKB){
+        mBoard = new KKBoard(size);
+        mSize = size;
+        mTableKKB = tableKKB;
+    }
+
+    public static void saveBoard(String name){
         //KKBoard B = mBoard.clone();
         //B.setName(name);
         //mTableKKB.add(B);

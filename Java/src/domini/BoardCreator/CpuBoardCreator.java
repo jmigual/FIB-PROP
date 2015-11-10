@@ -187,9 +187,28 @@ public class CpuBoardCreator extends BoardCreator {
 
         DFS_v1(i, j);
 
-        // Testing
+        // Fill the board with random numbers
+        mBoard.solve(); // future--> call randomSolution() !!
+
+        // Create regions
+        double s = mAddWeight/(double)(mAddWeight + mProdWeight);
+        double d = mDivWeight/(double)mTotalOpWeight;
+        double r = mSubsWeight/(double)mTotalOpWeight;
+        double m2 = mSizesWeights.get(2-1)/(double)mTotalSizesWeight;
         for (ArrayList<Cell> regCells : regionsCells){
-            mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, 42);
+            double rand = mRand.nextDouble();
+            if (regCells.size() == 2 && rand < r/m2){
+                mBoard.createRegion(regCells, KKRegion.OperationType.SUBTRACTION, 42);
+            } else if (regCells.size() == 2 && rand < d/m2){
+                mBoard.createRegion(regCells, KKRegion.OperationType.DIVISION, 2);
+            } else {
+                rand = mRand.nextDouble();
+                if (rand < s){
+                    mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, 42);
+                } else {
+                    mBoard.createRegion(regCells, KKRegion.OperationType.PRODUCT, 42);
+                }
+            }
         }
     }
 }

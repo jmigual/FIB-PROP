@@ -8,10 +8,9 @@ import domini.KKBoard;
  */
 public class HumanBoardCreator extends BoardCreator {
 
-
     public HumanBoardCreator(int size, Table<KKBoard> tableBKK){
         super(size, tableBKK);
     }
-    
+
 
 }

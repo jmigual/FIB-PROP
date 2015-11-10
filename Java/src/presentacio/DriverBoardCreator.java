@@ -3,6 +3,7 @@ package presentacio;
 import dades.Table;
 import domini.BoardCreator.BoardCreator;
 import domini.BoardCreator.CpuBoardCreator;
+import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
 import javafx.scene.control.Tab;
 
@@ -159,6 +160,70 @@ public class DriverBoardCreator {
     }
 
     public static void runHBC(){
+        out.print("Inserta una mida pel taulell:");
+        HumanBoardCreator.setBoardCreator(in.nextInt(), mTableKKB);
 
+        boolean printMenu = true;
+        while (true) {
+            if (printMenu) {
+                out.print("Selecciona una opció:\n" +
+                        "0) Deixar d'imprimir el menú per pantalla\n" +
+                        "1) Veure el taulell\n" +
+                        "2) Omplir el taulell de nombres aleatoris\n" +
+                        "3) Crear una regió\n" +
+                        "4) Modificar una regió\n" +
+                        "5) Comprovar que el taulell sigui resoluble\n" +
+                        "6) Resoldre el taulell\n" +
+                        "7) Guardar el taulell\n" +
+                        "8) Sortir\n");
+            }
+            out.print(">> ");
+            switch (in.nextInt()){
+                case 0: {
+                    printMenu = false;
+                    break;
+                }
+                case 1: {
+                    DriverKKBoardPrinter.printBoard(HumanBoardCreator.getBoard(),out);
+                    break;
+                }
+                case 2: {
+                    if (printMenu) {
+                        out.print("Entra les coordenades de la cel·la (fila,columna) (començant per l'índex 1)" +
+                                " i després entra el valor de la cel·la:\n" +
+                                ">> ");
+                    }
+                    else {
+                        out.print("(i,j)<-n >> ");
+                    }
+                    HumanBoardCreator.getBoard().getCell(in.nextInt()-1,in.nextInt()-1).setValue(in.nextInt());
+                    break;
+                }
+                case 3: {
+                    out.print("Número de cel·les: ");
+                    int n = in.nextInt();
+                    for (int i=1; i<=n; ++i){
+                        out.print("Coordenades (fila, columna) de la cel·la " + i + ": ");
+                    }
+                    break;
+                }
+                case 4: {
+                    break;
+                }
+                case 5: {
+                    break;
+                }
+                case 6: {
+                    break;
+                }
+                case 7: {
+                    break;
+                }
+                case 8: {
+                    return;
+                }
+
+            }
+        }
     }
 }
