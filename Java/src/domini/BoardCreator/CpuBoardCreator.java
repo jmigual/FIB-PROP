@@ -1,5 +1,6 @@
 package domini.BoardCreator;
 
+import dades.Table;
 import domini.Basic.Cell;
 import domini.Basic.Region;
 import domini.KKBoard;
@@ -87,8 +88,8 @@ public class CpuBoardCreator extends BoardCreator {
 
     }
 
-    public CpuBoardCreator(int size){
-        super(size);
+    public CpuBoardCreator(int size, Table<KKBoard> tableKKB){
+        super(size, tableKKB);
         mMaxRegionSize = 5;
         mAddWeight = mSubsWeight = mProdWeight = mDivWeight = 10;
         mTotalOpWeight = 40;
@@ -125,10 +126,6 @@ public class CpuBoardCreator extends BoardCreator {
             e.printStackTrace();
         }
         return 2;
-    }
-
-    private void createRegion(){
-
     }
 
     private void DFS_v1(int i, int j){

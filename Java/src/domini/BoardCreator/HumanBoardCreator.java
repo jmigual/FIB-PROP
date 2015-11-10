@@ -1,5 +1,6 @@
 package domini.BoardCreator;
 
+import dades.Table;
 import domini.KKBoard;
 
 /**
@@ -8,8 +9,8 @@ import domini.KKBoard;
 public class HumanBoardCreator extends BoardCreator {
 
 
-    public HumanBoardCreator(int size){
-        super(size);
+    public HumanBoardCreator(int size, Table<KKBoard> tableBKK){
+        super(size, tableBKK);
     }
     
 
