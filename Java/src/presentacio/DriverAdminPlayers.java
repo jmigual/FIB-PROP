@@ -16,11 +16,50 @@ public class DriverAdminPlayers implements Driver {
 
     String _currentPlayer;
 
+    PrintStream out = System.out;
+
+    Scanner in = new Scanner(System.in);
+
     public DriverAdminPlayers(PlayersAdmin p) {
         this._pAdmin = p;
         _currentPlayer = "";
     }
 
+    /**
+     * Shows the console input to allow a Player log in and checks some parameters
+     */
+    public void loginUser() {
+        out.print("Nom d'usuari: ");
+        String name = in.next();
+        out.print("Contrasenya: ");
+        String pass = in.next();
+
+        if (!_pAdmin.checkLogin(name, pass)) {
+            System.err.println("No s'ha pogut iniciar sessió nom d'usuari o contrasenya incorrectes");
+        }
+
+        _currentPlayer = name;
+    }
+
+    /**
+     * Removes the current logged in user
+     */
+    public void logoutUser() { _currentPlayer = ""; }
+
+    /**
+     * Shows the console input to check if a Player exists
+     */
+    public void checkPlayer() {
+        out.print("Nom d'usuari: ");
+
+        if (_pAdmin.exists(in.next())) out.println("L'usuari existeix");
+        else out.println("L'usuari no existeix");
+    }
+
+    /**
+     * Main function of the DriverAdminPlayers' class
+     * @param args Basic arguments to enter, they're ignored
+     */
     public static void main(String[] args) {
 
         KKDB db = new KKDB();
@@ -31,10 +70,10 @@ public class DriverAdminPlayers implements Driver {
         db.save();
     }
 
+    /**
+     * Shows a menu and allows the user to interactuate with the PlayersAdmin
+     */
     public void run() {
-        PrintStream out = System.out;
-        Scanner in = new Scanner(System.in);
-
         while (true) {
             out.println("Selecciona una opció:\n" +
                     "1) Afegir jugador\n" +
@@ -117,31 +156,17 @@ public class DriverAdminPlayers implements Driver {
                 }
                 // Check player
                 case 4: {
-                    out.print("Nom d'usuari: ");
-                    String name = in.next();
-
-                    if (_pAdmin.exists(name)) out.println("L'usuari existeix");
-                    else out.println("L'usuari no existeix");
-
+                    this.checkPlayer();
                     break;
                 }
                 // Log in
                 case 5: {
-                    out.print("Nom d'usuari: ");
-                    String name = in.next();
-                    out.print("Contrasenya: ");
-                    String pass = in.next();
-
-                    if (!_pAdmin.checkLogin(name, pass)) {
-                        System.err.println("No s'ha pogut iniciar sessió nom d'usuari o contrasenya incorrectes");
-                    }
-
-                    _currentPlayer = name;
+                    this.loginUser();
                     break;
                 }
                 // Close session
                 case 6: {
-                    _currentPlayer = "";
+                    this.logoutUser();
                     break;
                 }
                 // View all players
@@ -156,6 +181,10 @@ public class DriverAdminPlayers implements Driver {
         }
     }
 
+    /**
+     * To get the current logged in player
+     * @return Current logged in player
+     */
     public String getCurrentPlayer() {
         return _currentPlayer;
     }
