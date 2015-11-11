@@ -1,13 +1,16 @@
 package presentacio;
 
 import dades.Table;
+import domini.Basic.Cell;
 import domini.BoardCreator.BoardCreator;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
+import domini.KKRegion.KKRegion;
 import javafx.scene.control.Tab;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -19,11 +22,11 @@ public class DriverBoardCreator {
     private static Scanner in = new Scanner(System.in);
     private static Table<KKBoard> mTableKKB;
 
-    public DriverBoardCreator(){
+    public DriverBoardCreator() {
         mTableKKB = new Table<>();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         while (true) {
             out.println("Benvingut al creador de taulells de Kenken!\n" +
@@ -34,7 +37,7 @@ public class DriverBoardCreator {
 
             if (!in.hasNextInt()) break;
 
-            switch (in.nextInt()){
+            switch (in.nextInt()) {
                 case 1: {
                     runHBC();
                     break;
@@ -50,12 +53,12 @@ public class DriverBoardCreator {
         }
     }
 
-    protected static void runCBC(){
+    protected static void runCBC() {
         out.println("Introdueix la mida del taulell:");
         int size = in.nextInt();
         CpuBoardCreator CBC = new CpuBoardCreator(size, mTableKKB);
 
-        while (true){
+        while (true) {
             out.println("Selecciona una opció:\n" +
                     "1) Canviar la mida màxima de les regions\n" +
                     "2) Canviar pesos\n" +
@@ -66,7 +69,7 @@ public class DriverBoardCreator {
 
             if (!in.hasNextInt()) break;
 
-            switch (in.nextInt()){
+            switch (in.nextInt()) {
                 case 1: {
                     out.println("Introdueix la mida màxima de les regions:");
                     int m = in.nextInt();
@@ -103,11 +106,11 @@ public class DriverBoardCreator {
         }
     }
 
-    protected static  void editWeights(CpuBoardCreator CBC){
+    protected static void editWeights(CpuBoardCreator CBC) {
         while (true) {
             out.println("Pesos de les mides de regions: (mida)-->(pes)");
             for (int i = 0; i < CBC.getMaxRegionSize(); ++i) {
-                out.println(i+1 + "-->" + CBC.getSizesWeights().get(i));
+                out.println(i + 1 + "-->" + CBC.getSizesWeights().get(i));
             }
             out.println("Total:" + CBC.getTotalSizesWeight() + "\n" +
                     "Pesos de les operacions en les regions:\n" +
@@ -136,7 +139,7 @@ public class DriverBoardCreator {
                         break;
                     case "o":
                         out.println("Escriu la lletra que identifica l'operació (d,r,p,s) i després el seu pes:");
-                        switch (in.next()){
+                        switch (in.next()) {
                             case "d":
                                 CBC.setDivWeight(in.nextInt());
                                 break;
@@ -159,7 +162,7 @@ public class DriverBoardCreator {
         }
     }
 
-    public static void runHBC(){
+    public static void runHBC() {
         out.print("Inserta una mida pel taulell:");
         HumanBoardCreator HBC = new HumanBoardCreator(in.nextInt(), mTableKKB);
 
@@ -168,23 +171,28 @@ public class DriverBoardCreator {
             if (printMenu) {
                 out.print("Selecciona una opció:\n" +
                         "0) Deixar d'imprimir el menú per pantalla\n" +
-                        "1) Veure el taulell\n" +
-                        "2) Omplir el taulell de nombres aleatoris\n" +
+                        "1) Omplir el taulell de números aleatoris\n" +
+                        "2) Modificar el valor d'una cel·la\n" +
                         "3) Crear una regió\n" +
-                        "4) Modificar una regió\n" +
+                        "4) Veure el taulell\n" +
                         "5) Comprovar que el taulell sigui resoluble\n" +
-                        "6) Resoldre el taulell\n" +
+                        "6) Resoldre el taulell (s'esborraran els números)\n" +
                         "7) Guardar el taulell\n" +
-                        "8) Sortir\n");
+                        "8) Carregar un taulell\n" +
+                        "9) Sortir\n");
             }
             out.print(">> ");
-            switch (in.nextInt()){
+            switch (in.nextInt()) {
                 case 0: {
-                    printMenu = false;
+                    printMenu = !printMenu;
                     break;
                 }
                 case 1: {
-                    DriverKKBoardPrinter.printBoard(HBC.getBoard(),out);
+                    if (HBC.fillBoardWithRandomNumbers()) {
+                        out.println("El taulell de Kenken s'ha omplert de números aleatoris.");
+                    } else {
+                        out.println("Aquest taulell no té solució possible!");
+                    }
                     break;
                 }
                 case 2: {
@@ -192,37 +200,67 @@ public class DriverBoardCreator {
                         out.print("Entra les coordenades de la cel·la (fila,columna) (començant per l'índex 1)" +
                                 " i després entra el valor de la cel·la:\n" +
                                 ">> ");
-                    }
-                    else {
+                    } else {
                         out.print("(i,j)<-n >> ");
                     }
-                    HBC.getBoard().getCell(in.nextInt()-1,in.nextInt()-1).setValue(in.nextInt());
+                    HBC.getBoard().getCell(in.nextInt() - 1, in.nextInt() - 1).setValue(in.nextInt());
                     break;
                 }
                 case 3: {
-                    out.print("Número de cel·les: ");
-                    int n = in.nextInt();
-                    for (int i=1; i<=n; ++i){
-                        out.print("Coordenades (fila, columna) de la cel·la " + i + ": ");
+                    ArrayList<Cell> C = new ArrayList<Cell>(HBC.getBoard().getSize() * HBC.getBoard().getSize());
+
+                    C.clear();
+                    out.print("Introdueix la operacio (*,+,/,-): ");
+                    char op = in.next().charAt(0);
+                    out.print("Introdueix el resultat: ");
+                    int opValue = in.nextInt();
+                    out.print("Introdueix el tamany de la regio: ");
+                    int sizeRegion = in.nextInt();
+                    for (int j = 0; j < sizeRegion; j++) {
+                        out.print("Introdueix la posicio de la cella: ");
+                        int x = in.nextInt();
+                        int y = in.nextInt();
+                        C.add(HBC.getBoard().getCell(x, y));
+                    }
+                    if (!HBC.createRegion(false, C, op, opValue)){
+                        out.print("Aquesta regió eliminarà altres regions ja creades. Segueixes volent-la crear? (s/n)");
+                        String s = in.next();
+                        while (!s.equals("s") || !s.equals("n")){
+                            s = in.next();
+                        }
                     }
                     break;
                 }
                 case 4: {
+                    DriverKKBoardPrinter.printBoard(HBC.getBoard(), out);
                     break;
                 }
                 case 5: {
+                    if (HBC.getBoard().hasSolution()) {
+                        out.println("Té solució");
+                    } else {
+                        out.println("No té solució.");
+                    }
                     break;
                 }
                 case 6: {
+                    HBC.clearBoard();
+                    HBC.getBoard().solve();
                     break;
                 }
                 case 7: {
+                    out.print("Posa un nom al tauler:");
+                    HBC.saveBoard(in.next());
                     break;
                 }
                 case 8: {
+                    out.print("Com es diu el taulell que vols carregar? ");
+                    HBC.loadBoard(in.next());
+                    break;
+                }
+                case 9: {
                     return;
                 }
-
             }
         }
     }

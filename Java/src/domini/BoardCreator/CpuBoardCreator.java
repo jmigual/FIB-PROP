@@ -107,11 +107,10 @@ public class CpuBoardCreator extends BoardCreator {
      * 2 -> left
      * 3 -> right
      */
-    Random mRand;
-    ArrayList<ArrayList<Boolean>> visitedCells;
-    int currentRegSize, currentCellCounter;
-    ArrayList<Cell> currentRegCells;
-    ArrayList<ArrayList<Cell>> regionsCells;
+    private ArrayList<ArrayList<Boolean>> visitedCells;
+    private int currentRegSize, currentCellCounter;
+    private ArrayList<Cell> currentRegCells;
+    private ArrayList<ArrayList<Cell>> regionsCells;
 
     private int getRandomRegionSize() {
         double r = mRand.nextDouble();
