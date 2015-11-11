@@ -28,8 +28,10 @@ public class DriverBoardCreator {
 
     public static void main(String[] args) {
 
+        mTableKKB = new Table<>();
+
         while (true) {
-            out.println("Benvingut al creador de taulells de Kenken!\n" +
+            out.print("Benvingut al creador de taulells de Kenken!\n" +
                     "Seleciona una opci�:\n" +
                     "1) Crear un taulell manualment.\n" +
                     "2) Que la CPU em generi un taulell aleat�riament a partir de certs par�metres.\n" +
@@ -59,19 +61,19 @@ public class DriverBoardCreator {
         CpuBoardCreator CBC = new CpuBoardCreator(size, mTableKKB);
 
         while (true) {
-            out.println("Selecciona una opció:\n" +
+            out.print("Selecciona una opció:\n" +
                     "1) Canviar la mida màxima de les regions\n" +
                     "2) Canviar pesos\n" +
                     "3) Generar un taulell\n" +
                     "4) Veure el taulell\n" +
                     "5) Guardar el taulell\n" +
-                    "6) Sortir");
+                    "6) Sortir\n");
 
             if (!in.hasNextInt()) break;
 
             switch (in.nextInt()) {
                 case 1: {
-                    out.println("Introdueix la mida màxima de les regions:");
+                    out.print("Introdueix la mida màxima de les regions: ");
                     int m = in.nextInt();
                     CBC.setMaxRegionSize(m);
                     out.println("Mida màxima canviada a " + m + ".");
@@ -94,9 +96,10 @@ public class DriverBoardCreator {
                     break;
                 }
                 case 5: {
-                    out.print("Quin nom vols posar al taulell?");
+                    out.print("Quin nom vols posar al taulell? ");
                     String s = in.next();
                     CBC.saveBoard(s);
+                    out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
                     break;
                 }
                 case 6: {
@@ -163,7 +166,7 @@ public class DriverBoardCreator {
     }
 
     public static void runHBC() {
-        out.print("Inserta una mida pel taulell:");
+        out.print("Inserta una mida pel taulell: ");
         HumanBoardCreator HBC = new HumanBoardCreator(in.nextInt(), mTableKKB);
 
         boolean printMenu = true;
@@ -251,11 +254,16 @@ public class DriverBoardCreator {
                 case 7: {
                     out.print("Posa un nom al tauler:");
                     HBC.saveBoard(in.next());
+                    out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
                     break;
                 }
                 case 8: {
                     out.print("Com es diu el taulell que vols carregar? ");
-                    HBC.loadBoard(in.next());
+                    if (HBC.loadBoard(in.next())){
+                        out.println("Tauler carregat.");
+                    } else {
+                        out.println("404: No s'ha trobat el tauler. :/");
+                    }
                     break;
                 }
                 case 9: {
