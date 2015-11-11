@@ -1,7 +1,9 @@
 package dades;
 
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Manages the creation, deletion and existence of players
@@ -142,8 +144,15 @@ public class PlayersAdmin {
 
     public void viewAllPlayers() {
         for (Player p : _players) {
-            System.out.println(p.getName() + " " + p.getHash().toString());
+            System.out.println(p.getName() + " " + Arrays.toString(p.getHash()));
         }
+    }
+
+    public ArrayList<String> getAllPlayersNames() {
+        ArrayList<String> ret = new ArrayList<>(_players.size());
+
+        ret.addAll(_players.stream().map(Player::getName).collect(Collectors.toList()));
+        return ret;
     }
 
     private byte[] getHash(String s) throws Exception {
