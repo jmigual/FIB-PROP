@@ -35,7 +35,7 @@ public class Match implements Serializable {
         _score = _time = 0;
         _finished = false;
         _moves = new ArrayList<>();
-        _index = 0;
+        _index = -1;
     }
 
     /** Tells whether the match has been completed or not (usefull for recovering running matches) */
@@ -49,7 +49,6 @@ public class Match implements Serializable {
 
     public String getPlayer (){return _player;}
 
-
     /**Classes that use Move to implement the Undo function*/
     /** To make a move
       * @param i row of the Cell
@@ -60,7 +59,7 @@ public class Match implements Serializable {
         Cell cell = _board.getCell(i, j);
         Move move = new Move(cell, cell.getValue(), value);
 
-        for (int it=_index + 1; it<_moves.size(); ++it) _moves.remove(it);
+        for (int it=_moves.size()-1; it>_index; --it) _moves.remove(it);
 
         _moves.add(move);
         _index = _moves.size()-1;
@@ -70,7 +69,7 @@ public class Match implements Serializable {
     }
 
     public boolean back (){
-        if (_index == 0) return false;
+        if (_index == -1) return false;
         _moves.get(_index).revertMove();
         --_index;
 
@@ -85,7 +84,7 @@ public class Match implements Serializable {
         return true;
     }
 
-    /** Used to handle the annotations of the cells */
+    /** Used to handle the annotations of the cells (activate/deactivate)*/
 
     public void addAnnotation (int i, int j, int value, boolean ann) {
         Cell cell = _board.getCell(i,j);

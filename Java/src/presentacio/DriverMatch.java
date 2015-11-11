@@ -5,6 +5,7 @@ import dades.Player;
 import dades.PlayersAdmin;
 import dades.Table;
 import domini.Basic.Board;
+import domini.Basic.Cell;
 import domini.Basic.Match;
 import domini.KKBoard;
 
@@ -104,12 +105,12 @@ public class DriverMatch {
                     break;
             }
         }
-
-       // KKBoard sol = m.getBoard().getSolution();
         db.save();
     }
 
     public void run () {
+
+        // KKBoard sol = m.getBoard().getSolution();
         PrintStream out = System.out;
         DriverKKBoardPrinter KKp = new DriverKKBoardPrinter(_match.getBoard(),out);
         Scanner in = new Scanner(System.in);
@@ -119,20 +120,52 @@ public class DriverMatch {
         while (!finish){
             KKp.printBoard(_match.getBoard());
 
-            out.println("/n");
+            out.println("");
             out.println("Escull:");
             out.println ("1. Fer un moviment");
             out.println ("2. Tirar enrere l'ultim moviment");
             out.println("3. Refer l'ultim moviment tirat enrere");
-            out.println("4. Ficar anotacio en una cel·la");
-            out.println ("5. Veure anotacions d'una cel·la");
-            out.println ("6. Demanar un Ajut (Hint)");
-            out.println ("7. Guardar i sortir");
+            out.println("4. Editar anotacions");
+            out.println ("5. Demanar un Ajut (Hint)");
+            out.println ("6. Guardar i sortir");
 
             switch (in.nextInt()) {
+                case 1:
+                    out.println("Escriu la fila i columna de la cel·la a modificar seguit del valor desitjat:");
+                    _match.makeMove(in.nextInt(), in.nextInt(), in.nextInt());
+                    break;
+                case 2:
+                    if (!_match.back()) out.println("No hi ha moviments a revertir!");
+                    break;
+                case 3:
+                    if (!_match.forward()) out.println("No hi ha moviments a refer!");
+                    break;
+                case 4:
+                    out.println ("1. Afegir anotacio");
+                    out.println ("2. Eliminar anotacio");
+                    out.println ("3. Veure anotacions d'una cel·la");
 
+                    switch (in.nextInt()) {
+                        case 1:
+                            out.println("Introdueix fila, columna de cel·la i numero de l'anotacio");
+                            _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), true);
+                            break;
+                        case 2:
+                            out.println("Introdueix fila, columna de cel·la i numero de l'anotacio");
+                            _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), false);
+                            break;
+                        case 3:
+                            out.println("Introdueix fila, columna de cel·la");
+                            Cell cell = _match.getBoard().getCell(in.nextInt(), in.nextInt());
 
-                case 7:
+                            for (int it = 0; it < _match.getBoard().getSize(); ++it) out.print(cell.getAnnotation(it+1) + " ");
+                            out.println("");
+                            break;
+                    }
+                    break;
+                case 5:
+                    //MENU HINTS
+                case 6:
                     finish = true;
                     break;
             }
