@@ -136,7 +136,7 @@ public class KKBoard extends Board implements Serializable {
         this.getCell(i, j).calculatePossibilities();*/
 
 
-        //precalculate();
+        precalculate();
 
         calculateIndividualPossibilities();
 
