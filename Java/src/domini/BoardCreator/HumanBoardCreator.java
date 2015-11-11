@@ -26,14 +26,6 @@ public class HumanBoardCreator extends BoardCreator {
         return false;
     }
 
-    public void clearBoard() {
-        for (int i = 0; i < mSize; ++i) {
-            for (int j = 0; j < mSize; ++j) {
-                mBoard.getCell(i, j).setValue(0);
-            }
-        }
-    }
-
     public boolean createRegion(boolean forceOverlappingRegionsDestruction, ArrayList<Cell> cells, char operation,
                                 int result) {
         if (!forceOverlappingRegionsDestruction) {
