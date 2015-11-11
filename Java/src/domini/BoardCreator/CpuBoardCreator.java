@@ -1,5 +1,6 @@
 package domini.BoardCreator;
 
+import dades.Table;
 import domini.Basic.Cell;
 import domini.Basic.Region;
 import domini.KKBoard;
@@ -87,8 +88,8 @@ public class CpuBoardCreator extends BoardCreator {
 
     }
 
-    public CpuBoardCreator(int size){
-        super(size);
+    public CpuBoardCreator(int size, Table<KKBoard> tableKKB){
+        super(size, tableKKB);
         mMaxRegionSize = 5;
         mAddWeight = mSubsWeight = mProdWeight = mDivWeight = 10;
         mTotalOpWeight = 40;
@@ -106,11 +107,10 @@ public class CpuBoardCreator extends BoardCreator {
      * 2 -> left
      * 3 -> right
      */
-    Random mRand;
-    ArrayList<ArrayList<Boolean>> visitedCells;
-    int currentRegSize, currentCellCounter;
-    ArrayList<Cell> currentRegCells;
-    ArrayList<ArrayList<Cell>> regionsCells;
+    private ArrayList<ArrayList<Boolean>> visitedCells;
+    private int currentRegSize, currentCellCounter;
+    private ArrayList<Cell> currentRegCells;
+    private ArrayList<ArrayList<Cell>> regionsCells;
 
     private int getRandomRegionSize() {
         double r = mRand.nextDouble();
@@ -125,10 +125,6 @@ public class CpuBoardCreator extends BoardCreator {
             e.printStackTrace();
         }
         return 2;
-    }
-
-    private void createRegion(){
-
     }
 
     private void DFS_v1(int i, int j){
@@ -190,9 +186,28 @@ public class CpuBoardCreator extends BoardCreator {
 
         DFS_v1(i, j);
 
-        // Testing
+        // Fill the board with random numbers
+        //mBoard.solve(); // future--> call randomSolution() !!
+
+        // Create regions
+        double s = mAddWeight/(double)(mAddWeight + mProdWeight);
+        double d = mDivWeight/(double)mTotalOpWeight;
+        double r = mSubsWeight/(double)mTotalOpWeight;
+        double m2 = mSizesWeights.get(2-1)/(double)mTotalSizesWeight;
         for (ArrayList<Cell> regCells : regionsCells){
-            mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, 42);
+            double rand = mRand.nextDouble();
+            if (regCells.size() == 2 && rand < r/m2){
+                mBoard.createRegion(regCells, KKRegion.OperationType.SUBTRACTION, 42);
+            } else if (regCells.size() == 2 && rand < d/m2){
+                mBoard.createRegion(regCells, KKRegion.OperationType.DIVISION, 2);
+            } else {
+                rand = mRand.nextDouble();
+                if (rand < s){
+                    mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, 42);
+                } else {
+                    mBoard.createRegion(regCells, KKRegion.OperationType.PRODUCT, 42);
+                }
+            }
         }
     }
 }
