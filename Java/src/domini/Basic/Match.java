@@ -3,6 +3,7 @@ package domini.Basic;
 import java.io.Serializable;
 import java.util.ArrayList;
 import dades.Player;
+import domini.KKBoard;
 
 /**
  * Contains information about a Match, such as the Player and the current Board
@@ -11,8 +12,8 @@ public class Match implements Serializable {
     //ATTRIBUTES
 
     /** Basic attributes */
-    private Board _board;
-    private Player _player;
+    private KKBoard _board;
+    private String _player;
 
     private boolean _finished;
 
@@ -28,8 +29,7 @@ public class Match implements Serializable {
     //OPERATIONS
 
     /** Constructor giving the Board and Player */
-
-    public Match (Board board, Player player) {
+    public Match (KKBoard board, String player) {
         _board = board;
         _player = player;
         _score = _time = 0;
@@ -45,9 +45,9 @@ public class Match implements Serializable {
     public void setScore (float score){ _score = score;}
     public float getScore (){ return _score;}
 
-    public Board getBoard (){return _board;}
+    public KKBoard getBoard (){return _board;}
 
-    public Player getPlayer (){return _player;}
+    public String getPlayer (){return _player;}
 
 
     /**Classes that use Move to implement the Undo function*/
