@@ -31,10 +31,14 @@ public class BoardCreator {
 
 
     public BoardCreator(int size, Table<KKBoard> tableKKB) {
-        mBoard = new KKBoard(size);
         mSize = size;
+        newBoard();
         mTableKKB = tableKKB;
         mRand = new Random();
+    }
+
+    protected void newBoard(){
+        mBoard = new KKBoard(mSize);
         // Create a troll region for the whole the Board
         ArrayList<Cell> tot = new ArrayList<Cell>(mSize * mSize);
         for (int i = 0; i < mSize; ++i) {
@@ -43,6 +47,14 @@ public class BoardCreator {
             }
         }
         mBoard.createRegion(tot, KKRegion.OperationType.ADDITION, 0);
+    }
+
+    public void clearBoard() {
+        for (int i = 0; i < mSize; ++i) {
+            for (int j = 0; j < mSize; ++j) {
+                mBoard.getCell(i, j).setValue(0);
+            }
+        }
     }
 
     public void setBoardCreator(int size, Table<KKBoard> tableKKB) {
