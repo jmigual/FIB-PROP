@@ -81,7 +81,7 @@ public class DriverRegion {
                         region.calculatePossibilities();
                         for (int i = 0; i < maxCellValue; i++)
                             out.print(Boolean.toString(region.getPossibility(i + 1)) + " ");
-                        for (Cell c: region.getCells())c.calculatePossibilities();
+                        region.getCells().forEach(Cell::calculatePossibilities);
                         out.println();
                         break;
                     case 6:
@@ -102,7 +102,7 @@ public class DriverRegion {
                             out.print(Boolean.toString(region.getCells().get(modifiedCell).getPossibility(i + 1)) + " ");
                         break;
                     case 9:
-                        region.calculateIndividualPossibilities();;
+                        region.calculateIndividualPossibilities();
                         break;
                 }
             } else keepAsking = false;

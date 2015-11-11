@@ -12,13 +12,13 @@ import java.util.Scanner;
  */
 public class DriverAdminPlayers implements Driver {
 
-    PlayersAdmin _pAdmin;
+    private PlayersAdmin _pAdmin;
 
-    String _currentPlayer;
+    private String _currentPlayer;
 
-    PrintStream out = System.out;
+    private PrintStream out = System.out;
 
-    Scanner in = new Scanner(System.in);
+    private Scanner in = new Scanner(System.in);
 
     public DriverAdminPlayers(PlayersAdmin p) {
         this._pAdmin = p;
@@ -112,7 +112,7 @@ public class DriverAdminPlayers implements Driver {
                         String temp = in.next();
                         temp = temp.toLowerCase();
 
-                        correct = temp.equals("s") || temp.equals("y") || temp.equals("si") || temp.equals("yes");
+                        correct = "s".equals(temp) || "y".equals(temp) || "si".equals(temp) || "yes".equals(temp);
                     }
 
                     _pAdmin.createPlayer(name, pass);

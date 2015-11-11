@@ -2,6 +2,7 @@ package domini.Basic;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Contains some cells
@@ -26,12 +27,12 @@ public abstract class Region extends ItemPossibilities implements Serializable{
     /**
      * Constructor with initialized cells
      * @param cells Cells contained in the Region
-     * @param maxCellValue
+     * @param maxCellValue Maximum Cell Value
      */
     public Region(ArrayList<Cell> cells, int maxCellValue) {
         super(maxCellValue);
         this.cells = new ArrayList<>(cells.size());
-        for (int i=0; i<cells.size(); i++)this.cells.add(cells.get(i));
+        for (Cell cell : cells) this.cells.add(cell);
     }
 
     /**
@@ -48,7 +49,7 @@ public abstract class Region extends ItemPossibilities implements Serializable{
      */
     public void setCells(ArrayList<Cell> cells) {
         this.cells.clear();
-        for (Cell c: cells)this.cells.add(c);
+        this.cells.addAll(cells.stream().collect(Collectors.toList()));
     }
 
     /**
@@ -84,8 +85,15 @@ public abstract class Region extends ItemPossibilities implements Serializable{
         return cells.size();
     }
 
+    /**
+     * Must check if all the cells in the region have a correct value
+     * @return True if there's no cell breaking the region laws
+     */
     public abstract boolean isCorrect();
 
+    /**
+     * Checks the possibilities for all the cells
+     */
     public void calculateIndividualPossibilities(){
         for (Cell c: cells){
             c.annotations=c.possibilities.clone();
@@ -93,6 +101,12 @@ public abstract class Region extends ItemPossibilities implements Serializable{
         }
         dfs(0);
     }
+
+    /**
+     * Some thing that @iminspace's been doing and he's very happy with it =)
+     * @param i
+     * @return
+     */
     private boolean dfs (int i){
         if (i==cells.size()) return this.isCorrect();
         Cell c=cells.get(i);

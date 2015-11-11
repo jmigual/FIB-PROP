@@ -7,11 +7,11 @@ import java.io.Serializable;
  */
 
 public class Cell extends ItemPossibilities implements Serializable{
-    int value;
+    private int value;
     boolean[] annotations;
-    Region region;
-    Column column;
-    Row row;
+    private Region region;
+    private Column column;
+    private Row row;
 
     //Intentem fer primer Row i despres column amb tot -- Esteve
     public Cell(int max, Row row, Column column) {

@@ -13,7 +13,7 @@ public class PlayersAdmin {
     /**
      * Contains all the players from the DB
      */
-    Table<Player> _players;
+    private Table<Player> _players;
 
     /**
      * PlayersAdmin constructor, creates a player administrator
@@ -86,7 +86,6 @@ public class PlayersAdmin {
      * @param name     Player's name
      * @param password Player's password
      * @return <b>True</b> if the Player exists and has the selected password
-     * @throws Exception General exception with the error message
      */
     public boolean checkLogin(String name, String password) {
         try {
@@ -117,7 +116,6 @@ public class PlayersAdmin {
      * @param name     Player's name
      * @param password Player's password
      * @return <b>True</b> if the player is removed
-     * @throws Exception General exception with the error message
      */
     public boolean removePlayer(String name, String password) {
         byte[] hash;

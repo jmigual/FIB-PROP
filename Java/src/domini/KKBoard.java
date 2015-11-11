@@ -2,6 +2,8 @@ package domini;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
+import domini.Basic.Column;
+import domini.Basic.Row;
 import domini.KKRegion.*;
 
 import java.io.Serializable;
@@ -32,8 +34,7 @@ public class KKBoard extends Board implements Serializable {
     }
 
     private boolean precalculate() {
-        for (int i = 0; i < _kkregions.size(); i++) {
-            KKRegion r = _kkregions.get(i);
+        for (KKRegion r : _kkregions) {
             if (r.size() == 1) r.getCell(0).setValue(r.getOperationValue());
         }
         boolean changed = true;
@@ -102,21 +103,21 @@ public class KKBoard extends Board implements Serializable {
                 this.getCell(i, j).setValue(a);
                 ret = ret || recursive_solve(i_f, j_f);
                 if (!ret) this.getCell(i, j).setValue(0);
-                if (ret) return ret;
+                else return ret;
             }
         }
         return false;
     }
 
     public void calculateIndividualPossibilities(){
-        for (int i = 0; i < _kkregions.size(); i++) {
-            _kkregions.get(i).calculatePossibilities();
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculatePossibilities();
         }
-        for (int i = 0; i < _columns.size(); i++) {
-            _columns.get(i).calculatePossibilities();
+        for (Column _column : _columns) {
+            _column.calculatePossibilities();
         }
-        for (int i = 0; i < _rows.size(); i++) {
-            _rows.get(i).calculatePossibilities();
+        for (Row _row : _rows) {
+            _row.calculatePossibilities();
         }
         for (int i = 0; i < _size; i++) {
             for (int j = 0; j < _size; j++) {
@@ -126,15 +127,14 @@ public class KKBoard extends Board implements Serializable {
                 }
             }
         }
-        for (int i = 0; i < _kkregions.size(); i++) {
-            _kkregions.get(i).calculateIndividualPossibilities();
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculateIndividualPossibilities();
         }
-        for (int i = 0; i < _columns.size(); i++) {
-            _columns.get(i).calculateIndividualPossibilities();
-            i = i;
+        for (Column _column : _columns) {
+            _column.calculateIndividualPossibilities();
         }
-        for (int i = 0; i < _rows.size(); i++) {
-            _rows.get(i).calculateIndividualPossibilities();
+        for (Row _row : _rows) {
+            _row.calculateIndividualPossibilities();
         }
     }
 
@@ -168,7 +168,7 @@ public class KKBoard extends Board implements Serializable {
         else if (op == KKRegion.OperationType.NONE)
             _kkregions.add(new KKRegionAddition(cells, this.getSize(), opValue));
         else return false;
-        for (int i = 0; i < cells.size(); ++i) cells.get(i).setRegion(_kkregions.get(_kkregions.size() - 1));
+        for (Cell cell : cells) cell.setRegion(_kkregions.get(_kkregions.size() - 1));
         //_kkregions.get(_kkregions.size() - 1);
         return true;
     }

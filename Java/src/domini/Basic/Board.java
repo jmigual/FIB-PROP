@@ -14,13 +14,13 @@ public abstract class Board implements Serializable {
      *
      * @param size Size of the Board
      */
-    public Board(int size) {
+    protected Board(int size) {
         _size = size;
         _boardInfo = new ArrayList<>(_size);
         _rows = new ArrayList<>(_size);
         _columns = new ArrayList<>(_size);
         for (int i = 0; i < _size; ++i) {
-            _boardInfo.add(i, new ArrayList<Cell>(size));
+            _boardInfo.add(i, new ArrayList<>(size));
             _rows.add(i, new Row(_size, i));
             for (int j = 0; j < _size; ++j) {
                 if (i == 0) _columns.add(j, new Column(_size, j));
@@ -44,14 +44,12 @@ public abstract class Board implements Serializable {
 
     /**
      * An abstract method that should be implemented by subclasses
-     *
      * @return If the Board has a solutions with the actual configuration
      */
     public abstract boolean hasSolution();
 
     /**
      * An abstract method that should be implemented by subclasses
-     *
      * @return A Board with the solution
      */
     public abstract Board getSolution();
@@ -73,7 +71,6 @@ public abstract class Board implements Serializable {
 
     /**
      * To get the rows of the Board
-     *
      * @return Returns an ArrayList of the rows
      */
     public ArrayList<Row> getRows() {
@@ -82,7 +79,6 @@ public abstract class Board implements Serializable {
 
     /**
      * To get the size of the Board
-     *
      * @return Returns the size
      */
     public int getSize() {

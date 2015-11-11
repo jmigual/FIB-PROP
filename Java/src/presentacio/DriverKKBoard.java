@@ -30,7 +30,7 @@ public class DriverKKBoard implements Driver {
         KKBoard b;
         Table<KKBoard> taula = db.getBoards();
         if (taula.size() != 0) out.print("Vols carregar un tauler de la DB? (y/n): ");
-        if (taula.size() != 0 && in.next().equals("y")) {
+        if (taula.size() != 0 && "y".equals(in.next())) {
             out.println("Hi han aquestes: ");
             for (int i = 0; i < taula.size(); i++) {
                 out.println(Integer.toString(i) + ": de tamany " + Integer.toString(taula.get(i).getSize()));
@@ -43,7 +43,7 @@ public class DriverKKBoard implements Driver {
             b = new KKBoard(in.nextInt());
 
 
-            ArrayList<Cell> C = new ArrayList<Cell>(b.getSize() * b.getSize());
+            ArrayList<Cell> C = new ArrayList<>(b.getSize() * b.getSize());
 
             out.print("Introdueix el nombre de regions: ");
             int nregions = in.nextInt();
@@ -83,7 +83,7 @@ public class DriverKKBoard implements Driver {
             }
 
             out.print("Vols guardar el tauler a la DB? (y/n): ");
-            if (in.next().equals("y")) {
+            if ("y".equals(in.next())) {
                 Table<KKBoard> aux = db.getBoards();
                 aux.add(b);
                 db.save();
