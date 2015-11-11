@@ -8,13 +8,14 @@ import java.util.ArrayList;
 /**
  * KKRegion with addition operation
  */
-public class KKRegionAddition extends KKRegion implements Serializable{
+public class KKRegionAddition extends KKRegion implements Serializable {
 
     /**
      * Constructor with size
-     * @param size KKRegion's size
+     *
+     * @param size         KKRegion's size
      * @param maxCellValue Maximum cell value
-     * @param value KKRegion's operation value
+     * @param value        KKRegion's operation value
      */
     public KKRegionAddition(int size, int maxCellValue, int value) {
         super(size, maxCellValue, value);
@@ -23,9 +24,10 @@ public class KKRegionAddition extends KKRegion implements Serializable{
 
     /**
      * Constructor with default cells Array mdoe
-     * @param cells Cells contained in the region
+     *
+     * @param cells        Cells contained in the region
      * @param maxCellValue Maximum cell value
-     * @param value KKRegion's operation value
+     * @param value        KKRegion's operation value
      */
     public KKRegionAddition(Cell[] cells, int maxCellValue, int value) {
         super(cells, maxCellValue, value);
@@ -34,9 +36,10 @@ public class KKRegionAddition extends KKRegion implements Serializable{
 
     /**
      * Constructor with default cells
-     * @param cells Cells contained in the region
+     *
+     * @param cells        Cells contained in the region
      * @param maxCellValue Maximum cell value
-     * @param value KKRegion's operation value
+     * @param value        KKRegion's operation value
      */
     public KKRegionAddition(ArrayList<Cell> cells, int maxCellValue, int value) {
         super(cells, maxCellValue, value);
@@ -62,6 +65,7 @@ public class KKRegionAddition extends KKRegion implements Serializable{
 
     /**
      * Checks if all the contained cells respect the addition restriction
+     *
      * @return True if all the cells' values are correct
      */
     @Override
@@ -74,8 +78,8 @@ public class KKRegionAddition extends KKRegion implements Serializable{
                 sum -= b.getValue();
                 count--;
             }
-        if (sum<0)return false;
-        if (count==-1)return sum==0;
+        if (sum < 0) return false;
+        if (count == -1) return sum == 0;
         int min = Math.max(1, sum - maxValue * count);
         int max = Math.min(maxValue, sum - count);
         return !(min > 9 || max < 0);

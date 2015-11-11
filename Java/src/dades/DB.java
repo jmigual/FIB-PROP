@@ -33,17 +33,8 @@ public abstract class DB {
     }
 
     /**
-     * Loads all the data from disc
-     */
-    public abstract void load();
-
-    /**
-     * Saves all data to the disc
-     */
-    public abstract void save();
-
-    /**
      * To get a stream to save the data
+     *
      * @param name Name of the stream to get
      * @return An stream where the data can be stored, it must be closed before the object is deleted
      */
@@ -60,6 +51,7 @@ public abstract class DB {
 
     /**
      * To get a location where the data can be read
+     *
      * @param name Name of the stream to get
      * @return A stream where the data can be read, it must be closed before the object is destroyed
      */
@@ -68,4 +60,14 @@ public abstract class DB {
         InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), READ);
         return new ObjectInputStream(i);
     }
+
+    /**
+     * Loads all the data from disc
+     */
+    public abstract void load();
+
+    /**
+     * Saves all data to the disc
+     */
+    public abstract void save();
 }

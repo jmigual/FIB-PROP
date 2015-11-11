@@ -14,62 +14,11 @@ import java.util.ArrayList;
  */
 public class KKBoard extends Board implements Serializable {
 
+    boolean _hasSolution = false;
+    int _numSolution = 0;
     private ArrayList<KKRegion> _kkregions;
     private String _name;
     private String _creator;
-    boolean _hasSolution = false;
-    int _numSolution = 0;
-
-
-    public KKBoard getCopy(){
-        try
-        {
-            FileOutputStream fileOut = new FileOutputStream("/tmp/aux.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-        }
-        KKBoard Ret = null;
-        try
-        {
-            FileInputStream fileIn = new FileInputStream("/tmp/aux.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            Ret = (KKBoard) in.readObject();
-            in.close();
-            fileIn.close();
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-        }catch(ClassNotFoundException c)
-        {
-            System.out.println("KKBoard class not found");
-            c.printStackTrace();
-        }
-        return Ret;
-
-    }
-
-    public void set_name(String _name) {
-        this._name = _name;
-    }
-
-    public void set_creator(String _creator) {
-        this._creator = _creator;
-    }
-
-    public String get_name() {
-
-        return _name;
-    }
-
-    public String get_creator() {
-        return _creator;
-    }
-
 
 
     public KKBoard(int size) {
@@ -77,7 +26,49 @@ public class KKBoard extends Board implements Serializable {
         _kkregions = new ArrayList<>(_size * _size / 2);
     }
 
+    public KKBoard getCopy() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("/tmp/aux.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+        KKBoard Ret = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("/tmp/aux.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Ret = (KKBoard) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("KKBoard class not found");
+            c.printStackTrace();
+        }
+        return Ret;
 
+    }
+
+    public String get_name() {
+
+        return _name;
+    }
+
+    public void set_name(String _name) {
+        this._name = _name;
+    }
+
+    public String get_creator() {
+        return _creator;
+    }
+
+    public void set_creator(String _creator) {
+        this._creator = _creator;
+    }
 
     public Board getSolution() {
         return null;
@@ -145,8 +136,8 @@ public class KKBoard extends Board implements Serializable {
         this.getCell(i, j).calculatePossibilities();*/
 
 
-        //precalculate();
-        
+        precalculate();
+
         calculateIndividualPossibilities();
 
 
@@ -169,7 +160,7 @@ public class KKBoard extends Board implements Serializable {
 
     private boolean recursive_solve_until(int i, int j, int max) {
         if (j == this.getSize()) {
-            ++ _numSolution;
+            ++_numSolution;
             return true;
         }
 
@@ -213,7 +204,7 @@ public class KKBoard extends Board implements Serializable {
         return false;
     }
 
-    public void calculateIndividualPossibilities(){
+    public void calculateIndividualPossibilities() {
         for (KKRegion _kkregion : _kkregions) {
             _kkregion.calculatePossibilities();
         }

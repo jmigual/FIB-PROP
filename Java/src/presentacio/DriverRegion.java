@@ -4,10 +4,6 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Region;
 import domini.Basic.Row;
-import domini.KKRegion.KKRegionAddition;
-import domini.KKRegion.KKRegionDivision;
-import domini.KKRegion.KKRegionProduct;
-import domini.KKRegion.KKRegionSubtraction;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -30,10 +26,10 @@ public class DriverRegion {
         maxCellValue = in.nextInt();
         out.print("Introdueix el valor resultant de la suma : ");
         result = in.nextInt();*/
-        maxCellValue=size;
+        maxCellValue = size;
         Row row = new Row(maxCellValue, 0);
         //Region region = new KKRegionProduct(size, maxCellValue, result);
-        Region region = new Column(size,0);
+        Region region = new Column(size, 0);
         Column column = new Column(maxCellValue, 0);
 
         for (int i = 0; i < size; i++) {
@@ -54,7 +50,7 @@ public class DriverRegion {
             out.println("8: Get Individual possibilities");
             out.println("9: Calculate Individual possibilities");
             if (in.hasNextInt()) {
-                int modifiedCell,modifiedValue;
+                int modifiedCell, modifiedValue;
                 switch (in.nextInt()) {
                     case 1:
                         out.print("Which cell do you want to set the value of? ");
@@ -85,7 +81,7 @@ public class DriverRegion {
                         out.println();
                         break;
                     case 6:
-                        out.println (Boolean.toString(region.isCorrect()));
+                        out.println(Boolean.toString(region.isCorrect()));
                         break;
                     case 7:
                         out.print("Which cell do you want to set the possibility of? ");

@@ -6,9 +6,9 @@ import java.io.Serializable;
  * Created by Joan on 19/10/2015.
  */
 
-public class Cell extends ItemPossibilities implements Serializable{
-    private int value;
+public class Cell extends ItemPossibilities implements Serializable {
     boolean[] annotations;
+    private int value;
     private Region region;
     private Column column;
     private Row row;
@@ -76,7 +76,7 @@ public class Cell extends ItemPossibilities implements Serializable{
     @Override
     public void calculatePossibilities() {
         boolean[] pos = new boolean[possibilities.length];
-        for (int i=0; i<pos.length; i++)pos[i]=true;
+        for (int i = 0; i < pos.length; i++) pos[i] = true;
         // Get region possibilities
         boolean[] aux = region.getPossibilities();
         for (int i = 0; i < pos.length; ++i) pos[i] &= aux[i];
@@ -88,6 +88,6 @@ public class Cell extends ItemPossibilities implements Serializable{
         // Get row possibilities
         aux = row.getPossibilities();
         for (int i = 0; i < pos.length; ++i) pos[i] &= aux[i];
-        this.possibilities=pos;
+        this.possibilities = pos;
     }
 }

@@ -9,13 +9,12 @@ import java.util.ArrayList;
 /**
  * Region from a Ken-Ken board
  */
-public abstract class KKRegion extends Region implements Serializable{
+public abstract class KKRegion extends Region implements Serializable {
 
     /**
      * Contains the type of the operation
      */
     protected OperationType opType = OperationType.NONE;
-
     /**
      * Contains the operation's value
      */
@@ -23,9 +22,10 @@ public abstract class KKRegion extends Region implements Serializable{
 
     /**
      * Constructor with default values
-     * @param size Region's size
+     *
+     * @param size         Region's size
      * @param maxCellValue Region's max Cell value
-     * @param value Region's operation value
+     * @param value        Region's operation value
      */
     public KKRegion(int size, int maxCellValue, int value) {
         super(size, maxCellValue);
@@ -34,9 +34,10 @@ public abstract class KKRegion extends Region implements Serializable{
 
     /**
      * Constructor with an existing set of cells
-     * @param cells Cells contained in the region
+     *
+     * @param cells        Cells contained in the region
      * @param maxCellValue Region's max Cell value
-     * @param value Region's operation value
+     * @param value        Region's operation value
      */
     public KKRegion(ArrayList<Cell> cells, int maxCellValue, int value) {
         super(cells, maxCellValue);
@@ -45,9 +46,10 @@ public abstract class KKRegion extends Region implements Serializable{
 
     /**
      * Constructor with an existing collection of cells
-     * @param cells Cells contained in the region
+     *
+     * @param cells        Cells contained in the region
      * @param maxCellValue Region's max Cell value
-     * @param value Region's operation value
+     * @param value        Region's operation value
      */
     public KKRegion(Cell[] cells, int maxCellValue, int value) {
         super(cells.length, maxCellValue);
@@ -58,7 +60,36 @@ public abstract class KKRegion extends Region implements Serializable{
     }
 
     /**
+     * To check if two regions are the same
+     *
+     * @param o Object to check if they are the same object
+     * @return True if 'o' is equal to the current element
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof KKRegion)) return false;
+
+        KKRegion kkRegion = (KKRegion) o;
+
+        return operationValue == kkRegion.operationValue && opType == kkRegion.opType;
+    }
+
+    /**
+     * To get a hashCode, necessary to the operations with sets
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        int result = opType.hashCode();
+        result = 31 * result + operationValue;
+        return result;
+    }
+
+    /**
      * Returns the Region's operation type
+     *
      * @return OperationTyp object containing the current operation
      */
     public OperationType getOperation() {
@@ -67,9 +98,12 @@ public abstract class KKRegion extends Region implements Serializable{
 
     /**
      * To get the Region's operation value
+     *
      * @return int containing the Region's operation value
      */
-    public int getOperationValue() { return this.operationValue; }
+    public int getOperationValue() {
+        return this.operationValue;
+    }
 
     /**
      * Enum containing all types of operation available on a KKRegion
@@ -87,7 +121,6 @@ public abstract class KKRegion extends Region implements Serializable{
             this.type = t;
         }
     }
-
 
 
 }
