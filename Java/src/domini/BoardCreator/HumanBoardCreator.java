@@ -1,16 +1,14 @@
 package domini.BoardCreator;
 
-import domini.KKBoard;
-
 /**
  * Created by arnau_000 on 05/11/2015.
  */
 public class HumanBoardCreator extends BoardCreator {
 
 
-    public HumanBoardCreator(int size){
+    public HumanBoardCreator(int size) {
         super(size);
     }
-    
+
 
 }

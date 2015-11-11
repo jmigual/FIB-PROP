@@ -8,6 +8,7 @@ import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -20,6 +21,18 @@ public class DriverKKBoardPrinter implements Driver {
 
     private KKBoard board;
 
+
+    public DriverKKBoardPrinter() {
+    }
+
+    public DriverKKBoardPrinter(KKBoard board) {
+        this.board = board;
+    }
+
+    public DriverKKBoardPrinter(KKBoard board, PrintStream out) {
+        this.board = board;
+        this.out = out;
+    }
 
     public static void main(String args[]) {
         PrintStream out = System.out;
@@ -116,12 +129,37 @@ public class DriverKKBoardPrinter implements Driver {
             }
         }
 
-        // Print the final matrix with all the data
+        char[][] outC2 = new char[sizeV][sizeH];
         for (int i = 0; i < sizeV; ++i) {
-            for (int j = 0; j < sizeH; ++j) {
-                out.print(outC[i][j]);
+            System.arraycopy(outC[i], 0, outC2[i], 0, sizeH);
+        }
+
+        ArrayList<KKRegion> regions = board.get_kkregions();
+
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                Cell c = board.getCell(i, j);
+                int number = regions.indexOf(c.getRegion());
+
+                outC2[2 * i + 1][3 * j + 1] = number < 10 ? ' ' : (char) ((number / 10) + '0');
+                outC2[2 * i + 1][3 * j + 2] = (char) ((number % 10) + '0');
             }
+        }
+
+        // Print the final matrix with all the region data
+        for (int i = 0; i < sizeV; ++i) {
+            for (int j = 0; j < sizeH; ++j) out.print(outC[i][j]);
+            out.print("  ");
+            for (int j = 0; j < sizeH; ++j) out.print(outC2[i][j]);
             out.println();
+        }
+
+        out.println();
+        out.println("Valors de les regions");
+        for (int i = 0; i < regions.size(); ++i) {
+            KKRegion r = regions.get(i);
+            out.println(Integer.toString(i) + ": " + r.getOperation().toString() + " => " +
+            Integer.toString(r.getOperationValue()));
         }
     }
 
@@ -133,18 +171,6 @@ public class DriverKKBoardPrinter implements Driver {
             Cell c = region.getCell(i);
             out.println("Cel·la " + Integer.toString(i) + " Valor: " + Integer.toString(c.getValue()));
         }
-    }
-
-    public DriverKKBoardPrinter() {
-    }
-
-    public DriverKKBoardPrinter(KKBoard board) {
-        this.board = board;
-    }
-
-    public DriverKKBoardPrinter(KKBoard board, PrintStream out) {
-        this.board = board;
-        this.out = out;
     }
 
     public void setStream(PrintStream stream) {

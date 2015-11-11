@@ -1,6 +1,5 @@
 package presentacio;
 
-import domini.BoardCreator.BoardCreator;
 import domini.BoardCreator.CpuBoardCreator;
 
 import java.io.PrintStream;
@@ -14,20 +13,21 @@ public class DriverBoardCreator {
     private static PrintStream out = System.out;
     private static Scanner in = new Scanner(System.in);
 
-    public DriverBoardCreator(){    }
+    public DriverBoardCreator() {
+    }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         while (true) {
             out.println("Benvingut al creador de taulells de Kenken!\n" +
-                    "Seleciona una opció:\n" +
+                    "Seleciona una opciï¿½:\n" +
                     "1) Crear un taulell manualment.\n" +
-                    "2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.\n" +
+                    "2) Que la CPU em generi un taulell aleatï¿½riament a partir de certs parï¿½metres.\n" +
                     "3) Sortir\n");
 
             if (!in.hasNextInt()) break;
 
-            switch (in.nextInt()){
+            switch (in.nextInt()) {
                 case 1: {
                     runHBC();
                     break;
@@ -43,14 +43,14 @@ public class DriverBoardCreator {
         }
     }
 
-    protected static void runCBC(){
+    protected static void runCBC() {
         out.println("Introdueix la mida del taulell:");
         int size = in.nextInt();
         CpuBoardCreator CBC = new CpuBoardCreator(size);
 
-        while (true){
-            out.println("Selecciona una opció:\n" +
-                    "1) Canviar la mida màxima de les regions\n" +
+        while (true) {
+            out.println("Selecciona una opciï¿½:\n" +
+                    "1) Canviar la mida mï¿½xima de les regions\n" +
                     "2) Canviar pesos\n" +
                     "3) Generar un taulell\n" +
                     "4) Veure el taulell\n" +
@@ -59,12 +59,12 @@ public class DriverBoardCreator {
 
             if (!in.hasNextInt()) break;
 
-            switch (in.nextInt()){
+            switch (in.nextInt()) {
                 case 1: {
-                    out.println("Introdueix la mida màxima de les regions:");
+                    out.println("Introdueix la mida mï¿½xima de les regions:");
                     int m = in.nextInt();
                     CBC.setMaxRegionSize(m);
-                    out.println("Mida màxima canviada a " + m + ".");
+                    out.println("Mida mï¿½xima canviada a " + m + ".");
                     break;
                 }
                 case 2: {
@@ -94,28 +94,28 @@ public class DriverBoardCreator {
         }
     }
 
-    protected static  void editWeights(CpuBoardCreator CBC){
+    protected static void editWeights(CpuBoardCreator CBC) {
         while (true) {
             out.println("Pesos de les mides de regions: (mida)-->(pes)");
             for (int i = 0; i < CBC.getMaxRegionSize(); ++i) {
-                out.println(i+1 + "-->" + CBC.getSizesWeights().get(i));
+                out.println(i + 1 + "-->" + CBC.getSizesWeights().get(i));
             }
             out.println("Total:" + CBC.getTotalSizesWeight() + "\n" +
                     "Pesos de les operacions en les regions:\n" +
-                    "Divisió (d): " + CBC.getDivWeight() + "\n" +
+                    "Divisiï¿½ (d): " + CBC.getDivWeight() + "\n" +
                     "Resta (r): " + CBC.getSubsWeight() + "\n" +
                     "Producte (p): " + CBC.getProdWeight() + "\n" +
                     "Suma (s): " + CBC.getAddWeight() + "\n" +
                     "Total: " + CBC.getTotalOpWeight() + "\n" +
                     "\n" +
-                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bé tornar al menú " +
+                    "Vols modificar els pesos de les mides (m) o de les operacions (o), o bï¿½ tornar al menï¿½ " +
                     "anterior (t)?\n" +
                     "Nota: els pesos de les operacions estan condicionats als de les mides.\n");
             boolean b = true;
             while (b) {
                 switch (in.next()) {
                     case "m":
-                        out.println("Escriu la mida i després el pes:");
+                        out.println("Escriu la mida i desprï¿½s el pes:");
 //                        CBC.getSizesWeights().set(in.nextInt()-1,in.nextInt());
                         try {
                             CBC.setSizeWeight(in.nextInt(), in.nextInt());
@@ -126,8 +126,8 @@ public class DriverBoardCreator {
                         b = false;
                         break;
                     case "o":
-                        out.println("Escriu la lletra que identifica l'operació (d,r,p,s) i després el seu pes:");
-                        switch (in.next()){
+                        out.println("Escriu la lletra que identifica l'operaciï¿½ (d,r,p,s) i desprï¿½s el seu pes:");
+                        switch (in.next()) {
                             case "d":
                                 CBC.setDivWeight(in.nextInt());
                                 break;
@@ -150,7 +150,7 @@ public class DriverBoardCreator {
         }
     }
 
-    public static void runHBC(){
+    public static void runHBC() {
 
     }
 }
