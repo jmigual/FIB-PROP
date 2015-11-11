@@ -188,7 +188,7 @@ public class CpuBoardCreator extends BoardCreator {
         DFS_v1(i, j);
 
         // Fill the board with random numbers
-        mBoard.solve(); // future--> call randomSolution() !!
+        //mBoard.solve(); // future--> call randomSolution() !!
 
         // Create regions
         double s = mAddWeight/(double)(mAddWeight + mProdWeight);

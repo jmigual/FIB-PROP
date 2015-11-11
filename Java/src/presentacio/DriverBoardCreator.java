@@ -161,7 +161,7 @@ public class DriverBoardCreator {
 
     public static void runHBC(){
         out.print("Inserta una mida pel taulell:");
-        HumanBoardCreator.setBoardCreator(in.nextInt(), mTableKKB);
+        HumanBoardCreator HBC = new HumanBoardCreator(in.nextInt(), mTableKKB);
 
         boolean printMenu = true;
         while (true) {
@@ -184,7 +184,7 @@ public class DriverBoardCreator {
                     break;
                 }
                 case 1: {
-                    DriverKKBoardPrinter.printBoard(HumanBoardCreator.getBoard(),out);
+                    DriverKKBoardPrinter.printBoard(HBC.getBoard(),out);
                     break;
                 }
                 case 2: {
@@ -196,7 +196,7 @@ public class DriverBoardCreator {
                     else {
                         out.print("(i,j)<-n >> ");
                     }
-                    HumanBoardCreator.getBoard().getCell(in.nextInt()-1,in.nextInt()-1).setValue(in.nextInt());
+                    HBC.getBoard().getCell(in.nextInt()-1,in.nextInt()-1).setValue(in.nextInt());
                     break;
                 }
                 case 3: {

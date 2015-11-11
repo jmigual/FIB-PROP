@@ -4,22 +4,24 @@ import dades.Table;
 import domini.KKBoard;
 import javafx.scene.control.Tab;
 
+import java.util.ArrayList;
+
 /**
  * Created by arnau_000 on 05/11/2015.
  */
 
 public class BoardCreator {
 
-    protected static int mSize;
-    protected static KKBoard mBoard;
-    private static Table<KKBoard> mTableKKB;
+    protected int mSize;
+    protected KKBoard mBoard;
+    private Table<KKBoard> mTableKKB;
 
 
-    public static KKBoard getBoard() {
+    public KKBoard getBoard() {
         return mBoard;
     }
 
-    public static void setBoard(KKBoard board) {
+    public void setBoard(KKBoard board) {
         mBoard = board;
     }
 
@@ -30,17 +32,41 @@ public class BoardCreator {
         mTableKKB = tableKKB;
     }
 
-    public static void setBoardCreator(int size, Table<KKBoard> tableKKB){
+    public void setBoardCreator(int size, Table<KKBoard> tableKKB){
         mBoard = new KKBoard(size);
         mSize = size;
         mTableKKB = tableKKB;
     }
 
-    public static void saveBoard(String name){
-        //KKBoard B = mBoard.clone();
-        //B.setName(name);
-        //mTableKKB.add(B);
+    public void saveBoard(String name){
         mTableKKB.add(mBoard);
     }
 
+    protected boolean fillBoardWithRandomNumbers(){
+        return backtracking(0,0);
+    }
+
+    private boolean backtracking(int i, int j){
+        if (mBoard.getCell(i,j).getValue() == 0){
+            return backtracking(i + (j+1)/mSize, (j+1)%mSize);
+        }
+        int c=0;
+        ArrayList<Integer> v = new ArrayList<>(mSize);
+        for (int k=1; k<=9; ++k){
+            if (1==0){
+
+            }
+        }
+        if (c==0){
+            return false;
+        }
+        else {
+
+        }
+        return 1==0;
+    }
+
+    private boolean fits(int i, int j, int n){
+        return 1==0;
+    }
 }
