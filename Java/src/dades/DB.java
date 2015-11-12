@@ -70,4 +70,6 @@ public abstract class DB {
      * Saves all data to the disc
      */
     public abstract void save();
+
+    public static String getDataPath() { return dataPath; }
 }
