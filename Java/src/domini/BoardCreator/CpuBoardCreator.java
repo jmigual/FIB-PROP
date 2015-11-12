@@ -132,7 +132,7 @@ public class CpuBoardCreator extends BoardCreator {
     }
 
     public void setSizeWeight(int size, int weight) throws Exception {
-        if (size > mTotalSizesWeight) {
+        if (size > mMaxRegionSize) {
             throw new Exception("CBC: Tried to set the weight of a region size with a size " +
                     "bigger than the maximum.");
         }
@@ -154,10 +154,6 @@ public class CpuBoardCreator extends BoardCreator {
             e.printStackTrace();
         }
         return 2;
-    }
-
-    private void createRegion() {
-
     }
 
     private void DFS_v1(int i, int j) {
@@ -218,6 +214,8 @@ public class CpuBoardCreator extends BoardCreator {
         currentRegSize = getRandomRegionSize();
 
         DFS_v1(i, j);
+        // Create Region
+        regionsCells.add(currentRegCells);
 
         // Fill the board with random numbers
         fillBoardWithRandomNumbers();
@@ -227,10 +225,13 @@ public class CpuBoardCreator extends BoardCreator {
         double d = mDivWeight / (double) mTotalOpWeight;
         double r = mSubsWeight / (double) mTotalOpWeight;
         double m2 = mSizesWeights.get(2 - 1) / (double) mTotalSizesWeight;
+        mBoard.get_kkregions().remove(0);
         for (ArrayList<Cell> regCells : regionsCells) {
             double rand = mRand.nextDouble();
             int res;
-            if (regCells.size() == 2 && rand < r/m2){
+            if (regCells.size() == 1){
+                mBoard.createRegion(regCells, KKRegion.OperationType.NONE, regCells.get(0).getValue());
+            } else if (regCells.size() == 2 && rand < r/m2){
                 res = Math.max(regCells.get(0).getValue(), regCells.get(1).getValue()) -
                         Math.min(regCells.get(0).getValue(), regCells.get(1).getValue());
                 mBoard.createRegion(regCells, KKRegion.OperationType.SUBTRACTION, res);

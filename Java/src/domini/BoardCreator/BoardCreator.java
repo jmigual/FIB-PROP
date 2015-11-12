@@ -41,7 +41,7 @@ public class BoardCreator {
                 tot.add(i * mSize + j, mBoard.getCell(i, j));
             }
         }
-        mBoard.createRegion(tot, KKRegion.OperationType.ADDITION, 0);
+        mBoard.createRegion(tot, KKRegion.OperationType.PRODUCT, 0);
     }
 
     public void clearBoard() {
@@ -50,6 +50,10 @@ public class BoardCreator {
                 mBoard.getCell(i, j).setValue(0);
             }
         }
+    }
+
+    public KKBoard getBoard(){
+        return mBoard;
     }
 
     public void setBoardCreator(int size, Table<KKBoard> tableKKB) {

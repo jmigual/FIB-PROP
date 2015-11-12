@@ -224,12 +224,16 @@ public class DriverBoardCreator {
                         int y = in.nextInt();
                         C.add(HBC.getBoard().getCell(x, y));
                     }
-                    if (!HBC.createRegion(false, C, op, opValue)) {
-                        out.print("Aquesta regió eliminarà altres regions ja creades. Segueixes volent-la crear? (s/n)");
-                        String s = in.next();
-                        while (!s.equals("s") || !s.equals("n")) {
-                            s = in.next();
+                    try {
+                        if (!HBC.createRegion(false, C, op, opValue)) {
+                            out.print("Aquesta regió eliminarà altres regions ja creades. Segueixes volent-la crear? (s/n)");
+                            String s = in.next();
+                            while (!s.equals("s") || !s.equals("n")) {
+                                s = in.next();
+                            }
                         }
+                    } catch (Exception e) {
+                        out.println(e.getMessage());
                     }
                     break;
                 }
@@ -258,7 +262,7 @@ public class DriverBoardCreator {
                 }
                 case 8: {
                     out.print("Com es diu el taulell que vols carregar? ");
-                    if (HBC.loadBoard(in.next())){
+                    if (HBC.loadBoard(in.next())) {
                         out.println("Tauler carregat.");
                     } else {
                         out.println("404: No s'ha trobat el tauler. :/");
