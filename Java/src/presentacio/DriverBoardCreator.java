@@ -2,9 +2,12 @@ package presentacio;
 
 import dades.Table;
 import domini.Basic.Cell;
+import domini.BoardCreator.BoardCreator;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
+import domini.KKRegion.KKRegion;
+import javafx.scene.control.Tab;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -128,7 +131,6 @@ public class DriverBoardCreator {
                 switch (in.next()) {
                     case "m":
                         out.println("Escriu la mida i després el pes:");
-
 //                        CBC.getSizesWeights().set(in.nextInt()-1,in.nextInt());
                         try {
                             CBC.setSizeWeight(in.nextInt(), in.nextInt());
@@ -140,7 +142,6 @@ public class DriverBoardCreator {
                         break;
                     case "o":
                         out.println("Escriu la lletra que identifica l'operació (d,r,p,s) i després el seu pes:");
-
                         switch (in.next()) {
                             case "d":
                                 CBC.setDivWeight(in.nextInt());

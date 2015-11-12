@@ -1,12 +1,14 @@
 package domini.Basic;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Marc on 22/10/2015.
  * Contains information of a Move made by a player.
  */
 
-public class Move {
+public class Move implements Serializable {
 
     //ATTRIBUTES
 

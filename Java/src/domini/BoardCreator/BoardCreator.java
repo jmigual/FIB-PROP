@@ -4,6 +4,7 @@ import dades.Table;
 import domini.Basic.Cell;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
+import javafx.scene.control.Tab;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,14 +17,18 @@ public class BoardCreator {
 
     protected int mSize;
     protected KKBoard mBoard;
-    protected Random mRand;
     private Table<KKBoard> mTableKKB;
+    protected Random mRand;
 
 
-    public BoardCreator(int size) {
-        mBoard = new KKBoard(size);
-        mSize = size;
+    public KKBoard getBoard() {
+        return mBoard;
     }
+
+    public void setBoard(KKBoard board) {
+        mBoard = board;
+    }
+
 
     public BoardCreator(int size, Table<KKBoard> tableKKB) {
         mSize = size;
@@ -50,10 +55,6 @@ public class BoardCreator {
                 mBoard.getCell(i, j).setValue(0);
             }
         }
-    }
-
-    public KKBoard getBoard(){
-        return mBoard;
     }
 
     public void setBoardCreator(int size, Table<KKBoard> tableKKB) {

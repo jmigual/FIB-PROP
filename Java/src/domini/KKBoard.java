@@ -9,6 +9,7 @@ import domini.KKRegion.*;
 import java.io.*;
 import java.util.ArrayList;
 
+
 /**
  * Created by Joan on 20/10/2015.
  */
@@ -27,46 +28,47 @@ public class KKBoard extends Board implements Serializable {
     }
 
     public KKBoard getCopy() {
+
+        KKBoard ret = null;
+        byte[] tempData = null;
         try {
-            FileOutputStream fileOut = new FileOutputStream("/tmp/aux.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            //OutputStream fileOut = Files.newOutputStream(Paths.get(DB.getDataPath() + "aux.ser"), CREATE, WRITE);
+            ByteArrayOutputStream outS = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outS);
             out.writeObject(this);
             out.close();
-            fileOut.close();
+            tempData = outS.toByteArray();
         } catch (IOException i) {
             i.printStackTrace();
         }
-        KKBoard Ret = null;
         try {
-            FileInputStream fileIn = new FileInputStream("/tmp/aux.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            Ret = (KKBoard) in.readObject();
+            ByteArrayInputStream inS = new ByteArrayInputStream(tempData);
+            ObjectInputStream in = new ObjectInputStream(inS);
+            ret = (KKBoard) in.readObject();
             in.close();
-            fileIn.close();
+            inS.close();
         } catch (IOException i) {
             i.printStackTrace();
         } catch (ClassNotFoundException c) {
             System.out.println("KKBoard class not found");
             c.printStackTrace();
         }
-        return Ret;
+        return ret;
 
     }
-
+    public void setName(String _name) {
+        this._name = _name;
+    }
     public String get_name() {
 
         return _name;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
-    }
-
-    public String get_creator() {
+    public String getCreator() {
         return _creator;
     }
 
-    public void set_creator(String _creator) {
+    public void setCreator(String _creator) {
         this._creator = _creator;
     }
 
@@ -77,7 +79,7 @@ public class KKBoard extends Board implements Serializable {
     @Override
     public void solve() {
         boolean b = precalculate();
-        if (b) b = recursive_solve(0, 0);
+        if (b) b = recursiveSolve(0, 0);
         _hasSolution = b;
         System.out.println(b);
     }
@@ -115,7 +117,7 @@ public class KKBoard extends Board implements Serializable {
         return true;
     }
 
-    private boolean recursive_solve(int i, int j) {
+    private boolean recursiveSolve(int i, int j) {
         if (j == this.getSize()) return true;
 
         int j_f, i_f;
@@ -127,7 +129,7 @@ public class KKBoard extends Board implements Serializable {
         }
 
         if (this.getCell(i, j).getValue() != 0) {
-            return recursive_solve(i_f, j_f);
+            return recursiveSolve(i_f, j_f);
         }
 
         /*this.getCell(i, j).getColumn().calculatePossibilities();
@@ -135,14 +137,13 @@ public class KKBoard extends Board implements Serializable {
         this.getCell(i, j).getRegion().calculatePossibilities();
         this.getCell(i, j).calculatePossibilities();*/
 
-
         precalculate();
 
         calculateIndividualPossibilities();
 
 
         if (this.getCell(i, j).getValue() != 0) {
-            return recursive_solve(i_f, j_f);
+            return recursiveSolve(i_f, j_f);
         }
 
         if (getCell(i, j).getPossibilities().length == 0) return false;
@@ -150,7 +151,7 @@ public class KKBoard extends Board implements Serializable {
         for (int a = 1; a <= this.getSize(); ++a) {
             if (this.getCell(i, j).getPossibility(a)) {
                 this.getCell(i, j).setValue(a);
-                ret = ret || recursive_solve(i_f, j_f);
+                ret = ret || recursiveSolve(i_f, j_f);
                 if (!ret) this.getCell(i, j).setValue(0);
                 else return ret;
             }
@@ -173,7 +174,7 @@ public class KKBoard extends Board implements Serializable {
         }
 
         if (this.getCell(i, j).getValue() != 0) {
-            return recursive_solve(i_f, j_f);
+            return recursiveSolve(i_f, j_f);
         }
 
         /*this.getCell(i, j).getColumn().calculatePossibilities();
@@ -188,7 +189,7 @@ public class KKBoard extends Board implements Serializable {
 
 
         if (this.getCell(i, j).getValue() != 0) {
-            return recursive_solve(i_f, j_f);
+            return recursiveSolve(i_f, j_f);
         }
 
         if (getCell(i, j).getPossibilities().length == 0) return false;
@@ -196,7 +197,7 @@ public class KKBoard extends Board implements Serializable {
         for (int a = 1; a <= this.getSize(); ++a) {
             if (this.getCell(i, j).getPossibility(a)) {
                 this.getCell(i, j).setValue(a);
-                ret = ret || recursive_solve(i_f, j_f);
+                ret = ret || recursiveSolve(i_f, j_f);
                 if (!ret) this.getCell(i, j).setValue(0);
                 if (ret) return ret;
             }
@@ -205,8 +206,8 @@ public class KKBoard extends Board implements Serializable {
     }
 
     public void calculateIndividualPossibilities() {
-        for (KKRegion _kkregion : _kkregions) {
-            _kkregion.calculatePossibilities();
+        for (int i = 0; i < _kkregions.size(); i++) {
+            _kkregions.get(i).calculatePossibilities();
         }
         for (Column _column : _columns) {
             _column.calculatePossibilities();
