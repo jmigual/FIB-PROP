@@ -15,7 +15,7 @@ public abstract class DB {
     /**
      * Contains the default data path
      **/
-    final String dataPath = "./data/";
+    static final String dataPath = "./data/";
 
     /**
      * Constructs an empty DB
@@ -70,4 +70,6 @@ public abstract class DB {
         InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), READ);
         return new ObjectInputStream(i);
     }
+
+    public static String getDataPath() { return dataPath; }
 }

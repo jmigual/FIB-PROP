@@ -37,6 +37,10 @@ public class Cell extends ItemPossibilities implements Serializable{
         for (int i = 0; i < possibilities.length; i++) annotations[i] = false;
     }
 
+    public Cell getCopy(){
+        return null; //Cell ret=
+    }
+
     public int getValue() {
         return value;
     }
