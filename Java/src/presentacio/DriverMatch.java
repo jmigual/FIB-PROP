@@ -38,7 +38,7 @@ public class DriverMatch {
         //Donar valor a m
         while (!finish) {
             out.println("1) Carregar un match inacabat de la DB");
-            out.println("2) Comen�ar nou Match amb un Board de la DB");
+            out.println("2) Començar nou Match amb un Board de la DB");
             out.println("3) Sortir");
 
             switch (in.nextInt()) {
@@ -143,19 +143,19 @@ public class DriverMatch {
                 case 4:
                     out.println("1. Afegir anotacio");
                     out.println("2. Eliminar anotacio");
-                    out.println("3. Veure anotacions d'una cel�la");
+                    out.println("3. Veure anotacions d'una cel·la");
 
                     switch (in.nextInt()) {
                         case 1:
-                            out.println("Introdueix fila, columna de cel�la i numero de l'anotacio");
+                            out.println("Introdueix fila, columna de cel·la i numero de l'anotacio");
                             _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), true);
                             break;
                         case 2:
-                            out.println("Introdueix fila, columna de cel�la i numero de l'anotacio");
+                            out.println("Introdueix fila, columna de cel·la i numero de l'anotacio");
                             _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), false);
                             break;
                         case 3:
-                            out.println("Introdueix fila, columna de cel�la");
+                            out.println("Introdueix fila, columna de cel·la");
                             Cell cell = _match.getBoard().getCell(in.nextInt(), in.nextInt());
 
                             for (int it = 0; it < _match.getBoard().getSize(); ++it)
