@@ -14,18 +14,18 @@ public abstract class Board implements Serializable {
      *
      * @param size Size of the Board
      */
-    public Board(int size) {
+    protected Board(int size) {
         _size = size;
         _boardInfo = new ArrayList<>(_size);
         _rows = new ArrayList<>(_size);
         _columns = new ArrayList<>(_size);
         for (int i = 0; i < _size; ++i) {
-            _boardInfo.add(i, new ArrayList<Cell>(size));
+            _boardInfo.add(i, new ArrayList<>(size));
             _rows.add(i, new Row(_size, i));
             for (int j = 0; j < _size; ++j) {
                 if (i == 0) _columns.add(j, new Column(_size, j));
                 _boardInfo.get(i).add(j, new Cell(_size, _rows.get(i), _columns.get(j)));
-                _rows.get(i).addCell(j,_boardInfo.get(i).get(j));
+                _rows.get(i).addCell(j, _boardInfo.get(i).get(j));
                 _columns.get(j).addCell(i, _boardInfo.get(i).get(j));
             }
         }

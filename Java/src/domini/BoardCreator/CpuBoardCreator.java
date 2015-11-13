@@ -1,5 +1,6 @@
 package domini.BoardCreator;
 
+import dades.Table;
 import domini.Basic.Cell;
 import domini.Basic.Region;
 import domini.KKBoard;
@@ -78,7 +79,7 @@ public class CpuBoardCreator extends BoardCreator {
 
     public ArrayList<Integer> getSizesWeights() { return new ArrayList<>(mSizesWeights); }
     public void setSizeWeight(int size, int weight) throws Exception {
-        if (size > mTotalSizesWeight) {
+        if (size > mMaxRegionSize) {
             throw new Exception("CBC: Tried to set the weight of a region size with a size " +
                     "bigger than the maximum.");
         }
@@ -87,8 +88,8 @@ public class CpuBoardCreator extends BoardCreator {
 
     }
 
-    public CpuBoardCreator(int size){
-        super(size);
+    public CpuBoardCreator(int size, Table<KKBoard> tableKKB){
+        super(size, tableKKB);
         mMaxRegionSize = 5;
         mAddWeight = mSubsWeight = mProdWeight = mDivWeight = 10;
         mTotalOpWeight = 40;
@@ -106,11 +107,10 @@ public class CpuBoardCreator extends BoardCreator {
      * 2 -> left
      * 3 -> right
      */
-    Random mRand;
-    ArrayList<ArrayList<Boolean>> visitedCells;
-    int currentRegSize, currentCellCounter;
-    ArrayList<Cell> currentRegCells;
-    ArrayList<ArrayList<Cell>> regionsCells;
+    private ArrayList<ArrayList<Boolean>> visitedCells;
+    private int currentRegSize, currentCellCounter;
+    private ArrayList<Cell> currentRegCells;
+    private ArrayList<ArrayList<Cell>> regionsCells;
 
     private int getRandomRegionSize() {
         double r = mRand.nextDouble();
@@ -127,12 +127,8 @@ public class CpuBoardCreator extends BoardCreator {
         return 2;
     }
 
-    private void createRegion(){
-
-    }
-
-    private void DFS_v1(int i, int j){
-        if (visitedCells.get(i).get(j)){
+    private void DFS_v1(int i, int j) {
+        if (visitedCells.get(i).get(j)) {
             return;
         }
         visitedCells.get(i).set(j,true);
@@ -174,7 +170,7 @@ public class CpuBoardCreator extends BoardCreator {
 
         // Initialization
         mRand = new Random();
-        mBoard = new KKBoard(mSize);
+        newBoard();
         visitedCells = new ArrayList<>();
         for (int i=0; i<mSize; ++i){
             visitedCells.add(i, new ArrayList<>(mSize));
@@ -189,10 +185,53 @@ public class CpuBoardCreator extends BoardCreator {
         currentRegSize = getRandomRegionSize();
 
         DFS_v1(i, j);
+        // Create Region
+        regionsCells.add(currentRegCells);
 
-        // Testing
-        for (ArrayList<Cell> regCells : regionsCells){
-            mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, 42);
+        // Fill the board with random numbers
+        fillBoardWithRandomNumbers();
+
+        // Create regions
+        double s = mAddWeight / (double) (mAddWeight + mProdWeight);
+        double d = mDivWeight / (double) mTotalOpWeight;
+        double r = mSubsWeight / (double) mTotalOpWeight;
+        double m2 = mSizesWeights.get(2 - 1) / (double) mTotalSizesWeight;
+        mBoard.get_kkregions().remove(0);
+        for (ArrayList<Cell> regCells : regionsCells) {
+            double rand = mRand.nextDouble();
+            int res;
+            if (regCells.size() == 1){
+                mBoard.createRegion(regCells, KKRegion.OperationType.NONE, regCells.get(0).getValue());
+            } else if (regCells.size() == 2 && rand < r/m2){
+                res = Math.max(regCells.get(0).getValue(), regCells.get(1).getValue()) -
+                        Math.min(regCells.get(0).getValue(), regCells.get(1).getValue());
+                mBoard.createRegion(regCells, KKRegion.OperationType.SUBTRACTION, res);
+            } else if (regCells.size() == 2 && rand < d/m2){
+                if (Math.max(regCells.get(0).getValue(), regCells.get(1).getValue()) %
+                        Math.min(regCells.get(0).getValue(), regCells.get(1).getValue()) == 0) {
+                    res = Math.max(regCells.get(0).getValue(), regCells.get(1).getValue()) /
+                            Math.min(regCells.get(0).getValue(), regCells.get(1).getValue());
+                    mBoard.createRegion(regCells, KKRegion.OperationType.DIVISION, res);
+                }
+            } else {
+                rand = mRand.nextDouble();
+                if (rand < s){
+                    res = 0;
+                    for (Cell c : regCells){
+                        res += c.getValue();
+                    }
+                    mBoard.createRegion(regCells, KKRegion.OperationType.ADDITION, res);
+                } else {
+                    res = 1;
+                    for (Cell c : regCells){
+                        res *= c.getValue();
+                    }
+                    mBoard.createRegion(regCells, KKRegion.OperationType.PRODUCT, res);
+                }
+            }
         }
+
+        // Erase the numbers... if not, which fun?
+        clearBoard();
     }
 }

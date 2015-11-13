@@ -15,7 +15,7 @@ public abstract class DB {
     /**
      * Contains the default data path
      **/
-    final String dataPath = "./data/";
+    private static final String dataPath = "./data/";
 
     /**
      * Constructs an empty DB
@@ -33,22 +33,12 @@ public abstract class DB {
     }
 
     /**
-     * Loads all the data from disc
-     */
-    public abstract void load();
-
-    /**
-     * Saves all data to the disc
-     */
-    public abstract void save();
-
-    /**
      * To get a stream to save the data
      *
      * @param name Name of the stream to get
      * @return An stream where the data can be stored, it must be closed before the object is deleted
      */
-    public ObjectOutputStream getOutputStream(String name) {
+    public static ObjectOutputStream getOutputStream(String name) {
         try {
             OutputStream o = Files.newOutputStream(Paths.get(dataPath + name + ".db"), CREATE, WRITE);
             return new ObjectOutputStream(o);
@@ -65,9 +55,21 @@ public abstract class DB {
      * @param name Name of the stream to get
      * @return A stream where the data can be read, it must be closed before the object is destroyed
      */
-    public ObjectInputStream getInputStream(String name) throws IOException {
+    public static ObjectInputStream getInputStream(String name) throws IOException {
         Files.exists(Paths.get(dataPath + name + ".db"));
         InputStream i = Files.newInputStream(Paths.get(dataPath + name + ".db"), READ);
         return new ObjectInputStream(i);
     }
+
+    /**
+     * Loads all the data from disc
+     */
+    public abstract void load();
+
+    /**
+     * Saves all data to the disc
+     */
+    public abstract void save();
+
+    public static String getDataPath() { return dataPath; }
 }

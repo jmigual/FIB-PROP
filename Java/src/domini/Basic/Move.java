@@ -1,12 +1,14 @@
 package domini.Basic;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Marc on 22/10/2015.
  * Contains information of a Move made by a player.
  */
 
-public class Move {
+public class Move implements Serializable {
 
     //ATTRIBUTES
 
@@ -16,19 +18,23 @@ public class Move {
 
     //OPERATIONS
 
-    /** Constructor with all the attributes */
-    public Move (Cell cell, int last, int next){
+    /**
+     * Constructor with all the attributes
+     */
+    public Move(Cell cell, int last, int next) {
         _lastNum = last;
         _nextNum = next;
         _cell = cell;
     }
 
-    /** Functions used by Match to implement Undo*/
-    public void applyMove () {
-        _cell.setValue (_nextNum);
+    /**
+     * Functions used by Match to implement Undo
+     */
+    public void applyMove() {
+        _cell.setValue(_nextNum);
     }
 
-    public void revertMove (){
-        _cell.setValue (_lastNum);
+    public void revertMove() {
+        _cell.setValue(_lastNum);
     }
 }

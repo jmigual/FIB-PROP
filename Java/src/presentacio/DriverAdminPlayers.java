@@ -12,17 +12,32 @@ import java.util.Scanner;
  */
 public class DriverAdminPlayers implements Driver {
 
-    PlayersAdmin _pAdmin;
+    private PlayersAdmin _pAdmin;
 
-    String _currentPlayer;
+    private String _currentPlayer;
 
-    PrintStream out = System.out;
+    private PrintStream out = System.out;
 
-    Scanner in = new Scanner(System.in);
+    private Scanner in = new Scanner(System.in);
 
     public DriverAdminPlayers(PlayersAdmin p) {
         this._pAdmin = p;
         _currentPlayer = "";
+    }
+
+    /**
+     * Main function of the DriverAdminPlayers' class
+     *
+     * @param args Basic arguments to enter, they're ignored
+     */
+    public static void main(String[] args) {
+
+        KKDB db = new KKDB();
+        db.load();
+        PlayersAdmin p = db.getPlayersAdmin();
+        DriverAdminPlayers pa = new DriverAdminPlayers(p);
+        pa.run();
+        db.save();
     }
 
     /**
@@ -44,7 +59,9 @@ public class DriverAdminPlayers implements Driver {
     /**
      * Removes the current logged in user
      */
-    public void logoutUser() { _currentPlayer = ""; }
+    public void logoutUser() {
+        _currentPlayer = "";
+    }
 
     /**
      * Shows the console input to check if a Player exists
@@ -54,20 +71,6 @@ public class DriverAdminPlayers implements Driver {
 
         if (_pAdmin.exists(in.next())) out.println("L'usuari existeix");
         else out.println("L'usuari no existeix");
-    }
-
-    /**
-     * Main function of the DriverAdminPlayers' class
-     * @param args Basic arguments to enter, they're ignored
-     */
-    public static void main(String[] args) {
-
-        KKDB db = new KKDB();
-        db.load();
-        PlayersAdmin p = db.getPlayersAdmin();
-        DriverAdminPlayers pa = new DriverAdminPlayers(p);
-        pa.run();
-        db.save();
     }
 
     /**
@@ -112,7 +115,7 @@ public class DriverAdminPlayers implements Driver {
                         String temp = in.next();
                         temp = temp.toLowerCase();
 
-                        correct = temp.equals("s") || temp.equals("y") || temp.equals("si") || temp.equals("yes");
+                        correct = "s".equals(temp) || "y".equals(temp) || "si".equals(temp) || "yes".equals(temp);
                     }
 
                     _pAdmin.createPlayer(name, pass);
@@ -183,6 +186,7 @@ public class DriverAdminPlayers implements Driver {
 
     /**
      * To get the current logged in player
+     *
      * @return Current logged in player
      */
     public String getCurrentPlayer() {
