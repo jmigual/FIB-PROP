@@ -120,6 +120,30 @@ public abstract class KKRegion extends Region implements Serializable {
         OperationType(int t) {
             this.type = t;
         }
+
+        @Override
+        public String toString() {
+            String op = " ";
+            switch(this) {
+                case ADDITION:
+                    op = "+";
+                    break;
+                case SUBTRACTION:
+                    op = "-";
+                    break;
+                case PRODUCT:
+                    op = "*";
+                    break;
+                case DIVISION:
+                    op = "/";
+                    break;
+                case NONE:
+                    break;
+                default:
+                    break;
+            }
+            return op;
+        }
     }
 
 

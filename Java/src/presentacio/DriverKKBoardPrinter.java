@@ -134,6 +134,7 @@ public class DriverKKBoardPrinter implements Driver {
             System.arraycopy(outC[i], 0, outC2[i], 0, sizeH);
         }
 
+        // Print regions
         ArrayList<KKRegion> regions = board.get_kkregions();
 
         for (int i = 0; i < size; ++i) {
@@ -156,11 +157,26 @@ public class DriverKKBoardPrinter implements Driver {
 
         out.println();
         out.println("Valors de les regions");
+        ArrayList<String> printRegions = new ArrayList<>(regions.size());
+        int maxSize = 0;
         for (int i = 0; i < regions.size(); ++i) {
             KKRegion r = regions.get(i);
-            out.println(Integer.toString(i) + ": " + r.getOperation().toString() + " => " +
-                    Integer.toString(r.getOperationValue()));
+            String op = r.getOperation().toString();
+            String opV = Integer.toString(r.getOperationValue());
+            String temp = (i < 10 ? " " : "" ) + Integer.toString(i) + ": " + op + " => " + opV;
+            printRegions.add(temp);
+            if (temp.length() > maxSize) maxSize = temp.length();
         }
+
+        boolean odd = regions.size()%2 != 0;
+        int midSize = regions.size()/2;
+        for (int i = 0; i < midSize; ++i)  {
+            String spaces = "";
+            int sizeS = printRegions.get(i).length();
+            for (int j = 0; j < maxSize - sizeS; ++j) spaces += " ";
+            out.println(printRegions.get(i) + spaces + " | " + printRegions.get(odd ? i + midSize + 1 : i + midSize));
+        }
+        if (odd) out.println(printRegions.get(midSize));
     }
 
     public static void printRegion(KKRegion region, PrintStream out) {
