@@ -4,9 +4,11 @@ import domini.KKBoard;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Contains information about a Match, such as the Player and the current Board
+ * Also contains a history of the Moves made by the user, so that they can be reverted as pleased
  */
 public class Match implements Serializable {
     //ATTRIBUTES
@@ -15,15 +17,17 @@ public class Match implements Serializable {
      * Basic attributes
      */
     private KKBoard _board;
+    private Board _solution;
     private String _player;
 
     private boolean _finished;
 
     /**
-     * The score and time the match has been going on (probably connected)
+     * The score and time the match has been going on. The Score gets updated each time
      */
-    private float _score;
-    private float _time;
+    private long _score;
+    private long _time;
+    private long _penalty;
 
     /**
      * List of the last Moves made by the Player and the actual one
@@ -38,9 +42,12 @@ public class Match implements Serializable {
      * Constructor giving the Board and Player
      */
     public Match(KKBoard board, String player) {
-        _board = board;
+        _board = board.getCopy();
+        _solution = _board.getSolution();
         _player = player;
-        _score = _time = 0;
+        _score = 0;
+        _time = System.currentTimeMillis();
+        _penalty = 0;
         _finished = false;
         _moves = new ArrayList<>();
         _index = -1;
@@ -53,16 +60,18 @@ public class Match implements Serializable {
         return _finished;
     }
 
-    public float getScore() {
+    public long getScore() {
+        if (_finished) return _score;
+        _score = _penalty + (System.currentTimeMillis() - _time)/1000;
         return _score;
     }
 
     /**
      * Access to the different attributes of the class
      */
-    public void setScore(float score) {
+   /* public void setScore(float score) {
         _score = score;
-    }
+    }*/
 
     public KKBoard getBoard() {
         return _board;
@@ -79,20 +88,31 @@ public class Match implements Serializable {
      * @param i     row of the Cell
      * @param j     column of the Cell
      * @param value value the Cell is being changed to
+     *
+     * Return : whether the move is correct looking column and row
      */
-    public void makeMove(int i, int j, int value) {
-        Cell cell = _board.getCell(i, j);
+    public boolean makeMove(int i, int j, int value) {
+        Cell cell = _board.getCell(i-1, j-1);
         Move move = new Move(cell, cell.getValue(), value);
+
+        move.applyMove();
+
+        //CHECK ERROR
+        if (!_board.getColumns().get(j-1).isCorrect() || !_board.getRows().get(i-1).isCorrect()){
+            _penalty = _penalty + 10;                                                                   //PENALITZACIO PER FER ERROR
+            move.revertMove();
+            return false;
+        }
 
         for (int it = _moves.size() - 1; it > _index; --it) _moves.remove(it);
 
         _moves.add(move);
         _index = _moves.size() - 1;
-        move.applyMove();
 
-        //CHECK ERROR
+        return true;
     }
 
+    /** Undo, returns false if it can't be done*/
     public boolean back() {
         if (_index == -1) return false;
         _moves.get(_index).revertMove();
@@ -101,11 +121,22 @@ public class Match implements Serializable {
         return true;
     }
 
+    /**Redo, returns false if it can't be done */
     public boolean forward() {
         if (_index >= _moves.size() - 1) return false;
         ++_index;
         _moves.get(_index).applyMove();
 
+        return true;
+    }
+
+    /**Checks if the game is finished */
+
+    public boolean checkFinish () {
+        for (int i=0; i<_board.getSize(); ++i) for (int j=0; j<_board.getSize(); ++j)
+            if (_board.getCell(i,j).getValue() != _solution.getCell(i,j).getValue()) return false;
+        _finished = true;
+        _time = System.currentTimeMillis();
         return true;
     }
 
@@ -122,17 +153,54 @@ public class Match implements Serializable {
      * HINTS
      * 0: Shows if actual values are correct
      * 1: Puts a random correct number of a cell
+     *
+     * Returns the cell(s) that have been modified
      */
 
-    public void hint(int num) {
+    public ArrayList<Cell>  hint(int num) {
+        ArrayList<Cell> ret = new ArrayList<>();
         switch (num) {
             case 0:
-                _score = _score - 10;
+                _penalty = _penalty + 10;                                                             //PENALITZACIO PER COMPROVAR
+                for (int i=0; i<_board._size; ++i) {
+                    for (int j = 0; j<_board._size; ++j){
+                        Cell cell = _board.getCell(i,j);
+                        if (cell.getValue()!=0 && cell.getValue() !=_solution.getCell(i,j).getValue())
+                            ret.add(cell);
+                    }
+                }
                 break;
+
             case 1:
-                _score = _score - 20;
-                break;
+                _penalty = _penalty + 20;                                                             //PENALITZACIO PER OBTENIR NUMERO
+
+                if (isComplete()) return null;
+
+                Random random = new Random();
+                int range = _board.getSize();
+                int i;
+                int j;
+
+                while (true) {
+                    i = random.nextInt(range);
+                    j = random.nextInt(range);
+                    Cell cell = _board.getCell(i,j);
+
+                    if (cell.getValue()==0) {
+                        cell.setValue(_solution.getCell(i,j).getValue());
+                        ret.add(cell);
+                        return ret;
+                    }
+                }
         }
+
+        return ret;
+    }
+
+    private boolean isComplete() {
+        for (int i=0; i<_board.getSize(); ++i) for (int j=0; j<_board.getSize(); ++j)
+            if (_board.getCell(i,j).getValue() ==0) return false;
+        return true;
     }
 
 }

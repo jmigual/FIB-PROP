@@ -73,7 +73,9 @@ public class KKBoard extends Board implements Serializable {
     }
 
     public Board getSolution() {
-        return null;
+        KKBoard ret = getCopy();
+        ret.solve();
+        return ret;
     }
 
     @Override
