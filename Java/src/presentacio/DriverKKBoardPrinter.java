@@ -140,7 +140,8 @@ public class DriverKKBoardPrinter implements Driver {
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
                 Cell c = board.getCell(i, j);
-                int number = regions.indexOf(c.getRegion());
+                KKRegion reg = (KKRegion) c.getRegion();
+                int number = regions.indexOf(reg);
 
                 outC2[2 * i + 1][3 * j + 1] = number < 10 ? ' ' : (char) ((number / 10) + '0');
                 outC2[2 * i + 1][3 * j + 2] = (char) ((number % 10) + '0');
@@ -163,14 +164,14 @@ public class DriverKKBoardPrinter implements Driver {
             KKRegion r = regions.get(i);
             String op = r.getOperation().toString();
             String opV = Integer.toString(r.getOperationValue());
-            String temp = (i < 10 ? " " : "" ) + Integer.toString(i) + ": " + op + " => " + opV;
+            String temp = (i < 10 ? " " : "") + Integer.toString(i) + ": " + op + " => " + opV;
             printRegions.add(temp);
             if (temp.length() > maxSize) maxSize = temp.length();
         }
 
-        boolean odd = regions.size()%2 != 0;
-        int midSize = regions.size()/2;
-        for (int i = 0; i < midSize; ++i)  {
+        boolean odd = regions.size() % 2 != 0;
+        int midSize = regions.size() / 2;
+        for (int i = 0; i < midSize; ++i) {
             String spaces = "";
             int sizeS = printRegions.get(i).length();
             for (int j = 0; j < maxSize - sizeS; ++j) spaces += " ";
