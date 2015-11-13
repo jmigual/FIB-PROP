@@ -200,13 +200,13 @@ public class DriverBoardCreator {
                 }
                 case 2: {
                     if (printMenu) {
-                        out.print("Entra les coordenades de la cel·la (fila,columna) (començant per l'índex 1)" +
-                                " i després entra el valor de la cel·la:\n" +
+                        out.print("Entra les coordenades de la cel·la (fila,columna) i després entra el valor de la" +
+                                " cel·la:\n" +
                                 ">> ");
                     } else {
                         out.print("(i,j)<-n >> ");
                     }
-                    HBC.getBoard().getCell(in.nextInt() - 1, in.nextInt() - 1).setValue(in.nextInt());
+                    HBC.getBoard().getCell(in.nextInt(), in.nextInt()).setValue(in.nextInt());
                     break;
                 }
                 case 3: {
@@ -220,17 +220,25 @@ public class DriverBoardCreator {
                     out.print("Introdueix el tamany de la regio: ");
                     int sizeRegion = in.nextInt();
                     for (int j = 0; j < sizeRegion; j++) {
-                        out.print("Introdueix la posicio de la cella: ");
+                        out.print("Introdueix la posicio de la cel·la: ");
                         int x = in.nextInt();
                         int y = in.nextInt();
                         C.add(HBC.getBoard().getCell(x, y));
                     }
                     try {
                         if (!HBC.createRegion(false, C, op, opValue)) {
-                            out.print("Aquesta regió eliminarà altres regions ja creades. Segueixes volent-la crear? (s/n)");
+                            out.print("Aquesta regió n'eliminarà altres ja creades. Segueixes volent-la crear? (s/n)");
                             String s = in.next();
                             while (!s.equals("s") || !s.equals("n")) {
-                                s = in.next();
+                                if (s.equals("s")){
+                                    HBC.createRegion(true, C, op, opValue);
+                                    break;
+                                } else if (s.equals("n")) {
+                                    break;
+                                } else {
+                                    s = in.next();
+                                }
+
                             }
                         }
                     } catch (Exception e) {

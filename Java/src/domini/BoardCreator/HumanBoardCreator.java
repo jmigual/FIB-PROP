@@ -63,11 +63,8 @@ public class HumanBoardCreator extends BoardCreator {
             case '/':
                 KKop = KKRegion.OperationType.DIVISION;
                 break;
-            case ' ':
-                KKop = KKRegion.OperationType.NONE;
-                break;
             default:
-                /*if (cells.size() > 1) {
+                if (cells.size() > 1) {
                     try {
                         throw new Exception("HBC: createRegion(): invalid operation character");
                     } catch (Exception e) {
@@ -75,9 +72,9 @@ public class HumanBoardCreator extends BoardCreator {
                     }
                     return false;
                 } else {
-
-                }*/
-                return false;
+                    KKop = KKRegion.OperationType.NONE;
+                }
+                break;
 
         }
         mBoard.createRegion(cells, KKop, result);
