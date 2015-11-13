@@ -33,7 +33,7 @@ public class DriverKKBoard implements Driver {
         if (taula.size() != 0 && "y".equals(in.next())) {
             out.println("Hi han aquestes: ");
             for (int i = 0; i < taula.size(); i++) {
-                out.println(Integer.toString(i) + ": de tamany " + Integer.toString(taula.get(i).getSize()));
+                out.println(Integer.toString(i) + ": " + taula.get(i).get_name() + " de tamany " + Integer.toString(taula.get(i).getSize()));
             }
             out.println("Quina taula vols? ");
             b = taula.get(in.nextInt());
@@ -42,6 +42,8 @@ public class DriverKKBoard implements Driver {
             out.print("Introdueix el tamany: ");
             b = new KKBoard(in.nextInt());
 
+            out.print("Introdueix el nom del taulell: ");
+            b.setName(in.next());
 
             ArrayList<Cell> C = new ArrayList<>(b.getSize() * b.getSize());
 

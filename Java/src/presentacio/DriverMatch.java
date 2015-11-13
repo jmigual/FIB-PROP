@@ -1,14 +1,15 @@
 package presentacio;
 
 import dades.KKDB;
-import dades.PlayersAdmin;
 import dades.Table;
 import domini.Basic.Cell;
 import domini.Basic.Match;
 import domini.KKBoard;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 
 /**
  * Created by Marc on 10/11/2015.
@@ -25,7 +26,7 @@ public class DriverMatch {
         db.load();
         PrintStream out = System.out;
         Scanner in = new Scanner(System.in);
-        Match m;
+        Match m = null;
         DriverMatch dm;
         Table<Match> taula = db.getMatches();
 
@@ -38,8 +39,7 @@ public class DriverMatch {
         //Donar valor a m
         while (!finish) {
             out.println("1) Carregar un match inacabat de la DB");
-            out.println("2) Comen莽ar nou Match amb un Board de la DB");
-            out.println("3) Sortir");
+            out.println("2) Comensar nou Match amb un Board de la DB");
 
             switch (in.nextInt()) {
                 case 1:
@@ -52,12 +52,12 @@ public class DriverMatch {
 
                         for (int i = 0; i < taula.size(); i++) {
                             s = "No acabat";
-                            if (taula.get(i).hasFinished()) s = "Acabat";
+                            if (taula.get(i).hasFinished()) s = "Acabat  Score : " + taula.get(i).getScore();
 
                             b = taula.get(i).getBoard();
                             p = taula.get(i).getPlayer();
 
-                            out.println(Integer.toString(i) + " Board " + /*b.getName +*/  " Player " + p + "  " + s);
+                            out.println(Integer.toString(i) + ": Board " + b.get_name() +  " Player " + p + "  " + s);
                         }
                         out.println("Quin match vols reanudar? ");
 
@@ -66,9 +66,7 @@ public class DriverMatch {
                         if (n > -1 && n < taula.size()) {
                             if (!taula.get(n).hasFinished() && taula.get(n).getPlayer().equals(user)) {
                                 m = taula.get(n);
-                                dm = new DriverMatch(m);
-                                dm.run();
-
+                                finish = true;
                             } else out.println("Aquest Match ja ha acabat o no es teu");
                         }
 
@@ -76,15 +74,14 @@ public class DriverMatch {
 
                     break;
 
-                //Comen锟絘r nou match
+                //Comen鏰r nou match
                 case 2:
                     Table<KKBoard> taulaB = db.getBoards();
-                    PlayersAdmin pa = db.getPlayersAdmin();
 
                     if (taulaB.size() > 0) {
                         out.println("Hi ha aquests taulers: ");
                         for (int i = 0; i < taulaB.size(); i++) {
-                            out.println(Integer.toString(i) + /*getName*/ ": de tamany " + Integer.toString(taulaB.get(i).getSize()));
+                            out.println(Integer.toString(i) + ": " + taulaB.get(i).get_name() + " de tamany " + Integer.toString(taulaB.get(i).getSize()));
                         }
                         out.println("Quin tauler vols? (si no vols cap posa -1)");
 
@@ -93,24 +90,22 @@ public class DriverMatch {
                         if (aux > -1 && aux < taulaB.size()) {
                             m = new Match(taulaB.get(aux), user);
                             taula.add(m);
-
-                            dm = new DriverMatch(m);
-                            dm.run();
+                            finish = true;
                         }
                     } else out.println("No hi ha taulers a la Base de Dades");
 
                     break;
-                case 3:
-                    finish = true;
-                    break;
+
             }
         }
+
+        dm = new DriverMatch(m);
+        db.save();
+        dm.run();
         db.save();
     }
 
     public void run() {
-
-        // KKBoard sol = m.getBoard().getSolution();
         PrintStream out = System.out;
         DriverKKBoardPrinter KKp = new DriverKKBoardPrinter(_match.getBoard(), out);
         Scanner in = new Scanner(System.in);
@@ -118,6 +113,7 @@ public class DriverMatch {
         boolean finish = false;
 
         while (!finish) {
+            out.println("SCORE: " + _match.getScore());
             KKp.printBoard(_match.getBoard());
 
             out.println("");
@@ -131,8 +127,12 @@ public class DriverMatch {
 
             switch (in.nextInt()) {
                 case 1:
-                    out.println("Escriu la fila i columna de la cel锟絣a a modificar seguit del valor desitjat:");
-                    _match.makeMove(in.nextInt(), in.nextInt(), in.nextInt());
+                    out.println("Escriu la fila i columna de la cella a modificar seguit del valor desitjat:");
+                    if (!_match.makeMove(in.nextInt(), in.nextInt(), in.nextInt())) out.println("No pots posar aquest valor aqui!");
+                    else if (_match.checkFinish()) {
+                        out.println("FELICITATS! Has completat aquest taulell amb una puntuacio de " + _match.getScore());
+                        finish = true;
+                    }
                     break;
                 case 2:
                     if (!_match.back()) out.println("No hi ha moviments a revertir!");
@@ -141,6 +141,7 @@ public class DriverMatch {
                     if (!_match.forward()) out.println("No hi ha moviments a refer!");
                     break;
                 case 4:
+                    //MENU ANNOTATIONS
                     out.println("1. Afegir anotacio");
                     out.println("2. Eliminar anotacio");
                     out.println("3. Veure anotacions d'una cel路la");
@@ -148,15 +149,15 @@ public class DriverMatch {
                     switch (in.nextInt()) {
                         case 1:
                             out.println("Introdueix fila, columna de cel路la i numero de l'anotacio");
-                            _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), true);
+                            _match.addAnnotation(in.nextInt()-1, in.nextInt()-1, in.nextInt(), true);
                             break;
                         case 2:
                             out.println("Introdueix fila, columna de cel路la i numero de l'anotacio");
-                            _match.addAnnotation(in.nextInt(), in.nextInt(), in.nextInt(), false);
+                            _match.addAnnotation(in.nextInt()-1, in.nextInt()-1, in.nextInt(), false);
                             break;
                         case 3:
                             out.println("Introdueix fila, columna de cel路la");
-                            Cell cell = _match.getBoard().getCell(in.nextInt(), in.nextInt());
+                            Cell cell = _match.getBoard().getCell(in.nextInt()-1, in.nextInt()-1);
 
                             for (int it = 0; it < _match.getBoard().getSize(); ++it)
                                 out.print(cell.getAnnotation(it + 1) + " ");
@@ -166,6 +167,41 @@ public class DriverMatch {
                     break;
                 case 5:
                     //MENU HINTS
+                    out.println();
+                    out.println("1. Corregir errors");
+                    out.println("2. Mostrar numero aleatori");
+                    out.println("3. Sortir");
+
+                    ArrayList<Cell> cells;
+
+                    switch (in.nextInt()) {
+                        case 1:
+                            cells = _match.hint(0);
+                            int c, f;
+                            out.print("Caselles erronies : ");
+                            for (int i = 0; i<cells.size(); ++i) {
+                                f = cells.get(i).getRow().getPos()+1;
+                                c = cells.get(i).getColumn().getPos()+1;
+                                out.print("(" + f + "," + c + ") ");
+                            }
+                            out.println();
+                            break;
+
+                        case 2:
+                            cells = _match.hint(1);
+                            if (cells == null) out.println ("No queden espais lliures!");
+                            else {
+                                f = cells.get(0).getRow().getPos() + 1;
+                                c = cells.get(0).getColumn().getPos() + 1;
+                                out.println("Casella mostrada: (" + f + "," + c + ") ");
+                                if (_match.checkFinish()) {
+                                    out.println("FELICITATS! Has completat aquest taulell amb una puntuacio de " + _match.getScore());
+                                    finish = true;
+                                }
+                            }
+                            break;
+                    }
+                    break;
                 case 6:
                     finish = true;
                     break;
