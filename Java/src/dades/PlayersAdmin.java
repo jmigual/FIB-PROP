@@ -3,6 +3,7 @@ package dades;
 import exceptions.PlayerExistsException;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class PlayersAdmin {
         byte[] hash = ("asdf" + name).getBytes();
         try {
             hash = getHash(password);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         Player p = new Player(name, hash);
@@ -153,11 +154,22 @@ public class PlayersAdmin {
         return ret;
     }
 
-    public static byte[] getHash(String s) throws Exception {
+    /**
+     * To get the hash of a string
+     * @param s String to be hashed
+     * @return byte[] containing the hash
+     * @throws Exception Throwed when there's no selected algorithm
+     */
+    public static byte[] getHash(String s) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
-        return md.digest(s.getBytes("UTF-8"));
+        return md.digest(s.getBytes());
     }
 
+    /**
+     * To get the player with the specified name
+     * @param name Player's name
+     * @return The selected player
+     */
     public Player getPlayer(String name) {
         return _players.get(_players.indexOf(new Player(name)));
     }
