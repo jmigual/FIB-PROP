@@ -1,5 +1,7 @@
 package dades;
 
+import exceptions.PlayerExistsException;
+
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,22 +33,20 @@ public class PlayersAdmin {
      * @param password Player's, password
      * @return <b>True</b> if the player is added successfully
      */
-    public boolean createPlayer(String name, String password) {
+    public Player createPlayer(String name, String password) throws PlayerExistsException {
+        // Create the password's hash and the player to check
+        byte[] hash = ("asdf" + name).getBytes();
         try {
-            // Create the password's hash and the player to check
-            byte[] hash = getHash(password);
-            Player p = new Player(name, hash);
-
-            // Check if the player's already added
-            if (_players.contains(p)) return false;
-            _players.add(p);
-
-            return true;
+            hash = getHash(password);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
             e.printStackTrace();
         }
-        return false;
+        Player p = new Player(name, hash);
+
+        // Check if the player's already added
+        if (_players.contains(p)) throw new PlayerExistsException("The user already exists");
+        _players.add(p);
+        return p;
     }
 
     /**
@@ -153,8 +153,12 @@ public class PlayersAdmin {
         return ret;
     }
 
-    private byte[] getHash(String s) throws Exception {
+    public static byte[] getHash(String s) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         return md.digest(s.getBytes("UTF-8"));
+    }
+
+    public Player getPlayer(String name) {
+        return _players.get(_players.indexOf(new Player(name)));
     }
 }
