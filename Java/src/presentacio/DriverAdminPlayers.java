@@ -3,6 +3,7 @@ package presentacio;
 import dades.KKDB;
 import dades.PlayersAdmin;
 import domini.Basic.Driver;
+import exceptions.PlayerExistsException;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -118,7 +119,11 @@ public class DriverAdminPlayers implements Driver {
                         correct = "s".equals(temp) || "y".equals(temp) || "si".equals(temp) || "yes".equals(temp);
                     }
 
-                    _pAdmin.createPlayer(name, pass);
+                    try {
+                        _pAdmin.createPlayer(name, pass);
+                    } catch (PlayerExistsException e) {
+                        out.print("L'usuari que estàs intentant afegir ja existeix");
+                    }
 
                     break;
                 }

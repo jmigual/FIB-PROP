@@ -3,6 +3,8 @@ package dades;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 /**
  * Test class to check if Players Admin works properly
  */
@@ -21,8 +23,10 @@ public class PlayersAdminTest {
 
     @Test
     public void testCreatePlayer() throws Exception {
-        p.createPlayer(playerName, password);
-        //assertEquals(playerName, )
+        Player player = p.createPlayer(playerName, password);
+        assertEquals("PlayerName", playerName, player.getName());
+        assertArrayEquals("PlayerPassword", PlayersAdmin.getHash(password), player.getHash());
+        assertSame("Same player", player, p.getPlayer(playerName));
     }
 
     @Test
