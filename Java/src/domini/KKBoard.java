@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 /**
- * Created by Joan on 20/10/2015.
+ * Created by Joan??? on 20/10/2015.
  */
 public class KKBoard extends Board implements Serializable {
 
@@ -24,9 +24,12 @@ public class KKBoard extends Board implements Serializable {
 
     public KKBoard(int size) {
         super(size);
-        _kkregions = new ArrayList<>(_size * _size / 2);
+        _kkregions = new ArrayList<>(_size * _size );
     }
 
+    /*
+    * Make a copy of the implicit parameter by Serializing and Deserializing
+     */
     public KKBoard getCopy() {
 
         KKBoard ret = null;
@@ -72,7 +75,7 @@ public class KKBoard extends Board implements Serializable {
         this._creator = _creator;
     }
 
-    public Board getSolution() {
+    public KKBoard getSolution() {
         KKBoard ret = getCopy();
         ret.solve();
         return ret;
@@ -161,7 +164,14 @@ public class KKBoard extends Board implements Serializable {
         return false;
     }
 
+    public int getNumSolutions(int max){
+        KKBoard aux = this.getCopy();
+        aux.recursive_solve_until(0,0,max);
+        return aux._numSolution;
+    }
+
     private boolean recursive_solve_until(int i, int j, int max) {
+        if(_numSolution == max) return true;
         if (j == this.getSize()) {
             ++_numSolution;
             return true;
@@ -201,7 +211,7 @@ public class KKBoard extends Board implements Serializable {
                 this.getCell(i, j).setValue(a);
                 ret = ret || recursiveSolve(i_f, j_f);
                 if (!ret) this.getCell(i, j).setValue(0);
-                if (ret) return ret;
+                //if (ret) return ret;
             }
         }
         return false;
@@ -255,8 +265,9 @@ public class KKBoard extends Board implements Serializable {
      * DIVISION(3),
      * NONE(4);
      *
-     * @param cells
-     * @param op
+     * @param cells of the KKBoard
+     * @param op define the kind of operation
+     * @param opValue how much is the operation result
      */
     public boolean createRegion(ArrayList<Cell> cells, KKRegion.OperationType op, int opValue) {
         if (op == KKRegion.OperationType.ADDITION) _kkregions.add(new KKRegionAddition(cells, this.getSize(), opValue));
