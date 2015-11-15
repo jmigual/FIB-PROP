@@ -3,6 +3,7 @@ package presentacio;
 import dades.KKDB;
 import dades.PlayersAdmin;
 import domini.Basic.Driver;
+import exceptions.PlayerExistsException;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -53,7 +54,7 @@ public class DriverAdminPlayers implements Driver {
             System.err.println("No s'ha pogut iniciar sessió nom d'usuari o contrasenya incorrectes");
         }
 
-        _currentPlayer = name;
+        else _currentPlayer = name;
     }
 
     /**
@@ -71,6 +72,39 @@ public class DriverAdminPlayers implements Driver {
 
         if (_pAdmin.exists(in.next())) out.println("L'usuari existeix");
         else out.println("L'usuari no existeix");
+    }
+
+    public void createPlayer() {
+        boolean correct = false;
+        String name = "";
+        String pass = "";
+        while (!correct) {
+            while (name.length() == 0) {
+                out.print("Entra el nom d'usuari: ");
+                name = in.next();
+
+                if (name.length() == 0) out.println("El nom d'usuari no pot ser buit");
+            }
+
+            while (pass.length() < 8) {
+                out.println("La contrasenya ha de ser com a mínim de 8 caràcters");
+                out.print("Entra la contrasenya: ");
+                pass = in.next();
+            }
+
+            out.println("Nom: " + name + " contrasenya: " + pass);
+            out.print("És correcte (S/N)? ");
+            String temp = in.next();
+            temp = temp.toLowerCase();
+
+            correct = "s".equals(temp) || "y".equals(temp) || "si".equals(temp) || "yes".equals(temp);
+        }
+
+        try {
+            _pAdmin.createPlayer(name, pass);
+        } catch (PlayerExistsException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -93,33 +127,7 @@ public class DriverAdminPlayers implements Driver {
             switch (in.nextInt()) {
                 // Add player
                 case 1: {
-                    boolean correct = false;
-                    String name = "";
-                    String pass = "";
-                    while (!correct) {
-                        while (name.length() == 0) {
-                            out.print("Entra el nom d'usuari: ");
-                            name = in.next();
-
-                            if (name.length() == 0) out.println("El nom d'usuari no pot ser buit");
-                        }
-
-                        while (pass.length() < 8) {
-                            out.println("La contrasenya ha de ser com a mínim de 8 caràcters");
-                            out.print("Entra la contrasenya: ");
-                            pass = in.next();
-                        }
-
-                        out.println("Nom: " + name + " contrasenya: " + pass);
-                        out.print("És correcte (S/N)? ");
-                        String temp = in.next();
-                        temp = temp.toLowerCase();
-
-                        correct = "s".equals(temp) || "y".equals(temp) || "si".equals(temp) || "yes".equals(temp);
-                    }
-
-                    _pAdmin.createPlayer(name, pass);
-
+                   this.createPlayer();
                     break;
                 }
                 // Delete player

@@ -31,15 +31,20 @@ public class DriverMatch {
         Table<Match> taula = db.getMatches();
 
         //LOGIN USER
-        out.print("Nom de l'usuari actual: ");
-        String user = in.next();
+        String user;
+        if (args.length ==0) {
+            out.print("Nom de l'usuari actual: ");
+            user = in.next();
+        }
+        else user = args[0];
 
         boolean finish = false;
 
         //Donar valor a m
         while (!finish) {
-            out.println("1) Carregar un match inacabat de la DB");
+            out.println("1) Carregar un Match inacabat de la DB");
             out.println("2) Comensar nou Match amb un Board de la DB");
+            out.println("3) Enrere");
 
             switch (in.nextInt()) {
                 case 1:
@@ -96,6 +101,8 @@ public class DriverMatch {
 
                     break;
 
+                case 3:
+                    return;
             }
         }
 
