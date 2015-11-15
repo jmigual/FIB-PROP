@@ -15,64 +15,66 @@ import java.util.Scanner;
 public class DriverCell {
 
     public static void main(String[] args) {
-        Row row = new Row(9, 0);
-        Column column = new Column(9, 0);
-        Region region = new KKRegionAddition(4, 9, 12);
-        Cell cell = new Cell(9, region, column, row);
-
         PrintStream out = System.out;
         Scanner in = new Scanner(System.in);
+        out.print("Quin es el valor maxim de la cel.la?");
+        int size= in.nextInt();
+        Row row = new Row(size, 0);
+        Column column = new Column(size, 0);
+        Region region = new KKRegionAddition(2, size, 12);
+        Cell cell = new Cell(size, region, column, row);
+
 
         boolean keepAsking = true;
 
         while (keepAsking) {
             out.println();
-            out.println("What do you wish to do?");
-            out.println("1: Enter a new value");
-            out.println("2: Get current value");
-            out.println("3: Enter a possibility");
-            out.println("4: Get a possibility");
-            out.println("5: Enter an annotation");
-            out.println("6: Get an annotation");
+            out.println("Que vols fer?");
+            out.println("1: Introduir un nou valor");
+            out.println("2: Veure el valor actual");
+            out.println("3: Introduir una possibilitat");
+            out.println("4: Obtenir una possibilitat");
+            out.println("5: Introduir una anotacio");
+            out.println("6: Obtenir una anotacio");
             if (in.hasNextInt()) {
                 int modifiedValue;
                 switch (in.nextInt()) {
                     case 1:
-                        out.println("Enter the value");
+                        out.println("Quin es el valor?");
                         cell.setValue(in.nextInt());
                         break;
                     case 2:
-                        if (cell.getValue() == 0) out.println("There is no value assigned to the cell");
-                        else out.println("The value is " + Integer.toString(cell.getValue()));
+                        if (cell.getValue() == 0) out.println("No hi ha cap valor assignat a la cel.la");
+                        else out.println("El valor es " + Integer.toString(cell.getValue()));
                         break;
                     case 3:
-                        out.println("For which value do you wish to modify the possibility?");
+                        out.println("De quin valor vols canviar la possibilitat?");
                         modifiedValue = in.nextInt();
-                        out.print("Is it possible that there is a " + Integer.toString(modifiedValue) + "?");
-                        cell.setPossibility(modifiedValue, in.nextBoolean());
+                        out.print("Es possible que hi hagi un " + Integer.toString(modifiedValue) + "? (y/n)");
+                        cell.setPossibility(modifiedValue, "y".equals(in.next()));
                         break;
                     case 4:
-                        out.println("Which value do you want to get the possibility of?");
+                        out.println("De quin valor vols obtenir la possibilitat?");
                         int consultedValue = in.nextInt();
                         if (cell.getPossibility(consultedValue))
-                            out.println("It's possible for " + Integer.toString(consultedValue) + " to be in the cell");
+                            out.println("Es possible que hi hagi un " + Integer.toString(consultedValue) + " en la cel.la");
                         else
-                            out.println("It's impossible for " + Integer.toString(consultedValue) + " to be in the cell");
+                            out.println("Es impossible que hi hagi un " + Integer.toString(consultedValue) + " en la cel.la");
                         break;
                     case 5:
-                        out.print("For which value do you wish to change the annotation: ");
+                        out.print("De quin valor vols canviar l'annotacio: ");
                         modifiedValue = in.nextInt();
-                        out.print("Do you want to switch it or set it (switch/set): ");
-                        if (in.next().contains("switch")) cell.switchAnnotation(modifiedValue);
+                        out.print("Vols alternar el valor o introduir-ne un de nou?: (alt/intr)");
+                        if (in.next().contains("alt")) cell.switchAnnotation(modifiedValue);
                         else {
-                            out.print("To what do you want to set?: ");
-                            cell.setAnnotation(modifiedValue, in.nextBoolean());
+                            out.print("Quin valor li vols donar a l'annotacio?: (cert/fals)");
+                            cell.setAnnotation(modifiedValue, "cert".equals(in.next()));
                         }
                         break;
                     case 6:
-                        out.println("Which value do you want to get the possibility of?");
+                        out.println("De quin valor vols consultar l'annotacio?");
                         modifiedValue = in.nextInt();
-                        out.println("The annotation for " + Integer.toString(modifiedValue) + " is " + Boolean.toString(cell.getAnnotation(modifiedValue)));
+                        out.println("L'annotacio de la cel.la " + Integer.toString(modifiedValue) + " es " + Boolean.toString(cell.getAnnotation(modifiedValue)));
                         break;
                 }
             } else keepAsking = false;
