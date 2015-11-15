@@ -137,14 +137,14 @@ public class KKBoard extends Board implements Serializable {
             return recursiveSolve(i_f, j_f);
         }
 
-        /*this.getCell(i, j).getColumn().calculatePossibilities();
+        this.getCell(i, j).getColumn().calculatePossibilities();
         this.getCell(i, j).getRow().calculatePossibilities();
         this.getCell(i, j).getRegion().calculatePossibilities();
-        this.getCell(i, j).calculatePossibilities();*/
+        this.getCell(i, j).calculatePossibilities();
 
-        precalculate();
+       // precalculate();
 
-        calculateIndividualPossibilities();
+       // calculateIndividualPossibilities();
 
 
         if (this.getCell(i, j).getValue() != 0) {
@@ -189,15 +189,15 @@ public class KKBoard extends Board implements Serializable {
             return recursiveSolve(i_f, j_f);
         }
 
-        /*this.getCell(i, j).getColumn().calculatePossibilities();
+        this.getCell(i, j).getColumn().calculatePossibilities();
         this.getCell(i, j).getRow().calculatePossibilities();
         this.getCell(i, j).getRegion().calculatePossibilities();
-        this.getCell(i, j).calculatePossibilities();*/
+        this.getCell(i, j).calculatePossibilities();
 
 
         //precalculate();
 
-        calculateIndividualPossibilities();
+        //calculateIndividualPossibilities();
 
 
         if (this.getCell(i, j).getValue() != 0) {
