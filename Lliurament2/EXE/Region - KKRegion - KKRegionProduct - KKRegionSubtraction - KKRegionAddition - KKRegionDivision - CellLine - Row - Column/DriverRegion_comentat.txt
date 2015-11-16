@@ -1,3 +1,17 @@
+Aquest joc de proves ens serveix per comprovar les funcionalitats de les regions (en concret
+una de multiplicació) 
+
+L'unic driver que s'utilitza es el DriverRegion.jar
+
+La regió serà de multiplicació amb resultat 120 i de mida 3. La mida del KenKen on esta situada
+la regió serà de 9x9. Primer comprovarem que les funcions d'afegir i consultar els valors de les
+cel·les i de les possibilitats de les regions funciona. Tot seguit comprovarem que funciona el 
+càlcul de possibilitats de la regió funciona. 
+
+Per executar el programa utilitzar la comanda
+#> java -jar -Dfile.encoding=UTF-8 DriverRegion.jar
+
+
 2
 3	//escollim una regio de tamany 3 en un kenken de mida 9
 9	//es de tipus producte, i el resultat es 120
