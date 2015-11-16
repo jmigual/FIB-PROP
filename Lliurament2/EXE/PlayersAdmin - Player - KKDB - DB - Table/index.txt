@@ -1,0 +1,9 @@
+## Índex
+___
+| Nom Arxiu                           | Observacions                                   |
+| ----------------------------------- | ---------------------------------------------- |
+| `DriverAdminPlayers.in`             | Arxiu d'entrada cas de prova                   |
+| `DriverAdminPlayers.out`            | Sortida del cas de prova                       |
+| `DriverAdminPlayers.jar`            | Executable java                                |
+| `DriverAdminPlayers_comentat.html`  | Comentari en _html_ del cas de prova           |
+| `DriverAdminPlayers_comentat.txt`   | Comentari en estil _Markdown_ del cas de prova |
