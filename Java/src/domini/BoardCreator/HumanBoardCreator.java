@@ -19,7 +19,7 @@ public class HumanBoardCreator extends BoardCreator {
     public boolean loadBoard(String name) {
         for (KKBoard b : mTableKKB){
             if (b.get_name().equals(name)){
-                mBoard = b;
+                mBoard = b.getCopy();
                 return true;
             }
         }

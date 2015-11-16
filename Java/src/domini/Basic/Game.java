@@ -7,6 +7,7 @@ import dades.Table;
 import domini.KKBoard;
 import presentacio.DriverAdminPlayers;
 import presentacio.DriverBoardCreator;
+import presentacio.DriverKKBoard;
 import presentacio.DriverMatch;
 
 import java.io.PrintStream;
@@ -61,7 +62,8 @@ public class Game {
         out.println("1. El meu usuari");
         out.println("2. Jugar!!");
         out.println("3. Crear un taulell");
-        out.println("4. Veure base de dades");
+        out.println("4. Que la CPU em resolgui un taulell");
+        out.println("5. Veure base de dades");
         out.println("0. Tancar sessio");
 
         switch (in.nextInt()){
@@ -86,7 +88,22 @@ public class Game {
                 DriverBoardCreator.main(s2);
                 _db.load();
                 break;
+
             case 4:
+                out.print("Nom del taulell: ");
+                KKBoard board = null;
+                String nameB = in.next();
+                for (KKBoard b : _db.getBoards()) if (b.get_name().equals(nameB)) board = b;
+
+                if (board==null) out.println("Nom erroni");
+                else {
+                    DriverKKBoard driverKKB = new DriverKKBoard(board);
+                    driverKKB.run();
+                }
+
+                break;
+
+            case 5:
                 dbMenu();
                 break;
 
@@ -133,6 +150,23 @@ public class Game {
                 break;
 
             case 3:
+                out.print("Boards creats: ");
+                Table <KKBoard> taulaB = _db.getBoards();
+                for (KKBoard b : taulaB){
+                    if (b.getCreator().equals(_player.getName())) out.print(b.get_name() + " ");
+                }
+
+                out.print("\n \n");
+
+                out.println("Partides comensades/acabades: ");
+                Table <Match> taulaM= _db.getMatches();
+                for (Match m : taulaM){
+                    String s = "No acabat";
+                    if (m.hasFinished()) s = "Acabat  Score : " + m.getScore();
+                    if (m.getPlayer().equals(_player.getName())) out.println(m.getBoard().get_name() + " " + s);
+                }
+                out.println();
+
                 break;
 
             case 4:
