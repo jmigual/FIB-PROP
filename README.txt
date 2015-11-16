@@ -1,4 +1,4 @@
-Aquest és el nostre projecte de Kenken.
+﻿Aquest és el nostre projecte de Kenken.
 
 Relació de drivers i classes provades
 
@@ -91,3 +91,73 @@ en la dificultat del kenken (e.g. l'operació i resultat -1 en un taulell n*n t�
 possibles, mentres que l'operació i resultat -8 en un taulell de 9*9 només té 2 solucions diferents).
 ===============================================================
 
+
+========= Resolució de KenKens (veure KKBoard.java) ========
+
+La resolucio de KenKens es un algoritme que esta pendent d'optimitzar. De moment el que fa es
+un backtracking marcat per les possibilitats de la cel·la. En cada iteració del backtracking
+es calculen les possibilitats de la fila, la columna i la regió de cel·la actual. Tot seguit
+s'ajunten aquestes possibilitats amb un and i es prova ficar tots els valors possibles. 
+
+Per exemple resoldrem el seguent tauler:
+
++--------+  +--------+
+|     |  |  | 1  1| 3|
+|  +--+--|  |  +--+--|
+|  |     |  | 1| 2  2|
+|--+-----|  |--+-----|
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: + => 6 |  2: + => 5
+ 1: + => 4 |  3: + => 3
+
+En aquest moment estem a la cel·la (0,0). Tots els valors son possibles menys el 3 ja que
+si posem un 3 els altres 2 valors de la regio haurien de sumar 1. Començem provant l'1.
++--------+
+| 1   |  | 
+|  +--+--| 
+|  |     |  
+|--+-----|  
+|        |  
++--------+  
+
+Com ja hi ha un 1 en la mateixa columna no podem ficar un 1 a la cel·la (1,0). Tampoc podem
+ficar un 3 ja que faria que el valor que hauriam de posar a la cel·la (0,1) fos 0.
++--------+
+| 1   |  | 
+|  +--+--| 
+| 2|     |  
+|--+-----|  
+|        |  
++--------+ 
+
+Com ja hi ha un 1 i un 2 en la columna nomes hi podem ficar un 3 a la cel·la (2,0)
++--------+
+| 1   |  | 
+|  +--+--| 
+| 2|     |  
+|--+-----|  
+| 3      |  
++--------+
+
+Segons la regió, a la cel·la (0,1) només hi pot anar un 1, pero no hi pot anar ja que ja tenim
+un 1 en la mateixa fila, aixi que tornem enrere (fins a la cel·la (0,0) ja que les altres no
+tenen possibilitats restants).
++--------+
+| 2   |  | 
+|  +--+--| 
+|  |     |  
+|--+-----|  
+|        |  
++--------+     
+
+L'algoritme segueix fins que arriba al resultat:
++--------+
+| 2  1| 3|
+|  +--+--|
+| 1| 3  2|
+|--+-----|
+| 3  2  1|
++--------+ 
