@@ -5,9 +5,11 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Row;
 import domini.KKRegion.*;
+import presentacio.DriverKKBoardPrinter;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
@@ -83,10 +85,64 @@ public class KKBoard extends Board implements Serializable {
 
     @Override
     public void solve() {
-        boolean b = precalculate();
+        boolean b = true;//precalculate();
         if (b) b = recursiveSolve(0, 0);
         _hasSolution = b;
         System.out.println(b);
+    }
+
+    public void solveslow() {
+        boolean b = true;//precalculate();
+        if (b) b = recursiveSolvestep(0, 0);
+        _hasSolution = b;
+        System.out.println(b);
+    }
+
+    private boolean recursiveSolvestep(int i, int j) {
+        if (j == this.getSize()) return true;
+
+        DriverKKBoardPrinter.printBoard(this, System.out);
+        Scanner in = new Scanner(System.in);
+        in.next();
+
+        int j_f, i_f;
+        i_f = i + 1;
+        j_f = j;
+        if (i_f == this.getSize()) {
+            i_f = 0;
+            j_f = j + 1;
+        }
+
+        if (this.getCell(i, j).getValue() != 0) {
+            return recursiveSolve(i_f, j_f);
+        }
+
+        this.getCell(i, j).getColumn().calculatePossibilities();
+        this.getCell(i, j).getRow().calculatePossibilities();
+        this.getCell(i, j).getRegion().calculatePossibilities();
+        this.getCell(i, j).calculatePossibilities();
+
+        // precalculate();
+
+        // calculateIndividualPossibilities();
+
+
+        if (this.getCell(i, j).getValue() != 0) {
+            return recursiveSolve(i_f, j_f);
+        }
+
+        if (getCell(i, j).getPossibilities().length == 0) return false;
+        boolean ret = false;
+        for (int a = 1; a <= this.getSize(); ++a) {
+            if (this.getCell(i, j).getPossibility(a)) {
+                this.getCell(i, j).setValue(a);
+                //System.out.println("oeoe " + Integer.toString(j_f) + " " + Integer.toString(this.getSize()));
+                ret = ret || recursiveSolvestep(i_f, j_f);
+                if (!ret) this.getCell(i, j).setValue(0);
+                else return ret;
+            }
+        }
+        return false;
     }
 
     private boolean precalculate() {
