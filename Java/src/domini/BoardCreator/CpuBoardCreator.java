@@ -166,7 +166,8 @@ public class CpuBoardCreator extends BoardCreator {
 
     public void createBoard() throws Exception{
         if ((mDivWeight + mSubsWeight)/mTotalOpWeight > mSizesWeights.get(1) / mTotalSizesWeight) {
-            throw new Exception("Division and subtraction relative weights cannot be higher than size=2 region weight.");
+            throw new Exception("Division and substraction relative weights cannot be higher than size=2 region " +
+                    "weight.");
         }
 
         // Initialization

@@ -38,9 +38,9 @@ public class DriverBoardCreator {
 
         while (true) {
             out.print("Benvingut al creador de taulells de Kenken!\n" +
-                    "Seleciona una opci�:\n" +
+                    "Seleciona una opció:\n" +
                     "1) Crear un taulell manualment.\n" +
-                    "2) Que la CPU em generi un taulell aleat�riament a partir de certs par�metres.\n" +
+                    "2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.\n" +
                     "3) Sortir\n");
 
             if (!in.hasNextInt()) break;
@@ -104,9 +104,15 @@ public class DriverBoardCreator {
                 case 5: {
                     out.print("Quin nom vols posar al taulell? ");
                     String s = in.next();
-                    CBC.saveBoard(s,"CPU");
-                    db.save();
-                    out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
+                    boolean found = false;
+                    for (KKBoard b : mTableKKB) if (b.get_name().equals(s)) found = true;
+
+                    if (found) out.println("Ja existeix un taulell amb aquest nom");
+                    else {
+                        CBC.saveBoard(s, "CPU");
+                        db.save();
+                        out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
+                    }
                     break;
                 }
                 case 6: {
@@ -174,7 +180,8 @@ public class DriverBoardCreator {
 
     public static void runHBC() {
         out.print("Inserta una mida pel taulell: ");
-        HumanBoardCreator HBC = new HumanBoardCreator(in.nextInt(), mTableKKB);
+        int size = in.nextInt();
+        HumanBoardCreator HBC = new HumanBoardCreator(size, mTableKKB);
 
         boolean printMenu = true;
         while (true) {
@@ -271,18 +278,26 @@ public class DriverBoardCreator {
                     break;
                 }
                 case 7: {
-                    out.print("Posa un nom al tauler:");
-                    HBC.saveBoard(in.next(), player);
-                    db.save();
-                    out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
+                    out.print("Posa un nom al tauler: ");
+                    String s = in.next();
+                    boolean found = false;
+                    for (KKBoard b : mTableKKB) if (b.get_name().equals(s)) found = true;
+
+                    if (found) out.println("Ja existeix un taulell amb aquest nom");
+
+                    else {
+                        HBC.saveBoard(s, player);
+                        db.save();
+                        out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
+                    }
                     break;
                 }
                 case 8: {
                     out.print("Com es diu el taulell que vols carregar? ");
-                    if (HBC.loadBoard(in.next())) {
+                    if (HBC.loadBoard(in.next(), size)) {
                         out.println("Tauler carregat.");
                     } else {
-                        out.println("404: No s'ha trobat el tauler. :/");
+                        out.println("No s'ha trobat el tauler o no es de la mateixa mida. :/");
                     }
                     break;
                 }
