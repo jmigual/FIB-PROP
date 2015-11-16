@@ -17,7 +17,7 @@ public class BoardCreator {
 
     protected int mSize;
     protected KKBoard mBoard;
-    private Table<KKBoard> mTableKKB;
+    protected Table<KKBoard> mTableKKB;
     protected Random mRand;
 
 
