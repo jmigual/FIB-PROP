@@ -1,15 +1,20 @@
-Inserta una mida pel taulell: Selecciona una opciÛ:
-0) Deixar d'imprimir el men˙ per pantalla
-1) Omplir el taulell de n˙meros aleatoris
-2) Modificar el valor d'una cel∑la
-3) Crear una regiÛ
+Benvingut al creador de taulells de Kenken!
+Seleciona una opci√≥:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleat√≤riament a partir de certs par√†metres.
+3) Sortir
+Inserta una mida pel taulell: Selecciona una opci√≥:
+0) Deixar d'imprimir el men√∫ per pantalla
+1) Omplir el taulell de n√∫meros aleatoris
+2) Modificar el valor d'una cel¬∑la
+3) Crear una regi√≥
 4) Veure el taulell
 5) Comprovar que el taulell sigui resoluble
 6) Resoldre el taulell
-7) Guardar el taulell (s'esborraran els n˙meros)
+7) Guardar el taulell (s'esborraran els n√∫meros)
 8) Carregar un taulell
 9) Sortir
->> >> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Introdueix la posicio de la cel∑la: >> Tauler de tamany 3x3
+>> >> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Introdueix la posicio de la cel¬∑la: >> Tauler de tamany 3x3
 +--------+  +--------+
 |  |     |  | 1| 0  0|
 |  |     |  |  |     |
@@ -20,7 +25,7 @@ Inserta una mida pel taulell: Selecciona una opciÛ:
 
 Valors de les regions
  0: * => 0 |  1: / => 3
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: >> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: >> Tauler de tamany 3x3
 +--------+  +--------+
 |  |  |  |  | 1| 2| 0|
 |  +--+  |  |  +--+  |
@@ -32,7 +37,7 @@ Valors de les regions
 Valors de les regions
  0: * => 0 |  2: + => 2
  1: / => 3
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: >> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: >> Tauler de tamany 3x3
 +--------+  +--------+
 |  |  |  |  | 1| 2| 0|
 |  +--+  |  |  +--+  |
@@ -44,7 +49,7 @@ Valors de les regions
 Valors de les regions
  0: * => 0 |  2: + => 2
  1: / => 3 |  3: + => 2
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Introdueix la posicio de la cel∑la: >> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Introdueix la posicio de la cel¬∑la: >> Tauler de tamany 3x3
 +--------+  +--------+
 |  |  |  |  | 1| 2| 4|
 |  +--+  |  |  +--+  |
@@ -57,8 +62,8 @@ Valors de les regions
  0: * => 0 |  3: + => 2
  1: / => 3 |  4: + => 3
  2: + => 2
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Introdueix la posicio de la cel∑la: Introdueix la posicio de la cel∑la: >> true
-TÈ soluciÛ
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Introdueix la posicio de la cel¬∑la: Introdueix la posicio de la cel¬∑la: >> true
+T√© soluci√≥
 >> Tauler de tamany 3x3
 +--------+  +--------+
 |  |  |  |  | 1| 2| 4|
@@ -72,12 +77,12 @@ Valors de les regions
  0: * => 0 |  3: + => 2
  1: / => 3 |  4: + => 3
  2: + => 2 |  5: * => 9
->> El taulell de Kenken s'ha omplert de n˙meros aleatoris.
+>> El taulell de Kenken s'ha omplert de n√∫meros aleatoris.
 >> Tauler de tamany 3x3
 +--------+  +--------+
-| 2| 1| 3|  | 1| 2| 4|
+| 3| 2| 1|  | 1| 2| 4|
 |  +--+  |  |  +--+  |
-| 3| 2| 1|  | 1| 5| 4|
+| 2| 1| 3|  | 1| 5| 4|
 |--+  +--|  |--+  +--|
 | 1| 3  2|  | 2| 5  5|
 +--------+  +--------+
@@ -100,21 +105,21 @@ Valors de les regions
  0: * => 0 |  3: + => 2
  1: / => 3 |  4: + => 3
  2: + => 2 |  5: * => 9
->> Posa un nom al tauler: Ja existeix un taulell amb aquest nom
+>> Posa un nom al tauler: Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.
 >> Benvingut al creador de taulells de Kenken!
-Seleciona una opciÛ:
+Seleciona una opci√≥:
 1) Crear un taulell manualment.
-2) Que la CPU em generi un taulell aleatÚriament a partir de certs par‡metres.
+2) Que la CPU em generi un taulell aleat√≤riament a partir de certs par√†metres.
 3) Sortir
-Inserta una mida pel taulell: Selecciona una opciÛ:
-0) Deixar d'imprimir el men˙ per pantalla
-1) Omplir el taulell de n˙meros aleatoris
-2) Modificar el valor d'una cel∑la
-3) Crear una regiÛ
+Inserta una mida pel taulell: Selecciona una opci√≥:
+0) Deixar d'imprimir el men√∫ per pantalla
+1) Omplir el taulell de n√∫meros aleatoris
+2) Modificar el valor d'una cel¬∑la
+3) Crear una regi√≥
 4) Veure el taulell
 5) Comprovar que el taulell sigui resoluble
 6) Resoldre el taulell
-7) Guardar el taulell (s'esborraran els n˙meros)
+7) Guardar el taulell (s'esborraran els n√∫meros)
 8) Carregar un taulell
 9) Sortir
 >> >> Tauler de tamany 3x3
@@ -143,19 +148,19 @@ Valors de les regions
  1: / => 3 |  4: + => 3
  2: + => 2 |  5: * => 9
 >> Benvingut al creador de taulells de Kenken!
-Seleciona una opciÛ:
+Seleciona una opci√≥:
 1) Crear un taulell manualment.
-2) Que la CPU em generi un taulell aleatÚriament a partir de certs par‡metres.
+2) Que la CPU em generi un taulell aleat√≤riament a partir de certs par√†metres.
 3) Sortir
-Inserta una mida pel taulell: Selecciona una opciÛ:
-0) Deixar d'imprimir el men˙ per pantalla
-1) Omplir el taulell de n˙meros aleatoris
-2) Modificar el valor d'una cel∑la
-3) Crear una regiÛ
+Inserta una mida pel taulell: Selecciona una opci√≥:
+0) Deixar d'imprimir el men√∫ per pantalla
+1) Omplir el taulell de n√∫meros aleatoris
+2) Modificar el valor d'una cel¬∑la
+3) Crear una regi√≥
 4) Veure el taulell
 5) Comprovar que el taulell sigui resoluble
 6) Resoldre el taulell
-7) Guardar el taulell (s'esborraran els n˙meros)
+7) Guardar el taulell (s'esborraran els n√∫meros)
 8) Carregar un taulell
 9) Sortir
 >> >> (i,j)<-n >> >> Tauler de tamany 3x3
@@ -169,7 +174,7 @@ Inserta una mida pel taulell: Selecciona una opciÛ:
 
 Valors de les regions
  0: * => 0
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Introdueix la posicio de la cel∑la: >> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Introdueix la posicio de la cel¬∑la: >> Tauler de tamany 3x3
 +--------+  +--------+
 |        |  | 0  0  0|
 |  +-----|  |  +-----|
@@ -180,7 +185,7 @@ Valors de les regions
 
 Valors de les regions
  0: * => 0 |  1: * => 2
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Aquesta regiÛ n'eliminar‡ altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Aquesta regi√≥ n'eliminar√† altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
 +--------+  +--------+
 |        |  | 0  0  0|
 |  +-----|  |  +-----|
@@ -191,7 +196,7 @@ Valors de les regions
 
 Valors de les regions
  0: * => 0 |  1: * => 2
->> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel∑la: Aquesta regiÛ n'eliminar‡ altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel¬∑la: Aquesta regi√≥ n'eliminar√† altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
 +--------+  +--------+
 |        |  | 0  0  0|
 |  +--+--|  |  +--+--|
@@ -204,7 +209,7 @@ Valors de les regions
  0: * => 0 |  2: + => 2
  1: * => 2
 >> Benvingut al creador de taulells de Kenken!
-Seleciona una opciÛ:
+Seleciona una opci√≥:
 1) Crear un taulell manualment.
-2) Que la CPU em generi un taulell aleatÚriament a partir de certs par‡metres.
+2) Que la CPU em generi un taulell aleat√≤riament a partir de certs par√†metres.
 3) Sortir
