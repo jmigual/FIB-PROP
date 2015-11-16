@@ -10,7 +10,7 @@ Relació de drivers i classes provades
 6.DriverAdminPlayers: DB, KKDB, Table, Player
 7.DriverGame: Game + 1 + 2 + 3 + 4 + 5 + 6
 
-A la cerpata jocsDeProva hi ha diversos inputs (fitxers .in) com a jocs de prova.
+A la carpeta EXE hi ha diversos inputs (fitxers .in) com a jocs de prova.
 
 A continuació, comentem diversos algorismes interessants dins el projecte:
 
