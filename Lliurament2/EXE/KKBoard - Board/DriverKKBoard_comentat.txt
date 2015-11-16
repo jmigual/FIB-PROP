@@ -1,6 +1,6 @@
 L'objectiu d'aquest joc de proves és comprovar la funció de resulució pas a pas de KKBoard (Les altres són
 utilitzades des de Game i d'altres Drivers) per tal de que és pogui comprovar el funcionament del algoritme
-de resolució. No es aconsellable provar tauler molt grans per que per resoldrels s'utilitzen molts passos i
+de resolució. No es aconsellable provar taulers molt grans per que per resoldrels s'utilitzen molts passos i
 la sortida seria molt llarga.
 
 L'unic driver que s'utilitzara sera el DriverAdminPlayers.jar
