@@ -1,0 +1,46 @@
+Aquest joc de proves ens serveix per comprovar les funcionalitats de les cel·les.
+
+L'unic driver que es fa servir es el DriverCell.jar
+
+El joc de proves posa un valor a la cel·la i ho comprova, després fa el mateix amb una
+possibilitat i amb dos anotació
+
+Per executar el programa utilitzar la comanda
+#> java -jar -Dfile.encoding=UTF-8 DriverCell.jar
+
+9	//fiquem mida del Ken-Ken a 9
+
+1	//introduim el valor 9
+9
+
+2	//mirem el valor guardat
+
+3
+1	//posem que no hi pot haver un 1
+n
+
+4	//mirem si hi pot anar un 1
+1
+
+4	//mirem si hi pot anar un 2
+2	//aixo retornara cert ja que es el valor per defecte
+
+5
+1	//alternem l'anotació del valor 1
+alt
+
+5
+2	//posem l'anotació del valor 2
+intr
+cert
+
+6	//mirem si hi ha una anotació del valor 1
+1	//hi es ja que per defecte no hi hes (ho hem alternat)	
+
+6	//mirem si hi ha una anotació del valor 2
+2
+
+6	//mirem si hi ha una anotació del valor 3
+3	//no hi es (per defecte)
+
+

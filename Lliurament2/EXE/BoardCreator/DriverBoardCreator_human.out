@@ -1,0 +1,215 @@
+Benvingut al creador de taulells de Kenken!
+Seleciona una opció:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.
+3) Sortir
+Inserta una mida pel taulell: Selecciona una opció:
+0) Deixar d'imprimir el menú per pantalla
+1) Omplir el taulell de números aleatoris
+2) Modificar el valor d'una cel·la
+3) Crear una regió
+4) Veure el taulell
+5) Comprovar que el taulell sigui resoluble
+6) Resoldre el taulell
+7) Guardar el taulell (s'esborraran els números)
+8) Carregar un taulell
+9) Sortir
+>> >> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Introdueix la posicio de la cel·la: >> Tauler de tamany 3x3
++--------+  +--------+
+|  |     |  | 1| 0  0|
+|  |     |  |  |     |
+|  |     |  | 1| 0  0|
+|--+     |  |--+     |
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  1: / => 3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: >> Tauler de tamany 3x3
++--------+  +--------+
+|  |  |  |  | 1| 2| 0|
+|  +--+  |  |  +--+  |
+|  |     |  | 1| 0  0|
+|--+     |  |--+     |
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  2: + => 2
+ 1: / => 3
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: >> Tauler de tamany 3x3
++--------+  +--------+
+|  |  |  |  | 1| 2| 0|
+|  +--+  |  |  +--+  |
+|  |     |  | 1| 0  0|
+|--+     |  |--+     |
+|  |     |  | 2| 0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  2: + => 2
+ 1: / => 3 |  3: + => 2
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Introdueix la posicio de la cel·la: >> Tauler de tamany 3x3
++--------+  +--------+
+|  |  |  |  | 1| 2| 4|
+|  +--+  |  |  +--+  |
+|  |  |  |  | 1| 0| 4|
+|--+  +--|  |--+  +--|
+|  |     |  | 2| 0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  3: + => 2
+ 1: / => 3 |  4: + => 3
+ 2: + => 2
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Introdueix la posicio de la cel·la: Introdueix la posicio de la cel·la: >> true
+Té solució
+>> Tauler de tamany 3x3
++--------+  +--------+
+|  |  |  |  | 1| 2| 4|
+|  +--+  |  |  +--+  |
+|  |  |  |  | 1| 5| 4|
+|--+  +--|  |--+  +--|
+|  |     |  | 2| 5  5|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  3: + => 2
+ 1: / => 3 |  4: + => 3
+ 2: + => 2 |  5: * => 9
+>> El taulell de Kenken s'ha omplert de números aleatoris.
+>> Tauler de tamany 3x3
++--------+  +--------+
+| 3| 2| 1|  | 1| 2| 4|
+|  +--+  |  |  +--+  |
+| 2| 1| 3|  | 1| 5| 4|
+|--+  +--|  |--+  +--|
+| 1| 3  2|  | 2| 5  5|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  3: + => 2
+ 1: / => 3 |  4: + => 3
+ 2: + => 2 |  5: * => 9
+>> true
+>> Tauler de tamany 3x3
++--------+  +--------+
+| 3| 2| 1|  | 1| 2| 4|
+|  +--+  |  |  +--+  |
+| 1| 3| 2|  | 1| 5| 4|
+|--+  +--|  |--+  +--|
+| 2| 1  3|  | 2| 5  5|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  3: + => 2
+ 1: / => 3 |  4: + => 3
+ 2: + => 2 |  5: * => 9
+>> Posa un nom al tauler: Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.
+>> Benvingut al creador de taulells de Kenken!
+Seleciona una opció:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.
+3) Sortir
+Inserta una mida pel taulell: Selecciona una opció:
+0) Deixar d'imprimir el menú per pantalla
+1) Omplir el taulell de números aleatoris
+2) Modificar el valor d'una cel·la
+3) Crear una regió
+4) Veure el taulell
+5) Comprovar que el taulell sigui resoluble
+6) Resoldre el taulell
+7) Guardar el taulell (s'esborraran els números)
+8) Carregar un taulell
+9) Sortir
+>> >> Tauler de tamany 3x3
++--------+  +--------+
+|        |  | 0  0  0|
+|        |  |        |
+|        |  | 0  0  0|
+|        |  |        |
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0
+>> Com es diu el taulell que vols carregar? Tauler carregat.
+>> Tauler de tamany 3x3
++--------+  +--------+
+|  |  |  |  | 1| 2| 4|
+|  +--+  |  |  +--+  |
+|  |  |  |  | 1| 5| 4|
+|--+  +--|  |--+  +--|
+|  |     |  | 2| 5  5|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  3: + => 2
+ 1: / => 3 |  4: + => 3
+ 2: + => 2 |  5: * => 9
+>> Benvingut al creador de taulells de Kenken!
+Seleciona una opció:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.
+3) Sortir
+Inserta una mida pel taulell: Selecciona una opció:
+0) Deixar d'imprimir el menú per pantalla
+1) Omplir el taulell de números aleatoris
+2) Modificar el valor d'una cel·la
+3) Crear una regió
+4) Veure el taulell
+5) Comprovar que el taulell sigui resoluble
+6) Resoldre el taulell
+7) Guardar el taulell (s'esborraran els números)
+8) Carregar un taulell
+9) Sortir
+>> >> (i,j)<-n >> >> Tauler de tamany 3x3
++--------+  +--------+
+|        |  | 0  0  0|
+|        |  |        |
+|       1|  | 0  0  0|
+|        |  |        |
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Introdueix la posicio de la cel·la: >> Tauler de tamany 3x3
++--------+  +--------+
+|        |  | 0  0  0|
+|  +-----|  |  +-----|
+|  |    1|  | 0| 1  1|
+|  +-----|  |  +-----|
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  1: * => 2
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Aquesta regió n'eliminarà altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
++--------+  +--------+
+|        |  | 0  0  0|
+|  +-----|  |  +-----|
+|  |    1|  | 0| 1  1|
+|  +-----|  |  +-----|
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  1: * => 2
+>> Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cel·la: Aquesta regió n'eliminarà altres ja creades. Segueixes volent-la crear? (s/n)>> Tauler de tamany 3x3
++--------+  +--------+
+|        |  | 0  0  0|
+|  +--+--|  |  +--+--|
+|  |  | 1|  | 0| 2| 1|
+|  +--+--|  |  +--+--|
+|        |  | 0  0  0|
++--------+  +--------+
+
+Valors de les regions
+ 0: * => 0 |  2: + => 2
+ 1: * => 2
+>> Benvingut al creador de taulells de Kenken!
+Seleciona una opció:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.
+3) Sortir

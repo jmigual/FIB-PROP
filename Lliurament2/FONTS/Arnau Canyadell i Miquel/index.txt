@@ -1,0 +1,14 @@
+## Índex
+
+
+| Nom Arxiu                    | Observacions                                |
+
+| ---------------------------- | ------------------------------------------- |
+
+| `BoardCreator.java`          | Conté la classe BoardCreator                |
+
+| `DriverBoardCreator.java`    | Driver encarregat de crear boards           |
+
+| `CpuBoardCreator.java`       | Conté la classe Cpu BoardCreator            |
+
+| `HumanBoardCreator.java`     | Conté la classe HumanBoadCreator            |

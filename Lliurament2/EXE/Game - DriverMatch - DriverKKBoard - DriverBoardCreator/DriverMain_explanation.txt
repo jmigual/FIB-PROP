@@ -1,0 +1,24 @@
+Aquest executable utilitza la classe Game. Game és el driver principal, el main que crida
+a altres drivers per donar a l'usuari totes les opcions de l'aplicació. Més en concret
+s'utilitzen en part els drivers DriverMatch, DriverBoardCreator i DriverKKBoard, encara
+que s'aprofiten DriverAdminPlayers i DriverKKBoardPrinter.
+
+Quan es comença, es necessita fer un login. Aqui es pot escollir si crear un nou usuari
+o entrar amb un d'antic. Només pot haver-hi un usuari amb el mateix nom, ja que l'identifica.
+
+Un cop entrada la sessió, podem accedir a una varietat de zones. La primera és la zona de
+l'usuari, on pot modificar la seva contrasenya, eliminar l'usuari o veure un llistat dels
+taulells creats per ell i les partides que ha fet, tant les acabades com les que estan en joc.
+
+La segona zona és la de jugar, que porta a DriverMatch, on es pot jugar una partida de KenKen.
+La tercera és crear taulells de KenKen, sigui generat per la màquina o per l'usuari. Aquesta
+funcionalitat crida a DriverBoardCreator.
+
+La quarta és fer que l'ordinador resolgui un taulell per poder veure la seva solució. També
+hi ha la possibilitat de fer la resolució pas a pas per veure com es fa la resolució.
+Això s'aconsegueix cridant DriverKKBoard.
+
+La cinquena opció és accedir a la base de dades. Aquí es poden veure llistes de usuaris,
+taulells i partides que hi ha en l'aplicació, propis o no. També s'han de poder veure els rankings.
+
+Finalment, la opció de tancar la sessió per entrar amb una altra si es desitja.

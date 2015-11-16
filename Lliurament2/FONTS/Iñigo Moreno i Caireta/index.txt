@@ -1,0 +1,32 @@
+## Índex
+
+
+| Nom Arxiu                    | Observacions                                |
+
+| ---------------------------- | ------------------------------------------- |
+
+| `DriverRegion.java`          | Driver de les regions                       |
+
+| `DriverCell.java`            | Driver de les cel·les                       |
+
+| `KKRegion.java`              | Conté la classe KKRegion                    |
+
+| `KKRegionAddition.java`      | Conté la classe KKRegionAddition            |
+
+| `KKRegionDivision.java`      | Conté la classe KKRegionDivision            |
+
+| `KKRegionProduct.java`       | Conté la classe KKRegionProduct             |
+
+| `KKRegionSubstraction.java`  | Conté la classe KKRegionSubstraction        |
+
+| `Cell.java`                  | Conté la classe Cell                        |
+
+| `CellLine.java`              | Conté la classe CellLine                    |
+
+| `Column.java`                | Conté la classe Column                      |
+
+| `ItemPossibilities.java`     | Conté la classe ItemPossibilities           |
+
+| `Region.java`                | Conté la classe Region                      |
+
+| `Row.java`                   | Conté la classe Row                         |

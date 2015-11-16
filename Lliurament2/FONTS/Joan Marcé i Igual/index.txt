@@ -1,0 +1,15 @@
+## Índex
+
+| Nom Arxiu                    | Observacions                                |
+| ---------------------------- | ------------------------------------------- |
+| `DB.java`                    | Conté la classe DB                          |
+| `Driver.java`                | Conté la interface Driver                   |
+| `DriverAdminPlayers.java`    | Driver per gestionar els Players            |
+| `DriverKKBoardPrinter.java`  | Driver per imprimir un Ken-Ken per pantalla |
+| `KKDB.java`                  | Conté la classe KKDB                        |
+| `KKRegionDivision.java`      | Conté la classe KKRegionDivision            |
+| `KKRegionSubstraction.java`  | Conté la classe KKRegionSubstraction        |
+| `Player.java`                | Conté la classe Player                      |
+| `PlayerExistsException.java` | Conté la excepció PlayerExistsException     |
+| `PlayersAdmin.java`          | Conté la classe PlayersAdmin                |
+| `Table.java`                 | Conté la classe Table                       |

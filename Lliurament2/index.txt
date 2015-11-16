@@ -1,0 +1,20 @@
+## Índex
+
+
+| Nom Arxiu                    | Observacions                                            |
+
+| ---------------------------- | -------------------------------------------             |
+
+| `DOCS`                       | Conté la documentació  del projecte                     |
+
+| `SOURCE`                     | Conté tot el codi en java                               |
+
+| `EXE`                        | Conté els executables                                   |
+
+| `FONTS`                      | Conté el codi java distribuit segons qui ho             |
+|                              | ha fet (classes que hem col·laborat apareixen dos cops) |
+
+| `README`                     | Conté la relació entre drivers i classes i la descripció|
+|                              | dels algoritmes més interessants                        |
+
+| `C15G3`                      | Informació dels membres del grup                        |
