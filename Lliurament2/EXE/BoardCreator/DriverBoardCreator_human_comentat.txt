@@ -1,8 +1,21 @@
-1 // Comencem creant un tauler de 3x3 manulament
-3 // Mida
-0 // Desactivem la impressió del menú
+L'objectiu d'aquest joc de proves és comprovar les funcions de les classes Boardcreator i HumanBoardCreator
+necessàries per crear un tauler de kenken manualment (excepte les funcions que retornen valors aleatoris, 
+ja que sinó no podríem comparar els outputs).
+
+Per això s'utilitza el driver DriverBoardCreator.jar
+
+Al llarg de l'entrada del test s'explica què fa cada tros d'entrada.
+
+
+Entrada comentada:
+
+1 		// Comencem creant un tauler de 3x3 manulament
+3 		// Mida
+0 		// Desactivem la impressió del menú
+
+		// En les següents línies creem el tauler
 3    / 3 2    0 0    1 0   // 3-> crear regió
-4  // 4-> imprimir menú
+4  		// 4-> imprimir menú
 3    + 2 1    0 1
 4
 3    + 2 1    2 0
@@ -10,25 +23,39 @@
 3    + 3 2    0 2    1 2
 4
 3    * 9 3    1 1    2 1    2 2
-5 // Comprovem que té solució
+
+
+5 		// Comprovem que té solució
 4
-1 // La funció ens hauria d'omplir el tauler amb els números correctes
+1 		// La funció ens hauria d'omplir el tauler amb els números correctes. En aquest cas, com que el tauler
+  		// que hem creat només té una solució, l'output és determinat.
 4
-7    DriverBoardCreator_test // Guardem el tauler
-9 // Sortir
-1 // Tornar a entrar
-7 // Hi posem una mida qualsevol
+6 		// Mirem una solució. Això no hauria de fer variar el taulell ja que ja hi havien tots els números.
 4
-8    DriverBoardCreator_test // Carreguem el tauler d'abans
+7    DriverBoardCreator_test 	// Guardem el tauler
+9 		// Sortir
+
+
+1 		// Tornar a entrar
+0
+7 		// Hi posem una mida qualsevol
 4
-9
-1
-3 // Creem un nou tauler 3x3 de zero
-2    1 2    1 // 2-> posar un número en una casella (només serveix per a l'usuari, no influeix en el tauler final)
+8    DriverBoardCreator_test 	// Carreguem el tauler d'abans
+4
+9 		// Sortir
+
+
+1 		// Tornem a entrar ara per provar què passa quan creem regions a on ja n'hi havia
+0
+3 		// Creem un nou tauler 3x3 de zero
+2    1 2    1 	// 2-> posar un número en una casella (només serveix per a l'usuari, no influeix en el tauler final)
 4
 3    * 2 2    1 1    1 2
 4
-3    + 2 1    1 1    n // Volem crear una regió a on ja n'hi havia una. Responem que no volem sobreescriure i el taulell es queda igual
+3    + 2 1    1 1    n 	// Volem crear una regió a on ja n'hi havia una. Responem que no volem sobreescriure i el taulell es queda igual
 4
-3    + 2 1    1 1    s // Si ara tornem a fer el mateix però responem que volem eliminar la regió que hi havia i que se solapa
+3    + 2 1    1 1    s 	// Si ara tornem a fer el mateix però responem que volem eliminar la regió que hi havia i que se solapa
 4
+
+9		// Finalment sortim del programa
+3
