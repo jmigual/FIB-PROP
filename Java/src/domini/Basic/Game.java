@@ -93,7 +93,7 @@ public class Game {
                 out.print("Nom del taulell: ");
                 KKBoard board = null;
                 String nameB = in.next();
-                for (KKBoard b : _db.getBoards()) if (b.get_name().equals(nameB)) board = b;
+                for (KKBoard b : _db.getBoards()) if (b.get_name().equals(nameB)) board = b.getCopy();
 
                 if (board==null) out.println("Nom erroni");
                 else {
@@ -214,11 +214,11 @@ public class Game {
                 break;
 
             case 4:
+                out.println("PER IMPLEMENTAR CLASE STATS");
                 break;
 
             case 5:
                 break;
         }
     }
-
 }
