@@ -83,7 +83,8 @@ public class KKBoard extends Board implements Serializable {
 
     @Override
     public void solve() {
-        boolean b = precalculate();
+       // boolean b = precalculate();
+        boolean b =true;
         if (b) b = recursiveSolve(0, 0);
         _hasSolution = b;
         System.out.println(b);
