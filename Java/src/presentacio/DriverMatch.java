@@ -42,7 +42,7 @@ public class DriverMatch {
 
         //Donar valor a m
         while (!finish) {
-            out.println("1) Carregar una patida inacabat de la DB");
+            out.println("1) Carregar una partida inacabada de la DB");
             out.println("2) Comensar nova partida amb un taulell de la DB");
             out.println("3) Enrere");
 

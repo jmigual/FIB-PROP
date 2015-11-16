@@ -1,0 +1,77 @@
+Introdueix el tamany: Introdueix el nom del taulell: Introdueix el nombre de regions: Introdueix la operacio (*,+,/,-): Introdueix el resultat: Introdueix el tamany de la regio: Introdueix la posicio de la cella: Introdueix la posicio de la cella: Introdueix la posicio de la cella: Introdueix la posicio de la cella: Vols guardar el tauler a la DB? (y/n): 
+Què vols fer?
+1) Solucionar el tauler
+2) Imprimir el tauler
+3) Tornar
+4) Solucionar pas a pas
+2
+Tauler de tamany 2x2
++-----+  +-----+
+|     |  | 0  0|
+|     |  |     |
+|     |  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+
+Què vols fer?
+1) Solucionar el tauler
+2) Imprimir el tauler
+3) Tornar
+4) Solucionar pas a pas
+4
+Tauler de tamany 2x2
++-----+  +-----+
+|     |  | 0  0|
+|     |  |     |
+|     |  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+c
+Tauler de tamany 2x2
++-----+  +-----+
+| 1   |  | 0  0|
+|     |  |     |
+|     |  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+Tauler de tamany 2x2
++-----+  +-----+
+| 1   |  | 0  0|
+|     |  |     |
+| 2   |  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+c
+Tauler de tamany 2x2
++-----+  +-----+
+| 1  2|  | 0  0|
+|     |  |     |
+| 2   |  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+true
+Tauler de tamany 2x2
++-----+  +-----+
+| 1  2|  | 0  0|
+|     |  |     |
+| 2  1|  | 0  0|
++-----+  +-----+
+
+Valors de les regions
+ 0: + => 6
+
+Què vols fer?
+1) Solucionar el tauler
+2) Imprimir el tauler
+3) Tornar
+4) Solucionar pas a pas

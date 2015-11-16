@@ -39,9 +39,10 @@ public class CpuBoardCreator extends BoardCreator {
             this.mSizesWeights.add(mMaxRegionSize, 0);
             ++mMaxRegionSize;
         }
+        mMaxRegionSize = MaxRegionSize;
         mTotalSizesWeight = 0;
-        for (int i : mSizesWeights){
-            mTotalSizesWeight += i;
+        for (int i = 0; i<mMaxRegionSize; ++i){
+            mTotalSizesWeight += mSizesWeights.get(i);
         }
     }
 
