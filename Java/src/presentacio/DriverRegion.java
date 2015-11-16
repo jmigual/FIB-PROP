@@ -82,14 +82,14 @@ public class DriverRegion {
             out.println();
             out.println("Que vols fer?");
             out.println("1: Introduir un nou valor");
-            out.println("2: Obtenir els valor de les cel·les");
+            out.println("2: Obtenir els valor de les cel.les");
             out.println("3: Posar una possibilitat de la regio");
             out.println("4: Obtenir totes les possibilitats de la regio");
             out.println("5: Calcular les possibilitats de la regio");
             out.println("6: Veure si de moment es correcte");
             out.println("7: Posar una possibilitat d'una cel.la");
             out.println("8: Veure totes les possibilitats d'una cel.la");
-            out.println("9: Recalcular les possibilitats de totes les cel·les");
+            out.println("9: Recalcular les possibilitats de totes les cel.les");
             if (in.hasNextInt()) {
                 int modifiedCell, modifiedValue;
                 switch (in.nextInt()) {
