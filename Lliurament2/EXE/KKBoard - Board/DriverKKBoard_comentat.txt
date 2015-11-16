@@ -1,0 +1,38 @@
+L'objectiu d'aquest joc de proves és comprovar la funció de resulució pas a pas de KKBoard (Les altres són
+utilitzades des de Game i d'altres Drivers) per tal de que és pogui comprovar el funcionament del algoritme
+de resolució. No es aconsellable provar tauler molt grans per que per resoldrels s'utilitzen molts passos i
+la sortida seria molt llarga.
+
+L'unic driver que s'utilitzara sera el DriverAdminPlayers.jar
+
+En aquest joc provem un taulell de 2X2 que creem, si es vol provar un de més complicat utilitzeu 
+el DriverBoardCreator i copieu el board en aquesta carpeta.
+
+
+Per executar el programa utilitzar la comanda
+#> java -jar -Dfile.encoding=UTF-8 DriverKKBoard.jar
+
+
+//n si tenim cap board a la db, si en volem carregar un y i seguir instruccions
+------ Inici de la introducció del Ken-Ken
+2 
+randomname
+1
++
+6
+4 //Creem un Ken-Ken d'una sola regio (suma 6) de 2x2
+0 0
+0 1
+1 0
+1 1
+n
+------ Fí de la introducció del Ken-Ken
+2
+4
+//Solucinem pas a pass recursivament, veiem com primer omple la casella 0 0
+//despres la [1][0], [0][1] i el [1][1]
+introduim un carcter qualsevol per veure el següent pas.
+c
+c
+c
+c

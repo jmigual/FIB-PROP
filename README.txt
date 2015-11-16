@@ -1,16 +1,26 @@
-Aquest és el nostre projecte de Kenken.
+Aquest Ã©s el nostre projecte de Kenken.
+
+RelaciÃ³ de drivers i classes provades
+
+1.DriverCell: Cell
+2.DriverRegion: Region, KKRegion, KKRegionProduct, KKRegionSubtraction, KKRegionAddition, KKRegionDivision, CellLine, Row, Column + 1
+3.DriverKKBoard: Board, KKBoard + 1 + 2
+4.DriverMatch: Match + 1 + 2 + 3
+5.DriverBoardCreator: CPUBoardCreator, HumanBoardCreator + 1 + 2  + 3
+6.DriverAdminPlayers: DB, KKDB, Table, Player
+7.DriverGame: Game + 1 + 2 + 3 + 4 + 5 + 6
 
 A la cerpata jocsDeProva hi ha diversos inputs (fitxers .in) com a jocs de prova.
 
-A continuació, comentem diversos algorismes interessants dins el projecte:
+A continuaciÃ³, comentem diversos algorismes interessants dins el projecte:
 
-========= Creació aleatòria de les regions (veure CpuBoardCreator.java) ========
-L'algorisme fa un DFS a través del tauler començant en una posició aleatòria. Per cada casella, 
-l'algorisme decideix de manera aleatòria l'ordre en què es desplaça a la següent casella, i només
-passa un cop per cada casella. Després ajunta les caselles que s'han cridat de manera consecutiva 
-en el DFS, sempre i quan siguin caselles contigües.
+========= CreaciÃ³ aleatÃ²ria de les regions (veure CpuBoardCreator.java) ========
+L'algorisme fa un DFS a travÃ©s del tauler comenÃ§ant en una posiciÃ³ aleatÃ²ria. Per cada casella, 
+l'algorisme decideix de manera aleatÃ²ria l'ordre en quÃ¨ es desplaÃ§a a la segÃ¼ent casella, i nomÃ©s
+passa un cop per cada casella. DesprÃ©s ajunta les caselles que s'han cridat de manera consecutiva 
+en el DFS, sempre i quan siguin caselles contigÃ¼es.
 
-A continuació, un exemple en un taulell 3x3:
+A continuaciÃ³, un exemple en un taulell 3x3:
 +-+-+-+
 | | | |
 +-+-+-+
@@ -18,7 +28,7 @@ A continuació, un exemple en un taulell 3x3:
 +-+-+-+
 | | | |
 +-+-+-+
-Comença a 1,0
+ComenÃ§a a 1,0
 
 +-+-+-+
 | | | |
@@ -27,7 +37,7 @@ Comença a 1,0
 +-+-+-+
 | | | |
 +-+-+-+
-Crida al DFS en una casella contigua aleatòria.
+Crida al DFS en una casella contigua aleatÃ²ria.
 
 +-+-+-+
 |4|3| |
@@ -45,7 +55,7 @@ Segueix fent fins que es queda encallat; llavors continua per una branca anterio
 +-+-+-+
 |9|8|7|
 +-+-+-+
-Acaba d'omplir el tauler. Ara tocarà tornar enrere i crear regions de mida aleatòria (la probabilitat 
+Acaba d'omplir el tauler. Ara tocarÃ  tornar enrere i crear regions de mida aleatÃ²ria (la probabilitat 
 ve condicionada per uns "pesos" assignats a cada mida).
 
 +-+-+-+
@@ -55,8 +65,8 @@ ve condicionada per uns "pesos" assignats a cada mida).
 +-+-+-+
 |A|A|A|
 +-+-+-+
-Es crea una regió A de 3 caselles i una B de 1 casella. La regió C ha de ser de mida 1 perquè la 
-casella 5 i la 4 no són contigües.
+Es crea una regiÃ³ A de 3 caselles i una B de 1 casella. La regiÃ³ C ha de ser de mida 1 perquÃ¨ la 
+casella 5 i la 4 no sÃ³n contigÃ¼es.
 
 +-+-+-+
 |D|D|C|
@@ -66,18 +76,18 @@ casella 5 i la 4 no són contigües.
 |A|A|A|
 +-+-+-+
 Finalment s'acaben de crear les regions. Els valors finals de cada casella ja s'havien precalculat 
-abans del DFS i en funció d'això i de quina operació es vol que tingui cada regió, es calculen els 
+abans del DFS i en funciÃ³ d'aixÃ² i de quina operaciÃ³ es vol que tingui cada regiÃ³, es calculen els 
 resultats.
 
 
-Nota: l'algorisme es podria millorar si després de fer el DFS s'ajuntessin algunes regions per tal 
-que el número de regions de cada mida s'ajustés més al "pes" demanat per l'usuari.
+Nota: l'algorisme es podria millorar si desprÃ©s de fer el DFS s'ajuntessin algunes regions per tal 
+que el nÃºmero de regions de cada mida s'ajustÃ©s mÃ©s al "pes" demanat per l'usuari.
 
-Nota2: també es podria millorar si es tingués en compte el número de possibles solucions que té el
-taulell un cop ja creat. En general, crec que és menys divertit de jugar a un kenken amb moltes
-solucions diferents i s'haurien de penalitzar d'alguna manera. A part, també es podria tenir en 
-compte que hi ha operacions que donen més possibles combinacions per una regió i que això influeix
-en la dificultat del kenken (e.g. l'operació i resultat -1 en un taulell n*n té (n-1)*2 solucions 
-possibles, mentres que l'operació i resultat -8 en un taulell de 9*9 només té 2 solucions diferents).
+Nota2: tambÃ© es podria millorar si es tinguÃ©s en compte el nÃºmero de possibles solucions que tÃ© el
+taulell un cop ja creat. En general, crec que Ã©s menys divertit de jugar a un kenken amb moltes
+solucions diferents i s'haurien de penalitzar d'alguna manera. A part, tambÃ© es podria tenir en 
+compte que hi ha operacions que donen mÃ©s possibles combinacions per una regiÃ³ i que aixÃ² influeix
+en la dificultat del kenken (e.g. l'operaciÃ³ i resultat -1 en un taulell n*n tÃ© (n-1)*2 solucions 
+possibles, mentres que l'operaciÃ³ i resultat -8 en un taulell de 9*9 nomÃ©s tÃ© 2 solucions diferents).
 ===============================================================
 
