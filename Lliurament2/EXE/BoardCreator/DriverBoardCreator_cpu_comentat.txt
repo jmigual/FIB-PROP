@@ -1,9 +1,16 @@
+### Objectiu
 L'objectiu d'aquest joc de proves és comprovar les funcions de les classes BoardCreator i CpuBoardCreator.
 Degut a l'aleatorietat de l'output d'aquesta classe, no es comproven totes les funcions.
 
-S'utilitza el DriverBoardCreator.jar
+S'utilitza el `DriverBoardCreator.jar`
 
+___
 
+Per executar el programa utilitzar la comanda
+`#> java -jar -Dfile.encoding=UTF-8 DriverBoardCreator.jar`
+
+Entrada comentada: 
+```AsciiDoc
 2
 3 		// Mida del taulell
 
@@ -24,5 +31,4 @@ t 		// Els pesos totals s'han recalculat. Tornem al menú anterior
 
 6		// Finalment, sortim i tanquem el programa
 3
-
-
+```

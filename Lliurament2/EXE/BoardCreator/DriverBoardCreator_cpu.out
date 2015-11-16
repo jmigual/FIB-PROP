@@ -1,3 +1,8 @@
+Benvingut al creador de taulells de Kenken!
+Seleciona una opció:
+1) Crear un taulell manualment.
+2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.
+3) Sortir
 Introdueix la mida del taulell:
 Selecciona una opció:
 1) Canviar la mida màxima de les regions
@@ -114,7 +119,7 @@ Selecciona una opció:
 4) Veure el taulell
 5) Guardar el taulell
 6) Sortir
-Quin nom vols posar al taulell? Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.
+Quin nom vols posar al taulell? Ja existeix un taulell amb aquest nom
 Selecciona una opció:
 1) Canviar la mida màxima de les regions
 2) Canviar pesos

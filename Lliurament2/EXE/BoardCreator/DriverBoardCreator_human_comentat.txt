@@ -1,14 +1,17 @@
+### Objectiu
 L'objectiu d'aquest joc de proves és comprovar les funcions de les classes Boardcreator i HumanBoardCreator
 necessàries per crear un tauler de kenken manualment (excepte les funcions que retornen valors aleatoris, 
 ja que sinó no podríem comparar els outputs).
 
-Per això s'utilitza el driver DriverBoardCreator.jar
+Per això s'utilitza el driver `DriverBoardCreator.jar`
 
-Al llarg de l'entrada del test s'explica què fa cada tros d'entrada.
+___
 
+Per executar el programa utilitzar la comanda
+`#> java -jar -Dfile.encoding=UTF-8 DriverBoardCreator.jar < DriverBoardCreator_human.in > my_output.out`
 
-Entrada comentada:
-
+Entrada comentada: 
+```AsciiDoc
 1 		// Comencem creant un tauler de 3x3 manulament
 3 		// Mida
 0 		// Desactivem la impressió del menú
@@ -59,3 +62,4 @@ Entrada comentada:
 
 9		// Finalment sortim del programa
 3
+```
