@@ -1,0 +1,232 @@
+¬í z   Quin tipus de regio vols crear?
+1.Columna/Fila
+2.Regio de producte
+3.Regio de suma
+4.Regio de resta
+5.Regio de divisio
+Introdueix el tamany de la regio: Introdueix el valor maxim de les celles: Introdueix el valor resultant de la operacio : 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+A quina cel.la vols introduir el nou valor?Quin valor li vols donar a la cel.la 0? 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes z   les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+3 0 0 
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quin valor vols canviar la possibilitat?
+Es possible que hi hagi un 1? (y/n)
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+false true true true true true true true true 
+
+Que vols fer?
+1z   : Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+false false false false true false false true false 
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+true
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats z   de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+A quina cel.la vols introduir el nou valor?Quin valor li vols donar a la cel.la 1? 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+false
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular lesz    possibilitats de totes les celï¿½les
+A quina cel.la vols introduir el nou valor?Quin valor li vols donar a la cel.la 0? 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+A quina cel.la vols introduir el nou valor?Quin valor li vols donar a la cel.la 1? 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+false true true true true true false z   true false 
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols modificar les possibilitatsDe quin valor vols canviar la possibilitat?
+Es possible que hi hagi un 3? (y/n)
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols modificar les possibilitatsDe quin valor vols canviar la possibilitat?
+Es possiz   ble que hi hagi un 4? (y/n)
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols modificar les possibilitatsDe quin valor vols canviar la possibilitat?
+Es possible que hi hagi un 5? (y/n)
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols modificar les possibilitatsDe quin valor vols canviar la possibiliz   tat?
+Es possible que hi hagi un 5? (y/n)
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols veure les possibilitats? false false false false true false false false false 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibz   ilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols veure les possibilitats? false false false false false true false true false 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possibilitats de la regio
+5: Calcular les possibilitats de la regio
+6: Veure si de moment es correcte
+7: Posar una possibilitat d'una cel.la
+8: Veure totes les possibilitats d'una cel.la
+9: Recalcular les possibilitats de totes les celï¿½les
+De quina cel.la vols veure les possibilitats? false false true true false false false false false 
+Que vols fer?
+1: Introduir un nou valor
+2: Obtenir els valor de les celï¿½les
+3: Posar una possibilitat de la regio
+4: Obtenir totes les possi

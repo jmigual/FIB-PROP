@@ -112,7 +112,6 @@ public class DriverKKBoard implements Driver {
     }
 
     public void run() {
-        KKBoard c=b.getCopy();
         PrintStream out = System.out;
         DriverKKBoardPrinter KKp = new DriverKKBoardPrinter(b, out);
         Scanner in = new Scanner(System.in);
