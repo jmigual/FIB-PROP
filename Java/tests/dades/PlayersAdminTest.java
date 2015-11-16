@@ -12,6 +12,7 @@ public class PlayersAdminTest {
 
     String playerName = "Pepe";
     String password = "123#~~◘123";
+    String newPassword = "12345678";
 
     PlayersAdmin p;
 
@@ -31,11 +32,14 @@ public class PlayersAdminTest {
 
     @Test
     public void testChangePassword() throws Exception {
-        System.out.println("M'han cridat 2");
+        Player player = p.createPlayer(playerName, password);
+        assertTrue("Change password", p.changePassword(playerName, password, newPassword));
+        assertArrayEquals("PlayerNewPassword", PlayersAdmin.getHash(newPassword), player.getHash());
     }
 
     @Test
     public void testCheckLogin() throws Exception {
-        System.out.println("M'han cridat 3");
+        Player player = p.createPlayer(playerName, password);
+        assertTrue("Check login", p.checkLogin(playerName, password));
     }
 }
