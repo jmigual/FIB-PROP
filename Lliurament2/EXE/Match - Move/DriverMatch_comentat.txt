@@ -1,0 +1,106 @@
+OBJECTIU
+L'objectiu d'aquest driver és donar la possibilitat de jugar una partida de kenken.
+També comprova la funcionalitat correcte de la classe Move, Board i totes les dames estructurals.
+
+El driver utilitzat es DriverMatch, que utilitza DriverKKBoardPrinter per mostrar la progressio del tauler
+a mesura que s'avança en la partida.
+
+Per executar el programa utilitzar la comanda
+`#> java -jar -Dfile.encoding=UTF-8 DriverMatch.jar`
+
+Al principi es demanara el nom de l'usuari. Aquest pas es necessari ja que quan el MainDriver cridi aquest driver li passarà
+quin usuari esta iniciat, i en aquest cas no en tenim cap.
+
+#nom //nom d'usuari que escollim
+#2 //escollim començar un match nou a partir d'un taulell ja creat
+#0 //agafem el taulell identificat per 0 en el menu que es mostra
+
+Quan ho fem trobem 2 opcions, si seguir una partida inacabada (nomes es podra fer si esta inacabada
+i si es del mateix usuari que ha iniciat sessio) o començar-ne una de nova a partir d'un taulell de la base de dades.
+Seleccionant el taulell/partida inacabada que volguem, entrem en partida i veiem el següent:
+
+SCORE: 0
+Tauler de tamany 6x6
++-----------------+  +-----------------+
+|  |  |     |     |  | 0| 8| 9  9|10 10|
+|  +--+-----+--+--|  |  +--+-----+--+--|
+|  |  |     |  |  |  | 0| 7|15 15|14|11|
+|--+  |  +--+  |  |  |--+  |  +--+  |  |
+|  |  |  |  |  |  |  | 1| 7|15|11|14|11|
+|  |  +--+  |  +--|  |  |  +--+  |  +--|
+|  |  |  |  |  |  |  | 1| 7| 3|11|14|12|
+|--+--+  +--+--+  |  |--+--+  +--+--+  |
+|  |  |  |  |  |  |  | 3| 1| 3|17|13|12|
+|  +--+--+--+  |  |  |  +--+--+--+  |  |
+|  |     |  |  |  |  | 3| 4  4| 2|13|12|
++-----------------+  +-----------------+
+
+Valors de les regions
+ 0: + => 7  |  9: * => 30
+ 1: + => 5  | 10: - => 1
+ 2: + => 3  | 11: - => 3
+ 3: + => 9  | 12: + => 10
+ 4: + => 6  | 13: - => 4
+ 5: + => 9  | 14: + => 12
+ 6: + => 5  | 15: * => 18
+ 7: * => 36 | 16: - => 3
+ 8: + => 1  | 17: + => 2
+
+Escull:
+1. Fer un moviment
+2. Tirar enrere l'ultim moviment
+3. Refer l'ultim moviment tirat enrere
+4. Editar anotacions
+5. Demanar un Ajut (Hint)
+6. Guardar i sortir
+
+Amb aquesta interficie pots jugar una partida de kenken. Cada cop que fem alguna cosa
+(seleccionant una de les opcions disponibles) s'actualitzara el taulell, i aixi podem anar jugant.
+En aquest cas, comencem posant un valor a una casella:
+
+#1 
+#1 1 1
+
+Aixi estem posant el valor 1 a la casella (1,1), o sigui la de a dalt a l'esquerra del tot.
+
+#2
+#2
+
+Tirem enrere 2 cops. El primer funcionarà normal, pero el segon cop ens avisarà que no hi ha moviments a desfer.
+
+#3
+#3
+
+Ara fem l'inrevés, tirem endavant (refer) dos cops. El primer ens recuperarà el 1 que haviem perdut, pero el segon
+cop ens avisarà que no hi ha moviments a refer.
+
+#4 1
+#1 1 2
+
+Estem anant a afegir anotació, i ho estem fent a la casella (1,1), la mateixa on hem posat l'1 abans. Li estem dient que
+pensem que alla pot anar un 2. Ara mateix les anotacions no són molt pràctiques, perquè falta que puguin representar-se 
+gràficament.
+
+#4 3
+#1 1
+
+Ara anem a veure anotacions i seleccionem la casella (1,1). Si tot va bé, hauriem de veure que totes les anotacions estan en false
+menys la del numero 2, que la trobem en true. Ara anem a demanar ajudes:
+
+#5 1
+
+Estem demanant la primer ajuda, la de veure si els nombres posats son correctes. Veiem que el que haviem posat a la casella (1,1)
+es incorrecte. A partir d'aquí podriem decidir canviar el numero o esborrarlo posantli un 0 de valor.
+
+#5 2
+
+Per acabar demanem l'altre ajuda disponible de moment, que ens posi un valor aleatori en el taulell.
+Cal notar que durant l'execució el valor de Score ensenyat en cada bucle del menu s'ha anat incrementant. Aixo és perquè hi ha
+penalitzacions per demanar ajuts. També n'hi ha per posar un valor en una fila o columna on ja n'està posat un, encara
+que no s'ha vist en aquest exemple. També es va incrementant depenent del temps que es tarda en fer. Està previst tenir més
+ajuts més endavanat.
+
+#6
+
+Guardem el taulell tal com està a la base de dades i tanquem la execució. Si tornem a executar aquest driver després podrem escollir
+la opció de reprendre'l tal com el teniem, fins i tot amb els desfers i refers disponibles, gràcies a la classe Move.
