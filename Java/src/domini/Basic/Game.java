@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
-
-    private static Match _match;
     private static KKDB _db;
     private static Player _player;
 
@@ -127,7 +125,10 @@ public class Game {
                 break;
 
             case 2:
-               // _playersAdmin.removePlayer();
+                out.print("Torna a entrar la teva contrasenya: ");
+               _playersAdmin.removePlayer(_player.getName(), in.next());
+                _db.save();
+                out.println("La compte '" + _driverAP.getCurrentPlayer() + "' ha estat eliminada!");
                 logged = false;
                 break;
 
