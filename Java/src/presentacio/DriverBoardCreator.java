@@ -1,5 +1,6 @@
 package presentacio;
 
+import dades.KKDB;
 import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.BoardCreator;
@@ -17,7 +18,8 @@ import java.util.Scanner;
  * Created by arnau_000 on 08/11/2015.
  */
 public class DriverBoardCreator {
-
+    private static KKDB db;
+    private static String player;
     private static PrintStream out = System.out;
     private static Scanner in = new Scanner(System.in);
     private static Table<KKBoard> mTableKKB;
@@ -27,8 +29,12 @@ public class DriverBoardCreator {
     }
 
     public static void main(String[] args) {
+        db = new KKDB();
+        db.load();
+        mTableKKB = db.getBoards();
 
-        mTableKKB = new Table<>();
+        player = "random";
+        if (args.length!= 0) player = args[0];
 
         while (true) {
             out.print("Benvingut al creador de taulells de Kenken!\n" +
@@ -98,7 +104,8 @@ public class DriverBoardCreator {
                 case 5: {
                     out.print("Quin nom vols posar al taulell? ");
                     String s = in.next();
-                    CBC.saveBoard(s);
+                    CBC.saveBoard(s,"CPU");
+                    db.save();
                     out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
                     break;
                 }
@@ -265,7 +272,8 @@ public class DriverBoardCreator {
                 }
                 case 7: {
                     out.print("Posa un nom al tauler:");
-                    HBC.saveBoard(in.next());
+                    HBC.saveBoard(in.next(), player);
+                    db.save();
                     out.print("Nota: surt i torna a entrar si no vols modificar el tauler ja guardat.\n");
                     break;
                 }

@@ -63,7 +63,9 @@ public class BoardCreator {
         mTableKKB = tableKKB;
     }
 
-    public void saveBoard(String name) {
+    public void saveBoard(String name, String creator) {
+        mBoard.setName(name);
+        mBoard.setCreator(creator);
         mTableKKB.add(mBoard);
     }
 
