@@ -193,8 +193,8 @@ public class DriverBoardCreator {
                         "3) Crear una regió\n" +
                         "4) Veure el taulell\n" +
                         "5) Comprovar que el taulell sigui resoluble\n" +
-                        "6) Resoldre el taulell (s'esborraran els números)\n" +
-                        "7) Guardar el taulell\n" +
+                        "6) Resoldre el taulell\n" +
+                        "7) Guardar el taulell (s'esborraran els números)\n" +
                         "8) Carregar un taulell\n" +
                         "9) Sortir\n");
             }

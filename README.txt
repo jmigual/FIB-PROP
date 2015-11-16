@@ -2,10 +2,10 @@ Aquest és el nostre projecte de Kenken.
 
 Relació de drivers i classes provades
 
-1.DriverCell: Cell
+1.DriverCell: Cell , ItemPossibilities
 2.DriverRegion: Region, KKRegion, KKRegionProduct, KKRegionSubtraction, KKRegionAddition, KKRegionDivision, CellLine, Row, Column + 1
 3.DriverKKBoard: Board, KKBoard + 1 + 2
-4.DriverMatch: Match + 1 + 2 + 3
+4.DriverMatch: Match, Move + 1 + 2 + 3
 5.DriverBoardCreator: CPUBoardCreator, HumanBoardCreator + 1 + 2  + 3
 6.DriverAdminPlayers: DB, KKDB, Table, Player
 7.DriverGame: Game + 1 + 2 + 3 + 4 + 5 + 6

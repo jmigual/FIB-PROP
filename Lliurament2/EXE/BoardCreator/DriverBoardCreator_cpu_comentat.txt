@@ -1,0 +1,28 @@
+L'objectiu d'aquest joc de proves és comprovar les funcions de les classes BoardCreator i CpuBoardCreator.
+Degut a l'aleatorietat de l'output d'aquesta classe, no es comproven totes les funcions.
+
+S'utilitza el DriverBoardCreator.jar
+
+
+2
+3 		// Mida del taulell
+
+2 		// Canviar pesos
+m 2 100 // Posem un pes molt major per les regions de mida 2
+o r 0 	// Eliminem les restes
+t 		// Els pesos totals s'han recalculat. Tornem al menú anterior
+
+1 3 	// Canviem la mida màxima de les regions a 3
+2 t		// Mirem els canvis que això ha produït en els pesos
+
+// Si volguéssim algun resultat, ara podríem entrar "3" per generar un taulell
+
+4 		// Imprimim el taulell per pantalla (està buit i hi apareix una regió impossible
+		// per defecte)
+
+5 inacabat	// Guardem el taulell inacabat a la BD
+
+6		// Finalment, sortim i tanquem el programa
+3
+
+
