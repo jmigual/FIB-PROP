@@ -34,8 +34,8 @@ public class HumanBoardCreator extends BoardCreator {
      *                                           overlaps other regions. In this case, the other regions are deleted and
      *                                           their remaining cells become part of the default region.
      * @param cells                              ArrayList containing all the cells of the new region.
-     * @param operation                          Operation of the region. It is ignored if size==1 and it can't be NONE if size>1 and it can't
-     *                                           be SUBTRACTION or DIVISION if size>2
+     * @param operation                          Operation of the region. It is ignored if size==1 and it can't be NONE
+     *                                           if size>1 and it can't be SUBTRACTION or DIVISION if size>2
      * @param result                             Result of the operation
      * @return "the region has been created"
      */

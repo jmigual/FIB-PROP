@@ -38,9 +38,9 @@ public class DriverBoardCreator {
 
         while (true) {
             out.print("Benvingut al creador de taulells de Kenken!\n" +
-                    "Seleciona una opci�:\n" +
+                    "Seleciona una opció:\n" +
                     "1) Crear un taulell manualment.\n" +
-                    "2) Que la CPU em generi un taulell aleat�riament a partir de certs par�metres.\n" +
+                    "2) Que la CPU em generi un taulell aleatòriament a partir de certs paràmetres.\n" +
                     "3) Sortir\n");
 
             if (!in.hasNextInt()) break;
