@@ -42,27 +42,26 @@ public class DriverMatch {
 
         //Donar valor a m
         while (!finish) {
-            out.println("1) Carregar un Match inacabat de la DB");
-            out.println("2) Comensar nou Match amb un Board de la DB");
+            out.println("1) Carregar una patida inacabat de la DB");
+            out.println("2) Comensar nova partida amb un taulell de la DB");
             out.println("3) Enrere");
 
             switch (in.nextInt()) {
                 case 1:
                     if (taula.size() > 0) {
-                        out.println("Hi ha aquests: ");
+                        out.println("Hi ha aquestes partides: ");
 
                         String s;
                         KKBoard b;
                         String p;
 
                         for (int i = 0; i < taula.size(); i++) {
-                            s = "No acabat";
-                            if (taula.get(i).hasFinished()) s = "Acabat  Score : " + taula.get(i).getScore();
+                                s = "No acabat";
+                                if (taula.get(i).hasFinished()) s = "Acabat  Score : " + taula.get(i).getScore();
+                                b = taula.get(i).getBoard();
+                                p = taula.get(i).getPlayer();
 
-                            b = taula.get(i).getBoard();
-                            p = taula.get(i).getPlayer();
-
-                            out.println(Integer.toString(i) + ": Board " + b.get_name() +  " Player " + p + "  " + s);
+                                out.println(Integer.toString(i) + ": Board " + b.get_name() + " Player " + p + "  " + s);
                         }
                         out.println("Quin match vols reanudar? ");
 
@@ -72,7 +71,8 @@ public class DriverMatch {
                             if (!taula.get(n).hasFinished() && taula.get(n).getPlayer().equals(user)) {
                                 m = taula.get(n);
                                 finish = true;
-                            } else out.println("Aquest Match ja ha acabat o no es teu");
+                            }
+                            else out.println("Aquest Match ja ha acabat o no es teu");
                         }
 
                     } else out.println("No hi ha cap Match guardat");
@@ -86,7 +86,8 @@ public class DriverMatch {
                     if (taulaB.size() > 0) {
                         out.println("Hi ha aquests taulers: ");
                         for (int i = 0; i < taulaB.size(); i++) {
-                            out.println(Integer.toString(i) + ": " + taulaB.get(i).get_name() + " de tamany " + Integer.toString(taulaB.get(i).getSize()));
+                            out.println(Integer.toString(i) + ": " + taulaB.get(i).get_name() + " de tamany " +
+                                    Integer.toString(taulaB.get(i).getSize())+ " fet per " + taulaB.get(i).getCreator());
                         }
                         out.println("Quin tauler vols? (si no vols cap posa -1)");
 

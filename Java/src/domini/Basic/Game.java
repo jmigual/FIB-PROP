@@ -3,11 +3,14 @@ package domini.Basic;
 import dades.KKDB;
 import dades.Player;
 import dades.PlayersAdmin;
+import dades.Table;
+import domini.KKBoard;
 import presentacio.DriverAdminPlayers;
 import presentacio.DriverBoardCreator;
 import presentacio.DriverMatch;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
@@ -60,6 +63,7 @@ public class Game {
         out.println("1. El meu usuari");
         out.println("2. Jugar!!");
         out.println("3. Crear un taulell");
+        out.println("4. Veure base de dades");
         out.println("0. Tancar sessio");
 
         switch (in.nextInt()){
@@ -84,6 +88,9 @@ public class Game {
                 DriverBoardCreator.main(s2);
                 _db.load();
                 break;
+            case 4:
+                dbMenu();
+                break;
 
             case 0:
                 logged = false;
@@ -94,8 +101,9 @@ public class Game {
         out.println();
         out.println("Usuari: " + _player.getName());
         out.println("1. Modificar contrasenya");
-        //out.println("2. Eliminar usuari");
-        out.println("2. Enrere");
+        out.println("2. Eliminar usuari");
+        out.println("3. Veure stats personals");
+        out.println("4. Enrere");
 
         switch (in.nextInt()){
             case 1:
@@ -119,11 +127,63 @@ public class Game {
                 break;
 
             case 2:
+               // _playersAdmin.removePlayer();
+                logged = false;
+                break;
+
+            case 3:
+                break;
+
+            case 4:
                 break;
 
         }
     }
 
+    private static void dbMenu(){
+        out.println();
+        out.print("1. Veure colleccio de taulells\n" +
+                "2. Veure llista d'usuaris\n" +
+                "3. Veure partides\n" +
+                "4. Ranking/Stats?\n" +
+                "5. Enrere\n");
+        switch (in.nextInt()){
+            case 1:
+                Table<KKBoard> taulaB = _db.getBoards();
+                for (int i = 0; i < taulaB.size(); i++) {
+                    out.println(taulaB.get(i).get_name() + " de tamany " + Integer.toString(taulaB.get(i).getSize()) +
+                            " fet per " + taulaB.get(i).getCreator());
+                }
+                break;
 
+            case 2:
+                ArrayList<String> players = _playersAdmin.getAllPlayersNames();
+                for (int i = 0; i < players.size(); i++) out.println(players.get(i));
+                break;
+
+            case 3:
+                Table<Match> taulaM = _db.getMatches();
+                String s;
+                KKBoard b;
+                String p;
+
+                for (int i = 0; i < taulaM.size(); i++) {
+                    s = "No acabat";
+                    if (taulaM.get(i).hasFinished()) s = "Acabat  Score : " + taulaM.get(i).getScore();
+
+                    b = taulaM.get(i).getBoard();
+                    p = taulaM.get(i).getPlayer();
+
+                    out.println("Board " + b.get_name() +  " Player " + p + "  " + s);
+                }
+                break;
+
+            case 4:
+                break;
+
+            case 5:
+                break;
+        }
+    }
 
 }
