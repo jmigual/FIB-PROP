@@ -123,6 +123,7 @@ public class DriverKKBoard implements Driver {
             out.println("1) Solucionar el tauler");
             out.println("2) Imprimir el tauler");
             out.println("3) Tornar");
+            out.println("4) Solucionar pas a pas");
             if (in.hasNextInt()) {
                 switch (in.nextInt()) {
                     case 1:
@@ -134,7 +135,10 @@ public class DriverKKBoard implements Driver {
                     case 3:
                         keepAsking = false;
                         break;
-
+                    case 4:
+                        b.solveslow();
+                        KKp.printBoard();
+                        break;
                 }
             } else keepAsking = false;
         }
