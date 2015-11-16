@@ -1,0 +1,20 @@
+//n si tenim cap board a la db
+2 
+randomname
+1
++
+6
+4 //Creem un Ken-Ken d'una sola regio (suma 6) de 2x2
+0 0
+0 1
+1 0
+1 1
+n
+2
+4
+//Solucinem pas a pass recursivament, veiem com primer omple la casella 0 0
+//despres la [1][0], [0][1] i el [1][1]
+c
+c
+c
+c
