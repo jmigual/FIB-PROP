@@ -1,0 +1,52 @@
+L'objectiu d'aquest joc de proves és comprovar les funcionalitats de la base de dades (inclou les classes KKDB,
+DB i Table) i tambe comprovar la funcionalitat de l'administrador dels usuaris (inclou les classes PlayersAdmin i
+Player)
+
+L'unic driver que s'utilitzara sera el DriverAdminPlayers.jar
+
+L'usuari es dira Marcel i la contrasenya sera 123456 el primer cop i 123456789 el segon cop. 
+Aixo sera per comprovar que es comproven les condicions necessaries per la contrasenya ja que no es pot 
+guardar una contrasenya de menys de 8 caracters. Tot seguit s'afegira una nova contrasenya que sera asdfqwer
+per comprovar si es pot canviar la contrasenya.
+
+
+
+Per executar el programa utilitzar la comanda
+#> java -jar -Dfile.encoding=UTF-8 DriverAdminPlayers.jar
+
+
+Entrada comentada: 
+1            // Creem un nou jugador
+Marcel
+123456
+123456789
+S
+
+3            // Intentem canviar la contrasenya amb error
+asdf         // Nom de l'usuari
+asdf         // Contrasenya de l'usuari
+asdf         // Nova contrasenya de l'usuari
+asdf         // Nova contrasenya de l'usuari repetida
+
+3            // Intentem canviar la contrasenya sense error 
+Marcel       // Nom de l'usuari
+123456789    // Contrasenya de l'usuari
+asdfqwer     // Nova contrasenya de l'usuari
+asdfqwer     // Nova contrasenya de l'usuari repetida
+
+4            // Comprovar si existeix un usuari
+Marcel       // Nom de l'usuari
+
+5            // Iniciar sessió
+Marcel       // Nom d'usuari
+asdfqwer     // Contrasenya
+
+6            // Tancar sessió
+7            // Veure tots els usuaris
+
+2            // Eliminar jugador
+Marcel       // Nom del jugador
+asdfqwer     // Contrasenya
+
+7            // Veure tots els usuaris
+8            // Sortir
