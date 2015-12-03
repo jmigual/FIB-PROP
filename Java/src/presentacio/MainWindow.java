@@ -2,6 +2,7 @@ package presentacio;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -12,7 +13,8 @@ public class MainWindow extends JFrame {
     private ResourceBundle trans;
 
     public MainWindow() {
-        trans = ResourceBundle.getBundle("MainWindow");
+        Locale loc = new Locale("es");
+        trans = ResourceBundle.getBundle("MainWindow", loc);
         createUIComponents();
     }
 
@@ -32,10 +34,14 @@ public class MainWindow extends JFrame {
         JMenu boardMenu = new JMenu(trans.getString("menu_board"));
         JMenu userMenu = new JMenu(trans.getString("menu_user"));
         JMenu statsMenu = new JMenu(trans.getString("menu_stats"));
+        JMenu languageMenu = new JMenu(trans.getString("menu_language"));
+
+
 
         menubar.add(boardMenu);
         menubar.add(userMenu);
         menubar.add(statsMenu);
+        menubar.add(languageMenu);
         setJMenuBar(menubar);
     }
 
