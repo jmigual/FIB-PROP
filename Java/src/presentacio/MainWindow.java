@@ -19,13 +19,14 @@ public class MainWindow extends JFrame {
     }
 
     private void createUIComponents() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(trans.getString("windowName"));
         Dimension d = new Dimension();
         d.setSize(200, 200);
         setMinimumSize(d);
         setLocationRelativeTo(null);
         createMenuBar();
+        setContentPane(panel1);
     }
 
     private void createMenuBar() {
@@ -49,12 +50,12 @@ public class MainWindow extends JFrame {
     public static void main(String[] args) {
         try {
             // Set System L&F
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
                 IllegalAccessException e) {
             e.printStackTrace();
         }
+
         EventQueue.invokeLater(() -> {
             MainWindow m = new MainWindow();
             m.setVisible(true);
