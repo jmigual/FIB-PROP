@@ -12,12 +12,13 @@ public class MainWindow extends JFrame {
     private ResourceBundle trans;
 
     public MainWindow() {
+        trans = ResourceBundle.getBundle("MainWindow");
         createUIComponents();
     }
 
     private void createUIComponents() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("MainWindow");
+        setTitle(trans.getString("windowName"));
         Dimension d = new Dimension();
         d.setSize(200, 200);
         setMinimumSize(d);
@@ -28,9 +29,13 @@ public class MainWindow extends JFrame {
     private void createMenuBar() {
         JMenuBar menubar = new JMenuBar();
 
-        JMenu fileMenu = new JMenu("file");
+        JMenu boardMenu = new JMenu(trans.getString("menu_board"));
+        JMenu userMenu = new JMenu(trans.getString("menu_user"));
+        JMenu statsMenu = new JMenu(trans.getString("menu_stats"));
 
-        menubar.add(fileMenu);
+        menubar.add(boardMenu);
+        menubar.add(userMenu);
+        menubar.add(statsMenu);
         setJMenuBar(menubar);
     }
 
