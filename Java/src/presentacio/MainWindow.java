@@ -1,64 +1,53 @@
 package presentacio;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 /**
  * Created by Joan on 03/12/2015.
  */
-public class MainWindow extends JFrame {
-    private JPanel panel1;
-    private ResourceBundle trans;
 
-    public MainWindow() {
-        Locale loc = new Locale("es");
-        trans = ResourceBundle.getBundle("MainWindow", loc);
-        createUIComponents();
-    }
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
-    private void createUIComponents() {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle(trans.getString("windowName"));
-        Dimension d = new Dimension();
-        d.setSize(200, 200);
-        setMinimumSize(d);
-        setLocationRelativeTo(null);
-        createMenuBar();
-        setContentPane(panel1);
-    }
+import java.io.IOException;
 
-    private void createMenuBar() {
-        JMenuBar menubar = new JMenuBar();
+public class MainWindow extends Application {
 
-        JMenu boardMenu = new JMenu(trans.getString("menu_board"));
-        JMenu userMenu = new JMenu(trans.getString("menu_user"));
-        JMenu statsMenu = new JMenu(trans.getString("menu_stats"));
-        JMenu languageMenu = new JMenu(trans.getString("menu_language"));
-
-
-
-        menubar.add(boardMenu);
-        menubar.add(userMenu);
-        menubar.add(statsMenu);
-        menubar.add(languageMenu);
-        setJMenuBar(menubar);
-    }
-
+    private Stage primaryStage;
+    private Pane rootLayout;
 
     public static void main(String[] args) {
-        try {
-            // Set System L&F
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
-                IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        launch(args);
+    }
 
-        EventQueue.invokeLater(() -> {
-            MainWindow m = new MainWindow();
-            m.setVisible(true);
-        });
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("App molt guai");
+
+        initRootLayout();
+    }
+
+    private void initRootLayout() {
+        try {
+            // Load root layout from xml file
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainWindow.class.getResource("./MainWindow.fxml"));
+            rootLayout = loader.load();
+
+            // Show the scene containing the root layout
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public void exit() {
+        Platform.exit();
     }
 }
