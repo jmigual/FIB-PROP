@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
@@ -7,16 +8,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="448.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacio.MainWindow">
    <children>
-      <VBox prefHeight="132.0" prefWidth="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="600.0" VBox.vgrow="SOMETIMES">
+            <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <menus>
                 <Menu mnemonicParsing="false" text="KenKen">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#exit" text="Sortir" />
+                    <MenuItem fx:id="hola" mnemonicParsing="false" onAction="#exit" text="Sortir" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Usuaris">
@@ -41,15 +41,7 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <StackPane prefHeight="150.0" prefWidth="600.0" VBox.vgrow="SOMETIMES">
-               <children>
-                  <Group nodeOrientation="LEFT_TO_RIGHT">
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </Group>
-               </children>
-            </StackPane>
+            <Pane fx:id="leftArea" prefHeight="459.0" prefWidth="600.0" style="-fx-background-color: #000000;" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>
