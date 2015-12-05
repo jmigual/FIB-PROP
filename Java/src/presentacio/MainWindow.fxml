@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root prefHeight="448.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root onMouseClicked="#trolla" prefHeight="448.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -41,8 +41,9 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <Pane fx:id="leftArea" prefHeight="459.0" prefWidth="600.0" style="-fx-background-color: #000000;" VBox.vgrow="ALWAYS" />
+            <StackPane fx:id="leftArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </fx:root>

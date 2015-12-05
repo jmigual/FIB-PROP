@@ -4,31 +4,24 @@ package presentacio;
  */
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.NumberBinding;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MainWindow extends Application {
 
     private Stage primaryStage;
     private AnchorPane rootLayout;
     private GridPane gridPane;
-    private Pane leftArea;
+    private StackPane leftArea;
+    private boolean createdGrid;
 
     public static void main(String[] args) {
         launch(args);
@@ -36,6 +29,7 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        createdGrid=false;
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
 
@@ -56,15 +50,24 @@ public class MainWindow extends Application {
         primaryStage.show();
 
     }
-
-    private void addGrid() {
+    private void createGrid(){
         gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
 
-        rootLayout.getChildren().add(gridPane);
+        leftArea.getChildren().add(gridPane);
+
+
+        NumberBinding minimum = Bindings.min(leftArea.widthProperty(), leftArea.heightProperty());
+        gridPane.prefHeightProperty().bind(minimum);
+        gridPane.prefWidthProperty().bind(minimum);
+        gridPane.maxWidthProperty().bind(gridPane.prefWidthProperty());
+        gridPane.maxHeightProperty().bind(gridPane.prefHeightProperty());
+        gridPane.setMinSize(0,0);
+
+
+
 
         double size = 9;
-
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setPercentWidth(100 / size);
         columnConstraints.setHalignment(HPos.CENTER);
@@ -85,37 +88,30 @@ public class MainWindow extends Application {
         }
 
         gridPane.setStyle("-fx-background-color: #CCFF99; -fx-border-color: #000000; -fx-stroke-color: #FF0000;");
+        createdGrid=true;
+    }
+    private void resizeGrid() {
+        if (!createdGrid){
+            createGrid();
+        }
+
+        /*if (leftArea.getWidth()>leftArea.getHeight()){
+            gridPane.relocate(leftArea.getLayoutX(), leftArea.getLayoutY());
+            gridPane.setPrefSize(leftArea.getWidth(),leftArea.getHeight());
+        }*/
     }
 
     private void addResizeListeners(Scene scene) {
 
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                resized();
-            }
-        });
-        scene.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-                resized();
-            }
-        });
+        scene.widthProperty().addListener(observable -> resized());
+        scene.heightProperty().addListener(observable -> resized());
     }
 
     private void resized() {
         System.out.println(leftArea.getHeight());
 
-        addGrid();
+        resizeGrid();
     }
 
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
-     */
 }

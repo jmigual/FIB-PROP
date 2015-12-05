@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 public class MainController extends AnchorPane {
 
     @FXML
-    private Pane leftArea;
+    private StackPane leftArea;
     private AnchorPane rootlayout;
     public MainController(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
@@ -28,7 +29,7 @@ public class MainController extends AnchorPane {
         }
     }
 
-    public Pane getLeftArea() {
+    public StackPane getLeftArea() {
         return leftArea;
     }
 
@@ -38,5 +39,8 @@ public class MainController extends AnchorPane {
 
     public void exit() {
         Platform.exit();
+    }
+    public void trolla(){
+        System.out.print("troll");
     }
 }
