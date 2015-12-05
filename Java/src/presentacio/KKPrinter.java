@@ -30,7 +30,7 @@ public class KKPrinter {
 
     private void createGrid(){
         gridPane = new GridPane();
-        //gridPane.setGridLinesVisible(true);
+        gridPane.setGridLinesVisible(true);
 
         stackPane.getChildren().add(gridPane);
 
@@ -63,6 +63,7 @@ public class KKPrinter {
                 Label newLabel= new Label(Integer.toString(board.getCell(i,j).getValue()));
                 if (board.getCell(i,j).getValue()==0)newLabel.setText("");
                 newStackPane.getChildren().add(newLabel);
+                newStackPane.minHeightProperty().bind(gridPane.prefHeightProperty().divide(size));
                 gridPane.add(newStackPane, i, j);
             }
         }
@@ -70,37 +71,34 @@ public class KKPrinter {
         gridPane.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 5px;");
 
         for (Node node : gridPane.getChildren()){
-            int i=GridPane.getRowIndex(node);
-            int j=GridPane.getColumnIndex(node);
-            Cell c= board.getCell(i,j);
-            Region r = c.getRegion();
+            if (GridPane.getRowIndex(node)!=null) {
+                int i = GridPane.getRowIndex(node);
+                int j = GridPane.getColumnIndex(node);
+                Cell c = board.getCell(i, j);
+                Region r = c.getRegion();
 
-            String style="-fx-border-color: ";
-            String colorOn="black";
-            String colorOff="#B0B0B0 ";
+                String style = "-fx-border-color: ";
+                String colorOn = "black";
+                String colorOff = "#B0B0B0 ";
 
-            if (i>0 && board.getCell(i-1,j).getRegion()!=r){  //ADALT
-                style+=colorOn+" ";
+                if (i > 0 && board.getCell(i - 1, j).getRegion() != r) {  //ADALT
+                    style += colorOn + " ";
+                } else style += colorOff + " ";
+
+                if (j < size - 1 && board.getCell(i, j + 1).getRegion() != r) {  //DRETA
+                    style += colorOn + " ";
+                } else style += colorOff + " ";
+
+                if (i < size - 1 && board.getCell(i + 1, j).getRegion() != r) {  //ABAIX
+                    style += colorOn + " ";
+                } else style += colorOff + " ";
+
+                if (j > 0 && board.getCell(i, j - 1).getRegion() != r) {  //ESQUERRA
+                    style += colorOn + " ";
+                } else style += colorOff + " ";
+
+                node.setStyle(style);
             }
-            else style+=colorOff+" ";
-
-            if (j<size-1 && board.getCell(i,j+1).getRegion()!=r){  //DRETA
-                style+=colorOn+" ";
-            }
-            else style+=colorOff+" ";
-
-            if (i<size-1 && board.getCell(i+1,j).getRegion()!=r){  //ABAIX
-                style+=colorOn+" ";
-            }
-            else style+=colorOff+" ";
-
-            if (j>0 && board.getCell(i,j-1).getRegion()!=r){  //ESQUERRA
-                style+=colorOn+" ";
-            }
-            else style+=colorOff+" ";
-
-            node.setStyle(style);
-
 
         }
     }

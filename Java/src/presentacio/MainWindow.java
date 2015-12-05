@@ -53,7 +53,7 @@ public class MainWindow extends Application {
     private void createGrid(){
         KKPrinter printer;
         if (db.getBoards().size()==0) {
-            CpuBoardCreator creator = new CpuBoardCreator(9, db.getBoards());
+            CpuBoardCreator creator = new CpuBoardCreator(20, db.getBoards());
             try {
                 creator.createBoard();
             } catch (Exception e) {
