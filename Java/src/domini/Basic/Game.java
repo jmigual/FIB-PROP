@@ -5,10 +5,10 @@ import dades.Player;
 import dades.PlayersAdmin;
 import dades.Table;
 import domini.KKBoard;
-import presentacio.DriverAdminPlayers;
-import presentacio.DriverBoardCreator;
-import presentacio.DriverKKBoard;
-import presentacio.DriverMatch;
+import presentacio.Drivers.DriverAdminPlayers;
+import presentacio.Drivers.DriverBoardCreator;
+import presentacio.Drivers.DriverKKBoard;
+import presentacio.Drivers.DriverMatch;
 
 import java.io.PrintStream;
 import java.util.ArrayList;

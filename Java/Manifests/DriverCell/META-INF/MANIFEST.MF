@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: presentacio.DriverCell
+Main-Class: presentacio.Drivers.DriverCell
 

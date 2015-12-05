@@ -1,14 +1,11 @@
-package presentacio;
+package presentacio.Drivers;
 
 import dades.KKDB;
 import dades.Table;
 import domini.Basic.Cell;
-import domini.BoardCreator.BoardCreator;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
-import domini.KKRegion.KKRegion;
-import javafx.scene.control.Tab;
 
 import java.io.PrintStream;
 import java.util.ArrayList;

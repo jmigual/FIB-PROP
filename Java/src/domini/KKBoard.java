@@ -5,7 +5,7 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Row;
 import domini.KKRegion.*;
-import presentacio.DriverKKBoardPrinter;
+import presentacio.Drivers.DriverKKBoardPrinter;
 
 import java.io.*;
 import java.util.ArrayList;

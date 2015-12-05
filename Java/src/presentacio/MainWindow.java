@@ -3,15 +3,11 @@ package presentacio;
  * Created by Joan on 03/12/2015.
  */
 
+import dades.KKDB;
+import domini.Basic.Board;
+import domini.BoardCreator.CpuBoardCreator;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.DoubleBinding;
-import javafx.beans.binding.NumberBinding;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -22,6 +18,7 @@ public class MainWindow extends Application {
     private GridPane gridPane;
     private StackPane leftArea;
     private boolean createdGrid;
+    private KKDB db;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,6 +27,8 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         createdGrid=false;
+        db= new KKDB();
+        db.load();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
 
@@ -41,6 +40,7 @@ public class MainWindow extends Application {
         MainController mainController = new MainController();
         leftArea = mainController.getLeftArea();
         rootLayout = mainController.getRootlayout();
+        createGrid();
 
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
@@ -51,55 +51,24 @@ public class MainWindow extends Application {
 
     }
     private void createGrid(){
-        gridPane = new GridPane();
-        gridPane.setGridLinesVisible(true);
-
-        leftArea.getChildren().add(gridPane);
-
-
-        NumberBinding minimum = Bindings.min(leftArea.widthProperty(), leftArea.heightProperty());
-        gridPane.prefHeightProperty().bind(minimum);
-        gridPane.prefWidthProperty().bind(minimum);
-        gridPane.maxWidthProperty().bind(gridPane.prefWidthProperty());
-        gridPane.maxHeightProperty().bind(gridPane.prefHeightProperty());
-        gridPane.setMinSize(0,0);
-
-
-
-
-        double size = 9;
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setPercentWidth(100 / size);
-        columnConstraints.setHalignment(HPos.CENTER);
-
-        RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setPercentHeight(100 / size);
-        rowConstraints.setValignment(VPos.CENTER);
-
-
-        for (int i = 0; i < size; i++) {
-            gridPane.getColumnConstraints().add(columnConstraints);
-            gridPane.getRowConstraints().add(rowConstraints);
-        }
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                gridPane.add(new Label(Integer.toString(i) + Integer.toString(j)), i, j);
+        KKPrinter printer;
+        if (db.getBoards().size()==0) {
+            CpuBoardCreator creator = new CpuBoardCreator(9, db.getBoards());
+            try {
+                creator.createBoard();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        }
+            creator.saveBoard("test", "CPU");
+            db.save();
 
-        gridPane.setStyle("-fx-background-color: #CCFF99; -fx-border-color: #000000; -fx-stroke-color: #FF0000;");
-        createdGrid=true;
-    }
-    private void resizeGrid() {
-        if (!createdGrid){
-            createGrid();
+            printer = new KKPrinter(creator.getBoard(), leftArea);
         }
-
-        /*if (leftArea.getWidth()>leftArea.getHeight()){
-            gridPane.relocate(leftArea.getLayoutX(), leftArea.getLayoutY());
-            gridPane.setPrefSize(leftArea.getWidth(),leftArea.getHeight());
-        }*/
+        else{
+            printer = new KKPrinter(db.getBoards().get(0), leftArea);
+        }
     }
+
 
     private void addResizeListeners(Scene scene) {
 
@@ -108,9 +77,6 @@ public class MainWindow extends Application {
     }
 
     private void resized() {
-        System.out.println(leftArea.getHeight());
-
-        resizeGrid();
     }
 
 

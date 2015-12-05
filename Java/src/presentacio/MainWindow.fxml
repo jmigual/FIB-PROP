@@ -44,6 +44,5 @@
             <StackPane fx:id="leftArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </fx:root>
