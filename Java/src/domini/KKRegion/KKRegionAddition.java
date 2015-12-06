@@ -82,6 +82,6 @@ public class KKRegionAddition extends KKRegion implements Serializable {
         if (count == -1) return sum == 0;
         int min = Math.max(1, sum - maxValue * count);
         int max = Math.min(maxValue, sum - count);
-        return !(min > 9 || max < 0);
+        return !(min > maxValue || max <= 0);
     }
 }

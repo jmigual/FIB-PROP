@@ -33,7 +33,6 @@ public class KKPrinter {
     private String borderColor="black";
     private int borderWidth =5;
     private String regionDividerColor="black";
-    private String cellDividerColor="#B0B0B0";
 
 
     private GridPane gridPane;
@@ -101,10 +100,10 @@ public class KKPrinter {
                 KKRegion r= (KKRegion) board.getCell(i,j).getRegion();
                 if (!set.contains(r)){
                     set.add(r);
-                    Label operationLabel=new Label(Integer.toString(r.getOperationValue())+" "+r.getOperation().toString());
+                    Label operationLabel=new Label(" "+Integer.toString(r.getOperationValue())+" "+r.getOperation().toString());
                     operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size*5).asString(),"px;"));
                     StackPane.setAlignment(operationLabel,Pos.TOP_LEFT);
-                    //StackPane.setMargin(operationLabel,new Insets(2,0,0,2));
+                   // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
                     newStackPane.getChildren().add(operationLabel);
                 }
 
@@ -126,25 +125,25 @@ public class KKPrinter {
                 Cell c = board.getCell(i, j);
                 Region r = c.getRegion();
 
-                String style = "-fx-border-width: 2px; -fx-border-color: ";
+                String style = "-fx-border-color: "+regionDividerColor+"; -fx-border-width: ";
 
                 if (i > 0 && board.getCell(i - 1, j).getRegion() != r) {  //ADALT
-                    style += regionDividerColor;
-                } else style += cellDividerColor;
+                    style += "2px";
+                } else style += "0px";
                 style+=" ";
                 if (j < size - 1 && board.getCell(i, j + 1).getRegion() != r) {  //DRETA
-                    style += regionDividerColor;
-                } else style += cellDividerColor;
+                    style += "2px";
+                } else style += "0px";
 
                 style+=" ";
                 if (i < size - 1 && board.getCell(i + 1, j).getRegion() != r) {  //ABAIX
-                    style += regionDividerColor;
-                } else style += cellDividerColor;
+                    style += "2px";
+                } else style += "0px";
 
                 style+=" ";
                 if (j > 0 && board.getCell(i, j - 1).getRegion() != r) {  //ESQUERRA
-                    style += regionDividerColor;
-                } else style += cellDividerColor;
+                    style += "2px";
+                } else style += "0px";
 
                 style+=";";
 
@@ -152,6 +151,7 @@ public class KKPrinter {
             }
 
         }
+        updateCells();
     }
 
     private void select(StackPane location){

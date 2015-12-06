@@ -34,6 +34,10 @@ public class MainWindow extends Application {
         initRootLayout();
     }
 
+    public void stop(){
+        db.save();
+    }
+
     private void initRootLayout() {
         // Load root layout from xml file
         MainController mainController = new MainController(this);

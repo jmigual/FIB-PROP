@@ -47,4 +47,5 @@ public class MainController extends AnchorPane {
     public void trolla(){
         main.trolla();
     }
+
 }
