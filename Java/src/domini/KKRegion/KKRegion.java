@@ -67,12 +67,7 @@ public abstract class KKRegion extends Region implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof KKRegion)) return false;
-
-        KKRegion kkRegion = (KKRegion) o;
-
-        return operationValue == kkRegion.operationValue && opType == kkRegion.opType;
+        return this==o;
     }
 
     /**
