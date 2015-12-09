@@ -48,6 +48,19 @@ public class MainWindow extends Application {
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
         scene.setOnKeyPressed(event -> {
+            if (event.getCode()==KeyCode.ENTER){
+                printer.getBoard().clear();
+                printer.getBoard().solve();
+                printer.updateCells();
+            }
+            if (event.getCode()==KeyCode.BACK_SPACE){
+                printer.getBoard().clear();
+                printer.updateCells();
+            }
+            if (event.getCode()==KeyCode.DIGIT0){
+                printer.getSelectedCell().setValue(0);
+                printer.updateCells();
+            }
             if (event.getCode()==KeyCode.DIGIT0){
                 printer.getSelectedCell().setValue(0);
                 printer.updateCells();
@@ -98,7 +111,7 @@ public class MainWindow extends Application {
     }
     private void createGrid(){
         if (db.getBoards().size()==0) {
-            CpuBoardCreator creator = new CpuBoardCreator(9, db.getBoards());
+            CpuBoardCreator creator = new CpuBoardCreator(12, db.getBoards());
             try {
                 creator.createBoard();
             } catch (Exception e) {

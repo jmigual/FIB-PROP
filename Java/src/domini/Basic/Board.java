@@ -89,5 +89,13 @@ public abstract class Board implements Serializable {
         return _size;
     }
 
+    public void clear(){
+        for (int i=0; i<_size; i++){
+            for (int j=0; j<_size; j++){
+                _boardInfo.get(i).get(j).setValue(0);
+            }
+        }
+    }
+
 
 }
