@@ -101,11 +101,15 @@ public abstract class KKPrinter {
                 KKRegion r = (KKRegion) board.getCell(i, j).getRegion();
                 if (!set.contains(r)) {
                     set.add(r);
-                    Label operationLabel = new Label(" " + Integer.toString(r.getOperationValue()) + " " + r.getOperation().toString());
-                    operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 5).asString(), "px;"));
-                    StackPane.setAlignment(operationLabel, Pos.TOP_LEFT);
-                    // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
-                    newStackPane.getChildren().add(operationLabel);
+                    if (r.getOperationValue()!=0) {
+                        String operationLabelText=" " + Integer.toString(r.getOperationValue());
+                        if (r.getCells().size()!=1)operationLabelText+= " " + r.getOperation().toString();
+                        Label operationLabel = new Label(operationLabelText);
+                        operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 5).asString(), "px;"));
+                        StackPane.setAlignment(operationLabel, Pos.TOP_LEFT);
+                        // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
+                        newStackPane.getChildren().add(operationLabel);
+                    }
                 }
 
                 newStackPane.setOnMouseClicked(event -> {
