@@ -80,7 +80,7 @@ public class KKPrinter {
 
         //adding content of cells
 
-        HashSet<KKRegion> set = new HashSet<KKRegion>();
+        HashSet<KKRegion> set = new HashSet<>();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 StackPane newStackPane = new StackPane();

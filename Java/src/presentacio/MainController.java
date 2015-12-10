@@ -3,9 +3,12 @@ package presentacio;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -19,6 +22,8 @@ public class MainController extends AnchorPane {
     private StackPane leftArea;
     private AnchorPane rootlayout;
     private MainWindow main;
+    private Stage shownStage;
+
     public MainController(MainWindow main){
         this.main=main;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
@@ -41,7 +46,12 @@ public class MainController extends AnchorPane {
     }
 
     public void configureUser() {
-
+        shownStage = new Stage();
+        UserConfigController config = new UserConfigController(main);
+        shownStage.initModality(Modality.WINDOW_MODAL);
+        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.sizeToScene();
+        shownStage.show();
     }
 
     public void exit() {
