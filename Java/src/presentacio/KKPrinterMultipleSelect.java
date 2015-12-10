@@ -42,6 +42,15 @@ public class KKPrinterMultipleSelect extends KKPrinter {
         selectedCells.clear();
         updateCells();
     }
+    public void selectAll(){
+        selectedCells.clear();
+        for (int i=0; i<board.getSize(); i++){
+            for (int j=0; j<board.getSize();j++){
+                selectedCells.add(board.getCell(i,j));
+            }
+        }
+        updateCells();
+    }
     @Override
     protected String calculateColor(Cell c) {
         if (selectedCells==null)selectedCells=new ArrayList<>();

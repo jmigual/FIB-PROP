@@ -72,10 +72,11 @@ public class MainWindowDebugMultiple extends Application{
                 printer.getBoard().clear();
                 printer.updateCells();
             }
-
+            if (event.getCode()==KeyCode.A && event.isControlDown()){
+                printer.selectAll();
+            }
             if (event.getCode()==KeyCode.ESCAPE){
                 printer.deselect();
-                printer.updateCells();
             }
             if (event.getCode()==KeyCode.DIGIT0){
                 printer.getSelectedCells().get(0).setValue(0);
