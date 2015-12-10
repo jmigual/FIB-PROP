@@ -1,5 +1,6 @@
 package presentacio;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +19,8 @@ public class MainController extends AnchorPane {
     @FXML
     private StackPane leftArea;
     private AnchorPane rootlayout;
-    private MainWindow main;
-    public MainController(MainWindow main){
+    private Application main;
+    public MainController(Application main){
         this.main=main;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
@@ -48,8 +49,6 @@ public class MainController extends AnchorPane {
         Platform.exit();
     }
 
-    public void trolla(){
-        main.trolla();
-    }
+    public void trolla(){}
 
 }

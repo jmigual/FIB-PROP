@@ -2,6 +2,7 @@ package presentacio;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
+import domini.KKRegion.KKRegion;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -30,6 +31,7 @@ public class KKPrinterSingleSelect extends KKPrinter {
     @Override
     protected String calculateColor(Cell c) {
         boolean error = (!c.getColumn().isCorrect() || !c.getRegion().isCorrect() || !c.getRow().isCorrect());
+        if (((KKRegion)c.getRegion()).getOperationValue()==0)error=false;
         if (error && c==selectedCell)return selectedErrorColor;
         if (error) return errorColor;
         if (c==selectedCell)return selectedColor;

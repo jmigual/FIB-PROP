@@ -11,12 +11,14 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * Created by Inigo on 05/12/2015.
@@ -47,11 +49,17 @@ public abstract class KKPrinter {
         createGrid();
     }
 
+    public void clear(){
+        stackPane.getChildren().remove(gridPane);
+    }
+
     protected void createGrid() {
         gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
 
         stackPane.getChildren().add(gridPane);
+
+        stackPane.addEventFilter(MouseEvent.DRAG_DETECTED , mouseEvent -> stackPane.startFullDrag());
 
         //adding size constraints
 
@@ -116,6 +124,10 @@ public abstract class KKPrinter {
                     Object source = event.getSource();
                     if (source instanceof StackPane) select((StackPane) source);
                 });
+                newStackPane.setOnMouseDragEntered(event->{
+                    Object source = event.getSource();
+                    if (source instanceof StackPane) select((StackPane) source);
+                });
                 gridPane.add(newStackPane, j, i); //WTF who puts columns first?
             }
         }
@@ -161,7 +173,10 @@ public abstract class KKPrinter {
 
     protected abstract void select(StackPane location);
 
-
+    public void updateRegions(){
+        clear();
+        createGrid();
+    }
     public void updateCells() {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getRowIndex(node) != null) {
@@ -177,12 +192,7 @@ public abstract class KKPrinter {
                 String s = node.getStyle();
                 s = s.split("-fx-background-color")[0];
                 String color = calculateColor(c);
-                /*if (!c.getColumn().isCorrect() || !c.getRegion().isCorrect() || !c.getRow().isCorrect()) {
-                    s += "-fx-background-color: " + errorColor + ";";
-                } else if (node == selected) {
-                    s += "-fx-background-color: " + selectedColor + ";";
-                }*/
-                s += "-fx-background-color: " + color + ";";
+                if (!Objects.equals(color, backgroundColor))s += "-fx-background-color: " + color + ";";
                 node.setStyle(s);
             }
         }
