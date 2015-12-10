@@ -21,25 +21,25 @@ import java.util.HashSet;
 /**
  * Created by Inigo on 05/12/2015.
  */
-public class KKPrinter {
+public abstract class KKPrinter {
 
-    private String backgroundColor = "white";
-    private String selectedColor = "skyBlue";
-    private String errorColor = "Red";
-    private String borderColor = "black";
-    private int borderWidth = 5;
-    private String regionDividerColor = "black";
+    protected String backgroundColor = "white";
+    protected String selectedColor = "skyBlue";
+    protected String errorColor = "Red";
+    protected String selectedErrorColor = "purple";
+    protected String borderColor = "black";
+    protected int borderWidth = 5;
+    protected String regionDividerColor = "black";
 
 
-    private GridPane gridPane;
+    protected GridPane gridPane;
 
     public Board getBoard() {
         return board;
     }
 
-    private Board board;
-    private StackPane stackPane;
-    private StackPane selected;
+    protected Board board;
+    protected StackPane stackPane;
 
     public KKPrinter(Board board, StackPane stackPane) {
         this.board = board;
@@ -47,7 +47,7 @@ public class KKPrinter {
         createGrid();
     }
 
-    private void createGrid() {
+    protected void createGrid() {
         gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
 
@@ -101,11 +101,15 @@ public class KKPrinter {
                 KKRegion r = (KKRegion) board.getCell(i, j).getRegion();
                 if (!set.contains(r)) {
                     set.add(r);
-                    Label operationLabel = new Label(" " + Integer.toString(r.getOperationValue()) + " " + r.getOperation().toString());
-                    operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 5).asString(), "px;"));
-                    StackPane.setAlignment(operationLabel, Pos.TOP_LEFT);
-                    // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
-                    newStackPane.getChildren().add(operationLabel);
+                    if (r.getOperationValue()!=0) {
+                        String operationLabelText=" " + Integer.toString(r.getOperationValue());
+                        if (r.getCells().size()!=1)operationLabelText+= " " + r.getOperation().toString();
+                        Label operationLabel = new Label(operationLabelText);
+                        operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 5).asString(), "px;"));
+                        StackPane.setAlignment(operationLabel, Pos.TOP_LEFT);
+                        // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
+                        newStackPane.getChildren().add(operationLabel);
+                    }
                 }
 
                 newStackPane.setOnMouseClicked(event -> {
@@ -155,10 +159,7 @@ public class KKPrinter {
         updateCells();
     }
 
-    private void select(StackPane location) {
-        selected = location;
-        updateCells();
-    }
+    protected abstract void select(StackPane location);
 
 
     public void updateCells() {
@@ -175,20 +176,19 @@ public class KKPrinter {
 
                 String s = node.getStyle();
                 s = s.split("-fx-background-color")[0];
-
-                if (!c.getColumn().isCorrect() || !c.getRegion().isCorrect() || !c.getRow().isCorrect()) {
+                String color = calculateColor(c);
+                /*if (!c.getColumn().isCorrect() || !c.getRegion().isCorrect() || !c.getRow().isCorrect()) {
                     s += "-fx-background-color: " + errorColor + ";";
                 } else if (node == selected) {
                     s += "-fx-background-color: " + selectedColor + ";";
-                }
+                }*/
+                s += "-fx-background-color: " + color + ";";
                 node.setStyle(s);
-
             }
         }
     }
 
-    public Cell getSelectedCell() {
-        if (selected == null) return null;
-        return board.getCell(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
-    }
+    protected abstract String calculateColor(Cell c);
+
+
 }
