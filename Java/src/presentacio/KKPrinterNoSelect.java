@@ -14,7 +14,7 @@ public class KKPrinterNoSelect extends KKPrinter {
     }
 
     @Override
-    protected void select(StackPane location) {
+    protected void select(StackPane location, boolean dragged) {
 
     }
 

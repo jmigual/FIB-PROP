@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -59,7 +60,6 @@ public abstract class KKPrinter {
 
         stackPane.getChildren().add(gridPane);
 
-        stackPane.addEventFilter(MouseEvent.DRAG_DETECTED , mouseEvent -> stackPane.startFullDrag());
 
         //adding size constraints
 
@@ -120,13 +120,20 @@ public abstract class KKPrinter {
                     }
                 }
 
+                newStackPane.addEventFilter(MouseEvent.DRAG_DETECTED , event -> {
+                    newStackPane.startFullDrag();
+                    Object source = event.getSource();
+                    if (source instanceof StackPane) select((StackPane) source, false);
+                });
                 newStackPane.setOnMouseClicked(event -> {
                     Object source = event.getSource();
-                    if (source instanceof StackPane) select((StackPane) source);
+                    if (source instanceof StackPane) select((StackPane) source, false);
                 });
                 newStackPane.setOnMouseDragEntered(event->{
                     Object source = event.getSource();
-                    if (source instanceof StackPane) select((StackPane) source);
+
+                    if (source instanceof StackPane) select((StackPane) source, true);
+
                 });
                 gridPane.add(newStackPane, j, i); //WTF who puts columns first?
             }
@@ -171,7 +178,7 @@ public abstract class KKPrinter {
         updateCells();
     }
 
-    protected abstract void select(StackPane location);
+    protected abstract void select(StackPane location, boolean dragging);
 
     public void updateRegions(){
         clear();

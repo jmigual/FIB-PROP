@@ -22,7 +22,7 @@ public class KKPrinterRegionSelect extends KKPrinter {
 
 
     @Override
-    protected void select(StackPane location) {
+    protected void select(StackPane location, boolean dragged) {
         int i = GridPane.getRowIndex(location);
         int j = GridPane.getColumnIndex(location);
         Cell c = board.getCell(i, j);

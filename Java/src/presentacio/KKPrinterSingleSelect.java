@@ -21,7 +21,7 @@ public class KKPrinterSingleSelect extends KKPrinter {
         super(board,stackPane);
     }
     @Override
-    protected void select(StackPane location) {
+    protected void select(StackPane location, boolean dragged) {
         int i = GridPane.getRowIndex(location);
         int j = GridPane.getColumnIndex(location);
         selectedCell=board.getCell(i,j);

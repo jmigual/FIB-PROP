@@ -20,17 +20,22 @@ public class KKPrinterMultipleSelect extends KKPrinter {
 
     private ArrayList<Cell> selectedCells=new ArrayList<>();
 
+    boolean deselecting;
+
     public KKPrinterMultipleSelect(Board board, StackPane stackPane) {
         super(board, stackPane);
     }
 
     @Override
-    protected void select(StackPane location) {
+    protected void select(StackPane location, boolean dragged) {
         int i = GridPane.getRowIndex(location);
         int j = GridPane.getColumnIndex(location);
         Cell c = board.getCell(i, j);
-        if(selectedCells.contains(c))selectedCells.remove(c);
-        else selectedCells.add(c);
+        if(!dragged){
+            deselecting=selectedCells.contains(c);
+        }
+        if(deselecting && selectedCells.contains(c))selectedCells.remove(c);
+        else if (!deselecting) selectedCells.add(c);
         updateCells();
     }
     public void deselect(){
