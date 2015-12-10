@@ -35,7 +35,7 @@ public class KKPrinterMultipleSelect extends KKPrinter {
             deselecting=selectedCells.contains(c);
         }
         if(deselecting && selectedCells.contains(c))selectedCells.remove(c);
-        else if (!deselecting) selectedCells.add(c);
+        else if (!deselecting && !selectedCells.contains(c)) selectedCells.add(c);
         updateCells();
     }
     public void deselect(){
