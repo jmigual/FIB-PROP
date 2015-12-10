@@ -4,11 +4,15 @@ package presentacio;
  */
 
 import dades.KKDB;
+import dades.PlayersAdmin;
 import domini.BoardCreator.CpuBoardCreator;
+import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class MainWindow extends Application {
@@ -20,21 +24,37 @@ public class MainWindow extends Application {
     private KKDB db;
     private KKPrinter printer;
 
+    public String getmUsername() {
+        return mUsername;
+    }
+
+    public void setmUsername(String mUsername) {
+        this.mUsername = mUsername;
+    }
+
+    private String mUsername;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-        db= new KKDB();
+        db = new KKDB();
         db.load();
+        try {
+            db.getPlayersAdmin().createPlayer("admin", "admin");
+        } catch (PlayerExistsException e) {
+            System.err.println("This player already exists");
+        }
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
 
         initRootLayout();
     }
 
-    public void stop(){
+    public void stop() {
         db.save();
     }
 
@@ -48,56 +68,56 @@ public class MainWindow extends Application {
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
         scene.setOnKeyPressed(event -> {
-            if (event.getCode()==KeyCode.ENTER){
+            if (event.getCode() == KeyCode.ENTER) {
                 printer.getBoard().clear();
                 printer.getBoard().solve();
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.BACK_SPACE){
+            if (event.getCode() == KeyCode.BACK_SPACE) {
                 printer.getBoard().clear();
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT0){
+            if (event.getCode() == KeyCode.DIGIT0) {
                 printer.getSelectedCell().setValue(0);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT0){
+            if (event.getCode() == KeyCode.DIGIT0) {
                 printer.getSelectedCell().setValue(0);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT1){
+            if (event.getCode() == KeyCode.DIGIT1) {
                 printer.getSelectedCell().setValue(1);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT2){
+            if (event.getCode() == KeyCode.DIGIT2) {
                 printer.getSelectedCell().setValue(2);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT3){
+            if (event.getCode() == KeyCode.DIGIT3) {
                 printer.getSelectedCell().setValue(3);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT4){
+            if (event.getCode() == KeyCode.DIGIT4) {
                 printer.getSelectedCell().setValue(4);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT5){
+            if (event.getCode() == KeyCode.DIGIT5) {
                 printer.getSelectedCell().setValue(5);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT6){
+            if (event.getCode() == KeyCode.DIGIT6) {
                 printer.getSelectedCell().setValue(6);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT7){
+            if (event.getCode() == KeyCode.DIGIT7) {
                 printer.getSelectedCell().setValue(7);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT8){
+            if (event.getCode() == KeyCode.DIGIT8) {
                 printer.getSelectedCell().setValue(8);
                 printer.updateCells();
             }
-            if (event.getCode()==KeyCode.DIGIT9){
+            if (event.getCode() == KeyCode.DIGIT9) {
                 printer.getSelectedCell().setValue(9);
                 printer.updateCells();
             }
@@ -109,8 +129,9 @@ public class MainWindow extends Application {
         primaryStage.show();
 
     }
-    private void createGrid(){
-        if (db.getBoards().size()==0) {
+
+    private void createGrid() {
+        if (db.getBoards().size() == 0) {
             CpuBoardCreator creator = new CpuBoardCreator(12, db.getBoards());
             try {
                 creator.createBoard();
@@ -121,8 +142,7 @@ public class MainWindow extends Application {
             db.save();
 
             printer = new KKPrinter(creator.getBoard(), leftArea);
-        }
-        else{
+        } else {
             printer = new KKPrinter(db.getBoards().get(0), leftArea);
         }
     }
@@ -134,9 +154,12 @@ public class MainWindow extends Application {
         scene.heightProperty().addListener(observable -> resized());
     }
 
+    public PlayersAdmin getPlayersAdmin() { return db.getPlayersAdmin(); }
+
     private void resized() {
     }
-    public void trolla(){
+
+    public void trolla() {
     }
 
 }

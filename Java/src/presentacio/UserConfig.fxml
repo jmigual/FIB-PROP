@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="345.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="147.0" layoutY="56.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -27,32 +26,33 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="name" GridPane.columnIndex="1" />
+            <TextField fx:id="userName" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="*Nom d'usuari" GridPane.rowIndex="1" />
             <Label text="*Nom" />
             <Label text="Nova contrasenya" GridPane.rowIndex="3" />
             <Label text="**Repetir nova contrasenya" GridPane.rowIndex="4" />
             <Label text="*Antiga contrasenya" GridPane.rowIndex="6" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <PasswordField prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="* Camps obligatoris" GridPane.rowIndex="8" />
+            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="passwordR" onKeyTyped="#passwordEquals" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="oldPassword" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="fields" text="* Camps obligatoris" GridPane.rowIndex="8" />
             <Label prefHeight="27.0" prefWidth="406.0" text="** Obligatori si s'ha omplert el camp anterior" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="9" />
             <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <children>
-                  <Button mnemonicParsing="false" text="Accepta">
+                  <Button fx:id="acceptButton" mnemonicParsing="false" text="Accepta">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Cancel·la">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel·la">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="passAlert" text="Les dues contrasenyes no coincideixen" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="5" />
          </children>
       </GridPane>
    </children>
