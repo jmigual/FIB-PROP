@@ -40,6 +40,10 @@ public class MainController extends AnchorPane {
         return rootlayout;
     }
 
+    public void configureUser() {
+
+    }
+
     public void exit() {
         Platform.exit();
     }

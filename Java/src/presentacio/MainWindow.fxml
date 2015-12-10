@@ -16,27 +16,35 @@
               <menus>
                 <Menu mnemonicParsing="false" text="KenKen">
                   <items>
-                    <MenuItem fx:id="hola" mnemonicParsing="false" onAction="#exit" text="Sortir" />
+                        <MenuItem mnemonicParsing="false" text="Crea un tauler" />
+                        <MenuItem mnemonicParsing="false" text="Edita un tauler" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Crea una partida" />
+                        <MenuItem mnemonicParsing="false" text="Carrega una partida" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Desa" />
+                        <MenuItem mnemonicParsing="false" text="Anomena i desa" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Tanca la sessió" />
+                    <MenuItem fx:id="hola" mnemonicParsing="false" onAction="#exit" text="Surt" />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Usuaris">
+                  <Menu mnemonicParsing="false" text="Usuari">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Afegir" />
-                        <MenuItem mnemonicParsing="false" text="Eliminar" />
-                        <MenuItem mnemonicParsing="false" text="Canviar nom" />
-                        <MenuItem mnemonicParsing="false" text="Canviar contrasenya" />
+                        <MenuItem mnemonicParsing="false" onAction="#configureUser" text="Configuració de l'usuari" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Estadistiques">
+                  <Menu mnemonicParsing="false" text="Estadístiques">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Millors puntuacions" />
                         <MenuItem mnemonicParsing="false" text="Millors usuaris" />
+                        <MenuItem mnemonicParsing="false" text="Reinicia" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ajuda">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Ajuda KenKen" />
-                        <MenuItem mnemonicParsing="false" text="Sobre KenKen" />
+                        <MenuItem mnemonicParsing="false" text="Ajuda" />
+                        <MenuItem mnemonicParsing="false" text="Sobre el KenKen" />
                      </items>
                   </Menu>
               </menus>
