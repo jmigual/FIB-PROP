@@ -13,12 +13,12 @@ public class UserConfigController extends AnchorPane {
     private AnchorPane rootLayout;
 
     UserConfigController(MainWindow main) {
-        FXMLLoader load = new FXMLLoader(getClass().getResource("UserConfig.fxml"));
-        //load.setRoot(main);
-        load.setController(this);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UserConfig.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
 
         try {
-            rootLayout = load.load();
+            rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }

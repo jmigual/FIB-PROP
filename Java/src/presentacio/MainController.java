@@ -48,7 +48,7 @@ public class MainController extends AnchorPane {
     public void configureUser() {
         shownStage = new Stage();
         UserConfigController config = new UserConfigController(main);
-        shownStage.initModality(Modality.WINDOW_MODAL);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config.getRootLayout()));
         shownStage.sizeToScene();
         shownStage.show();
