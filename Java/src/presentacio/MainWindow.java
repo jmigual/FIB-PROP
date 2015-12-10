@@ -18,7 +18,7 @@ public class MainWindow extends Application {
     private GridPane gridPane;
     private StackPane leftArea;
     private KKDB db;
-    private KKPrinter printer;
+    private KKPrinterSingleSelect printer;
 
     public static void main(String[] args) {
         launch(args);
@@ -57,6 +57,11 @@ public class MainWindow extends Application {
                 printer.getBoard().clear();
                 printer.updateCells();
             }
+
+            /*if (event.getCode()==KeyCode.ESCAPE){
+                printer.deselect();
+                printer.updateCells();
+            }*/
             if (event.getCode()==KeyCode.DIGIT0){
                 printer.getSelectedCell().setValue(0);
                 printer.updateCells();
@@ -120,10 +125,10 @@ public class MainWindow extends Application {
             creator.saveBoard("test", "CPU");
             db.save();
 
-            printer = new KKPrinter(creator.getBoard(), leftArea);
+            printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
         }
         else{
-            printer = new KKPrinter(db.getBoards().get(0), leftArea);
+            printer = new KKPrinterSingleSelect(db.getBoards().get(0), leftArea);
         }
     }
 
