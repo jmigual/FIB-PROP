@@ -17,12 +17,12 @@ import javafx.stage.Stage;
 
 public class MainWindow extends Application {
 
-    private Stage primaryStage;
-    private AnchorPane rootLayout;
-    private GridPane gridPane;
-    private StackPane leftArea;
-    private KKDB db;
-    private KKPrinter printer;
+    protected Stage primaryStage;
+    protected AnchorPane rootLayout;
+    protected GridPane gridPane;
+    protected StackPane leftArea;
+    protected KKDB db;
+    private KKPrinterSingleSelect printer;
 
     public String getmUsername() {
         return mUsername;
@@ -58,7 +58,7 @@ public class MainWindow extends Application {
         db.save();
     }
 
-    private void initRootLayout() {
+    protected void initRootLayout() {
         // Load root layout from xml file
         MainController mainController = new MainController(this);
         leftArea = mainController.getLeftArea();
@@ -75,6 +75,10 @@ public class MainWindow extends Application {
             }
             if (event.getCode() == KeyCode.BACK_SPACE) {
                 printer.getBoard().clear();
+                printer.updateCells();
+            }
+            if (event.getCode() == KeyCode.ESCAPE) {
+                printer.clear();
                 printer.updateCells();
             }
             if (event.getCode() == KeyCode.DIGIT0) {
@@ -123,43 +127,25 @@ public class MainWindow extends Application {
             }
         });
 
-        addResizeListeners(scene);
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
     }
 
-    private void createGrid() {
-        if (db.getBoards().size() == 0) {
-            CpuBoardCreator creator = new CpuBoardCreator(12, db.getBoards());
-            try {
-                creator.createBoard();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            creator.saveBoard("test", "CPU");
-            db.save();
-
-            printer = new KKPrinter(creator.getBoard(), leftArea);
-        } else {
-            printer = new KKPrinter(db.getBoards().get(0), leftArea);
+    protected void createGrid() {
+        db.getBoards().clear();
+        CpuBoardCreator creator = new CpuBoardCreator(12, db.getBoards());
+        try {
+            creator.createBoard();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-    }
+        creator.saveBoard("test", "CPU");
+        db.save();
 
-
-    private void addResizeListeners(Scene scene) {
-
-        scene.widthProperty().addListener(observable -> resized());
-        scene.heightProperty().addListener(observable -> resized());
+        printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
     }
 
     public PlayersAdmin getPlayersAdmin() { return db.getPlayersAdmin(); }
-
-    private void resized() {
-    }
-
-    public void trolla() {
-    }
-
 }

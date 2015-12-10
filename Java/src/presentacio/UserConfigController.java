@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class UserConfigController extends AnchorPane {
 
-    PlayersAdmin mAdmin;
+    private PlayersAdmin mAdmin;
     private AnchorPane rootLayout;
     @FXML
     private TextField name;
