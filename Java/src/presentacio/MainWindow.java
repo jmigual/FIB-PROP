@@ -81,8 +81,8 @@ public class MainWindow extends Application {
                 printer.updateCells();
             }
             if (event.getCode() == KeyCode.DIGIT3) {
-                printer.getSelectedCell().setValue(3);
-                printer.updateCells();
+                printer.getSelectedCell().switchAnnotation(3);
+                printer.updateAnnotations();
             }
             if (event.getCode() == KeyCode.DIGIT4) {
                 printer.getSelectedCell().setValue(4);
@@ -118,7 +118,8 @@ public class MainWindow extends Application {
 
     protected void createGrid() {
         db.getBoards().clear();
-        CpuBoardCreator creator = new CpuBoardCreator(12, db.getBoards());
+        int size=12;
+        CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();
         } catch (Exception e) {
@@ -127,6 +128,7 @@ public class MainWindow extends Application {
         creator.saveBoard("test", "CPU");
         db.save();
 
+        for (int i=1; i<=size; i++)creator.getBoard().getCell(0,0).setAnnotation(i,true);
         printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
     }
 

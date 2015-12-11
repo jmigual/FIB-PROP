@@ -32,7 +32,10 @@ public abstract class KKPrinter {
     protected String selectedErrorColor = "purple";
     protected String borderColor = "black";
     protected int borderWidth = 5;
+    protected String cellDividerColor = "gray";
     protected String regionDividerColor = "black";
+    protected int dividerWidth=2;
+    boolean opcio = false;
 
 
     protected GridPane gridPane;
@@ -54,7 +57,7 @@ public abstract class KKPrinter {
         stackPane.getChildren().remove(gridPane);
     }
 
-    protected void createGrid() {
+    protected final void createGrid() {
         gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
 
@@ -113,71 +116,149 @@ public abstract class KKPrinter {
                         String operationLabelText=" " + Integer.toString(r.getOperationValue());
                         if (r.getCells().size()!=1)operationLabelText+= " " + r.getOperation().toString();
                         Label operationLabel = new Label(operationLabelText);
-                        operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 5).asString(), "px;"));
+                        operationLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", newStackPane.heightProperty().divide(5).asString(), "px;"));
                         StackPane.setAlignment(operationLabel, Pos.TOP_LEFT);
                         // StackPane.setMargin(operationLabel,new Insets(0,0,0,2));
                         newStackPane.getChildren().add(operationLabel);
                     }
                 }
+                addEvents(newStackPane);
+                addAnnotationGrid(newStackPane);
 
-                newStackPane.addEventFilter(MouseEvent.DRAG_DETECTED , event -> {
-                    newStackPane.startFullDrag();
-                    Object source = event.getSource();
-                    if (source instanceof StackPane) select((StackPane) source, false);
-                });
-                newStackPane.setOnMouseClicked(event -> {
-                    Object source = event.getSource();
-                    if (source instanceof StackPane) select((StackPane) source, false);
-                });
-                newStackPane.setOnMouseDragEntered(event->{
-                    Object source = event.getSource();
-
-                    if (source instanceof StackPane) select((StackPane) source, true);
-
-                });
                 gridPane.add(newStackPane, j, i); //WTF who puts columns first?
             }
         }
-
         //setting grid style
         gridPane.setStyle("-fx-background-color: " + backgroundColor + "; -fx-border-color: " + borderColor + "; -fx-border-width: " + Integer.toString(borderWidth) + "px;");
+        if (opcio) {
+            for (Node node : gridPane.getChildren()) {
+                if (GridPane.getRowIndex(node) != null) {
+                    int i = GridPane.getRowIndex(node);
+                    int j = GridPane.getColumnIndex(node);
+                    Cell c = board.getCell(i, j);
+                    Region r = c.getRegion();
 
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getRowIndex(node) != null) {
-                int i = GridPane.getRowIndex(node);
-                int j = GridPane.getColumnIndex(node);
-                Cell c = board.getCell(i, j);
-                Region r = c.getRegion();
+                    String style = "-fx-border-width: "+Integer.toString(dividerWidth)+"px; -fx-border-color: ";
 
-                String style = "-fx-border-color: " + regionDividerColor + "; -fx-border-width: ";
+                    if (i > 0 && board.getCell(i - 1, j).getRegion() != r) {  //ADALT
+                        style += regionDividerColor;
+                    } else style += cellDividerColor;
+                    style += " ";
+                    if (j < size - 1 && board.getCell(i, j + 1).getRegion() != r) {  //DRETA
+                        style += regionDividerColor;
+                    } else style += cellDividerColor;
 
-                if (i > 0 && board.getCell(i - 1, j).getRegion() != r) {  //ADALT
-                    style += "2px";
-                } else style += "0px";
-                style += " ";
-                if (j < size - 1 && board.getCell(i, j + 1).getRegion() != r) {  //DRETA
-                    style += "2px";
-                } else style += "0px";
+                    style += " ";
+                    if (i < size - 1 && board.getCell(i + 1, j).getRegion() != r) {  //ABAIX
+                        style += regionDividerColor;
+                    } else style += cellDividerColor;
 
-                style += " ";
-                if (i < size - 1 && board.getCell(i + 1, j).getRegion() != r) {  //ABAIX
-                    style += "2px";
-                } else style += "0px";
+                    style += " ";
+                    if (j > 0 && board.getCell(i, j - 1).getRegion() != r) {  //ESQUERRA
+                        style += regionDividerColor;
+                    } else style += cellDividerColor;
 
-                style += " ";
-                if (j > 0 && board.getCell(i, j - 1).getRegion() != r) {  //ESQUERRA
-                    style += "2px";
-                } else style += "0px";
+                    style += ";";
 
-                style += ";";
+                    node.setStyle(style);
+                }
 
-                node.setStyle(style);
             }
+        }
+        else{
+            for (Node node : gridPane.getChildren()) {
+                if (GridPane.getRowIndex(node) != null) {
+                    int i = GridPane.getRowIndex(node);
+                    int j = GridPane.getColumnIndex(node);
+                    Cell c = board.getCell(i, j);
+                    Region r = c.getRegion();
 
+                    String style = "-fx-border-color: "+regionDividerColor+"; -fx-border-width: ";
+
+                    if (i > 0 && board.getCell(i - 1, j).getRegion() != r) {  //ADALT
+                        style += Integer.toString(dividerWidth)+"px";
+                    } else style += "0px";
+                    style += " ";
+                    if (j < size - 1 && board.getCell(i, j + 1).getRegion() != r) {  //DRETA
+                        style += Integer.toString(dividerWidth)+"px";
+                    } else style += "0px";
+
+                    style += " ";
+                    if (i < size - 1 && board.getCell(i + 1, j).getRegion() != r) {  //ABAIX
+                        style += Integer.toString(dividerWidth)+"px";
+                    } else style += "0px";
+
+                    style += " ";
+                    if (j > 0 && board.getCell(i, j - 1).getRegion() != r) {  //ESQUERRA
+                        style += Integer.toString(dividerWidth)+"px";
+                    } else style += "0px";
+
+                    style += ";";
+
+                    node.setStyle(style);
+                }
+
+            }
         }
         updateCells();
+        updateAnnotations();
     }
 
+    private void addEvents(StackPane newStackPane) {
+        newStackPane.addEventFilter(MouseEvent.DRAG_DETECTED , event -> {
+            newStackPane.startFullDrag();
+            Object source = event.getSource();
+            if (source instanceof StackPane) select((StackPane) source, false);
+        });
+        newStackPane.setOnMouseClicked(event -> {
+            Object source = event.getSource();
+            if (source instanceof StackPane) select((StackPane) source, false);
+        });
+        newStackPane.setOnMouseDragEntered(event->{
+            Object source = event.getSource();
+
+            if (source instanceof StackPane) select((StackPane) source, true);
+
+        });
+    }
+    
+    private void addAnnotationGrid(StackPane stackPane) {
+        int size=board.getSize();
+        int gridSize=(int)Math.ceil(Math.sqrt(size));
+        GridPane annotationGrid= new GridPane();
+        //annotationGrid.setGridLinesVisible(true);
+        annotationGrid.prefHeightProperty().bind(stackPane.widthProperty().divide(1.5));
+        annotationGrid.prefWidthProperty().bind(stackPane.widthProperty().divide(1.5));
+        annotationGrid.maxWidthProperty().bind(annotationGrid.prefWidthProperty());
+        annotationGrid.maxHeightProperty().bind(annotationGrid.prefHeightProperty());
+        annotationGrid.setMinSize(0, 0);
+
+        ColumnConstraints columnConstraints = new ColumnConstraints();
+        columnConstraints.setPercentWidth(100 / gridSize);
+        columnConstraints.setHalignment(HPos.CENTER);
+
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setPercentHeight(100 / gridSize);
+        rowConstraints.setValignment(VPos.CENTER);
+
+
+        for (int i = 0; i < gridSize; i++) {
+            annotationGrid.getColumnConstraints().add(columnConstraints);
+            annotationGrid.getRowConstraints().add(rowConstraints);
+        }
+        annotationGrid.setId("AnnotationGrid");
+        stackPane.getChildren().add(annotationGrid);
+        StackPane.setAlignment(annotationGrid,Pos.BOTTOM_RIGHT);
+
+        for (int n=0; n<size; n++){
+            int i=n/gridSize;
+            int j=n-i*gridSize;
+            Label l = new Label (Integer.toString(n+1));
+            l.setId("OperationLabel#"+Integer.toString(n+1));
+            l.styleProperty().bind(Bindings.concat("-fx-font-size: ", stackPane.widthProperty().divide(gridSize * 1.2 * (n >= 9 ? 2 : 1)).asString(), "px;"));
+            annotationGrid.add(l,j,i);
+        }
+    }
     protected abstract void select(StackPane location, boolean dragging);
 
     public void updateRegions(){
@@ -201,6 +282,23 @@ public abstract class KKPrinter {
                 String color = calculateColor(c);
                 if (!Objects.equals(color, backgroundColor))s += "-fx-background-color: " + color + ";";
                 node.setStyle(s);
+            }
+        }
+    }
+
+    public void updateAnnotations(){
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) != null && node instanceof StackPane) {
+                StackPane stackPane=(StackPane)node;
+                int i = GridPane.getRowIndex(node);
+                int j = GridPane.getColumnIndex(node);
+                Cell c = board.getCell(i, j);
+                for (int n=1; n<=board.getSize(); n++){
+                    Label l=(Label)stackPane.lookup("#OperationLabel#"+Integer.toString(n));
+                    l.setVisible(c.getAnnotation(n) && c.getValue()==0);
+                }
+
+
             }
         }
     }
