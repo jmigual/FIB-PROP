@@ -99,7 +99,7 @@ public abstract class KKPrinter {
                 //label inside stackpane
                 Label newLabel = new Label(Integer.toString(board.getCell(i, j).getValue()));
                 if (board.getCell(i, j).getValue() == 0) newLabel.setText("");
-                newLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 3).asString(), "px;"));
+                newLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", minimum.divide(size * 1.3).asString(), "px;"));
                 newStackPane.getChildren().add(newLabel);
                 newStackPane.prefHeightProperty().bind(gridPane.prefHeightProperty().divide(size));
                 newStackPane.prefWidthProperty().bind(gridPane.prefWidthProperty().divide(size));

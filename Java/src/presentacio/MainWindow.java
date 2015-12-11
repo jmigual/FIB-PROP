@@ -9,9 +9,11 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 
 public class MainWindow extends Application {
 
@@ -64,50 +66,16 @@ public class MainWindow extends Application {
                 printer.clear();
                 printer.updateCells();
             }
-            if (event.getCode() == KeyCode.DIGIT0) {
-                printer.getSelectedCell().setValue(0);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT0) {
-                printer.getSelectedCell().setValue(0);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT1) {
-                printer.getSelectedCell().setValue(1);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT2) {
-                printer.getSelectedCell().setValue(2);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT3) {
-                printer.getSelectedCell().switchAnnotation(3);
-                printer.updateAnnotations();
-            }
-            if (event.getCode() == KeyCode.DIGIT4) {
-                printer.getSelectedCell().setValue(4);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT5) {
-                printer.getSelectedCell().setValue(5);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT6) {
-                printer.getSelectedCell().setValue(6);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT7) {
-                printer.getSelectedCell().setValue(7);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT8) {
-                printer.getSelectedCell().setValue(8);
-                printer.updateCells();
-            }
-            if (event.getCode() == KeyCode.DIGIT9) {
-                printer.getSelectedCell().setValue(9);
-                printer.updateCells();
-            }
+            if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event,0);
+            if (event.getCode() == KeyCode.DIGIT1 || event.getCode() == KeyCode.NUMPAD1) numEvent(event,1);
+            if (event.getCode() == KeyCode.DIGIT2 || event.getCode() == KeyCode.NUMPAD2) numEvent(event,2);
+            if (event.getCode() == KeyCode.DIGIT3 || event.getCode() == KeyCode.NUMPAD3) numEvent(event,3);
+            if (event.getCode() == KeyCode.DIGIT4 || event.getCode() == KeyCode.NUMPAD4) numEvent(event,4);
+            if (event.getCode() == KeyCode.DIGIT5 || event.getCode() == KeyCode.NUMPAD5) numEvent(event,5);
+            if (event.getCode() == KeyCode.DIGIT6 || event.getCode() == KeyCode.NUMPAD6) numEvent(event,6);
+            if (event.getCode() == KeyCode.DIGIT7 || event.getCode() == KeyCode.NUMPAD7) numEvent(event,7);
+            if (event.getCode() == KeyCode.DIGIT8 || event.getCode() == KeyCode.NUMPAD8) numEvent(event,8);
+            if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
         });
 
 
@@ -115,10 +83,15 @@ public class MainWindow extends Application {
         primaryStage.show();
 
     }
-
+    private void numEvent(KeyEvent event, int n){
+        if (event.isControlDown())printer.getSelectedCell().switchAnnotation(n);
+        else printer.getSelectedCell().setValue(n);
+        printer.updateCells();
+        printer.updateAnnotations();
+    }
     protected void createGrid() {
         db.getBoards().clear();
-        int size=12;
+        int size=4;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();
@@ -128,7 +101,6 @@ public class MainWindow extends Application {
         creator.saveBoard("test", "CPU");
         db.save();
 
-        for (int i=1; i<=size; i++)creator.getBoard().getCell(0,0).setAnnotation(i,true);
         printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
     }
 
