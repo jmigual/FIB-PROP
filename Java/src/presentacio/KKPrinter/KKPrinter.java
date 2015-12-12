@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
@@ -11,8 +11,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -38,7 +36,6 @@ public abstract class KKPrinter {
     boolean opcio = false;
 
 
-    protected GridPane gridPane;
 
     public Board getBoard() {
         return board;
@@ -46,11 +43,24 @@ public abstract class KKPrinter {
 
     protected Board board;
     protected StackPane stackPane;
+    protected GridPane gridPane;
+
 
     public KKPrinter(Board board, StackPane stackPane) {
         this.board = board;
         this.stackPane = stackPane;
         createGrid();
+    }
+    public KKPrinter(KKPrinter kkPrinter){
+        this.board=kkPrinter.board;
+        this.stackPane=kkPrinter.stackPane;
+        this.gridPane=kkPrinter.gridPane;
+
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) != null && node instanceof StackPane) {
+                addEvents((StackPane)node);
+            }
+        }
     }
 
     public void clear(){
@@ -205,7 +215,8 @@ public abstract class KKPrinter {
     }
 
     private void addEvents(StackPane newStackPane) {
-        newStackPane.addEventFilter(MouseEvent.DRAG_DETECTED , event -> {
+
+        newStackPane.setOnDragDetected( event -> {
             newStackPane.startFullDrag();
             Object source = event.getSource();
             if (source instanceof StackPane) select((StackPane) source, false);

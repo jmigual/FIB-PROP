@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
@@ -11,6 +11,9 @@ import javafx.scene.layout.StackPane;
 public class KKPrinterNoSelect extends KKPrinter {
     public KKPrinterNoSelect (Board board, StackPane stackPane){
         super(board,stackPane);
+    }
+    public KKPrinterNoSelect(KKPrinter kkPrinter) {
+        super(kkPrinter);
     }
 
     @Override

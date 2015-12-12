@@ -1,10 +1,9 @@
-package presentacio;
+package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
 import domini.KKRegion.KKRegion;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
@@ -24,6 +23,9 @@ public class KKPrinterMultipleSelect extends KKPrinter {
 
     public KKPrinterMultipleSelect(Board board, StackPane stackPane) {
         super(board, stackPane);
+    }
+    public KKPrinterMultipleSelect(KKPrinter kkPrinter) {
+        super(kkPrinter);
     }
 
     @Override

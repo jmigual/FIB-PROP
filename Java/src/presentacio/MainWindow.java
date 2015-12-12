@@ -6,13 +6,14 @@ package presentacio;
 import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import presentacio.KKPrinter.KKPrinter;
+import presentacio.KKPrinter.KKPrinterMultipleSelect;
+import presentacio.KKPrinter.KKPrinterSingleSelect;
 
 
 public class MainWindow extends Application {
@@ -22,7 +23,7 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane leftArea;
     protected KKDB db;
-    private KKPrinterSingleSelect printer;
+    private KKPrinter printer;
 
     public static void main(String[] args) {
         launch(args);
@@ -63,7 +64,7 @@ public class MainWindow extends Application {
             }
 
             if (event.getCode() == KeyCode.ESCAPE) {
-                printer.clear();
+                printer=new KKPrinterMultipleSelect(printer);
                 printer.updateCells();
             }
             if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event,0);
@@ -84,14 +85,15 @@ public class MainWindow extends Application {
 
     }
     private void numEvent(KeyEvent event, int n){
+        /*
         if (event.isControlDown())printer.getSelectedCell().switchAnnotation(n);
         else printer.getSelectedCell().setValue(n);
         printer.updateCells();
-        printer.updateAnnotations();
+        printer.updateAnnotations();*/
     }
     protected void createGrid() {
         db.getBoards().clear();
-        int size=4;
+        int size=6;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();

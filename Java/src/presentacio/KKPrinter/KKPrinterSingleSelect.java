@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
@@ -19,6 +19,9 @@ public class KKPrinterSingleSelect extends KKPrinter {
 
     public KKPrinterSingleSelect (Board board, StackPane stackPane){
         super(board,stackPane);
+    }
+    public KKPrinterSingleSelect(KKPrinter kkPrinter) {
+        super(kkPrinter);
     }
     @Override
     protected void select(StackPane location, boolean dragged) {

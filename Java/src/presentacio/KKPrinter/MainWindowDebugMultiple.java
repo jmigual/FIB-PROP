@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.KKPrinter;
 /**
  * Created by Joan on 03/12/2015.
  */
@@ -7,12 +7,12 @@ import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import presentacio.KKPrinter.KKPrinterMultipleSelect;
+import presentacio.MainController;
 
 public class MainWindowDebugMultiple extends Application{
 
