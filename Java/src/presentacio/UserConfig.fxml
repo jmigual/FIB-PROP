@@ -40,12 +40,12 @@
             <Label prefHeight="27.0" prefWidth="406.0" text="** Obligatori si s'ha omplert el camp anterior" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="9" />
             <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                <children>
-                  <Button fx:id="acceptButton" mnemonicParsing="false" text="Accepta">
+                  <Button fx:id="acceptButton" mnemonicParsing="false" onAction="#dialogAccept" text="Accepta">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel·la">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#dialogReject" text="Cancel·la">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

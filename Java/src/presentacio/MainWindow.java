@@ -22,21 +22,19 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane leftArea;
     protected KKDB db;
-    protected String currentPlayer;
     private KKPrinterSingleSelect printer;
-
-    public String getmUsername() {
-        return mUsername;
-    }
-
-    public void setmUsername(String mUsername) {
-        this.mUsername = mUsername;
-    }
-
-    private String mUsername;
+    protected String mUsername;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public void setUsername(String mUsername) {
+        this.mUsername = mUsername;
     }
 
     @Override
@@ -44,11 +42,11 @@ public class MainWindow extends Application {
         db = new KKDB();
         db.load();
         try {
-            db.getPlayersAdmin().createPlayer("admin", "admin");
+            db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");
         }
-        this.currentPlayer = "admin";
+        this.mUsername = "admin";
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
@@ -149,5 +147,7 @@ public class MainWindow extends Application {
         printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
     }
 
-    public PlayersAdmin getPlayersAdmin() { return db.getPlayersAdmin(); }
+    public PlayersAdmin getPlayersAdmin() {
+        return db.getPlayersAdmin();
+    }
 }

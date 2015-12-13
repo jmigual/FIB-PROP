@@ -1,5 +1,6 @@
 package presentacio;
 
+import dades.Player;
 import dades.PlayersAdmin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +53,7 @@ public class UserConfigController extends AnchorPane {
             e.printStackTrace();
         }
 
+        createFields(mAdmin.getPlayer(main.getUsername()));
     }
 
     private void checkAccept() {
@@ -68,5 +70,20 @@ public class UserConfigController extends AnchorPane {
 
     public boolean getResult() {
         return result;
+    }
+
+    private void createFields(Player player) {
+        this.name.setText(player.getName());
+        this.userName.setText(player.getUserName());
+    }
+
+    @FXML
+    private void dialogAccept() {
+
+    }
+
+    @FXML
+    private void dialogReject() {
+        
     }
 }
