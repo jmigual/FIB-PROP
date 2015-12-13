@@ -22,6 +22,7 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane leftArea;
     protected KKDB db;
+    protected String currentPlayer;
     private KKPrinterSingleSelect printer;
 
     public String getmUsername() {
@@ -47,6 +48,7 @@ public class MainWindow extends Application {
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");
         }
+        this.currentPlayer = "admin";
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
