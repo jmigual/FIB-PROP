@@ -59,7 +59,7 @@ public class DriverMatch {
                                 s = "No acabat";
                                 if (taula.get(i).hasFinished()) s = "Acabat  Score : " + taula.get(i).getScore();
                                 b = taula.get(i).getBoard();
-                                p = taula.get(i).getPlayer();
+                                p = taula.get(i).getPlayer().getName();
 
                                 out.println(Integer.toString(i) + ": Board " + b.get_name() + " Player " + p + "  " + s);
                         }
