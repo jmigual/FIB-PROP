@@ -2,6 +2,7 @@ package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
+import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -10,7 +11,7 @@ import javafx.scene.layout.StackPane;
  * Created by Iñigo on 10/12/2015.
  */
 public class KKPrinterRegionSelect extends KKPrinter {
-    public KKPrinterRegionSelect(Board board, StackPane stackPane) {
+    public KKPrinterRegionSelect(KKBoard board, StackPane stackPane) {
         super(board, stackPane);
     }
     public KKPrinterRegionSelect(KKPrinter kkPrinter) {

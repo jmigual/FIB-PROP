@@ -3,6 +3,7 @@ package presentacio.KKPrinter;
 import domini.Basic.Board;
 import domini.Basic.Cell;
 import domini.Basic.Region;
+import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
@@ -37,16 +38,20 @@ public abstract class KKPrinter {
 
 
 
-    public Board getBoard() {
+    public KKBoard getBoard() {
         return board;
     }
 
-    protected Board board;
+    public void setBoard(KKBoard board) {
+        this.board = board;
+    }
+
+    protected KKBoard board;
     protected StackPane stackPane;
     protected GridPane gridPane;
 
 
-    public KKPrinter(Board board, StackPane stackPane) {
+    public KKPrinter(KKBoard board, StackPane stackPane) {
         this.board = board;
         this.stackPane = stackPane;
         createGrid();

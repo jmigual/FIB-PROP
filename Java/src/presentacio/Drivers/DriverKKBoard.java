@@ -136,8 +136,7 @@ public class DriverKKBoard implements Driver {
                         keepAsking = false;
                         break;
                     case 4:
-                        b.solveslow();
-                        KKp.printBoard();
+                        System.out.println ("No longer works without KKPrinter");
                         break;
                 }
             } else keepAsking = false;
