@@ -5,6 +5,7 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Row;
 import domini.KKRegion.*;
+import domini.stats.Playable;
 import presentacio.Drivers.DriverKKBoardPrinter;
 
 import java.io.*;
@@ -15,13 +16,28 @@ import java.util.Scanner;
 /**
  * Created by Joan??? on 20/10/2015.
  */
-public class KKBoard extends Board implements Serializable {
+public class KKBoard extends Board implements Playable {
 
     boolean _hasSolution = false;
     int _numSolution = 0;
     private ArrayList<KKRegion> _kkregions;
     private String _name;
     private String _creator;
+
+    private int getHash(String s){
+        int hash = 7;
+        for (int i = 0; i < s.length(); i++) {
+            hash = hash*31 + s.charAt(i);
+        }
+        return hash;
+
+    }
+
+    public int getID(){
+        return getHash(_name);
+    }
+
+
 
 
     public KKBoard(int size) {

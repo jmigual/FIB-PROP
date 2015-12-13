@@ -6,5 +6,6 @@ import java.io.Serializable;
 
 public interface Playable extends Serializable {
     int getID();
+    //String getID();
     int getSize();
 }

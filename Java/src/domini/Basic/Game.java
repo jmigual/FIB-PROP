@@ -207,7 +207,7 @@ public class Game {
                     if (taulaM.get(i).hasFinished()) s = "Acabat  Score : " + taulaM.get(i).getScore();
 
                     b = taulaM.get(i).getBoard();
-                    p = taulaM.get(i).getPlayer();
+                    p = taulaM.get(i).getPlayer().getName();
 
                     out.println("Board " + b.get_name() +  " Player " + p + "  " + s);
                 }

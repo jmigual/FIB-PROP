@@ -1,6 +1,12 @@
 package domini.Basic;
 
+import dades.KKDB;
+import dades.Player;
+import dades.PlayersAdmin;
 import domini.KKBoard;
+import domini.stats.Matchable;
+import domini.stats.Playable;
+import presentacio.Drivers.DriverAdminPlayers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +16,7 @@ import java.util.Random;
  * Contains information about a Match, such as the Player and the current Board
  * Also contains a history of the Moves made by the user, so that they can be reverted as pleased
  */
-public class Match implements Serializable {
+public class Match implements Matchable {
     //ATTRIBUTES
 
     /**
@@ -21,6 +27,26 @@ public class Match implements Serializable {
     private String _player;
 
     private boolean _finished;
+
+    public Player getPlayer(){
+        KKDB _db;
+        PlayersAdmin _playersAdmin;
+        _db = new KKDB();
+        _db.load();
+        _playersAdmin = _db.getPlayersAdmin();
+        DriverAdminPlayers _driverAP;
+        _driverAP = new DriverAdminPlayers(_playersAdmin);
+        return _playersAdmin.getPlayer(_player);
+    }
+    public Playable getGame(){
+        return _board;
+    }
+    public boolean finished(){
+        return _finished;
+    }
+    public int computeTime(){
+        return (int) _score;
+    }
 
     /**
      * The score and time the match has been going on. The Score gets updated each time
@@ -76,10 +102,11 @@ public class Match implements Serializable {
     public KKBoard getBoard() {
         return _board;
     }
-
+/*
     public String getPlayer() {
         return _player;
     }
+ */
 
     /**Classes that use Move to implement the Undo function*/
     /**
