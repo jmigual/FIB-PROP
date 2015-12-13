@@ -10,35 +10,67 @@ public class Player implements Serializable {
     /**
      * Contains the player name
      */
-    private String _name;
-
+    private String mName;
+    /**
+     * Contains the player's username
+     */
+    private String mUserName;
     /**
      * Contains the player's password hash with SHA-512
      */
-    private byte[] _hash;
+    private byte[] mHash;
+
+    /**
+     * Constructs a new player with the password's hash, username and name
+     *
+     * @param name     Player's name
+     * @param userName Player's username
+     * @param hash     Player's password hash with SHA-512
+     */
+    public Player(String name, String userName, byte[] hash) {
+        this.mName = name;
+        this.mUserName = userName;
+        this.mHash = hash;
+    }
+
+    /**
+     * Constructs a new player with the password's hash and username
+     *
+     * @param userName Player's username
+     * @param hash     Player's password hash with SHA-512
+     */
+    public Player(String userName, byte[] hash) {
+        this.mUserName = userName;
+        this.mHash = hash;
+    }
 
     /////////////
     // METHODS //
     /////////////
 
     /**
-     * Constructs a new player with the password's hash and name
+     * Constructs a new Player with the specified name
      *
-     * @param name  Player's name
-     * @param _hash Player's password hash with SHA-512
+     * @param userName Player's username
      */
-    public Player(String name, byte[] _hash) {
-        this._name = name;
-        this._hash = _hash;
+    public Player(String userName) {
+        this.mUserName = userName;
     }
 
     /**
-     * Constructs a new Player with the specified name
-     *
-     * @param name Player's name
+     * To get the player's username
+     * @return String containing the username
      */
-    public Player(String name) {
-        this._name = name;
+    public String getUserName() {
+        return mUserName;
+    }
+
+    /**
+     * To set the player's username
+     * @param userName Username to set to the player
+     */
+    public void setUserName(String userName) {
+        this.mUserName = userName;
     }
 
     /**
@@ -54,8 +86,7 @@ public class Player implements Serializable {
 
         Player player = (Player) o;
 
-        return _name.equals(player._name);
-
+        return mUserName.equals(player.mUserName);
     }
 
     /**
@@ -65,7 +96,7 @@ public class Player implements Serializable {
      */
     @Override
     public int hashCode() {
-        return _name.hashCode();
+        return mName.hashCode();
     }
 
     /**
@@ -74,7 +105,7 @@ public class Player implements Serializable {
      * @return Returns the password's hash
      */
     public byte[] getHash() {
-        return _hash;
+        return mHash;
     }
 
     /**
@@ -83,7 +114,7 @@ public class Player implements Serializable {
      * @param _hash Player's password hash with SHA-512
      */
     public void setHash(byte[] _hash) {
-        this._hash = _hash;
+        this.mHash = _hash;
     }
 
     /**
@@ -92,7 +123,7 @@ public class Player implements Serializable {
      * @return Player's name
      */
     public String getName() {
-        return _name;
+        return mName;
     }
 
     /**
@@ -101,6 +132,6 @@ public class Player implements Serializable {
      * @param _name Player's name to set
      */
     public void setName(String _name) {
-        this._name = _name;
+        this.mName = _name;
     }
 }

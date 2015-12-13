@@ -12,14 +12,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinterRegionSelect;
 import presentacio.MainController;
+import presentacio.MainWindow;
 
-public class MainWindowDebugRegion extends Application{
+public class MainWindowDebugRegion extends MainWindow {
 
-    protected Stage primaryStage;
-    protected AnchorPane rootLayout;
-    protected GridPane gridPane;
-    protected StackPane leftArea;
-    protected KKDB db;
+
 
     public static void main(String[] args) {
         launch(args);

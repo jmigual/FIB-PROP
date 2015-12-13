@@ -13,14 +13,10 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.MainController;
+import presentacio.MainWindow;
 
-public class MainWindowDebugMultiple extends Application{
+public class MainWindowDebugMultiple extends MainWindow {
 
-    protected Stage primaryStage;
-    protected AnchorPane rootLayout;
-    protected GridPane gridPane;
-    protected StackPane leftArea;
-    protected KKDB db;
 
     public static void main(String[] args) {
         launch(args);

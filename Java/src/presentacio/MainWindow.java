@@ -8,20 +8,19 @@ import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import dades.PlayersAdmin;
+import exceptions.PlayerExistsException;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
-
-import java.util.concurrent.CountDownLatch;
 
 
 public class MainWindow extends Application {
@@ -33,15 +32,31 @@ public class MainWindow extends Application {
     protected KKDB db;
     private KKPrinter printer;
     Thread thread;
+    protected String mUsername;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public void setUsername(String mUsername) {
+        this.mUsername = mUsername;
     }
 
     @Override
     public void start(Stage primaryStage) {
         db = new KKDB();
         db.load();
+        try {
+            db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
+        } catch (PlayerExistsException e) {
+            System.err.println("This player already exists");
+        }
+        this.mUsername = "admin";
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
 
@@ -94,7 +109,6 @@ public class MainWindow extends Application {
                 printer.updateCells();
                 printer.updateAnnotations();
             }
-
             if (event.getCode() == KeyCode.ESCAPE) {
                 printer=new KKPrinterMultipleSelect(printer);
                 printer.updateCells();
@@ -153,5 +167,7 @@ public class MainWindow extends Application {
         //printer = new KKPrinterSingleSelect(db.getBoards().get(0), leftArea);
     }
 
-
+    public PlayersAdmin getPlayersAdmin() {
+        return db.getPlayersAdmin();
+    }
 }
