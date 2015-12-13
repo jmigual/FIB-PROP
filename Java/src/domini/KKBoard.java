@@ -5,12 +5,9 @@ import domini.Basic.Cell;
 import domini.Basic.Column;
 import domini.Basic.Row;
 import domini.KKRegion.*;
-<<<<<<< HEAD
 import domini.stats.Playable;
-=======
 import javafx.application.Platform;
 import javafx.scene.layout.StackPane;
->>>>>>> 33ccbf8ab77dcd7367cc3ca87b225dfcd6bd26be
 import presentacio.Drivers.DriverKKBoardPrinter;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
