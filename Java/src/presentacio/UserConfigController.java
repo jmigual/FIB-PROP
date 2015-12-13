@@ -2,6 +2,7 @@ package presentacio;
 
 import dades.Player;
 import dades.PlayersAdmin;
+import exceptions.PlayerNotExistsExcepction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -26,6 +28,8 @@ public class UserConfigController extends AnchorPane {
     private TextField userName;
     @FXML
     private Label passAlert;
+    @FXML
+    private Label checkAlert;
     @FXML
     private Label fields;
     @FXML
@@ -53,15 +57,23 @@ public class UserConfigController extends AnchorPane {
             e.printStackTrace();
         }
 
-        createFields(mAdmin.getPlayer(main.getUsername()));
-    }
-
-    private void checkAccept() {
-        if (password.getText().length() > 0 && password.getText().equals(passwordR.getText())) {
-            passAlert.setVisible(true);
+        Player p;
+        try {
+            p = mAdmin.getPlayer(main.getUsername());
+            createFields(p);
+        } catch (PlayerNotExistsExcepction e) {
+            e.printStackTrace();
+            ((Stage) (this.getScene().getWindow())).close();
         }
 
+    }
 
+    private boolean checkAccept() {
+        if (password.getText().length() > 0 && !password.getText().equals(passwordR.getText())) {
+            passAlert.setVisible(true);
+            return false;
+        } else passAlert.setVisible(false);
+        return true;
     }
 
     public AnchorPane getRootLayout() {
@@ -79,11 +91,27 @@ public class UserConfigController extends AnchorPane {
 
     @FXML
     private void dialogAccept() {
+        if (!checkAccept()) return;
 
+        if (!mAdmin.checkLogin(userName.getText(), oldPasssword.getText())) {
+            checkAlert.setVisible(true);
+        } else checkAlert.setVisible(false);
+
+        if (password.getText().length() > 0) {
+            mAdmin.changePassword(userName.getText(), oldPasssword.getText(), password.getText());
+        }
+
+        mAdmin.changeName(name.getText(), userName.getText());
+
+        result = true;
+        Stage stage = (Stage) acceptButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void dialogReject() {
-        
+        result = false;
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 }

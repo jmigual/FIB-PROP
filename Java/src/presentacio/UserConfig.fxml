@@ -53,6 +53,7 @@
                </children>
             </HBox>
             <Label fx:id="passAlert" text="Les dues contrasenyes no coincideixen" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <Label fx:id="checkAlert" text="La contrasenya introduida és incorrecta" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </children>

@@ -1,6 +1,7 @@
 package dades;
 
 import exceptions.PlayerExistsException;
+import exceptions.PlayerNotExistsExcepction;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +30,7 @@ public class PlayersAdmin {
 
     /**
      * Creates a new player without name
+     *
      * @param userName Player's username, must be unique
      * @param password Player's password
      * @return The player added
@@ -49,18 +51,22 @@ public class PlayersAdmin {
      */
     public Player createPlayer(String name, String userName, String password) throws PlayerExistsException {
         // Create the password's hash and the player to check
-        byte[] hash = ("asdf" + name + userName).getBytes();
-        try {
-            hash = getHash(password);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        byte[] hash = getHash(password);
         Player p = new Player(name, userName, hash);
 
         // Check if the player's already added
         if (_players.contains(p)) throw new PlayerExistsException("The user already exists");
         _players.add(p);
         return p;
+    }
+    
+    public void changeName(String name, String userName) {
+        try {
+            Player p = getPlayer(userName);
+            p.setName(name);
+        } catch (PlayerNotExistsExcepction e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -73,23 +79,19 @@ public class PlayersAdmin {
      * <b>False</b>
      */
     public boolean changePassword(String userName, String currentPassword, String newPassword) {
-        try {
-            byte[] hash = getHash(newPassword);
-            Player p = new Player(userName, hash);
+        byte[] hash = getHash(newPassword);
+        Player p = new Player(userName, hash);
 
-            // Search if the player exists
-            if (_players.contains(p)) {
-                // Get the player
-                Player p2 = _players.get(_players.indexOf(p));
+        // Search if the player exists
+        if (_players.contains(p)) {
+            // Get the player
+            Player p2 = _players.get(_players.indexOf(p));
 
-                // Check if the password matches
-                if (!Arrays.equals(p2.getHash(), getHash(currentPassword))) return false;
-                // Change the password (hash)
-                p2.setHash(hash);
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Check if the password matches
+            if (!Arrays.equals(p2.getHash(), getHash(currentPassword))) return false;
+            // Change the password (hash)
+            p2.setHash(hash);
+            return true;
         }
         return false;
     }
@@ -103,15 +105,21 @@ public class PlayersAdmin {
      */
     public boolean checkLogin(String userName, String password) {
         try {
-            Player p = new Player(userName);
-            if (_players.contains(p)) {
-                // Check if the introduced password's hash and the user hash match
-                return Arrays.equals(_players.get(_players.indexOf(p)).getHash(), getHash(password));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return checkLogin(getPlayer(userName), password);
+        } catch (PlayerNotExistsExcepction e) {
+            return false;
         }
-        return false;
+    }
+
+    /**
+     * Checks if a player has the selected password
+     *
+     * @param p        Player to check
+     * @param password Password to check
+     * @return <em>True</em> if the password matches
+     */
+    public boolean checkLogin(Player p, String password) {
+        return Arrays.equals(p.getHash(), getHash(password));
     }
 
     /**
@@ -132,23 +140,17 @@ public class PlayersAdmin {
      * @return <b>True</b> if the player is removed
      */
     public boolean removePlayer(String userName, String password) {
-        byte[] hash;
-        Player p;
-        try {
-            hash = getHash(password);
-            p = new Player(userName, hash);
+        byte[] hash = getHash(password);
+        Player p = new Player(userName, hash);
 
-            if (_players.contains(p)) {
-                int index = _players.indexOf(p);
-                // Check if the password's hash matches
-                if (Arrays.equals(_players.get(index).getHash(), hash)) {
-                    // Delete the player
-                    _players.remove(index);
-                    return true;
-                }
+        if (_players.contains(p)) {
+            int index = _players.indexOf(p);
+            // Check if the password's hash matches
+            if (Arrays.equals(_players.get(index).getHash(), hash)) {
+                // Delete the player
+                _players.remove(index);
+                return true;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return false;
@@ -172,11 +174,16 @@ public class PlayersAdmin {
      *
      * @param s String to be hashed
      * @return byte[] containing the hash
-     * @throws NoSuchAlgorithmException It's thrown when there's no selected algorithm
      */
-    public static byte[] getHash(String s) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
-        return md.digest(s.getBytes());
+    public static byte[] getHash(String s) {
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            return md.digest(s.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return ("asdf" + s).getBytes();
+        }
     }
 
     /**
@@ -185,7 +192,10 @@ public class PlayersAdmin {
      * @param userName Player's name
      * @return The selected player
      */
-    public Player getPlayer(String userName) {
-        return _players.get(_players.indexOf(new Player(userName)));
+    public Player getPlayer(String userName)throws PlayerNotExistsExcepction {
+        Player p = new Player(userName);
+        if (!_players.contains(p)) throw new PlayerNotExistsExcepction();
+
+        return _players.get(_players.indexOf(p));
     }
 }
