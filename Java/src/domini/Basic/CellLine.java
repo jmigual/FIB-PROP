@@ -61,4 +61,22 @@ public class CellLine extends Region implements Serializable {
         }
         return true;
     }
+
+    public void calculateIndividualPossibilities(){
+        for (int k=1; k<=cells.size(); k++){
+            Cell found = null;
+            boolean exit=false;
+            for (int i=0; i<cells.size() && !exit; i++){
+                Cell cell = cells.get(i);
+                if (cell.getPossibility(k) && cell.getValue()==0){
+                    if (found!=null)exit=true;
+                    else found=cell;
+                }
+            }
+
+            if (!exit && found!=null){
+                for (int i=1; i<=cells.size(); i++)found.setPossibility(i,i==k);
+            }
+        }
+    }
 }

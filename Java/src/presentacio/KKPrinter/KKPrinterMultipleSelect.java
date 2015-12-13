@@ -2,6 +2,7 @@ package presentacio.KKPrinter;
 
 import domini.Basic.Board;
 import domini.Basic.Cell;
+import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -21,7 +22,7 @@ public class KKPrinterMultipleSelect extends KKPrinter {
 
     boolean deselecting;
 
-    public KKPrinterMultipleSelect(Board board, StackPane stackPane) {
+    public KKPrinterMultipleSelect(KKBoard board, StackPane stackPane) {
         super(board, stackPane);
     }
     public KKPrinterMultipleSelect(KKPrinter kkPrinter) {

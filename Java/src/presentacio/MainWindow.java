@@ -4,9 +4,15 @@ package presentacio;
  */
 
 import dades.KKDB;
+import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
+import domini.KKBoard;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -14,6 +20,8 @@ import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
+
+import java.util.concurrent.CountDownLatch;
 
 
 public class MainWindow extends Application {
@@ -24,6 +32,7 @@ public class MainWindow extends Application {
     protected StackPane leftArea;
     protected KKDB db;
     private KKPrinter printer;
+    Thread thread;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,10 +46,16 @@ public class MainWindow extends Application {
         this.primaryStage.setTitle("App molt guai");
 
         initRootLayout();
+
     }
 
     public void stop() {
         db.save();
+        Thread.getAllStackTraces().forEach((a,b)->{
+            System.out.println(a.getClass().toString());
+            System.out.println(b.getClass().toString());
+            System.out.println("----------------");
+        });
     }
 
     protected void initRootLayout() {
@@ -54,18 +69,48 @@ public class MainWindow extends Application {
         Scene scene = new Scene(rootLayout);
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                printer.getBoard().clear();
-                printer.getBoard().solve();
-                printer.updateCells();
+                if(event.isControlDown())printer.getBoard().preCalculate();
+                else if (event.isShiftDown()){
+                    KKBoard copy=printer.getBoard().getCopy();
+                    Task<Integer> task = new Task<Integer>() {
+                        @Override protected Integer call() throws Exception {
+                            copy.solve();
+                            return 0;
+                        }
+                    };
+                    task.setOnSucceeded(stateEvent->{
+                        printer.setBoard(copy);
+                        printer.updateCells();
+                        printer.updateAnnotations();
+                    });
+                    new Thread(task).start();
+                }
+                else printer.getBoard().solve();
+                //printer.updateCells();
+                //printer.updateAnnotations();
             }
             if (event.getCode() == KeyCode.BACK_SPACE) {
                 printer.getBoard().clear();
                 printer.updateCells();
+                printer.updateAnnotations();
             }
 
             if (event.getCode() == KeyCode.ESCAPE) {
                 printer=new KKPrinterMultipleSelect(printer);
                 printer.updateCells();
+            }
+
+            if (event.getCode() == KeyCode.SPACE){
+                printer.getBoard().calculateIndividualPossibilities();
+                for (int i=0; i<printer.getBoard().getSize(); i++) {
+                    for (int j = 0; j < printer.getBoard().getSize(); j++) {
+                        Cell c = printer.getBoard().getCell(i, j);
+                        for (int k = 1; k <= printer.getBoard().getSize(); k++) {
+                            c.setAnnotation(k, c.getPossibility(k));
+                        }
+                    }
+                }
+                printer.updateAnnotations();
             }
             if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event,0);
             if (event.getCode() == KeyCode.DIGIT1 || event.getCode() == KeyCode.NUMPAD1) numEvent(event,1);
@@ -85,15 +130,16 @@ public class MainWindow extends Application {
 
     }
     private void numEvent(KeyEvent event, int n){
-        /*
-        if (event.isControlDown())printer.getSelectedCell().switchAnnotation(n);
-        else printer.getSelectedCell().setValue(n);
-        printer.updateCells();
-        printer.updateAnnotations();*/
+        if (printer instanceof KKPrinterSingleSelect) {
+            if (event.isControlDown()) ((KKPrinterSingleSelect)printer).getSelectedCell().switchAnnotation(n);
+            else ((KKPrinterSingleSelect)printer).getSelectedCell().setValue(n);
+            printer.updateCells();
+            printer.updateAnnotations();
+        }
     }
     protected void createGrid() {
         db.getBoards().clear();
-        int size=6;
+        int size=11;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();
@@ -104,6 +150,7 @@ public class MainWindow extends Application {
         db.save();
 
         printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
+        //printer = new KKPrinterSingleSelect(db.getBoards().get(0), leftArea);
     }
 
 
