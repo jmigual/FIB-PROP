@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * Created by Joan on 10/12/2015.
  */
-public class UserConfigController extends AnchorPane {
+public class UserConfigController extends AnchorPane implements Controller{
 
     private PlayersAdmin mAdmin;
 
@@ -76,8 +76,14 @@ public class UserConfigController extends AnchorPane {
         return true;
     }
 
+    @Override
     public AnchorPane getRootLayout() {
         return rootLayout;
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     public boolean getResult() {

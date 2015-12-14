@@ -17,13 +17,14 @@ import java.io.IOException;
 /**
  * Created by Inigo on 04/12/2015.
  */
-public class MainController extends AnchorPane {
+public class MainController extends AnchorPane implements Controller {
 
     @FXML
     private AnchorPane leftArea;
     private AnchorPane rootlayout;
     private Stage shownStage;
     private MainWindow main;
+    private Controller actualController;
 
     public MainController(MainWindow main){
         this.main=main;
@@ -50,6 +51,7 @@ public class MainController extends AnchorPane {
         boolean windowed=true;
         if (!windowed) {
             UserConfigController config = new UserConfigController(main);
+            if (actualController!=null)actualController.stop();
             leftArea.getChildren().clear();
             AnchorPane newPane = config.getRootLayout();
             AnchorPane.setBottomAnchor(newPane, 0.);
@@ -73,4 +75,13 @@ public class MainController extends AnchorPane {
     }
 
 
+    @Override
+    public AnchorPane getRootLayout() {
+        return rootlayout;
+    }
+
+    @Override
+    public void stop() {
+
+    }
 }
