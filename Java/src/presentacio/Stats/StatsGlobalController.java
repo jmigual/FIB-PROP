@@ -44,7 +44,6 @@ public class StatsGlobalController extends AnchorPane {
 
     StatsGlobalController(MainWindow main) {
         mStats = main.getKKStats();
-        TableColumn
         //Taula = new TableView();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Global.fxml"));
         loader.setRoot(this);
