@@ -1,8 +1,8 @@
-package presentacio.KKPrinter;
+/*package presentacio.KKPrinter;
 /**
  * Created by Joan on 03/12/2015.
  */
-
+/*
 import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
@@ -140,3 +140,4 @@ public class MainWindowDebugMultiple extends MainWindow {
         printer = new KKPrinterMultipleSelect(creator.getBoard(), leftArea);
     }
 }
+*/

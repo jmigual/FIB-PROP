@@ -5,6 +5,7 @@ import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
@@ -17,13 +18,18 @@ import java.io.IOException;
 public class HBCController {
 
     @FXML
+    AnchorPane allArea;
     StackPane stackPane;
     KKPrinter printer;
     HumanBoardCreator hbc;
 
-    public HBCController(StackPane stackPane, int size){
-        this.stackPane = stackPane;
-
+    public HBCController(AnchorPane allArea, int size){
+        this.allArea = allArea;
+        if (allArea.lookup("#KenkenPane") instanceof StackPane) {
+            this.stackPane = (StackPane) allArea.lookup("#KenkenPane");
+        } else {
+            new Exception("HBCController(AnchorPane, size) called without a valid AnchorPane");
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);

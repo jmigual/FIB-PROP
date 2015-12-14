@@ -2,7 +2,7 @@ package presentacio.KKPrinter;
 /**
  * Created by Joan on 03/12/2015.
  */
-
+/*
 import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import javafx.application.Application;
@@ -122,3 +122,4 @@ public class MainWindowDebugRegion extends MainWindow {
         printer = new KKPrinterRegionSelect(creator.getBoard(), leftArea);
     }
 }
+*/

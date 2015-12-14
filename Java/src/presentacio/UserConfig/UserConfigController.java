@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.UserConfig;
 
 import dades.Player;
 import dades.PlayersAdmin;
@@ -11,13 +11,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import presentacio.Controller;
+import presentacio.MainWindow;
 
 import java.io.IOException;
 
 /**
  * Created by Joan on 10/12/2015.
  */
-public class UserConfigController extends AnchorPane {
+public class UserConfigController extends AnchorPane implements Controller {
 
     private PlayersAdmin mAdmin;
 
@@ -37,14 +39,14 @@ public class UserConfigController extends AnchorPane {
     @FXML
     private PasswordField passwordR;
     @FXML
-    private PasswordField oldPasssword;
+    private PasswordField oldPassword;
     @FXML
     private Button acceptButton;
     @FXML
     private Button cancelButton;
     private boolean result = false;
 
-    UserConfigController(MainWindow main) {
+    public UserConfigController(MainWindow main) {
         mAdmin = main.getPlayersAdmin();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UserConfig.fxml"));
@@ -76,8 +78,14 @@ public class UserConfigController extends AnchorPane {
         return true;
     }
 
+    @Override
     public AnchorPane getRootLayout() {
         return rootLayout;
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     public boolean getResult() {
@@ -93,12 +101,13 @@ public class UserConfigController extends AnchorPane {
     private void dialogAccept() {
         if (!checkAccept()) return;
 
-        if (!mAdmin.checkLogin(userName.getText(), oldPasssword.getText())) {
+        if (!mAdmin.checkLogin(userName.getText(), oldPassword.getText())) {
             checkAlert.setVisible(true);
+            return;
         } else checkAlert.setVisible(false);
 
         if (password.getText().length() > 0) {
-            mAdmin.changePassword(userName.getText(), oldPasssword.getText(), password.getText());
+            mAdmin.changePassword(userName.getText(), oldPassword.getText(), password.getText());
         }
 
         mAdmin.changeName(name.getText(), userName.getText());
