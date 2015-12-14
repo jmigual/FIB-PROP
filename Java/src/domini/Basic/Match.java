@@ -6,6 +6,7 @@ import dades.PlayersAdmin;
 import domini.KKBoard;
 import domini.stats.Matchable;
 import domini.stats.Playable;
+import exceptions.PlayerNotExistsExcepction;
 import presentacio.Drivers.DriverAdminPlayers;
 
 import java.io.Serializable;
@@ -28,6 +29,7 @@ public class Match implements Matchable {
 
     private boolean _finished;
 
+    // NOTE: Això està malament
     public Player getPlayer(){
         KKDB _db;
         PlayersAdmin _playersAdmin;
@@ -36,7 +38,12 @@ public class Match implements Matchable {
         _playersAdmin = _db.getPlayersAdmin();
         DriverAdminPlayers _driverAP;
         _driverAP = new DriverAdminPlayers(_playersAdmin);
-        return _playersAdmin.getPlayer(_player);
+        try {
+            return _playersAdmin.getPlayer(_player);
+        } catch (PlayerNotExistsExcepction e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     public Playable getGame(){
         return _board;

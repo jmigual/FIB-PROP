@@ -5,6 +5,8 @@ import dades.Player;
 import dades.PlayersAdmin;
 import dades.Table;
 import domini.KKBoard;
+import exceptions.PlayerExistsException;
+import exceptions.PlayerNotExistsExcepction;
 import presentacio.Drivers.DriverAdminPlayers;
 import presentacio.Drivers.DriverBoardCreator;
 import presentacio.Drivers.DriverKKBoard;
@@ -34,7 +36,19 @@ public class Game {
             _driverAP = new DriverAdminPlayers(_playersAdmin);
 
             while (_driverAP.getCurrentPlayer().equals("")) login();
-            _player = _playersAdmin.getPlayer(_driverAP.getCurrentPlayer());
+            try {
+                _player = _playersAdmin.getPlayer(_driverAP.getCurrentPlayer());
+            } catch (PlayerNotExistsExcepction e) {
+                try {
+                    _player = _playersAdmin.createPlayer("Admin", "admin", "admin");
+                } catch (PlayerExistsException ee) {
+                    try {
+                        _player = _playersAdmin.getPlayer("admin");
+                    } catch (PlayerNotExistsExcepction eee) {
+                        eee.printStackTrace();
+                    }
+                }
+            }
             logged = true;
 
             while (logged) mainMenu();
@@ -132,12 +146,7 @@ public class Game {
                     break;
                 }
 
-                try {
-                    _player.setHash(PlayersAdmin.getHash(nPass1));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                _player.setHash(PlayersAdmin.getHash(nPass1));
                 _db.save();
                 break;
 

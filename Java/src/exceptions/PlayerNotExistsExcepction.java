@@ -3,15 +3,15 @@ package exceptions;
 import java.security.PrivilegedActionException;
 
 /**
- * Exception showing that already exists the player
+ * Created by Joan on 13/12/2015.
  */
-public class PlayerExistsException extends Exception {
+public class PlayerNotExistsExcepction extends Exception {
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public PlayerExistsException() {
+    public PlayerNotExistsExcepction() {
     }
 
     /**
@@ -22,7 +22,7 @@ public class PlayerExistsException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public PlayerExistsException(String message) {
+    public PlayerNotExistsExcepction(String message) {
         super(message);
     }
 
@@ -40,7 +40,7 @@ public class PlayerExistsException extends Exception {
      *                unknown.)
      * @since 1.4
      */
-    public PlayerExistsException(String message, Throwable cause) {
+    public PlayerNotExistsExcepction(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -58,7 +58,7 @@ public class PlayerExistsException extends Exception {
      *              unknown.)
      * @since 1.4
      */
-    public PlayerExistsException(Throwable cause) {
+    public PlayerNotExistsExcepction(Throwable cause) {
         super(cause);
     }
 
@@ -76,8 +76,8 @@ public class PlayerExistsException extends Exception {
      *                           be writable
      * @since 1.7
      */
-    public PlayerExistsException(String message, Throwable cause, boolean enableSuppression,
-                                 boolean writableStackTrace) {
+    public PlayerNotExistsExcepction(String message, Throwable cause, boolean enableSuppression,
+                                     boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
