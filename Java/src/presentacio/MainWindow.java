@@ -10,6 +10,7 @@ import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import domini.stats.KKStats;
+import exceptions.PlayerNotExistsExcepction;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import dades.PlayersAdmin;
@@ -57,6 +58,7 @@ public class MainWindow extends Application {
         db.load();
         try {
             db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
+
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");
         }
@@ -64,6 +66,12 @@ public class MainWindow extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
+
+        try {
+            actualPlayer = db.getPlayersAdmin().getPlayer(mUsername);
+        } catch (PlayerNotExistsExcepction playerNotExistsExcepction) {
+            playerNotExistsExcepction.printStackTrace();
+        }
 
 
         //Inicialització dels stats

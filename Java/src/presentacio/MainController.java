@@ -12,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
+import presentacio.Stats.StatsPersonalController;
 import sun.applet.Main;
 
 import java.awt.event.MouseEvent;
@@ -59,6 +60,13 @@ public class MainController extends AnchorPane {
     }
 
     public void showGlobal(){
+        shownStage = new Stage();
+        StatsGlobalController config = new StatsGlobalController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config));
+        shownStage.sizeToScene();
+        shownStage.show();
+        /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats/Stats_Global.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -67,12 +75,12 @@ public class MainController extends AnchorPane {
             leftArea.getChildren().add(loader.load());
         } catch (IOException exception) {
             throw new RuntimeException(exception);
-        }
+        }*/
     }
 
     public void showPersonal(){
         shownStage = new Stage();
-        StatsGlobalController config = new StatsGlobalController(main);
+        StatsPersonalController config = new StatsPersonalController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config));
         shownStage.sizeToScene();
