@@ -44,17 +44,19 @@ public class StatsPersonalController extends AnchorPane {
 
     public StatsPersonalController(MainWindow main) {
         mStats = main.getKKStats();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Personal.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
 
-        createDefault(main.actualPlayer);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Personal.fxml"));
+        //loader.setRoot(this);
+        loader.setController(this);
 
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        createDefault(main.actualPlayer);
     }
 
     private void createDefault(Player actual) {
