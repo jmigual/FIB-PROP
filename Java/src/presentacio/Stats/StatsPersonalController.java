@@ -74,12 +74,6 @@ public class StatsPersonalController extends AnchorPane {
         aux = mStats.countSolvedGames(actual);
         matchesfm.textProperty().setValue(aux.toString());
 
-
-
-        AnchorPane.setTopAnchor(table, .0);
-        AnchorPane.setLeftAnchor(table, .0);
-        AnchorPane.setBottomAnchor(table, .0);
-        AnchorPane.setRightAnchor(table, .0);
     }
 
     public AnchorPane getRootLayout() {
