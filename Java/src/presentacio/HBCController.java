@@ -6,6 +6,7 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
@@ -15,14 +16,16 @@ import java.io.IOException;
 /**
  * Created by arnau_000 on 10/12/2015.
  */
-public class HBCController {
-
-    @FXML
-    AnchorPane allArea;
+public class HBCController extends AnchorPane implements Controller {
+    
+    AnchorPane rootLayout;
     StackPane stackPane;
     KKPrinter printer;
     HumanBoardCreator hbc;
     FXMLLoader loader;
+    
+    @FXML
+    private StackPane KenkenPane;
 
     public HBCController(int size){
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
@@ -30,32 +33,27 @@ public class HBCController {
         loader.setController(this);
 
         try {
-            allArea = loader.load();
+           rootLayout = loader.load();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        if (allArea.lookup("#KenkenPane") instanceof StackPane) {
-            stackPane = (StackPane) allArea.lookup("#KenkenPane");
-        } else {
-            new Exception("HBCController(AnchorPane, size) called without a valid AnchorPane");
+            e.printStackTrace();
         }
 
         hbc = new HumanBoardCreator(size, new Table<>()); // real table should be passed
-        printer = new KKPrinterMultipleSelect(hbc.getBoard(), stackPane);
-
-        /*
-
-        try {
-        rootlayout = loader.load();
-        } catch (IOException exception) {
-        throw new RuntimeException(exception);
-        }
-
-        */
+        printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
 
     }
 
     public void changeMode(){
 
+    }
+
+    @Override
+    public AnchorPane getRootLayout() {
+        return rootLayout;
+    }
+
+    @Override
+    public void stop() {
+        
     }
 }
