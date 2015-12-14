@@ -55,6 +55,15 @@ public class MainController extends AnchorPane {
         shownStage.show();
     }
 
+    public void showGlobal(){
+        StackPane Finestra = new StackPane();
+
+    }
+    public void showPersonal(){
+
+    }
+
+
     public void exit() {
         Platform.exit();
     }

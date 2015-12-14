@@ -7,6 +7,7 @@ import dades.KKDB;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
+import domini.stats.KKStats;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import dades.PlayersAdmin;
@@ -30,6 +31,7 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane leftArea;
     protected KKDB db;
+    protected KKStats mstats;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
@@ -169,5 +171,8 @@ public class MainWindow extends Application {
 
     public PlayersAdmin getPlayersAdmin() {
         return db.getPlayersAdmin();
+    }
+    public KKStats getKKStats() {
+        return mstats;
     }
 }
