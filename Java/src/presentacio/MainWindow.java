@@ -4,6 +4,7 @@ package presentacio;
  */
 
 import dades.KKDB;
+import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
@@ -45,6 +46,8 @@ public class MainWindow extends Application {
     public void setUsername(String mUsername) {
         this.mUsername = mUsername;
     }
+    
+    public Table<KKBoard> getBoards() { return db.getBoards(); }
 
     @Override
     public void start(Stage primaryStage) {
@@ -66,11 +69,11 @@ public class MainWindow extends Application {
 
     public void stop() {
         db.save();
-        Thread.getAllStackTraces().forEach((a, b) -> {
+        /*Thread.getAllStackTraces().forEach((a, b) -> {
             System.out.println(a.getClass().toString());
             System.out.println(b.getClass().toString());
             System.out.println("----------------");
-        });
+        });*/
     }
 
     protected void initRootLayout() {

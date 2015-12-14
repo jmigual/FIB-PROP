@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presentacio.CollectionView.CollectionViewController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
@@ -85,5 +86,11 @@ public class MainController extends AnchorPane implements Controller {
         AnchorPane.setRightAnchor(newPane, 0.);
         leftArea.getChildren().add(newPane);
         actualController=c;
+    }
+    
+    @FXML
+    private void editBoard() {
+        CollectionViewController coll = new CollectionViewController(main);
+        switchController(coll);
     }
 }

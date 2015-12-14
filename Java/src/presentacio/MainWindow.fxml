@@ -17,7 +17,7 @@
                 <Menu mnemonicParsing="false" text="KenKen">
                   <items>
                         <MenuItem mnemonicParsing="false" text="Crea un tauler" />
-                        <MenuItem mnemonicParsing="false" text="Edita un tauler" />
+                        <MenuItem mnemonicParsing="false" onAction="#editBoard" text="Edita un tauler" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Crea una partida" />
                         <MenuItem mnemonicParsing="false" text="Carrega una partida" />
