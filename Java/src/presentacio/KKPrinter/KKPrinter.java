@@ -301,6 +301,10 @@ public abstract class KKPrinter {
             }
         }
     }
+    public void updateContent() {
+        updateCells();
+        updateAnnotations();
+    }
 
     public void updateAnnotations(){
         for (Node node : gridPane.getChildren()) {
