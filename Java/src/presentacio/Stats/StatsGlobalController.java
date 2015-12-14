@@ -23,25 +23,14 @@ public class StatsGlobalController extends AnchorPane {
 
     private KKStats mStats;
 
-    private AnchorPane rootLayout;
-
     private TableView<InfoRanking> table;
 
     private boolean result = false;
 
     public StatsGlobalController(MainWindow main) {
         mStats = main.getKKStats();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Global.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
-
+        
         createDefault();
-
-        try {
-            rootLayout = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void createDefault() {
@@ -71,11 +60,7 @@ public class StatsGlobalController extends AnchorPane {
         AnchorPane.setBottomAnchor(table, .0);
         AnchorPane.setRightAnchor(table, .0);
     }
-
-    public AnchorPane getRootLayout() {
-        return rootLayout;
-    }
-
+    
     public boolean getResult() {
         return result;
     }
