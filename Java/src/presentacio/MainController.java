@@ -74,7 +74,7 @@ public class MainController extends AnchorPane {
         shownStage = new Stage();
         StatsGlobalController config = new StatsGlobalController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.setScene(new Scene(config));
         shownStage.sizeToScene();
         shownStage.show();
     }
