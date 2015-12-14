@@ -65,7 +65,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void humanCreateBoardClicked(){
-        HBCController hbcc = new HBCController(leftArea, 9);
+        HBCController hbcc = new HBCController(9);
 
     }
 

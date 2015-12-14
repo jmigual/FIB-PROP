@@ -22,17 +22,23 @@ public class HBCController {
     StackPane stackPane;
     KKPrinter printer;
     HumanBoardCreator hbc;
+    FXMLLoader loader;
 
-    public HBCController(AnchorPane allArea, int size){
-        this.allArea = allArea;
+    public HBCController(int size){
+        loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+
+        try {
+            allArea = loader.load();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         if (allArea.lookup("#KenkenPane") instanceof StackPane) {
-            this.stackPane = (StackPane) allArea.lookup("#KenkenPane");
+            stackPane = (StackPane) allArea.lookup("#KenkenPane");
         } else {
             new Exception("HBCController(AnchorPane, size) called without a valid AnchorPane");
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
 
         hbc = new HumanBoardCreator(size, new Table<>()); // real table should be passed
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), stackPane);
