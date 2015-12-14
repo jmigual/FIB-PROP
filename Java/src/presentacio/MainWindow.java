@@ -66,11 +66,6 @@ public class MainWindow extends Application {
 
     public void stop() {
         db.save();
-        Thread.getAllStackTraces().forEach((a, b) -> {
-            System.out.println(a.getClass().toString());
-            System.out.println(b.getClass().toString());
-            System.out.println("----------------");
-        });
     }
 
     protected void initRootLayout() {
@@ -84,11 +79,11 @@ public class MainWindow extends Application {
         AnchorPane.setRightAnchor(stackLeftArea, 0.);
         anchorLeftArea.getChildren().add(stackLeftArea);
         rootLayout = mainController.getRootlayout();
-        createGrid();
+        //createGrid();
 
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
-        scene.setOnKeyPressed(event -> {
+        /*scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if(event.isControlDown())printer.getBoard().preCalculate();
                 else if (event.isShiftDown()){
@@ -144,7 +139,7 @@ public class MainWindow extends Application {
             if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
         });
 
-
+*/
         primaryStage.setScene(scene);
         primaryStage.show();
 

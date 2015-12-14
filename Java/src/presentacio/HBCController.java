@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by arnau_000 on 10/12/2015.
  */
-public class HBCController {
+public class HBCController extends AnchorPane implements Controller{
 
     @FXML
     AnchorPane allArea;
@@ -56,6 +56,16 @@ public class HBCController {
     }
 
     public void changeMode(){
+
+    }
+
+    @Override
+    public AnchorPane getRootLayout() {
+        return allArea;
+    }
+
+    @Override
+    public void stop() {
 
     }
 }
