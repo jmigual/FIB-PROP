@@ -49,6 +49,8 @@ public class StatsPersonalController extends AnchorPane {
         loader.setRoot(this);
         loader.setController(this);
 
+        createDefault(main.actualPlayer);
+
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
@@ -56,7 +58,7 @@ public class StatsPersonalController extends AnchorPane {
         }
 
 
-        createDefault(main.actualPlayer);
+
     }
 
     private void createDefault(Player actual) {
@@ -74,7 +76,9 @@ public class StatsPersonalController extends AnchorPane {
 
         matchesfm = new Label();
         aux = mStats.countSolvedGames(actual);
+
         matchesfm.textProperty().setValue(aux.toString());
+        
 
     }
 
