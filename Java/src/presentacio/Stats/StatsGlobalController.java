@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import presentacio.MainWindow;
 
+import javax.swing.table.TableColumn;
+import javax.swing.text.TableView;
 import java.io.IOException;
 
 /**
@@ -25,11 +27,25 @@ public class StatsGlobalController extends AnchorPane {
 
     private AnchorPane rootLayout;
 
+    @FXML
+    private TableView Taula;
+
+    @FXML
+    private TableColumn columnaRank;
+
+    @FXML
+    private TableColumn columnaName;
+
+    @FXML
+    private TableColumn columnaScore;
+
+
     private boolean result = false;
 
     StatsGlobalController(MainWindow main) {
-        //mAdmin = main.getPlayersAdmin();
         mStats = main.getKKStats();
+        TableColumn
+        //Taula = new TableView();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Global.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -39,6 +55,7 @@ public class StatsGlobalController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Taula.
 
     }
 
