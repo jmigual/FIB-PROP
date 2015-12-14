@@ -37,7 +37,7 @@ public class UserConfigController extends AnchorPane {
     @FXML
     private PasswordField passwordR;
     @FXML
-    private PasswordField oldPasssword;
+    private PasswordField oldPassword;
     @FXML
     private Button acceptButton;
     @FXML
@@ -93,12 +93,13 @@ public class UserConfigController extends AnchorPane {
     private void dialogAccept() {
         if (!checkAccept()) return;
 
-        if (!mAdmin.checkLogin(userName.getText(), oldPasssword.getText())) {
+        if (!mAdmin.checkLogin(userName.getText(), oldPassword.getText())) {
             checkAlert.setVisible(true);
+            return;
         } else checkAlert.setVisible(false);
 
         if (password.getText().length() > 0) {
-            mAdmin.changePassword(userName.getText(), oldPasssword.getText(), password.getText());
+            mAdmin.changePassword(userName.getText(), oldPassword.getText(), password.getText());
         }
 
         mAdmin.changeName(name.getText(), userName.getText());
