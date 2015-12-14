@@ -61,4 +61,13 @@ public class MainController extends AnchorPane {
 
     public void trolla(){}
 
+    public void humanCreateBoardClicked(){
+        HBCController hbcc = new HBCController(leftArea, 9);
+
+    }
+
+    public void cpuCreateBoardClicked(){
+
+    }
+
 }
