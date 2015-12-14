@@ -17,13 +17,14 @@ import java.io.IOException;
 /**
  * Created by Inigo on 04/12/2015.
  */
-public class MainController extends AnchorPane {
+public class MainController extends AnchorPane implements Controller {
 
     @FXML
-    private StackPane leftArea;
+    private AnchorPane leftArea;
     private AnchorPane rootlayout;
     private Stage shownStage;
     private MainWindow main;
+    private Controller actualController;
 
     public MainController(MainWindow main){
         this.main=main;
@@ -38,7 +39,7 @@ public class MainController extends AnchorPane {
         }
     }
 
-    public StackPane getLeftArea() {
+    public AnchorPane getLeftArea() {
         return leftArea;
     }
 
@@ -47,18 +48,45 @@ public class MainController extends AnchorPane {
     }
 
     public void configureUser() {
-        shownStage = new Stage();
-        UserConfigController config = new UserConfigController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config.getRootLayout()));
-        shownStage.sizeToScene();
-        shownStage.show();
+        boolean windowed=true;
+        if (!windowed) {
+            UserConfigController config = new UserConfigController(main);
+            switchController(config);
+        }
+        else {
+            shownStage = new Stage();
+            UserConfigController config = new UserConfigController(main);
+            shownStage.initModality(Modality.APPLICATION_MODAL);
+            shownStage.setScene(new Scene(config.getRootLayout()));
+            shownStage.sizeToScene();
+            shownStage.show();
+        }
     }
 
     public void exit() {
         Platform.exit();
     }
 
-    public void trolla(){}
 
+    @Override
+    public AnchorPane getRootLayout() {
+        return rootlayout;
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    private void switchController(Controller c){
+        if (actualController!=null)actualController.stop();
+        leftArea.getChildren().clear();
+        AnchorPane newPane = c.getRootLayout();
+        AnchorPane.setBottomAnchor(newPane, 0.);
+        AnchorPane.setTopAnchor(newPane, 0.);
+        AnchorPane.setLeftAnchor(newPane, 0.);
+        AnchorPane.setRightAnchor(newPane, 0.);
+        leftArea.getChildren().add(newPane);
+        actualController=c;
+    }
 }

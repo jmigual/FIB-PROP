@@ -28,7 +28,7 @@ public class MainWindow extends Application {
     protected Stage primaryStage;
     protected AnchorPane rootLayout;
     protected GridPane gridPane;
-    protected StackPane leftArea;
+    protected StackPane stackLeftArea;
     protected KKDB db;
     private KKPrinter printer;
     Thread thread;
@@ -66,7 +66,7 @@ public class MainWindow extends Application {
 
     public void stop() {
         db.save();
-        Thread.getAllStackTraces().forEach((a,b)->{
+        Thread.getAllStackTraces().forEach((a, b) -> {
             System.out.println(a.getClass().toString());
             System.out.println(b.getClass().toString());
             System.out.println("----------------");
@@ -76,7 +76,13 @@ public class MainWindow extends Application {
     protected void initRootLayout() {
         // Load root layout from xml file
         MainController mainController = new MainController(this);
-        leftArea = mainController.getLeftArea();
+        AnchorPane anchorLeftArea = mainController.getLeftArea();
+        stackLeftArea =new StackPane();
+        AnchorPane.setBottomAnchor(stackLeftArea,0.);
+        AnchorPane.setTopAnchor(stackLeftArea, 0.);
+        AnchorPane.setLeftAnchor(stackLeftArea, 0.);
+        AnchorPane.setRightAnchor(stackLeftArea, 0.);
+        anchorLeftArea.getChildren().add(stackLeftArea);
         rootLayout = mainController.getRootlayout();
         createGrid();
 
@@ -163,8 +169,8 @@ public class MainWindow extends Application {
         creator.saveBoard("test", "CPU");
         db.save();
 
-        printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
-        //printer = new KKPrinterSingleSelect(db.getBoards().get(0), leftArea);
+        printer = new KKPrinterSingleSelect(creator.getBoard(), stackLeftArea);
+        //printer = new KKPrinterSingleSelect(db.getBoards().get(0), stackLeftArea);
     }
 
     public PlayersAdmin getPlayersAdmin() {
