@@ -40,30 +40,23 @@ public class StatsGlobalController extends AnchorPane {
     private TableColumn columnaScore;
 
 
-    private boolean result = false;
-
-    StatsGlobalController(MainWindow main) {
-        mStats = main.getKKStats();
+    public StatsGlobalController(MainWindow main, javafx.scene.layout.StackPane Lay) {
+        //mStats = main.getKKStats();
         //Taula = new TableView();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Global.fxml"));
-        loader.setRoot(this);
         loader.setController(this);
 
         try {
-            rootLayout = loader.load();
+            Lay = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Taula.
+        //Taula.
 
     }
 
     public AnchorPane getRootLayout() {
         return rootLayout;
-    }
-
-    public boolean getResult() {
-        return result;
     }
 
 
