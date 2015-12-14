@@ -1,17 +1,14 @@
 package presentacio;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presentacio.UserConfig.UserConfigController;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 /**

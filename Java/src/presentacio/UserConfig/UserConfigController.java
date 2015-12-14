@@ -1,4 +1,4 @@
-package presentacio;
+package presentacio.UserConfig;
 
 import dades.Player;
 import dades.PlayersAdmin;
@@ -11,13 +11,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import presentacio.Controller;
+import presentacio.MainWindow;
 
 import java.io.IOException;
 
 /**
  * Created by Joan on 10/12/2015.
  */
-public class UserConfigController extends AnchorPane implements Controller{
+public class UserConfigController extends AnchorPane implements Controller {
 
     private PlayersAdmin mAdmin;
 
@@ -44,7 +46,7 @@ public class UserConfigController extends AnchorPane implements Controller{
     private Button cancelButton;
     private boolean result = false;
 
-    UserConfigController(MainWindow main) {
+    public UserConfigController(MainWindow main) {
         mAdmin = main.getPlayersAdmin();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UserConfig.fxml"));
