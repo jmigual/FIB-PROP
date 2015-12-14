@@ -3,10 +3,10 @@ package presentacio.Stats;
 /**
  * Created by esteve on 14/12/2015.
  */
-class InfoRanking {
-    Integer rank;
-    String name;
-    Integer score;
+public class InfoRanking {
+    private Integer rank;
+    private String name;
+    private Integer score;
 
     public InfoRanking(){
         this.rank = -1;

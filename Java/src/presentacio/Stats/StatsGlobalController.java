@@ -46,24 +46,23 @@ public class StatsGlobalController extends AnchorPane {
 
     private void createDefault() {
         // rank column
-        TableColumn<InfoRanking, String> rankColumn = new TableColumn<>("Position");
+        TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Position");
         rankColumn.setMinWidth(50);
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-
-
+        
         // Name column
         TableColumn<InfoRanking, String> nameColumn = new TableColumn<>("Player");
         nameColumn.setMinWidth(50);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         // Score column
-        TableColumn<InfoRanking, String> scoreColumn = new TableColumn<>("Score");
+        TableColumn<InfoRanking, Integer> scoreColumn = new TableColumn<>("Score");
         scoreColumn.setMinWidth(50);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
         table = new TableView<>();
         table.setItems(getStubItems());
-        table.getColumns().addAll(rankColumn,nameColumn, scoreColumn);
+        table.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
 
         this.getChildren().add(table);
 
