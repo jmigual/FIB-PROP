@@ -34,6 +34,7 @@ public class MainWindow extends Application {
     protected StackPane leftArea;
     protected KKDB db;
     protected KKStats mstats;
+    public Player actualPlayer;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
@@ -67,6 +68,8 @@ public class MainWindow extends Application {
 
         //Inicialització dels stats
         this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
+
+
         initRootLayout();
 
     }

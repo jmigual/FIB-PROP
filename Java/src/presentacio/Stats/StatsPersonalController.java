@@ -1,9 +1,12 @@
 package presentacio.Stats;
 
+import dades.Player;
 import domini.stats.KKStats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,15 +26,29 @@ public class StatsPersonalController extends AnchorPane {
 
     private TableView<InfoRanking> table;
 
+    @FXML
+    private Label puntuaciofm;
+
+    @FXML
+    private Label posiciofm;
+
+    @FXML
+    private Label boardsfm;
+
+    @FXML
+    private Label matchesfm;
+
+
+
     private boolean result = false;
 
     public StatsPersonalController(MainWindow main) {
         mStats = main.getKKStats();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Global.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Personal.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
-        createDefault();
+        createDefault(main.actualPlayer);
 
         try {
             rootLayout = loader.load();
@@ -40,27 +57,24 @@ public class StatsPersonalController extends AnchorPane {
         }
     }
 
-    private void createDefault() {
-        // rank column
-        TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Position");
-        rankColumn.setMinWidth(50);
-        rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        
-        // Name column
-        TableColumn<InfoRanking, String> nameColumn = new TableColumn<>("Player");
-        nameColumn.setMinWidth(50);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    private void createDefault(Player actual) {
+        puntuaciofm = new Label();
+        Integer aux = mStats.score(actual);
+        puntuaciofm.textProperty().setValue(aux.toString());
 
-        // Score column
-        TableColumn<InfoRanking, Integer> scoreColumn = new TableColumn<>("Score");
-        scoreColumn.setMinWidth(50);
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        posiciofm = new Label();
+        aux = mStats.rank(actual);
+        posiciofm.textProperty().setValue(aux.toString());
 
-        table = new TableView<>();
-        table.setItems(getStubItems());
-        table.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
+        boardsfm = new Label();
+        aux = mStats.countMatches(actual);
+        boardsfm.textProperty().setValue(aux.toString());
 
-        this.getChildren().add(table);
+        matchesfm = new Label();
+        aux = mStats.countSolvedGames(actual);
+        matchesfm.textProperty().setValue(aux.toString());
+
+
 
         AnchorPane.setTopAnchor(table, .0);
         AnchorPane.setLeftAnchor(table, .0);
@@ -76,15 +90,5 @@ public class StatsPersonalController extends AnchorPane {
         return result;
     }
 
-    public ObservableList<InfoRanking> getStubItems() {
-        ObservableList<InfoRanking> info = FXCollections.observableArrayList();
-        for(int i=0; i<mStats.rankingGlobal().getSize(); ++i){
-            info.add(new InfoRanking(i,mStats.rankingGlobal().getPlayer(i).getName(),
-                    mStats.rankingGlobal().getValue(i)));
-        }
-        /*
-        info.add(new InfoRanking(1, "Pere Marc antoni", 15));
-        info.add(new InfoRanking(2, "Maria", 123));*/
-        return info;
-    }
+
 }
