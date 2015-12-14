@@ -46,7 +46,7 @@ public class StatsPersonalController extends AnchorPane {
         mStats = main.getKKStats();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Personal.fxml"));
-        //loader.setRoot(this);
+        loader.setRoot(this);
         loader.setController(this);
 
         try {
