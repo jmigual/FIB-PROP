@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
 import sun.applet.Main;
 
@@ -72,6 +73,15 @@ public class MainController extends AnchorPane {
     public void showPersonal(){
         shownStage = new Stage();
         StatsGlobalController config = new StatsGlobalController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.sizeToScene();
+        shownStage.show();
+    }
+
+    public void showByboard(){
+        shownStage = new Stage();
+        StatsBoardController config = new StatsBoardController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config.getRootLayout()));
         shownStage.sizeToScene();
