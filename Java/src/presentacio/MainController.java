@@ -51,14 +51,7 @@ public class MainController extends AnchorPane implements Controller {
         boolean windowed=true;
         if (!windowed) {
             UserConfigController config = new UserConfigController(main);
-            if (actualController!=null)actualController.stop();
-            leftArea.getChildren().clear();
-            AnchorPane newPane = config.getRootLayout();
-            AnchorPane.setBottomAnchor(newPane, 0.);
-            AnchorPane.setTopAnchor(newPane, 0.);
-            AnchorPane.setLeftAnchor(newPane, 0.);
-            AnchorPane.setRightAnchor(newPane, 0.);
-            leftArea.getChildren().add(newPane);
+            switchController(config);
         }
         else {
             shownStage = new Stage();
@@ -83,5 +76,17 @@ public class MainController extends AnchorPane implements Controller {
     @Override
     public void stop() {
 
+    }
+
+    private void switchController(Controller c){
+        if (actualController!=null)actualController.stop();
+        leftArea.getChildren().clear();
+        AnchorPane newPane = c.getRootLayout();
+        AnchorPane.setBottomAnchor(newPane, 0.);
+        AnchorPane.setTopAnchor(newPane, 0.);
+        AnchorPane.setLeftAnchor(newPane, 0.);
+        AnchorPane.setRightAnchor(newPane, 0.);
+        leftArea.getChildren().add(newPane);
+        actualController=c;
     }
 }
