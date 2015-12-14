@@ -14,6 +14,12 @@ public class KKStats extends Stats {
 
     /////// PLAYER STATS ////////////////////////////////////////////////////////////////////
     public int score(Player player){
-        return 10;
+        int aux =0;
+        for(int i=0; i<_matches.size(); ++i){
+            if(_matches.get(i).getPlayer().getName() == player.getName() && _matches.get(i).finished()){
+                aux+=_matches.get(i).computeTime();
+            }
+        }
+        return aux;
     }
 }
