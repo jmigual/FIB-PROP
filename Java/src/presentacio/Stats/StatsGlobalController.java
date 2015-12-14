@@ -77,8 +77,13 @@ public class StatsGlobalController extends AnchorPane {
 
     public ObservableList<InfoRanking> getStubItems() {
         ObservableList<InfoRanking> info = FXCollections.observableArrayList();
+        for(int i=0; i<mStats.rankingGlobal().getSize(); ++i){
+            info.add(new InfoRanking(i,mStats.rankingGlobal().getPlayer(i).getName(),
+                    mStats.rankingGlobal().getValue(i)));
+        }
+        /*
         info.add(new InfoRanking(1, "Pere Marc antoni", 15));
-        info.add(new InfoRanking(2, "Maria", 123));
+        info.add(new InfoRanking(2, "Maria", 123));*/
         return info;
     }
 }

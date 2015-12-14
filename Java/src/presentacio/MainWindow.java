@@ -4,6 +4,8 @@ package presentacio;
  */
 
 import dades.KKDB;
+import dades.Player;
+import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
@@ -62,6 +64,9 @@ public class MainWindow extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
 
+
+        //Inicialització dels stats
+        this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
         initRootLayout();
 
     }

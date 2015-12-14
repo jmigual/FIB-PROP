@@ -3,7 +3,7 @@ package presentacio.Stats;
 /**
  * Created by esteve on 14/12/2015.
  */
-public class InfoRanking {
+class InfoRanking {
     Integer rank;
     String name;
     Integer score;
