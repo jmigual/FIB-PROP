@@ -6,7 +6,6 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
