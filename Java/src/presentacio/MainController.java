@@ -58,7 +58,15 @@ public class MainController extends AnchorPane {
     }
 
     public void showGlobal(){
-        rootlayout = new StatsGlobalController(main);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats/Stats_Global.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            leftArea.getChildren().clear();
+            leftArea.getChildren().add(loader.load());
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     public void showPersonal(){
