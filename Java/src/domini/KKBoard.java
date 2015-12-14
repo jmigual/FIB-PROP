@@ -414,6 +414,7 @@ public class KKBoard extends Board implements Playable {
 
     private void showAndWait(KKPrinter printer,KKBoard kkboard){
         Platform.runLater(() -> {
+            kkboard.calculateIndividualPossibilities();
             printer.setBoard(kkboard);
             printer.updateCells();
             for (int a=0; a<printer.getBoard().getSize(); a++) {
