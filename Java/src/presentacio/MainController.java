@@ -58,9 +58,9 @@ public class MainController extends AnchorPane {
     }
 
     public void showGlobal(){
-        StackPane Finestra = new StackPane();
-
+        rootlayout = new StatsGlobalController(main);
     }
+
     public void showPersonal(){
 
     }
