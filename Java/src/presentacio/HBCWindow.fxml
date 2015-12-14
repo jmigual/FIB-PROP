@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="448.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <MenuBar onMouseClicked="#trolla" prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="KenKen">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#arnau" text="Crea un tauler" />
+                                <MenuItem mnemonicParsing="false" text="Edita un tauler" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" text="Crea una partida" />
+                                <MenuItem mnemonicParsing="false" text="Carrega una partida" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" text="Desa" />
+                                <MenuItem mnemonicParsing="false" text="Anomena i desa" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" text="Tanca la sessió" />
+                                <MenuItem fx:id="hola" mnemonicParsing="false" onAction="#exit" text="Surt" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Usuari">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#configureUser" text="Configuració de l'usuari" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Estadístiques">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Millors puntuacions" />
+                                <MenuItem mnemonicParsing="false" text="Millors usuaris" />
+                                <MenuItem mnemonicParsing="false" text="Reinicia" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ajuda">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Ajuda" />
+                                <MenuItem mnemonicParsing="false" text="Sobre el KenKen" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                      <StackPane fx:id="leftArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" />
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button alignment="CENTER" mnemonicParsing="false" text="Button" />
+                        <CheckBox mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+            </children>
+        </VBox>
+    </children>
+</fx:root>
