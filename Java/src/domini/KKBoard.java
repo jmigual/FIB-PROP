@@ -7,16 +7,11 @@ import domini.Basic.Row;
 import domini.KKRegion.*;
 import domini.stats.Playable;
 import javafx.application.Platform;
-import javafx.scene.layout.StackPane;
-import presentacio.Drivers.DriverKKBoardPrinter;
 import presentacio.KKPrinter.KKPrinter;
-import presentacio.KKPrinter.KKPrinterSingleSelect;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import static java.lang.Thread.sleep;
 
 
 /**
@@ -30,25 +25,22 @@ public class KKBoard extends Board implements Playable {
     private String _name;
     private String _creator;
 
-    private int getHash(String s){
+    public KKBoard(int size) {
+        super(size);
+        _kkregions = new ArrayList<>(_size * _size);
+    }
+
+    private int getHash(String s) {
         int hash = 7;
         for (int i = 0; i < s.length(); i++) {
-            hash = hash*31 + s.charAt(i);
+            hash = hash * 31 + s.charAt(i);
         }
         return hash;
 
     }
 
-    public int getID(){
+    public int getID() {
         return getHash(_name);
-    }
-
-
-
-
-    public KKBoard(int size) {
-        super(size);
-        _kkregions = new ArrayList<>(_size * _size );
     }
 
     /*
@@ -83,12 +75,14 @@ public class KKBoard extends Board implements Playable {
         return ret;
 
     }
-    public void setName(String _name) {
-        this._name = _name;
-    }
-    public String get_name() {
+
+    public String getName() {
 
         return _name;
+    }
+
+    public void setName(String _name) {
+        this._name = _name;
     }
 
     public String getCreator() {
@@ -114,8 +108,8 @@ public class KKBoard extends Board implements Playable {
     }
 
     public void solveslow(KKPrinter printer) {
-        boolean b =  preCalculate();
-        if (b) b = recursiveSolveStep(0, 0,printer,this);
+        boolean b = preCalculate();
+        if (b) b = recursiveSolveStep(0, 0, printer, this);
         _hasSolution = b;
         System.out.println(b);
     }
@@ -123,11 +117,11 @@ public class KKBoard extends Board implements Playable {
     private boolean recursiveSolveStep(int i, int j, KKPrinter printer, KKBoard kkboard) {
         if (j == this.getSize()) {
 
-            this._boardInfo=kkboard._boardInfo;
+            this._boardInfo = kkboard._boardInfo;
             return true;
         }
 
-        showAndWait(printer,kkboard);
+        showAndWait(printer, kkboard);
 
         int j_f, i_f;
         i_f = i + 1;
@@ -138,29 +132,28 @@ public class KKBoard extends Board implements Playable {
         }
 
         if (kkboard.getCell(i, j).getValue() != 0) {
-            return recursiveSolveStep(i_f, j_f, printer,kkboard);
+            return recursiveSolveStep(i_f, j_f, printer, kkboard);
         }
 
-        boolean b=kkboard.preCalculate();
-        if (!b){
+        boolean b = kkboard.preCalculate();
+        if (!b) {
             return false;
         }
 
         //boolean b=calculateIndividualPossibilities();
-        boolean[] possibilities= kkboard.getCell(i,j).getPossibilities().clone();
-
+        boolean[] possibilities = kkboard.getCell(i, j).getPossibilities().clone();
 
 
         if (kkboard.getCell(i, j).getValue() != 0) {
-            return recursiveSolveStep(i_f, j_f,printer,kkboard);
+            return recursiveSolveStep(i_f, j_f, printer, kkboard);
         }
 
 
         boolean ret = false;
         for (int a = 1; a <= this.getSize(); ++a) {
-            if (possibilities[a-1]) {
+            if (possibilities[a - 1]) {
                 kkboard.getCell(i, j).setValue(a);
-                ret = recursiveSolveStep(i_f, j_f,printer,kkboard.getCopy()) || ret;
+                ret = recursiveSolveStep(i_f, j_f, printer, kkboard.getCopy()) || ret;
                 if (!ret) kkboard.getCell(i, j).setValue(0);
                 else return ret;
             }
@@ -177,7 +170,7 @@ public class KKBoard extends Board implements Playable {
         while (changed) {
             changed = false;
 
-            if (!calculateIndividualPossibilities())return false;
+            if (!calculateIndividualPossibilities()) return false;
             //mira si hi ha alguna cella amb 1 sola possibilitat
             for (int i = 0; i < _size; i++) {
                 for (int j = 0; j < _size; j++) {
@@ -206,10 +199,9 @@ public class KKBoard extends Board implements Playable {
     private boolean recursiveSolve(int i, int j, KKBoard kkboard) {
         if (j == this.getSize()) {
 
-            this._boardInfo=kkboard._boardInfo;
+            this._boardInfo = kkboard._boardInfo;
             return true;
         }
-
 
 
         int j_f, i_f;
@@ -221,29 +213,28 @@ public class KKBoard extends Board implements Playable {
         }
 
         if (kkboard.getCell(i, j).getValue() != 0) {
-            return recursiveSolve(i_f, j_f,kkboard);
+            return recursiveSolve(i_f, j_f, kkboard);
         }
 
-        boolean b=kkboard.preCalculate();
-        if (!b){
+        boolean b = kkboard.preCalculate();
+        if (!b) {
             return false;
         }
 
         //boolean b=calculateIndividualPossibilities();
-        boolean[] possibilities= kkboard.getCell(i,j).getPossibilities().clone();
-
+        boolean[] possibilities = kkboard.getCell(i, j).getPossibilities().clone();
 
 
         if (kkboard.getCell(i, j).getValue() != 0) {
-            return recursiveSolve(i_f, j_f,kkboard);
+            return recursiveSolve(i_f, j_f, kkboard);
         }
 
 
         boolean ret = false;
         for (int a = 1; a <= this.getSize(); ++a) {
-            if (possibilities[a-1]) {
+            if (possibilities[a - 1]) {
                 kkboard.getCell(i, j).setValue(a);
-                ret = recursiveSolve(i_f, j_f,kkboard.getCopy()) || ret;
+                ret = recursiveSolve(i_f, j_f, kkboard.getCopy()) || ret;
                 if (!ret) kkboard.getCell(i, j).setValue(0);
                 else return ret;
             }
@@ -307,16 +298,16 @@ public class KKBoard extends Board implements Playable {
 
     public boolean calculateIndividualPossibilities() {
         for (int i = 0; i < _kkregions.size(); i++) {
-            if (!_kkregions.get(i).isCorrect())return false;
+            if (!_kkregions.get(i).isCorrect()) return false;
             _kkregions.get(i).calculatePossibilities();
         }
         for (Column _column : _columns) {
             _column.calculatePossibilities();
-            if (!_column.isCorrect())return false;
+            if (!_column.isCorrect()) return false;
         }
         for (Row _row : _rows) {
             _row.calculatePossibilities();
-            if (!_row.isCorrect())return false;
+            if (!_row.isCorrect()) return false;
         }
         for (int i = 0; i < _size; i++) {
             for (int j = 0; j < _size; j++) {
@@ -362,9 +353,9 @@ public class KKBoard extends Board implements Playable {
                 if (c.getValue() == 0) {
                     boolean found = false;
                     for (int k = 1; k <= _size && !found; k++) {
-                        if (c.getPossibility(k))found=true;
+                        if (c.getPossibility(k)) found = true;
                     }
-                    if (!found){
+                    if (!found) {
                         return false;
                     }
                 }
@@ -381,7 +372,7 @@ public class KKBoard extends Board implements Playable {
 
     }
 
-    public ArrayList<KKRegion> get_kkregions() {
+    public ArrayList<KKRegion> getKkregions() {
         return _kkregions;
     }
 
@@ -392,8 +383,8 @@ public class KKBoard extends Board implements Playable {
      * DIVISION(3),
      * NONE(4);
      *
-     * @param cells of the KKBoard
-     * @param op define the kind of operation
+     * @param cells   of the KKBoard
+     * @param op      define the kind of operation
      * @param opValue how much is the operation result
      */
     public boolean createRegion(ArrayList<Cell> cells, KKRegion.OperationType op, int opValue) {
@@ -412,12 +403,12 @@ public class KKBoard extends Board implements Playable {
         return true;
     }
 
-    private void showAndWait(KKPrinter printer,KKBoard kkboard){
+    private void showAndWait(KKPrinter printer, KKBoard kkboard) {
         Platform.runLater(() -> {
             kkboard.calculateIndividualPossibilities();
             printer.setBoard(kkboard);
             printer.updateCells();
-            for (int a=0; a<printer.getBoard().getSize(); a++) {
+            for (int a = 0; a < printer.getBoard().getSize(); a++) {
                 for (int x = 0; x < printer.getBoard().getSize(); x++) {
                     Cell c = printer.getBoard().getCell(a, x);
                     for (int k = 1; k <= printer.getBoard().getSize(); k++) {

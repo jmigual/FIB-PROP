@@ -11,51 +11,49 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <AnchorPane prefHeight="30.0" prefWidth="200.0">
-                                 <children>
-                                    <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <items>
-                                          <Label text="Usuaris" />
-                                       </items>
-                                    </ToolBar>
-                                 </children>
-                              </AnchorPane>
-                              <VBox fx:id="leftArea" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
+                        <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <Label text="Usuaris" />
+                           </items>
+                        </ToolBar>
                      </children>
                   </AnchorPane>
-               </content>
-            </ScrollPane>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+                     <content>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <VBox fx:id="leftArea" prefHeight="200.0" prefWidth="100.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+                  <AnchorPane prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <ToolBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <Label text="Taulers" />
+                              <Pane HBox.hgrow="ALWAYS" />
+                              <Button mnemonicParsing="false" onAction="#applyFilters" text="Refrescar" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefViewportHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <AnchorPane prefHeight="30.0" prefWidth="200.0">
-                                       <children>
-                                          <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <items>
-                                                <Label text="Taulers" />
-                                             </items>
-                                          </ToolBar>
-                                       </children>
-                                    </AnchorPane>
-                                    <VBox fx:id="rightArea" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                                 </children>
-                              </VBox>
+                              <VBox fx:id="rightArea" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </content>

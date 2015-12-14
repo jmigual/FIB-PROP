@@ -4,14 +4,14 @@ package presentacio;
  */
 
 import dades.KKDB;
+import dades.PlayersAdmin;
 import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
+import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.concurrent.Task;
-import dades.PlayersAdmin;
-import exceptions.PlayerExistsException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,12 +31,17 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane stackLeftArea;
     protected KKDB db;
-    private KKPrinter printer;
-    Thread thread;
+    protected MainController mainController;
     protected String mUsername;
+    Thread thread;
+    private KKPrinter printer;
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public MainController getMainController() {
+        return mainController;
     }
 
     public String getUsername() {
@@ -46,8 +51,10 @@ public class MainWindow extends Application {
     public void setUsername(String mUsername) {
         this.mUsername = mUsername;
     }
-    
-    public Table<KKBoard> getBoards() { return db.getBoards(); }
+
+    public Table<KKBoard> getBoards() {
+        return db.getBoards();
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -62,6 +69,7 @@ public class MainWindow extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
+        mainController = new MainController(this);
 
         initRootLayout();
 
@@ -78,10 +86,9 @@ public class MainWindow extends Application {
 
     protected void initRootLayout() {
         // Load root layout from xml file
-        MainController mainController = new MainController(this);
         AnchorPane anchorLeftArea = mainController.getLeftArea();
-        stackLeftArea =new StackPane();
-        AnchorPane.setBottomAnchor(stackLeftArea,0.);
+        stackLeftArea = new StackPane();
+        AnchorPane.setBottomAnchor(stackLeftArea, 0.);
         AnchorPane.setTopAnchor(stackLeftArea, 0.);
         AnchorPane.setLeftAnchor(stackLeftArea, 0.);
         AnchorPane.setRightAnchor(stackLeftArea, 0.);
@@ -93,23 +100,23 @@ public class MainWindow extends Application {
         Scene scene = new Scene(rootLayout);
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                if(event.isControlDown())printer.getBoard().preCalculate();
-                else if (event.isShiftDown()){
-                    KKBoard copy=printer.getBoard().getCopy();
+                if (event.isControlDown()) printer.getBoard().preCalculate();
+                else if (event.isShiftDown()) {
+                    KKBoard copy = printer.getBoard().getCopy();
                     Task<Integer> task = new Task<Integer>() {
-                        @Override protected Integer call() throws Exception {
+                        @Override
+                        protected Integer call() throws Exception {
                             copy.solve();
                             return 0;
                         }
                     };
-                    task.setOnSucceeded(stateEvent->{
+                    task.setOnSucceeded(stateEvent -> {
                         printer.setBoard(copy);
                         printer.updateCells();
                         printer.updateAnnotations();
                     });
                     new Thread(task).start();
-                }
-                else printer.getBoard().solve();
+                } else printer.getBoard().solve();
                 //printer.updateCells();
                 //printer.updateAnnotations();
             }
@@ -119,13 +126,13 @@ public class MainWindow extends Application {
                 printer.updateAnnotations();
             }
             if (event.getCode() == KeyCode.ESCAPE) {
-                printer=new KKPrinterMultipleSelect(printer);
+                printer = new KKPrinterMultipleSelect(printer);
                 printer.updateCells();
             }
 
-            if (event.getCode() == KeyCode.SPACE){
+            if (event.getCode() == KeyCode.SPACE) {
                 printer.getBoard().calculateIndividualPossibilities();
-                for (int i=0; i<printer.getBoard().getSize(); i++) {
+                for (int i = 0; i < printer.getBoard().getSize(); i++) {
                     for (int j = 0; j < printer.getBoard().getSize(); j++) {
                         Cell c = printer.getBoard().getCell(i, j);
                         for (int k = 1; k <= printer.getBoard().getSize(); k++) {
@@ -135,16 +142,16 @@ public class MainWindow extends Application {
                 }
                 printer.updateAnnotations();
             }
-            if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event,0);
-            if (event.getCode() == KeyCode.DIGIT1 || event.getCode() == KeyCode.NUMPAD1) numEvent(event,1);
-            if (event.getCode() == KeyCode.DIGIT2 || event.getCode() == KeyCode.NUMPAD2) numEvent(event,2);
-            if (event.getCode() == KeyCode.DIGIT3 || event.getCode() == KeyCode.NUMPAD3) numEvent(event,3);
-            if (event.getCode() == KeyCode.DIGIT4 || event.getCode() == KeyCode.NUMPAD4) numEvent(event,4);
-            if (event.getCode() == KeyCode.DIGIT5 || event.getCode() == KeyCode.NUMPAD5) numEvent(event,5);
-            if (event.getCode() == KeyCode.DIGIT6 || event.getCode() == KeyCode.NUMPAD6) numEvent(event,6);
-            if (event.getCode() == KeyCode.DIGIT7 || event.getCode() == KeyCode.NUMPAD7) numEvent(event,7);
-            if (event.getCode() == KeyCode.DIGIT8 || event.getCode() == KeyCode.NUMPAD8) numEvent(event,8);
-            if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
+            if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event, 0);
+            if (event.getCode() == KeyCode.DIGIT1 || event.getCode() == KeyCode.NUMPAD1) numEvent(event, 1);
+            if (event.getCode() == KeyCode.DIGIT2 || event.getCode() == KeyCode.NUMPAD2) numEvent(event, 2);
+            if (event.getCode() == KeyCode.DIGIT3 || event.getCode() == KeyCode.NUMPAD3) numEvent(event, 3);
+            if (event.getCode() == KeyCode.DIGIT4 || event.getCode() == KeyCode.NUMPAD4) numEvent(event, 4);
+            if (event.getCode() == KeyCode.DIGIT5 || event.getCode() == KeyCode.NUMPAD5) numEvent(event, 5);
+            if (event.getCode() == KeyCode.DIGIT6 || event.getCode() == KeyCode.NUMPAD6) numEvent(event, 6);
+            if (event.getCode() == KeyCode.DIGIT7 || event.getCode() == KeyCode.NUMPAD7) numEvent(event, 7);
+            if (event.getCode() == KeyCode.DIGIT8 || event.getCode() == KeyCode.NUMPAD8) numEvent(event, 8);
+            if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event, 9);
         });
 
 
@@ -152,17 +159,19 @@ public class MainWindow extends Application {
         primaryStage.show();
 
     }
-    private void numEvent(KeyEvent event, int n){
+
+    private void numEvent(KeyEvent event, int n) {
         if (printer instanceof KKPrinterSingleSelect) {
-            if (event.isControlDown()) ((KKPrinterSingleSelect)printer).getSelectedCell().switchAnnotation(n);
-            else ((KKPrinterSingleSelect)printer).getSelectedCell().setValue(n);
+            if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
+            else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();
             printer.updateAnnotations();
         }
     }
+
     protected void createGrid() {
         db.getBoards().clear();
-        int size=11;
+        int size = 11;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();

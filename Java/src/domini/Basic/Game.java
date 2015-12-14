@@ -107,7 +107,7 @@ public class Game {
                 out.print("Nom del taulell: ");
                 KKBoard board = null;
                 String nameB = in.next();
-                for (KKBoard b : _db.getBoards()) if (b.get_name().equals(nameB)) board = b.getCopy();
+                for (KKBoard b : _db.getBoards()) if (b.getName().equals(nameB)) board = b.getCopy();
 
                 if (board==null) out.println("Nom erroni");
                 else {
@@ -162,7 +162,7 @@ public class Game {
                 out.print("Boards creats: ");
                 Table <KKBoard> taulaB = _db.getBoards();
                 for (KKBoard b : taulaB){
-                    if (b.getCreator().equals(_player.getName())) out.print(b.get_name() + " ");
+                    if (b.getCreator().equals(_player.getName())) out.print(b.getName() + " ");
                 }
 
                 out.print("\n \n");
@@ -172,7 +172,7 @@ public class Game {
                 for (Match m : taulaM){
                     String s = "No acabat";
                     if (m.hasFinished()) s = "Acabat  Score : " + m.getScore();
-                    if (m.getPlayer().equals(_player.getName())) out.println(m.getBoard().get_name() + " " + s);
+                    if (m.getPlayer().equals(_player.getName())) out.println(m.getBoard().getName() + " " + s);
                 }
                 out.println();
 
@@ -195,7 +195,7 @@ public class Game {
             case 1:
                 Table<KKBoard> taulaB = _db.getBoards();
                 for (int i = 0; i < taulaB.size(); i++) {
-                    out.println(taulaB.get(i).get_name() + " de tamany " + Integer.toString(taulaB.get(i).getSize()) +
+                    out.println(taulaB.get(i).getName() + " de tamany " + Integer.toString(taulaB.get(i).getSize()) +
                             " fet per " + taulaB.get(i).getCreator());
                 }
                 break;
@@ -218,7 +218,7 @@ public class Game {
                     b = taulaM.get(i).getBoard();
                     p = taulaM.get(i).getPlayer().getName();
 
-                    out.println("Board " + b.get_name() +  " Player " + p + "  " + s);
+                    out.println("Board " + b.getName() +  " Player " + p + "  " + s);
                 }
                 break;
 

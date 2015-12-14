@@ -9,10 +9,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import presentacio.Controller;
+import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
 
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
     public CollectionViewController(MainWindow main) {
         mBoards = main.getBoards();
         mPlayers = new HashMap<>();
-        
+
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("CollectionView.fxml"));
         loader.setController(this);
 
@@ -55,9 +54,10 @@ public class CollectionViewController extends AnchorPane implements Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         stubCreaTaulers();
         loadPlayers();
+        applyFilters();
     }
 
     @Override
@@ -69,17 +69,17 @@ public class CollectionViewController extends AnchorPane implements Controller {
     public void stop() {
 
     }
-    
+
     private void stubCreaTaulers() {
         CpuBoardCreator creator = new CpuBoardCreator(9, mBoards);
-        
+
         ArrayList<String> names = new ArrayList<>();
         names.add("pere");
         names.add("joan");
         names.add("anna");
         names.add("admin");
-        
-        
+
+
         if (mBoards.size() < 10) {
             for (int i = 0; i < 10; ++i) {
                 try {
@@ -87,8 +87,8 @@ public class CollectionViewController extends AnchorPane implements Controller {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                
-                creator.saveBoard("auto" + Integer.toString(i), names.get(i%names.size()));
+
+                creator.saveBoard("auto" + Integer.toString(i), names.get(i % names.size()));
             }
         }
     }
@@ -96,27 +96,51 @@ public class CollectionViewController extends AnchorPane implements Controller {
     protected void loadPlayers() {
         HashSet<String> player;
         player = mBoards.stream().map(KKBoard::getCreator).collect(Collectors.toCollection(HashSet::new));
-        
-        for(String s : player) {
+
+        for (String s : player) {
             HBox box = new HBox();
             CheckBox check = new CheckBox();
-            
+            check.setSelected(true);
+
             box.getChildren().addAll(check, new Label(s));
-            
+
             leftArea.getChildren().add(box);
             VBox.setMargin(box, new Insets(5.0));
-            
+
             mPlayers.put(s, check);
         }
     }
-    
+
+    public void applyFilters() {
+        for (KKBoard board : mBoards) {
+            if (mPlayers.get(board.getCreator()).isSelected()) rightArea.getChildren().add(createPane(board));
+        } 
+    }
+
+    public HBox createPane(KKBoard board) {
+        HBox all = new HBox();
+        all.setMinHeight(50.0);
+        all.setPrefHeight(50.0);
+        VBox.setVgrow(all, Priority.SOMETIMES);
+        
+        VBox text = new VBox();
+        text.getChildren().add(new Label("Nom: " + board.getName()));
+        text.getChildren().add(new Label("Tamany: " + Integer.toString(board.getSize())));
+        StackPane pane = new StackPane();
+        HBox.setHgrow(pane, Priority.ALWAYS);
+        KKPrinterNoSelect printer = new KKPrinterNoSelect(board, pane);
+        all.getChildren().addAll(text, pane);
+
+        return all;
+    }
+
     @FXML
     public void dialogAccept() {
-        
+
     }
-    
+
     @FXML
     public void dialogReject() {
-        
+
     }
 }
