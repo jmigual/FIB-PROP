@@ -20,7 +20,7 @@ import java.io.IOException;
 public class MainController extends AnchorPane {
 
     @FXML
-    private StackPane leftArea;
+    private AnchorPane leftArea;
     private AnchorPane rootlayout;
     private Stage shownStage;
     private MainWindow main;
@@ -38,7 +38,7 @@ public class MainController extends AnchorPane {
         }
     }
 
-    public StackPane getLeftArea() {
+    public AnchorPane getLeftArea() {
         return leftArea;
     }
 
@@ -47,18 +47,30 @@ public class MainController extends AnchorPane {
     }
 
     public void configureUser() {
-        shownStage = new Stage();
-        UserConfigController config = new UserConfigController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config.getRootLayout()));
-        shownStage.sizeToScene();
-        shownStage.show();
+        boolean windowed=true;
+        if (!windowed) {
+            UserConfigController config = new UserConfigController(main);
+            leftArea.getChildren().clear();
+            AnchorPane newPane = config.getRootLayout();
+            AnchorPane.setBottomAnchor(newPane, 0.);
+            AnchorPane.setTopAnchor(newPane, 0.);
+            AnchorPane.setLeftAnchor(newPane, 0.);
+            AnchorPane.setRightAnchor(newPane, 0.);
+            leftArea.getChildren().add(newPane);
+        }
+        else {
+            shownStage = new Stage();
+            UserConfigController config = new UserConfigController(main);
+            shownStage.initModality(Modality.APPLICATION_MODAL);
+            shownStage.setScene(new Scene(config.getRootLayout()));
+            shownStage.sizeToScene();
+            shownStage.show();
+        }
     }
 
     public void exit() {
         Platform.exit();
     }
 
-    public void trolla(){}
 
 }
