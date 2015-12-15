@@ -4,13 +4,14 @@ package presentacio;
  */
 
 import dades.KKDB;
+import dades.PlayersAdmin;
+import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
+import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.concurrent.Task;
-import dades.PlayersAdmin;
-import exceptions.PlayerExistsException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +31,7 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane stackLeftArea;
     protected KKDB db;
+    protected MainController mainController;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
@@ -38,12 +40,20 @@ public class MainWindow extends Application {
         launch(args);
     }
 
+    public MainController getMainController() {
+        return mainController;
+    }
+
     public String getUsername() {
         return mUsername;
     }
 
     public void setUsername(String mUsername) {
         this.mUsername = mUsername;
+    }
+
+    public Table<KKBoard> getBoards() {
+        return db.getBoards();
     }
 
     @Override
@@ -59,6 +69,7 @@ public class MainWindow extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
+        mainController = new MainController(this);
 
         initRootLayout();
 
@@ -70,10 +81,9 @@ public class MainWindow extends Application {
 
     protected void initRootLayout() {
         // Load root layout from xml file
-        MainController mainController = new MainController(this);
         AnchorPane anchorLeftArea = mainController.getLeftArea();
-        stackLeftArea =new StackPane();
-        AnchorPane.setBottomAnchor(stackLeftArea,0.);
+        stackLeftArea = new StackPane();
+        AnchorPane.setBottomAnchor(stackLeftArea, 0.);
         AnchorPane.setTopAnchor(stackLeftArea, 0.);
         AnchorPane.setLeftAnchor(stackLeftArea, 0.);
         AnchorPane.setRightAnchor(stackLeftArea, 0.);
@@ -141,20 +151,22 @@ public class MainWindow extends Application {
 
 */
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
-
     }
-    private void numEvent(KeyEvent event, int n){
+
+    private void numEvent(KeyEvent event, int n) {
         if (printer instanceof KKPrinterSingleSelect) {
-            if (event.isControlDown()) ((KKPrinterSingleSelect)printer).getSelectedCell().switchAnnotation(n);
-            else ((KKPrinterSingleSelect)printer).getSelectedCell().setValue(n);
+            if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
+            else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();
             printer.updateAnnotations();
         }
     }
+
     protected void createGrid() {
         db.getBoards().clear();
-        int size=11;
+        int size = 11;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();

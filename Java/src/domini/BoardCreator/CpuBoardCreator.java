@@ -2,7 +2,6 @@ package domini.BoardCreator;
 
 import dades.Table;
 import domini.Basic.Cell;
-import domini.Basic.Region;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 
@@ -198,7 +197,7 @@ public class CpuBoardCreator extends BoardCreator {
         double d = mDivWeight / (double) mTotalOpWeight;
         double r = mSubsWeight / (double) mTotalOpWeight;
         double m2 = mSizesWeights.get(2 - 1) / (double) mTotalSizesWeight;
-        mBoard.get_kkregions().remove(0);
+        mBoard.getKkregions().remove(0);
         for (ArrayList<Cell> regCells : regionsCells) {
             double rand = mRand.nextDouble();
             int res;
