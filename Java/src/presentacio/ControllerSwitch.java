@@ -9,35 +9,41 @@ import java.util.Stack;
  */
 public class ControllerSwitch {
 
-    private Stack<Controller> mPreviows;
+    private Stack<Controller> mPrevious;
 
+    private Controller mCurrent;
     private AnchorPane mArea;
 
     public ControllerSwitch(AnchorPane area) {
-        mPreviows = new Stack<>();
+        mPrevious = new Stack<>();
         mArea = area;
     }
 
     public void add(Controller c) {
         switchController(c);
-        mPreviows.push(c);
+        mPrevious.push(c);
     }
 
     public void rollBack() {
-        if (mPreviows.isEmpty()) {
+        if (mPrevious.isEmpty()) {
+            switchController(null);
+            return;
+        }
+        else if (mPrevious.size() == 1) {
+            mPrevious.pop().stop();
             switchController(null);
             return;
         }
 
-        mPreviows.pop().stop();
-        switchController(mPreviows.peek());
+        mPrevious.pop().stop();
+        switchController(mPrevious.peek());
     }
 
-    private void switchController(Controller c) {
+    public void switchController(Controller c) {
         mArea.getChildren().clear();
         if (c == null) return;
 
-        if (! mPreviows.isEmpty() && mPreviows.peek() != null) mPreviows.peek().stop();
+        if (! mPrevious.isEmpty() && mPrevious.peek() != null) mPrevious.peek().stop();
 
         AnchorPane newPane = c.getRootLayout();
         AnchorPane.setBottomAnchor(newPane, 0.);
@@ -45,5 +51,10 @@ public class ControllerSwitch {
         AnchorPane.setLeftAnchor(newPane, 0.);
         AnchorPane.setRightAnchor(newPane, 0.);
         mArea.getChildren().add(newPane);
+        mCurrent = c;
+    }
+
+    public Controller getController() {
+        return mCurrent;
     }
 }

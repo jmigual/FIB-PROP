@@ -178,7 +178,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     @FXML
     public void dialogAccept() {
-
+        //mMain.getMainController().getContSwitch()
     }
 
     @FXML

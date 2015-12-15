@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presentacio.CollectionView.CollectionViewController;
+import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
@@ -81,12 +82,13 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void dialogCancelled() {
-        contSwitch.rollBack();
+        contSwitch.switchController(null);
     }
 
     @FXML
     private void editBoard() {
-        CollectionViewController coll = new CollectionViewController(main);
-        contSwitch.add(coll);
+        contSwitch.switchController(new CollectionViewEditorController(main));
     }
+
+    public ControllerSwitch getContSwitch() { return contSwitch; }
 }
