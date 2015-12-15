@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import presentacio.Controller;
@@ -78,6 +79,11 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     @Override
     public void stop() {
+
+    }
+
+    @Override
+    public void setScene(Scene scene) {
 
     }
 

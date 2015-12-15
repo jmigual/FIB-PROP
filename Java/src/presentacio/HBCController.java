@@ -110,12 +110,12 @@ public class HBCController extends AnchorPane implements Controller {
         if (createRegionMode) {
 //            ((KKPrinterRegionSelect) printer).deselect();
             printer = new KKPrinterMultipleSelect(printer);
-            Create_ModifyRegionButton.setText("Crea la regió");
+            Create_ModifyRegionButton.setText("Crea la regiï¿½");
             DeleteRegionButton.setVisible(false);
         } else {
             ((KKPrinterMultipleSelect) printer).deselect();
             printer = new KKPrinterRegionSelect(printer);
-            Create_ModifyRegionButton.setText("Modifica la regió");
+            Create_ModifyRegionButton.setText("Modifica la regiï¿½");
             DeleteRegionButton.setVisible(true);
         }
     }
@@ -123,7 +123,7 @@ public class HBCController extends AnchorPane implements Controller {
     /*
     private void numberPressed(int n){
         if (! createRegionMode){
-            ((KKPrinterRegionSelect) printer).getSelectedKKRegion() // canviar le resultat de la KKRegion (no és trivial)
+            ((KKPrinterRegionSelect) printer).getSelectedKKRegion() // canviar le resultat de la KKRegion (no ï¿½s trivial)
         }
     }
     */
@@ -158,16 +158,16 @@ public class HBCController extends AnchorPane implements Controller {
         }
 
         if (op == '-' && C.size() > 2) {
-            warn("Entrada invalida", "Atenció!", "No es pot crear una regio de tipus resta amb un nombre de cel.les diferent a 2.");
+            warn("Entrada invalida", "Atenciï¿½!", "No es pot crear una regio de tipus resta amb un nombre de cel.les diferent a 2.");
             return;
         } else if (op == '/' && C.size() > 2) {
-            warn("Entrada invalida", "Atenció!", "No es pot crear una regio de tipus divisio amb un nombre de cel.les diferent a 2.");
+            warn("Entrada invalida", "Atenciï¿½!", "No es pot crear una regio de tipus divisio amb un nombre de cel.les diferent a 2.");
             return;
         } else if (!isPositiveInteger(ResultValueInput.getText())) {
-            warn("Entrada invalida", "Atenció!", "El resultat ha de ser un nombre natural.");
+            warn("Entrada invalida", "Atenciï¿½!", "El resultat ha de ser un nombre natural.");
             return;
         } else if (C.size() < 1) {
-            warn("Entrada invalida", "Atenció!", "No has seleccionat cap cel.la.");
+            warn("Entrada invalida", "Atenciï¿½!", "No has seleccionat cap cel.la.");
             return;
         } else {
 
@@ -177,8 +177,8 @@ public class HBCController extends AnchorPane implements Controller {
             if (createRegionMode) {
 
                 if (!hbc.isContiguous(C)){
-                    warn("Entrada invàlida", "Atenció!", "La regió que has seleccionat té parts no contigües. " +
-                            "No es pot crear una regió amb aquesta forma.");
+                    warn("Entrada invï¿½lida", "Atenciï¿½!", "La regiï¿½ que has seleccionat tï¿½ parts no contigï¿½es. " +
+                            "No es pot crear una regiï¿½ amb aquesta forma.");
                     return;
                 }
 
@@ -223,7 +223,7 @@ public class HBCController extends AnchorPane implements Controller {
             //((KKPrinterRegionSelect) printer).deselect();
             printer.updateRegions();
         } else {
-            warn("Acció prohibida", "Atenció!", "No es poden eliminar regions en el mode de creació de regions.");
+            warn("Acciï¿½ prohibida", "Atenciï¿½!", "No es poden eliminar regions en el mode de creaciï¿½ de regions.");
         }
     }
 
@@ -259,17 +259,17 @@ public class HBCController extends AnchorPane implements Controller {
 
     public void hasSolutionButtonPressed(){
         if (!hbc.isFinished()){
-            warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la solució d'un kenken " +
-                    "inacabat. Assigna una regió a cada cel·la abans.");
+            warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la soluciï¿½ d'un kenken " +
+                    "inacabat. Assigna una regiï¿½ a cada celï¿½la abans.");
             return;
         }
         hbc.removeDefaultRegion();
         if (hbc.getBoard().hasSolution()) {
-            inform("Solucionador de Kenkens", "El Kenken té solució!", "El solucionador ha trobat com a mínim una " +
-                    "solució al Kenken proposat.");
+            inform("Solucionador de Kenkens", "El Kenken tï¿½ soluciï¿½!", "El solucionador ha trobat com a mï¿½nim una " +
+                    "soluciï¿½ al Kenken proposat.");
         } else {
-            inform("Solucionador de Kenkens", "El Kenken no té solució!", "El solucionador no ha trobat cap " +
-                    "solució al Kenken proposat.");
+            inform("Solucionador de Kenkens", "El Kenken no tï¿½ soluciï¿½!", "El solucionador no ha trobat cap " +
+                    "soluciï¿½ al Kenken proposat.");
         }
         hbc.createDefaultRegion();
     }
@@ -277,8 +277,8 @@ public class HBCController extends AnchorPane implements Controller {
     public void solveButtonPressed(){
         hbc.removeDefaultRegion();
         if (! hbc.getBoard().hasSolution()){
-            warn("Solucionador de Kenkens", "El kenken no té solució!", "El solucionador no ha trobat cap " +
-                    "solució al kenken proposat.");
+            warn("Solucionador de Kenkens", "El kenken no tï¿½ soluciï¿½!", "El solucionador no ha trobat cap " +
+                    "soluciï¿½ al kenken proposat.");
         } else {
             hbc.getBoard().solve();
             printer.updateContent();
@@ -309,5 +309,10 @@ public class HBCController extends AnchorPane implements Controller {
     @Override
     public void stop() {
         
+    }
+
+    @Override
+    public void setScene(Scene scene) {
+
     }
 }

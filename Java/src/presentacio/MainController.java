@@ -76,6 +76,11 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
+    @Override
+    public void setScene(Scene scene) {
+
+    }
+
     private void switchController(Controller c) {
         if (actualController != null) {
             actualController.stop();
@@ -89,6 +94,7 @@ public class MainController extends AnchorPane implements Controller {
         AnchorPane.setRightAnchor(newPane, 0.);
         leftArea.getChildren().add(newPane);
         actualController = c;
+        c.setScene(rootLayout.getScene());
     }
 
     public void dialogCancelled() {
