@@ -30,7 +30,9 @@ public class KKPrinterRegionSelect extends KKPrinter {
         int i = GridPane.getRowIndex(location);
         int j = GridPane.getColumnIndex(location);
         Cell c = board.getCell(i, j);
-        selectedKKRegion=(KKRegion)c.getRegion();
+
+        if ((KKRegion)c.getRegion()==selectedKKRegion)selectedKKRegion=null;
+        else selectedKKRegion=(KKRegion)c.getRegion();
         updateCells();
     }
 

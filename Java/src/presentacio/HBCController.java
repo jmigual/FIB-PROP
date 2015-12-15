@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -43,7 +44,7 @@ public class HBCController extends AnchorPane implements Controller {
     private boolean annotationsMode;
 
     private static int MAX_SIZE = 9;
-    
+
     @FXML
     private StackPane KenkenPane;
     @FXML
