@@ -117,4 +117,21 @@ public class BoardCreator {
         return vaux;
     }
 
+    public boolean hasConsistentState(){
+        boolean ret = true;
+        for (KKRegion r : mBoard.getKkregions()){
+            for (Cell c : r.getCells()){
+                if (c.getRegion() != r){
+                    System.out.print("Cell " + c + " -/- Region " + r + "/n");
+                    ret = false;
+                }
+                if (mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos()) != c){
+                    System.out.print("Region " + r + " -> Cell " + c + " -/- Cell " +
+                            mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos()) + "/n");
+                    ret = false;
+                }
+            }
+        }
+        return ret;
+    }
 }

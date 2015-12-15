@@ -186,6 +186,13 @@ public class HBCController extends AnchorPane implements Controller {
             DeleteRegionButton.setVisible(true);
             ModeToggleButton.setVisible(true);
         }
+
+        KKRegion troll = hbc.removeTroll();
+        if (!hbc.hasConsistentState()){
+            warn("Estat inconsistent!", null, "");
+        }
+        hbc.addTroll(troll);
+
     }
 
     public void create_modifyRegionButtonPressed() {
@@ -209,7 +216,7 @@ public class HBCController extends AnchorPane implements Controller {
             case "RadioButton[id=ProductRadioButton, styleClass=radio-button]'Multiplicacio'":
                 op = '*';
                 break;
-            case "RadioButton[id=SubstractRadioButton, styleClass=radio-button]'Resta'":
+            case "RadioButton[id=SubstractionRadioButton, styleClass=radio-button]'Resta'":
                 op = '-';
                 break;
             case "RadioButton[id=DivisionRadioButton, styleClass=radio-button]'Divisio'":
