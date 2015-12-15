@@ -4,6 +4,7 @@ import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.HumanBoardCreator;
 import domini.KKBoard;
+import domini.KKRegion.KKRegion;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -185,13 +186,6 @@ public class HBCController extends AnchorPane implements Controller {
             ModeToggleButton.setVisible(true);
         }
     }
-    /*
-    private void numberPressed(int n){
-        if (! createRegionMode){
-            ((KKPrinterRegionSelect) printer).getSelectedKKRegion() // canviar le resultat de la KKRegion (no �s trivial)
-        }
-    }
-    */
 
     public void create_modifyRegionButtonPressed() {
 
@@ -241,11 +235,11 @@ public class HBCController extends AnchorPane implements Controller {
 
             if (createRegionMode) {
 
-                if (!hbc.isContiguous(C)){
+/*                if (!hbc.isContiguous(C)){
                     warn("Entrada inv�lida", "Atenci�!", "La regi� que has seleccionat t� parts no contig�es. " +
                             "No es pot crear una regi� amb aquesta forma.");
                     return;
-                }
+                }*/
 
                 try {
                     if (!hbc.createRegion(false, C, op, opValue)) {
@@ -263,7 +257,7 @@ public class HBCController extends AnchorPane implements Controller {
 
             } else {
 
-                // Modify region mode
+    /*            // Modify region mode
                 if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
                     hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
                 }
@@ -271,7 +265,7 @@ public class HBCController extends AnchorPane implements Controller {
                     hbc.createRegion(false, C, op, opValue);
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
 //                ((KKPrinterRegionSelect) printer).deselect();
 
             }
@@ -282,10 +276,10 @@ public class HBCController extends AnchorPane implements Controller {
 
     public void deleteRegionButtonPressed(){
         if (!createRegionMode){
-            if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
+ /*           if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
                 hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
             }
-            //((KKPrinterRegionSelect) printer).deselect();
+   */         //((KKPrinterRegionSelect) printer).deselect();
             printer.updateRegions();
         } else {
             warn("Acci� prohibida", "Atenci�!", "No es poden eliminar regions en el mode de creaci� de regions.");
@@ -321,12 +315,12 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     public void hasSolutionButtonPressed(){
-        if (!hbc.isFinished()){
+    /*    if (!hbc.isFinished()){
             warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la soluci� d'un kenken " +
                     "inacabat. Assigna una regi� a cada cel�la abans.");
             return;
-        }
-        hbc.removeDefaultRegion();
+        }*/
+        KKRegion troll = hbc.removeTroll();
         if (hbc.getBoard().hasSolution()) {
             inform("Solucionador de Kenkens", "El Kenken t� soluci�!", "El solucionador ha trobat com a m�nim una " +
                     "soluci� al Kenken proposat.");
@@ -334,16 +328,16 @@ public class HBCController extends AnchorPane implements Controller {
             inform("Solucionador de Kenkens", "El Kenken no t� soluci�!", "El solucionador no ha trobat cap " +
                     "soluci� al Kenken proposat.");
         }
-        hbc.createDefaultRegion();
+        hbc.addTroll(troll);
     }
 
     public void solveButtonPressed(){
-        if (!hbc.isFinished()){
+    /*    if (!hbc.isFinished()){
             warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la soluci� d'un kenken " +
                     "inacabat. Assigna una regi� a cada cel�la abans.");
             return;
-        }
-        hbc.removeDefaultRegion();
+        }*/
+        KKRegion troll = hbc.removeTroll();
         if (! hbc.getBoard().hasSolution()){
             warn("Solucionador de Kenkens", "El kenken no t� soluci�!", "El solucionador no ha trobat cap " +
                     "soluci� al kenken proposat.");
@@ -351,7 +345,7 @@ public class HBCController extends AnchorPane implements Controller {
             hbc.getBoard().solve();
             printer.updateContent();
         }
-        hbc.createDefaultRegion();
+        hbc.addTroll(troll);
     }
 
     public void cancelButtonPressed(){

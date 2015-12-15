@@ -1,12 +1,10 @@
 package domini.BoardCreator;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import dades.Table;
 import domini.Basic.Cell;
-import domini.Basic.Column;
-import domini.Basic.Row;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
+import domini.KKRegion.KKRegionProduct;
 
 import java.util.ArrayList;
 
@@ -45,114 +43,82 @@ public class HumanBoardCreator extends BoardCreator {
     public boolean createRegion(boolean forceOverlappingRegionsDestruction, ArrayList<Cell> cells, char operation,
                                 int result) throws Exception {
 
+        // Check if it overlaps any other regions
         if (!forceOverlappingRegionsDestruction) {
             for (Cell c : cells) {
                 if (((KKRegion) c.getRegion()).getOperationValue() != 0) {
                     return false;
                 }
             }
-        } else {
-            for (Cell c : cells) {
-                if (c.getRegion() != defaultRegion) {
-                    deleteRegion((KKRegion) c.getRegion());
-                }
+        }
+
+        // Look for regions that overlap
+        ArrayList<KKRegion> R = new ArrayList<>();
+        for (Cell c : cells) {
+            if (((KKRegion) c.getRegion()).getOperationValue() != 0 && !R.contains(c.getRegion())) {
+                R.add((KKRegion) c.getRegion());
             }
         }
 
         KKRegion.OperationType KKop;
-        if (cells.size() == 1) {
-            KKop = KKRegion.OperationType.NONE;
-        } else if (cells.size() > 1) {
-            switch (operation) {
-                case '+':
-                    KKop = KKRegion.OperationType.ADDITION;
-                    break;
-                case '-':
-                    KKop = KKRegion.OperationType.SUBTRACTION;
-                    break;
-                case '*':
-                    KKop = KKRegion.OperationType.PRODUCT;
-                    break;
-                case '/':
-                    KKop = KKRegion.OperationType.DIVISION;
-                    break;
-                default:
-                    Exception e = new Exception("HBC: createRegion(): invalid operation character");
-                    e.printStackTrace();
+        switch (operation) {
+            case '+':
+                KKop = KKRegion.OperationType.ADDITION;
+                break;
+            case '-':
+                KKop = KKRegion.OperationType.SUBTRACTION;
+                break;
+            case '*':
+                KKop = KKRegion.OperationType.PRODUCT;
+                break;
+            case '/':
+                KKop = KKRegion.OperationType.DIVISION;
+                break;
+            default:
+                if (cells.size() > 1) {
+                    try {
+                        throw new Exception("HBC: createRegion(): invalid operation character");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return false;
-            }
-        } else {
-            Exception e = new Exception("HBC: createRegion(): invalid cells array");
-            e.printStackTrace();
-            return false;
+                } else {
+                    KKop = KKRegion.OperationType.NONE;
+                }
+                break;
+
         }
         mBoard.createRegion(cells, KKop, result);
-        return true;
-    }
 
-    public void deleteRegion(KKRegion region){
-        ArrayList<Cell> C = region.getCells();
-        for (Cell c : C){
-            c.setRegion(defaultRegion);
-        }
-        mBoard.getKkregions().remove(mBoard.getKkregions().indexOf(region));
-    }
-
-    public boolean isContiguous(ArrayList<Cell> C){
-        if (C.size() < 1){
-            return true;
-        }
-
-        Cell c = C.get(0);
-        ArrayList<Boolean> visited = new ArrayList<>();
-        for (int i=0; i<C.size(); ++i){
-            visited.add(false);
-        }
-        isContiguousRec(C, visited, c);
-        for (Boolean b : visited){
-            if (!b){
-                return false;
+        // Delete all overlapped regions
+        for (KKRegion r : R){
+            mBoard.getKkregions().remove(mBoard.getKkregions().indexOf(r));
+            for (int i=0; i<r.getCells().size(); i++){
+                if (r.getCells().get(i).getRegion() == r){
+                    r.getCells().get(i).setRegion(mBoard.getKkregions().get(0));
+                }
             }
         }
         return true;
     }
 
-    private void isContiguousRec(ArrayList<Cell> C, ArrayList<Boolean> visited, Cell c){
-        visited.set(C.indexOf(c), true);
-        int x = c.getRow().getPos();
-        int y = c.getColumn().getPos();
-        if (x > 0){
-            Cell newc = find(C, x-1, y);
-            if (newc != null && !visited.get(C.indexOf(newc))){
-                isContiguousRec(C, visited, newc);
-            }
-        }
-        if (y > 0){
-            Cell newc = find(C, x, y-1);
-            if (newc != null && !visited.get(C.indexOf(newc))){
-                isContiguousRec(C, visited, newc);
-            }
-        }
-        if (x < mBoard.getSize()-1){
-            Cell newc = find(C, x+1, y);
-            if (newc != null && !visited.get(C.indexOf(newc))){
-                isContiguousRec(C, visited, newc);
-            }
-        }
-        if (y < mBoard.getSize()-1){
-            Cell newc = find(C, x, y+1);
-            if (newc != null && !visited.get(C.indexOf(newc))){
-                isContiguousRec(C, visited, newc);
-            }
-        }
+    public KKRegion removeTroll(){
+        KKRegion troll = findTroll();
+        mBoard.getKkregions().remove(mBoard.getKkregions().indexOf(troll));
+        return troll;
     }
 
-    private Cell find(ArrayList<Cell> C, int x, int y){
-        for (Cell c : C){
-            if (c.getRow().getPos() == x && c.getColumn().getPos() == y){
-                return c;
+    private KKRegion findTroll(){
+        for (KKRegion r : mBoard.getKkregions()){
+            if (r.getOperationValue()==0){
+                return r;
             }
         }
+        System.out.println("Troll not found.");
         return null;
+    }
+
+    public void addTroll(KKRegion troll){
+        mBoard.getKkregions().add(0, troll);
     }
 }
