@@ -5,6 +5,7 @@ import dades.PlayersAdmin;
 import exceptions.PlayerNotExistsExcepction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -85,6 +86,11 @@ public class UserConfigController extends AnchorPane implements Controller {
 
     @Override
     public void stop() {
+
+    }
+
+    @Override
+    public void setScene(Scene scene) {
 
     }
 

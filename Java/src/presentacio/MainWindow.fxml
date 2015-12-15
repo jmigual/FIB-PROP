@@ -37,9 +37,9 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Estadístiques">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Millors puntuacions" />
-                        <MenuItem mnemonicParsing="false" text="Millors usuaris" />
-                        <MenuItem mnemonicParsing="false" text="Reinicia" />
+                        <MenuItem fx:id="Personal" mnemonicParsing="false" onAction="#showPersonal" text="Personals" />
+                        <MenuItem fx:id="Global" mnemonicParsing="false" onAction="#showGlobal" text="Globals" />
+                        <MenuItem mnemonicParsing="false" onAction="#showByboard" text="Per taulers" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ajuda">
