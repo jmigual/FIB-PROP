@@ -7,10 +7,7 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -51,6 +48,8 @@ public class HBCController extends AnchorPane implements Controller {
     private RadioButton DivisionRadioButton;
     @FXML
     private Button CreateRegionButton;
+    @FXML
+    private ToggleGroup OperationRadioGroup;
 
     public HBCController(int size){
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
@@ -98,32 +97,93 @@ public class HBCController extends AnchorPane implements Controller {
     */
 
     public void createRegionButtonPressed(){
-        ArrayList<Cell> C = new ArrayList<Cell>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
+        if (createRegionMode) {
+            ArrayList<Cell> C = new ArrayList<>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
 
-        C.clear();
-        // Get operation
-        char op = '+';
-        // Get result
-        int opValue = Integer.parseInt(ResultValueInput.getText());
-        // Get cells
-        C = ((KKPrinterMultipleSelect) printer).getSelectedCells();
+            // Get cells
+            C.clear();
+            C = ((KKPrinterMultipleSelect) printer).getSelectedCells();
 
-        try {
-            if (!hbc.createRegion(false, C, op, opValue)) {
-                System.out.print("Aquesta regió n'eliminarà altres ja creades. Segueixes volent-la crear? (s/n)");
-                String s = "s";
-                while (!s.equals("s") || !s.equals("n")) {
-                    if (s.equals("s")){
-                        hbc.createRegion(true, C, op, opValue);
-                        break;
-                    } else if (s.equals("n")) {
-                        break;
-                    }
-                }
+            // Get operation
+            char op = '+';
+            switch (OperationRadioGroup.getSelectedToggle().toString()) {
+                case "RadioButton[id=AdditionRadioButton, styleClass=radio-button]'Suma'":
+                    op = '+';
+                    break;
+                case "RadioButton[id=ProductRadioButton, styleClass=radio-button]'Multiplicacio'":
+                    op = '*';
+                    break;
+                case "RadioButton[id=SubstractRadioButton, styleClass=radio-button]'Resta'":
+                    op = '-';
+                    break;
+                case "RadioButton[id=DivisionRadioButton, styleClass=radio-button]'Divisio'":
+                    op = '/';
+                    break;
             }
-        } catch (Exception e) {
+
+            if (op == '-' && C.size() > 2){
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Entrada invalida");
+                a.setContentText("No es pot crear una regio de tipus resta amb un numero de cel.les diferent a 2.");
+                a.showAndWait();
+                return;
+            } else if (op == '/' && C.size() > 2) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Entrada invalida");
+                a.setContentText("No es pot crear una regio de tipus divisio amb un numero de cel.les diferent a 2.");
+                a.showAndWait();
+                return;
+            } else if (!isPositiveInteger(ResultValueInput.getText())) {
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setTitle("Entrada invalida");
+                a.setContentText("El resultat ha de ser un nombre natural.");
+                a.showAndWait();
+                return;
+            } else {
+
+                // Get result
+                int opValue = Integer.parseInt(ResultValueInput.getText());
+
+                try {
+                    if (!hbc.createRegion(false, C, op, opValue)) {
+                        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Aquesta regio n'elimina altres ja creades."
+                                + "Estas segur que vols crear-la i eliminar les regions que es solapen?");
+                        a.setTitle("Confirmacio de l'eliminacio de regions");
+                        if (a.showAndWait().get() == ButtonType.OK){
+                            hbc.createRegion(true, C, op, opValue);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                printer.updateRegions();
+                ((KKPrinterMultipleSelect) printer).deselect();
+
+            }
+
+        } else {
+            Exception e = new Exception("CreateRegion called but not in createRegionMode");
             e.printStackTrace();
         }
+    }
+
+    private static boolean isPositiveInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

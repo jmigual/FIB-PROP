@@ -33,10 +33,13 @@
                   <Button mnemonicParsing="false" text="Guarda" GridPane.rowIndex="6" />
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
                      <children>
-                        <RadioButton fx:id="AdditionRadioButton" mnemonicParsing="false" text="Suma" />
-                        <RadioButton fx:id="ProductRadioButton" mnemonicParsing="false" text="Multiplicació" />
-                        <RadioButton fx:id="SubstractRadioButton" mnemonicParsing="false" text="Resta" />
-                        <RadioButton fx:id="DivisionRadioButton" mnemonicParsing="false" text="Divisió" />
+                        <RadioButton fx:id="AdditionRadioButton" mnemonicParsing="false" selected="true" text="Suma">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="OperationRadioGroup" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="ProductRadioButton" mnemonicParsing="false" text="Multiplicacio" toggleGroup="$OperationRadioGroup" />
+                        <RadioButton fx:id="SubstractRadioButton" mnemonicParsing="false" text="Resta" toggleGroup="$OperationRadioGroup" />
+                        <RadioButton fx:id="DivisionRadioButton" mnemonicParsing="false" text="Divisio" toggleGroup="$OperationRadioGroup" />
                      </children>
                   </VBox>
                   <TextField fx:id="ResultValueInput" promptText="Resultat" GridPane.rowIndex="2" />
