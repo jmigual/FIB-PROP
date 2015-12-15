@@ -58,7 +58,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void humanCreateBoardClicked(){
-        HBCController hbcc = new HBCController(new Table<KKBoard>()); // real table should be passed
+        HBCController hbcc = new HBCController(main);
         switchController(hbcc);
     }
 

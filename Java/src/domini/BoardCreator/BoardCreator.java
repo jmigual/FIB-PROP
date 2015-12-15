@@ -39,7 +39,7 @@ public class BoardCreator {
         mSize = size;
         newBoard();
         mTableKKB = tableKKB;
-        mRand = new Random();
+        mRand = new Random(System.currentTimeMillis());
     }
 
     protected void newBoard(){
@@ -108,6 +108,7 @@ public class BoardCreator {
     private boolean fits(int i, int j, int n) {
         mBoard.getColumns().get(j).calculatePossibilities();
         mBoard.getRows().get(i).calculatePossibilities();
+        mBoard.getCell(i, j).getRegion().calculatePossibilities();
         mBoard.getCell(i, j).calculatePossibilities();
         return mBoard.getCell(i, j).getPossibility(n);
     }
