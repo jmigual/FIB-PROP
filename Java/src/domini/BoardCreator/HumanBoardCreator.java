@@ -44,6 +44,7 @@ public class HumanBoardCreator extends BoardCreator {
      */
     public boolean createRegion(boolean forceOverlappingRegionsDestruction, ArrayList<Cell> cells, char operation,
                                 int result) throws Exception {
+
         if (!forceOverlappingRegionsDestruction) {
             for (Cell c : cells) {
                 if (((KKRegion) c.getRegion()).getOperationValue() != 0) {
@@ -94,6 +95,7 @@ public class HumanBoardCreator extends BoardCreator {
         for (Cell c : C){
             c.setRegion(defaultRegion);
         }
+        mBoard.getKkregions().remove(mBoard.getKkregions().indexOf(region));
     }
 
     public boolean isContiguous(ArrayList<Cell> C){

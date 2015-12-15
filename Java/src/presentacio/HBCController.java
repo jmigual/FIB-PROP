@@ -11,13 +11,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterRegionSelect;
+import presentacio.KKPrinter.KKPrinterSingleSelect;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,7 @@ public class HBCController extends AnchorPane implements Controller {
     private FXMLLoader loader;
     private Scene scene;
     private boolean createRegionMode;
+    private boolean annotationsMode;
 
     private static int MAX_SIZE = 9;
     
@@ -67,8 +73,12 @@ public class HBCController extends AnchorPane implements Controller {
     private ToggleButton ModeToggleButton;
     @FXML
     private Button ClearBoardButton;
+    @FXML
+    private ToggleButton AnnotacionsModeToggleButton;
+    @FXML
+    private Button CancelButton;
 
-       public HBCController(MainWindow mainWindow){
+    public HBCController(MainWindow mainWindow){
 
         int size = askSize();
 
@@ -90,6 +100,9 @@ public class HBCController extends AnchorPane implements Controller {
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
         DeleteRegionButton.setVisible(false);
+        annotationsMode = false;
+        FillWithRandomNumbersButton.setVisible(false);
+        ClearBoardButton.setVisible(false);
     }
 
     private int askSize(){
@@ -116,15 +129,62 @@ public class HBCController extends AnchorPane implements Controller {
 //            ((KKPrinterRegionSelect) printer).deselect();
             printer = new KKPrinterMultipleSelect(printer);
             Create_ModifyRegionButton.setText("Crea la regi�");
+
             DeleteRegionButton.setVisible(false);
         } else {
             ((KKPrinterMultipleSelect) printer).deselect();
             printer = new KKPrinterRegionSelect(printer);
             Create_ModifyRegionButton.setText("Modifica la regi�");
+
             DeleteRegionButton.setVisible(true);
         }
     }
 
+    public void annotacionsModeToggleButtonPressed(){
+        annotationsMode = !annotationsMode;
+        if (annotationsMode) {
+            // deselect ...
+            printer = new KKPrinterSingleSelect(printer);
+
+            // Show buttons
+            FillWithRandomNumbersButton.setVisible(true);
+            ClearBoardButton.setVisible(true);
+
+            // Hide buttons
+            ResultValueInput.setVisible(false);
+            AdditionRadioButton.setVisible(false);
+            ProductRadioButton.setVisible(false);
+            SubstractionRadioButton.setVisible(false);
+            DivisionRadioButton.setVisible(false);
+            Create_ModifyRegionButton.setVisible(false);
+            HasSolutionButton.setVisible(false);
+            SolveButton.setVisible(false);
+            DeleteRegionButton.setVisible(false);
+            ModeToggleButton.setVisible(false);
+
+        } else {
+            if (createRegionMode){
+                printer = new KKPrinterMultipleSelect(printer);
+            } else {
+                printer = new KKPrinterRegionSelect(printer);
+            }
+            // Hide buttons
+            FillWithRandomNumbersButton.setVisible(false);
+            ClearBoardButton.setVisible(false);
+
+            // Show buttons
+            ResultValueInput.setVisible(true);
+            AdditionRadioButton.setVisible(true);
+            ProductRadioButton.setVisible(true);
+            SubstractionRadioButton.setVisible(true);
+            DivisionRadioButton.setVisible(true);
+            Create_ModifyRegionButton.setVisible(true);
+            HasSolutionButton.setVisible(true);
+            SolveButton.setVisible(true);
+            DeleteRegionButton.setVisible(true);
+            ModeToggleButton.setVisible(true);
+        }
+    }
     /*
     private void numberPressed(int n){
         if (! createRegionMode){
@@ -251,9 +311,7 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     public void fillWithRandomNumbersButtonPressed(){
-        hbc.removeDefaultRegion();
         hbc.fillBoardWithRandomNumbers();
-        hbc.createDefaultRegion();
         printer.updateCells();
     }
 
@@ -280,6 +338,11 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     public void solveButtonPressed(){
+        if (!hbc.isFinished()){
+            warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la soluci� d'un kenken " +
+                    "inacabat. Assigna una regi� a cada cel�la abans.");
+            return;
+        }
         hbc.removeDefaultRegion();
         if (! hbc.getBoard().hasSolution()){
             warn("Solucionador de Kenkens", "El kenken no t� soluci�!", "El solucionador no ha trobat cap " +
@@ -289,6 +352,11 @@ public class HBCController extends AnchorPane implements Controller {
             printer.updateContent();
         }
         hbc.createDefaultRegion();
+    }
+
+    public void cancelButtonPressed(){
+        Stage stage = (Stage) CancelButton.getScene().getWindow();
+        stage.close();
     }
 
     private void warn(String title, String header, String body){
@@ -313,11 +381,45 @@ public class HBCController extends AnchorPane implements Controller {
 
     @Override
     public void stop() {
-        
+        scene.setOnKeyPressed(Event -> {
+
+        });
     }
 
     @Override
     public void setScene(Scene scene) {
+        this.scene = scene;
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DIGIT0 || event.getCode() == KeyCode.NUMPAD0) numEvent(event,0);
+            if (event.getCode() == KeyCode.DIGIT1 || event.getCode() == KeyCode.NUMPAD1) numEvent(event,1);
+            if (event.getCode() == KeyCode.DIGIT2 || event.getCode() == KeyCode.NUMPAD2) numEvent(event,2);
+            if (event.getCode() == KeyCode.DIGIT3 || event.getCode() == KeyCode.NUMPAD3) numEvent(event,3);
+            if (event.getCode() == KeyCode.DIGIT4 || event.getCode() == KeyCode.NUMPAD4) numEvent(event,4);
+            if (event.getCode() == KeyCode.DIGIT5 || event.getCode() == KeyCode.NUMPAD5) numEvent(event,5);
+            if (event.getCode() == KeyCode.DIGIT6 || event.getCode() == KeyCode.NUMPAD6) numEvent(event,6);
+            if (event.getCode() == KeyCode.DIGIT7 || event.getCode() == KeyCode.NUMPAD7) numEvent(event,7);
+            if (event.getCode() == KeyCode.DIGIT8 || event.getCode() == KeyCode.NUMPAD8) numEvent(event,8);
+            if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
 
+            if (event.getCode()==KeyCode.A && event.isControlDown()){
+                if (printer instanceof KKPrinterMultipleSelect){
+                    ((KKPrinterMultipleSelect) printer).selectAll();
+                }
+            }
+            if (event.getCode()==KeyCode.ESCAPE){
+                if (printer instanceof KKPrinterMultipleSelect){
+                    ((KKPrinterMultipleSelect) printer).deselect();
+                }
+            }
+        });
+    }
+
+    private void numEvent(KeyEvent event, int n) {
+        if (printer instanceof KKPrinterSingleSelect) {
+            if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
+            else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
+            printer.updateCells();
+            printer.updateAnnotations();
+        }
     }
 }
