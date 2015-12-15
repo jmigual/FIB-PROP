@@ -122,12 +122,12 @@ public class BoardCreator {
         for (KKRegion r : mBoard.getKkregions()){
             for (Cell c : r.getCells()){
                 if (c.getRegion() != r){
-                    System.out.print("Cell " + c + " -/- Region " + r + "/n");
+                    System.out.println("Cell " + c + " -/- Region " + r);
                     ret = false;
                 }
                 if (mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos()) != c){
-                    System.out.print("Region " + r + " -> Cell " + c + " -/- Cell " +
-                            mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos()) + "/n");
+                    System.out.println("Region " + r + " -> Cell " + c + " --/-- Cell " +
+                            mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos()));
                     ret = false;
                 }
             }
