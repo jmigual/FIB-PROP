@@ -44,7 +44,8 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void showLoginBox() {
-        createNewWindow(new LoginBoxController(main));
+        Stage s = createNewWindow(new LoginBoxController(main));
+        s.setOnCloseRequest(event -> System.exit(0));
     }
 
     public AnchorPane getLeftArea() {
@@ -97,13 +98,14 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    private void createNewWindow(Parent c) {
+    private Stage createNewWindow(Parent c) {
         Stage shownStage = new Stage();
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(c));
         shownStage.sizeToScene();
         shownStage.getIcons().add(main.getIcon());
         shownStage.show();
+        return shownStage;
     }
 
     public void dialogCancelled() {

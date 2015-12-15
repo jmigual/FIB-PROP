@@ -1,5 +1,6 @@
 package presentacio;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import dades.PlayersAdmin;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +24,16 @@ public class LoginBoxController extends AnchorPane implements Controller {
     private AnchorPane rootLayout;
 
     @FXML
+    private TextField user;
+
+    @FXML
     private TextField userName;
 
     @FXML
     private PasswordField password;
+
+    @FXML
+    private PasswordField passwordR;
 
     @FXML
     private Label incorrect;
@@ -75,6 +82,17 @@ public class LoginBoxController extends AnchorPane implements Controller {
 
     @FXML
     private void createUser() {
+        rootLayout.getChildren().clear();
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
+        loader.setController(this);
+        loader.setRoot(this);
+
+        try {
+            rootLayout = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ((Stage) rootLayout.getScene().getWindow()).sizeToScene();
     }
 }
