@@ -102,6 +102,7 @@ public class BoardCreator {
     private boolean fits(int i, int j, int n) {
         mBoard.getColumns().get(j).calculatePossibilities();
         mBoard.getRows().get(i).calculatePossibilities();
+        mBoard.getCell(i, j).getRegion().calculatePossibilities();
         mBoard.getCell(i, j).calculatePossibilities();
         return mBoard.getCell(i, j).getPossibility(n);
     }
@@ -115,4 +116,5 @@ public class BoardCreator {
         }
         return vaux;
     }
+
 }
