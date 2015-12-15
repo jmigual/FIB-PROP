@@ -25,10 +25,12 @@ public class MainController extends AnchorPane implements Controller {
     private MainWindow main;
     private Controller actualController;
     private Stack<Controller> previousController;
+    private ControllerSwitch contSwitch;
 
     public MainController(MainWindow main) {
         this.main = main;
         this.previousController = new Stack<>();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -38,6 +40,8 @@ public class MainController extends AnchorPane implements Controller {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        contSwitch = new ControllerSwitch(leftArea);
     }
 
     public AnchorPane getLeftArea() {
@@ -59,7 +63,7 @@ public class MainController extends AnchorPane implements Controller {
 
     public void humanCreateBoardClicked(){
         HBCController hbcc = new HBCController(9);
-        switchController(hbcc);
+        contSwitch.add(hbcc);
     }
 
     public void cpuCreateBoardClicked(){
@@ -76,48 +80,13 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    private void switchController(Controller c) {
-        if (c == null) {
-            leftArea.getChildren().clear();
-            previousController.push(actualController);
-            actualController = null;
-            return;
-        }
-
-        if (actualController != null) actualController.stop();
-        leftArea.getChildren().clear();
-
-
-
-        AnchorPane newPane = c.getRootLayout();
-        AnchorPane.setBottomAnchor(newPane, 0.);
-        AnchorPane.setTopAnchor(newPane, 0.);
-        AnchorPane.setLeftAnchor(newPane, 0.);
-        AnchorPane.setRightAnchor(newPane, 0.);
-        leftArea.getChildren().add(newPane);
-        actualController = c;
-    }
-
-    private void switchPreviowsController() {
-        Controller c = previousController.pop();
-        leftArea.getChildren().clear();
-
-        if (c == null) {
-            actualController = null;
-            return;
-        }
-
-        if (actualController != null) actualController.stop();
-        
-    }
-
     public void dialogCancelled() {
-        switchController(previousController.pop());
+        contSwitch.rollBack();
     }
 
     @FXML
     private void editBoard() {
         CollectionViewController coll = new CollectionViewController(main);
-        switchController(coll);
+        contSwitch.add(coll);
     }
 }
