@@ -14,9 +14,11 @@ import presentacio.Stats.StatsGlobalController;
 import presentacio.Stats.StatsPersonalController;
 import sun.applet.Main;
 import presentacio.CollectionView.CollectionViewController;
+import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
+import java.util.Stack;
 
 /**
  * Created by Inigo on 04/12/2015.
@@ -26,13 +28,12 @@ public class MainController extends AnchorPane implements Controller {
     @FXML
     private AnchorPane leftArea;
     private AnchorPane rootLayout;
-    private Stage shownStage;
     private MainWindow main;
-    private Controller actualController;
-    private Controller previousController;
+    private ControllerSwitch contSwitch;
 
     public MainController(MainWindow main) {
         this.main = main;
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -42,6 +43,8 @@ public class MainController extends AnchorPane implements Controller {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        contSwitch = new ControllerSwitch(leftArea);
     }
 
     public AnchorPane getLeftArea() {
@@ -49,7 +52,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void configureUser() {
-        shownStage = new Stage();
+        Stage shownStage = new Stage();
         UserConfigController config = new UserConfigController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config.getRootLayout()));
@@ -58,7 +61,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void showGlobal(){
-        shownStage = new Stage();
+        Stage shownStage = new Stage();
         StatsGlobalController config = new StatsGlobalController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config));
@@ -77,7 +80,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void showPersonal(){
-        shownStage = new Stage();
+        Stage shownStage = new Stage();
         StatsPersonalController config = new StatsPersonalController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config));
@@ -87,7 +90,7 @@ public class MainController extends AnchorPane implements Controller {
 
 
     public void showByboard(){
-        shownStage = new Stage();
+        Stage shownStage = new Stage();
         StatsBoardController config = new StatsBoardController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config.getRootLayout()));
@@ -102,7 +105,7 @@ public class MainController extends AnchorPane implements Controller {
 
     public void humanCreateBoardClicked(){
         HBCController hbcc = new HBCController(main);
-        switchController(hbcc);
+        contSwitch.add(hbcc);
     }
 
     public void cpuCreateBoardClicked(){
@@ -124,29 +127,14 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    private void switchController(Controller c) {
-        if (actualController != null) {
-            actualController.stop();
-            previousController = actualController;
-        }
-        leftArea.getChildren().clear();
-        AnchorPane newPane = c.getRootLayout();
-        AnchorPane.setBottomAnchor(newPane, 0.);
-        AnchorPane.setTopAnchor(newPane, 0.);
-        AnchorPane.setLeftAnchor(newPane, 0.);
-        AnchorPane.setRightAnchor(newPane, 0.);
-        leftArea.getChildren().add(newPane);
-        actualController = c;
-        c.setScene(rootLayout.getScene());
-    }
-
     public void dialogCancelled() {
-        switchController(previousController);
+        contSwitch.switchController(null);
     }
 
     @FXML
     private void editBoard() {
-        CollectionViewController coll = new CollectionViewController(main);
-        switchController(coll);
+        contSwitch.switchController(new CollectionViewEditorController(main));
     }
+
+    public ControllerSwitch getContSwitch() { return contSwitch; }
 }
