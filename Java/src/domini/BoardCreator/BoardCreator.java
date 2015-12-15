@@ -20,6 +20,11 @@ public class BoardCreator {
     protected Table<KKBoard> mTableKKB;
     protected Random mRand;
 
+    public KKRegion getDefaultRegion() {
+        return defaultRegion;
+    }
+
+    protected KKRegion defaultRegion;
 
     public KKBoard getBoard() {
         return mBoard;
@@ -47,6 +52,7 @@ public class BoardCreator {
             }
         }
         mBoard.createRegion(tot, KKRegion.OperationType.PRODUCT, 0);
+        defaultRegion = mBoard.get_kkregions().get(0);
     }
 
     public void clearBoard() {

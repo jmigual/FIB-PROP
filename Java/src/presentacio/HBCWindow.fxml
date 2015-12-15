@@ -29,7 +29,7 @@
                <children>
                   <Button fx:id="changeModeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#changeMode" prefHeight="25.0" prefWidth="123.0" text="Canvia de mode" GridPane.rowIndex="1" />
                   <Label fx:id="modeLabel" text="Mode de creació de regions" />
-                  <Button fx:id="CreateRegionButton" mnemonicParsing="false" onAction="#createRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="4" />
+                  <Button fx:id="Create_ModifyRegionButton" mnemonicParsing="false" onAction="#create_modifyRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="4" />
                   <Button mnemonicParsing="false" text="Guarda" GridPane.rowIndex="6" />
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
                      <children>
@@ -43,6 +43,7 @@
                      </children>
                   </VBox>
                   <TextField fx:id="ResultValueInput" promptText="Resultat" GridPane.rowIndex="2" />
+                  <Button fx:id="DeleteRegionButton" mnemonicParsing="false" onAction="#deleteRegionButtonPressed" text="Elimina la regió" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </children>

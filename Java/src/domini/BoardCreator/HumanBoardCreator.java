@@ -1,7 +1,10 @@
 package domini.BoardCreator;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import dades.Table;
 import domini.Basic.Cell;
+import domini.Basic.Column;
+import domini.Basic.Row;
 import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 
@@ -49,8 +52,8 @@ public class HumanBoardCreator extends BoardCreator {
             }
         } else {
             for (Cell c : cells) {
-                if (((KKRegion) c.getRegion()).getOperationValue() != 0) {
-
+                if (c.getRegion() != defaultRegion) {
+                    deleteRegion((KKRegion) c.getRegion());
                 }
             }
         }
@@ -84,5 +87,70 @@ public class HumanBoardCreator extends BoardCreator {
         }
         mBoard.createRegion(cells, KKop, result);
         return true;
+    }
+
+    public void deleteRegion(KKRegion region){
+        ArrayList<Cell> C = region.getCells();
+        for (Cell c : C){
+            c.setRegion(defaultRegion);
+        }
+    }
+
+    public boolean isContiguous(ArrayList<Cell> C){
+        if (C.size() < 1){
+            return true;
+        }
+
+        Cell c = C.get(0);
+        ArrayList<Boolean> visited = new ArrayList<>();
+        for (int i=0; i<C.size(); ++i){
+            visited.add(false);
+        }
+        isContiguousRec(C, visited, c);
+        for (Boolean b : visited){
+            if (!b){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void isContiguousRec(ArrayList<Cell> C, ArrayList<Boolean> visited, Cell c){
+        visited.set(C.indexOf(c), true);
+        int x = c.getRow().getPos();
+        int y = c.getColumn().getPos();
+        if (x > 0){
+            Cell newc = find(C, x-1, y);
+            if (newc != null && !visited.get(C.indexOf(newc))){
+                isContiguousRec(C, visited, newc);
+            }
+        }
+        if (y > 0){
+            Cell newc = find(C, x, y-1);
+            if (newc != null && !visited.get(C.indexOf(newc))){
+                isContiguousRec(C, visited, newc);
+            }
+        }
+        if (x < mBoard.getSize()-1){
+            Cell newc = find(C, x+1, y);
+            if (newc != null && !visited.get(C.indexOf(newc))){
+                isContiguousRec(C, visited, newc);
+            }
+        }
+        if (y < mBoard.getSize()-1){
+            Cell newc = find(C, x, y+1);
+            if (newc != null && !visited.get(C.indexOf(newc))){
+                isContiguousRec(C, visited, newc);
+            }
+        }
+    }
+
+    private Cell find(ArrayList<Cell> C, int x, int y){
+        for (Cell c : C){
+            if (c.getRow().getPos() == x && c.getColumn().getPos() == y){
+                return c;
+            }
+        }
+        return null;
     }
 }

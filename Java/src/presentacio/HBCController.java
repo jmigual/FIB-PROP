@@ -47,7 +47,7 @@ public class HBCController extends AnchorPane implements Controller {
     @FXML
     private RadioButton DivisionRadioButton;
     @FXML
-    private Button CreateRegionButton;
+    private Button Create_ModifyRegionButton;
     @FXML
     private ToggleGroup OperationRadioGroup;
 
@@ -81,9 +81,11 @@ public class HBCController extends AnchorPane implements Controller {
         createRegionMode = !createRegionMode;
         if (createRegionMode) {
             printer = new KKPrinterMultipleSelect(printer);
+            Create_ModifyRegionButton.setText("Crea la regió");
             modeLabel.setText("Mode de creació de regions");
         } else {
             printer = new KKPrinterRegionSelect(printer);
+            Create_ModifyRegionButton.setText("Modifica la regió");
             modeLabel.setText("Mode d'edició de regions");
         }
     }
@@ -96,60 +98,66 @@ public class HBCController extends AnchorPane implements Controller {
     }
     */
 
-    public void createRegionButtonPressed(){
-        if (createRegionMode) {
-            ArrayList<Cell> C = new ArrayList<>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
+    public void create_modifyRegionButtonPressed() {
 
-            // Get cells
+        // Get cells
+        ArrayList<Cell> C;
+        if (createRegionMode) {
+            C = new ArrayList<>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
             C.clear();
             C = ((KKPrinterMultipleSelect) printer).getSelectedCells();
+        } else {
+            C = ((KKPrinterRegionSelect) printer).getSelectedKKRegion().getCells();
+        }
 
-            // Get operation
-            char op = '+';
-            switch (OperationRadioGroup.getSelectedToggle().toString()) {
-                case "RadioButton[id=AdditionRadioButton, styleClass=radio-button]'Suma'":
-                    op = '+';
-                    break;
-                case "RadioButton[id=ProductRadioButton, styleClass=radio-button]'Multiplicacio'":
-                    op = '*';
-                    break;
-                case "RadioButton[id=SubstractRadioButton, styleClass=radio-button]'Resta'":
-                    op = '-';
-                    break;
-                case "RadioButton[id=DivisionRadioButton, styleClass=radio-button]'Divisio'":
-                    op = '/';
-                    break;
-            }
+        // Get operation
+        char op = '+';
+        switch (OperationRadioGroup.getSelectedToggle().toString()) {
+            case "RadioButton[id=AdditionRadioButton, styleClass=radio-button]'Suma'":
+                op = '+';
+                break;
+            case "RadioButton[id=ProductRadioButton, styleClass=radio-button]'Multiplicacio'":
+                op = '*';
+                break;
+            case "RadioButton[id=SubstractRadioButton, styleClass=radio-button]'Resta'":
+                op = '-';
+                break;
+            case "RadioButton[id=DivisionRadioButton, styleClass=radio-button]'Divisio'":
+                op = '/';
+                break;
+        }
 
-            if (op == '-' && C.size() > 2){
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Entrada invalida");
-                a.setContentText("No es pot crear una regio de tipus resta amb un numero de cel.les diferent a 2.");
-                a.showAndWait();
-                return;
-            } else if (op == '/' && C.size() > 2) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Entrada invalida");
-                a.setContentText("No es pot crear una regio de tipus divisio amb un numero de cel.les diferent a 2.");
-                a.showAndWait();
-                return;
-            } else if (!isPositiveInteger(ResultValueInput.getText())) {
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setTitle("Entrada invalida");
-                a.setContentText("El resultat ha de ser un nombre natural.");
-                a.showAndWait();
-                return;
-            } else {
+        if (op == '-' && C.size() > 2) {
+            warn("Entrada invalida", "Atenció!", "No es pot crear una regio de tipus resta amb un nombre de cel.les diferent a 2.");
+            return;
+        } else if (op == '/' && C.size() > 2) {
+            warn("Entrada invalida", "Atenció!", "No es pot crear una regio de tipus divisio amb un nombre de cel.les diferent a 2.");
+            return;
+        } else if (!isPositiveInteger(ResultValueInput.getText())) {
+            warn("Entrada invalida", "Atenció!", "El resultat ha de ser un nombre natural.");
+            return;
+        } else if (C.size() < 1) {
+            warn("Entrada invalida", "Atenció!", "No has seleccionat cap cel.la.");
+            return;
+        } else {
 
-                // Get result
-                int opValue = Integer.parseInt(ResultValueInput.getText());
+            // Get result
+            int opValue = Integer.parseInt(ResultValueInput.getText());
+
+            if (createRegionMode) {
+
+                if (!hbc.isContiguous(C)){
+                    warn("Entrada invàlida", "Atenció!", "La regió que has seleccionat té parts no contigües. " +
+                            "No es pot crear una regió amb aquesta forma.");
+                    return;
+                }
 
                 try {
                     if (!hbc.createRegion(false, C, op, opValue)) {
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Aquesta regio n'elimina altres ja creades."
                                 + "Estas segur que vols crear-la i eliminar les regions que es solapen?");
                         a.setTitle("Confirmacio de l'eliminacio de regions");
-                        if (a.showAndWait().get() == ButtonType.OK){
+                        if (a.showAndWait().get() == ButtonType.OK) {
                             hbc.createRegion(true, C, op, opValue);
                         }
                     }
@@ -157,17 +165,36 @@ public class HBCController extends AnchorPane implements Controller {
                     e.printStackTrace();
                 }
 
-                printer.updateRegions();
-                ((KKPrinterMultipleSelect) printer).deselect();
+            } else {
+
+                // Modify region mode
+                if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
+                    hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
+                }
+                try {
+                    hbc.createRegion(false, C, op, opValue);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
 
-        } else {
-            Exception e = new Exception("CreateRegion called but not in createRegionMode");
-            e.printStackTrace();
+            printer.updateRegions();
+            ((KKPrinterMultipleSelect) printer).deselect();
         }
     }
 
+    public void deleteRegionButtonPressed(){
+        if (!createRegionMode){
+            if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
+                hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
+            }
+            //((KKPrinterRegionSelect) printer).deselect();
+            printer.updateRegions();
+        } else {
+            warn("Acció prohibida", "Atenció!", "No es poden eliminar regions en el mode de creació de regions.");
+        }
+    }
     private static boolean isPositiveInteger(String str) {
         if (str == null) {
             return false;
@@ -184,6 +211,14 @@ public class HBCController extends AnchorPane implements Controller {
             }
         }
         return true;
+    }
+
+    private void warn(String title, String header, String body){
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.setContentText(body);
+        a.showAndWait();
     }
 
     @Override
