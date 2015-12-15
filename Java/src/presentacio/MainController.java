@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
@@ -44,8 +45,9 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void showLoginBox() {
-        Stage s = createNewWindow(new LoginBoxController(main));
+        Stage s = createNewWindow(new LoginBoxController(main), StageStyle.UTILITY);
         s.setOnCloseRequest(event -> System.exit(0));
+        s.setTitle("Iniciar sessió");
     }
 
     public AnchorPane getLeftArea() {
@@ -99,7 +101,12 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     private Stage createNewWindow(Parent c) {
+        return createNewWindow(c, StageStyle.DECORATED);
+    }
+
+    private Stage createNewWindow(Parent c, StageStyle style) {
         Stage shownStage = new Stage();
+        shownStage.initStyle(style);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(c));
         shownStage.sizeToScene();

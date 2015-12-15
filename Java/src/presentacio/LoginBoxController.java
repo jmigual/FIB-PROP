@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -83,16 +84,21 @@ public class LoginBoxController extends AnchorPane implements Controller {
     @FXML
     private void createUser() {
         rootLayout.getChildren().clear();
+        Stage stage = (Stage) this.getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
         loader.setController(this);
         loader.setRoot(this);
+
 
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ((Stage) rootLayout.getScene().getWindow()).sizeToScene();
+
+        stage.setScene(new Scene(rootLayout));
+        stage.sizeToScene();
+        stage.centerOnScreen();
     }
 }
