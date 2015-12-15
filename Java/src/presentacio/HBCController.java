@@ -68,9 +68,13 @@ public class HBCController extends AnchorPane implements Controller {
     @FXML
     private Button ClearBoardButton;
 
-       public HBCController(Table<KKBoard> table){
+       public HBCController(MainWindow mainWindow){
 
         int size = askSize();
+
+           if (size < 0){
+               size = 3;
+           }
 
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
         loader.setRoot(this);
@@ -82,9 +86,10 @@ public class HBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        hbc = new HumanBoardCreator(size, table);
+        hbc = new HumanBoardCreator(size, mainWindow.db.getBoards());
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
+        DeleteRegionButton.setVisible(false);
     }
 
     private int askSize(){

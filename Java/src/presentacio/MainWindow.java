@@ -4,11 +4,14 @@ package presentacio;
  */
 
 import dades.KKDB;
-import dades.PlayersAdmin;
+import dades.Player;
 import dades.Table;
+import dades.PlayersAdmin;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
+import domini.stats.KKStats;
+import exceptions.PlayerNotExistsExcepction;
 import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.concurrent.Task;
@@ -31,10 +34,22 @@ public class MainWindow extends Application {
     protected GridPane gridPane;
     protected StackPane stackLeftArea;
     protected KKDB db;
+    protected KKStats mstats;
+    public Player actualPlayer;
     protected MainController mainController;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
+
+    public Table<KKBoard> getTaulers() {
+        return taulers;
+    }
+
+    public Player getActualPlayer() {
+        return actualPlayer;
+    }
+
+    protected Table<KKBoard> taulers;
 
     public static void main(String[] args) {
         launch(args);
@@ -60,8 +75,11 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) {
         db = new KKDB();
         db.load();
+        taulers = db.getBoards();
         try {
             db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
+
+
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");
         }
@@ -70,6 +88,17 @@ public class MainWindow extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
         mainController = new MainController(this);
+
+        try {
+            actualPlayer = db.getPlayersAdmin().getPlayer(mUsername);
+        } catch (PlayerNotExistsExcepction playerNotExistsExcepction) {
+            playerNotExistsExcepction.printStackTrace();
+        }
+
+
+        //Inicialitzaci� dels stats
+        this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
+
 
         initRootLayout();
 
@@ -182,5 +211,8 @@ public class MainWindow extends Application {
 
     public PlayersAdmin getPlayersAdmin() {
         return db.getPlayersAdmin();
+    }
+    public KKStats getKKStats() {
+        return mstats;
     }
 }
