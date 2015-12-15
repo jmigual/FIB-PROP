@@ -61,7 +61,7 @@ public class DriverMatch {
                                 b = taula.get(i).getBoard();
                                 p = taula.get(i).getPlayer().getUserName();
 
-                                out.println(Integer.toString(i) + ": Board " + b.get_name() + " Player " + p + "  " + s);
+                                out.println(Integer.toString(i) + ": Board " + b.getName() + " Player " + p + "  " + s);
                         }
                         out.println("Quin match vols reanudar? ");
 
@@ -79,14 +79,14 @@ public class DriverMatch {
 
                     break;
 
-                //Començar nou match
+                //Comenï¿½ar nou match
                 case 2:
                     Table<KKBoard> taulaB = db.getBoards();
 
                     if (taulaB.size() > 0) {
                         out.println("Hi ha aquests taulers: ");
                         for (int i = 0; i < taulaB.size(); i++) {
-                            out.println(Integer.toString(i) + ": " + taulaB.get(i).get_name() + " de tamany " +
+                            out.println(Integer.toString(i) + ": " + taulaB.get(i).getName() + " de tamany " +
                                     Integer.toString(taulaB.get(i).getSize())+ " fet per " + taulaB.get(i).getCreator());
                         }
                         out.println("Quin tauler vols? (si no vols cap posa -1)");

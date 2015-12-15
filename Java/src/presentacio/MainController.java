@@ -11,68 +11,106 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presentacio.Stats.StatsBoardController;
+import presentacio.Stats.StatsGlobalController;
+import presentacio.Stats.StatsPersonalController;
+import sun.applet.Main;
+import presentacio.CollectionView.CollectionViewController;
+import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * Created by Inigo on 04/12/2015.
  */
-public class MainController extends AnchorPane implements Controller {
+public class MainController extends AnchorPane {
 
     @FXML
     private AnchorPane leftArea;
-    private AnchorPane rootlayout;
-    private Stage shownStage;
+    private AnchorPane rootLayout;
     private MainWindow main;
+    private ControllerSwitch contSwitch;
     private Controller actualController;
 
-    public MainController(MainWindow main){
-        this.main=main;
+    public MainController(MainWindow main) {
+        this.main = main;
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
         try {
-            rootlayout = loader.load();
+            rootLayout = loader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        contSwitch = new ControllerSwitch(leftArea);
     }
 
     public AnchorPane getLeftArea() {
         return leftArea;
     }
 
-    public AnchorPane getRootlayout() {
-        return rootlayout;
+    public void configureUser() {
+        Stage shownStage = new Stage();
+        UserConfigController config = new UserConfigController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.sizeToScene();
+        shownStage.show();
     }
 
-    public void configureUser() {
-        boolean windowed=true;
-        if (!windowed) {
-            UserConfigController config = new UserConfigController(main);
-            switchController(config);
-        }
-        else {
-            shownStage = new Stage();
-            UserConfigController config = new UserConfigController(main);
-            shownStage.initModality(Modality.APPLICATION_MODAL);
-            shownStage.setScene(new Scene(config.getRootLayout()));
-            shownStage.sizeToScene();
-            shownStage.show();
-        }
+    public void showGlobal(){
+        Stage shownStage = new Stage();
+        StatsGlobalController config = new StatsGlobalController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config));
+        shownStage.sizeToScene();
+        shownStage.show();
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats/Stats_Global.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        try {
+            leftArea.getChildren().clear();
+            leftArea.getChildren().add(loader.load());
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }*/
     }
+
+    public void showPersonal(){
+        Stage shownStage = new Stage();
+        StatsPersonalController config = new StatsPersonalController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config));
+        shownStage.sizeToScene();
+        shownStage.show();
+    }
+
+
+    public void showByboard(){
+        Stage shownStage = new Stage();
+        StatsBoardController config = new StatsBoardController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.sizeToScene();
+        shownStage.show();
+    }
+
 
     public void exit() {
         Platform.exit();
     }
 
     public void humanCreateBoardClicked(){
-        HBCController hbcc = new HBCController(9);
-        switchController(hbcc);
+        HBCController hbcc = new HBCController(main);
+        contSwitch.add(hbcc);
     }
 
     public void createMatch(){
@@ -87,7 +125,7 @@ public class MainController extends AnchorPane implements Controller {
         if (taulaB.size() > 0) {
             out.println("Hi ha aquests taulers: ");
             for (int i = 0; i < taulaB.size(); i++) {
-                out.println(Integer.toString(i) + ": " + taulaB.get(i).get_name() + " de tamany " +
+                out.println(Integer.toString(i) + ": " + taulaB.get(i).getName() + " de tamany " +
                         Integer.toString(taulaB.get(i).getSize())+ " fet per " + taulaB.get(i).getCreator());
             }
             out.println("Quin tauler vols? (si no vols cap posa -1)");
@@ -126,7 +164,7 @@ public class MainController extends AnchorPane implements Controller {
                 b = taula.get(i).getBoard();
                 p = taula.get(i).getPlayer().getUserName();
 
-                out.println(Integer.toString(i) + ": Board " + b.get_name() + " Player " + p + "  " + s);
+                out.println(Integer.toString(i) + ": Board " + b.getName() + " Player " + p + "  " + s);
             }
             out.println("Quin match vols reanudar? ");
 
@@ -142,20 +180,11 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    @Override
     public AnchorPane getRootLayout() {
-        return rootlayout;
+        return rootLayout;
     }
 
-    @Override
-    public void stop() {
 
-    }
-
-    @Override
-    public void setScene(Scene scene) {
-
-    }
 
     private void switchController(Controller c){
         if (actualController!=null)actualController.stop();
@@ -169,4 +198,15 @@ public class MainController extends AnchorPane implements Controller {
         actualController=c;
         c.setScene(this.getScene());
     }
+
+    public void dialogCancelled() {
+        contSwitch.switchController(null);
+    }
+
+    @FXML
+    private void editBoard() {
+        contSwitch.switchController(new CollectionViewEditorController(main));
+    }
+
+    public ControllerSwitch getContSwitch() { return contSwitch; }
 }

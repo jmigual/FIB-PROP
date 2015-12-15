@@ -43,6 +43,11 @@ public class KKDB extends DB {
     }
 
     /**
+     * Returns the Players
+     */
+    public Table<Player> getPlayers() {return _players;}
+
+    /**
      * Saves all data on disc
      */
     public void save() {

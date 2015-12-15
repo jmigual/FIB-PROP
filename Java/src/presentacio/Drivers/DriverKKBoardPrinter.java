@@ -135,7 +135,7 @@ public class DriverKKBoardPrinter implements Driver {
         }
 
         // Print regions
-        ArrayList<KKRegion> regions = board.get_kkregions();
+        ArrayList<KKRegion> regions = board.getKkregions();
 
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {

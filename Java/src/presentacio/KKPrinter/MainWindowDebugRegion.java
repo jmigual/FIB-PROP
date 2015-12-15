@@ -45,7 +45,7 @@ public class MainWindowDebugRegion extends MainWindow {
         // Load root layout from xml file
         MainController mainController = new MainController(this);
         leftArea = mainController.getLeftArea();
-        rootLayout = mainController.getRootlayout();
+        rootLayout = mainController.getRootLayout();
         createGrid();
 
         // Show the scene containing the root layout

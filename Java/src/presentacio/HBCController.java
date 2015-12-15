@@ -7,6 +7,7 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -20,6 +21,8 @@ import presentacio.KKPrinter.KKPrinterRegionSelect;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by arnau_000 on 10/12/2015.
@@ -32,11 +35,11 @@ public class HBCController extends AnchorPane implements Controller {
     private FXMLLoader loader;
     private Scene scene;
     private boolean createRegionMode;
-    
+
+    private static int MAX_SIZE = 9;
+
     @FXML
     private StackPane KenkenPane;
-    @FXML
-    private Label modeLabel;
     @FXML
     private HBox gridRow3;
     @FXML
@@ -50,9 +53,30 @@ public class HBCController extends AnchorPane implements Controller {
     @FXML
     private RadioButton DivisionRadioButton;
     @FXML
-    private Button CreateRegionButton;
+    private Button Create_ModifyRegionButton;
+    @FXML
+    private ToggleGroup OperationRadioGroup;
+    @FXML
+    private Button FillWithRandomNumbersButton;
+    @FXML
+    private Button HasSolutionButton;
+    @FXML
+    private Button SolveButton;
+    @FXML
+    private Button DeleteRegionButton;
+    @FXML
+    private ToggleButton ModeToggleButton;
+    @FXML
+    private Button ClearBoardButton;
 
-    public HBCController(int size){
+       public HBCController(MainWindow mainWindow){
+
+        int size = askSize();
+
+           if (size < 0){
+               size = 3;
+           }
+
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -63,69 +87,224 @@ public class HBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        hbc = new HumanBoardCreator(size, new Table<>()); // real table should be passed
+        hbc = new HumanBoardCreator(size, mainWindow.db.getBoards());
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
-
-        KenkenPane.maxWidthProperty().bind(rootLayout.widthProperty().multiply(2).divide(3));
-
-        /* es pot fer sense -- de moment
-        // Key events
-        Scene scene = new Scene(rootLayout);
-        scene.setOnKeyTyped(event -> {
-            if (event.getCode().isDigitKey()) {
-                numberPressed(Integer.parseInt(event.getCharacter()));
-            }
-        });
-        */
+        DeleteRegionButton.setVisible(false);
     }
 
-    public void changeMode(){
+    private int askSize(){
+        List<String> choices = new ArrayList<>();
+        for (int i=2; i<=MAX_SIZE; ++i){
+            choices.add(String.valueOf(i));
+        }
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("mida", choices);
+        dialog.setTitle("Mida del kenken");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quina mida vols que tingui el kenken?");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            return Integer.parseInt(result.get());
+        }
+        return -1;
+    }
+
+    public void modeToggleButtonPressed(){
         createRegionMode = !createRegionMode;
         if (createRegionMode) {
+//            ((KKPrinterRegionSelect) printer).deselect();
             printer = new KKPrinterMultipleSelect(printer);
-            modeLabel.setText("Mode de creació de regions");
+            Create_ModifyRegionButton.setText("Crea la regiï¿½");
+            DeleteRegionButton.setVisible(false);
         } else {
+            ((KKPrinterMultipleSelect) printer).deselect();
             printer = new KKPrinterRegionSelect(printer);
-            modeLabel.setText("Mode d'edició de regions");
+            Create_ModifyRegionButton.setText("Modifica la regiï¿½");
+            DeleteRegionButton.setVisible(true);
         }
     }
 
     /*
     private void numberPressed(int n){
         if (! createRegionMode){
-            ((KKPrinterRegionSelect) printer).getSelectedKKRegion() // canviar le resultat de la KKRegion (no és trivial)
+            ((KKPrinterRegionSelect) printer).getSelectedKKRegion() // canviar le resultat de la KKRegion (no ï¿½s trivial)
         }
     }
     */
 
-    public void createRegionButtonPressed(){
-        ArrayList<Cell> C = new ArrayList<Cell>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
+    public void create_modifyRegionButtonPressed() {
 
-        C.clear();
+        // Get cells
+        ArrayList<Cell> C;
+        if (createRegionMode) {
+            C = new ArrayList<>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
+            C.clear();
+            C = ((KKPrinterMultipleSelect) printer).getSelectedCells();
+        } else {
+            C = ((KKPrinterRegionSelect) printer).getSelectedKKRegion().getCells();
+        }
+
         // Get operation
         char op = '+';
-        // Get result
-        int opValue = Integer.parseInt(ResultValueInput.getText());
-        // Get cells
-        C = ((KKPrinterMultipleSelect) printer).getSelectedCells();
-
-        try {
-            if (!hbc.createRegion(false, C, op, opValue)) {
-                System.out.print("Aquesta regió n'eliminarà altres ja creades. Segueixes volent-la crear? (s/n)");
-                String s = "s";
-                while (!s.equals("s") || !s.equals("n")) {
-                    if (s.equals("s")){
-                        hbc.createRegion(true, C, op, opValue);
-                        break;
-                    } else if (s.equals("n")) {
-                        break;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        switch (OperationRadioGroup.getSelectedToggle().toString()) {
+            case "RadioButton[id=AdditionRadioButton, styleClass=radio-button]'Suma'":
+                op = '+';
+                break;
+            case "RadioButton[id=ProductRadioButton, styleClass=radio-button]'Multiplicacio'":
+                op = '*';
+                break;
+            case "RadioButton[id=SubstractRadioButton, styleClass=radio-button]'Resta'":
+                op = '-';
+                break;
+            case "RadioButton[id=DivisionRadioButton, styleClass=radio-button]'Divisio'":
+                op = '/';
+                break;
         }
+
+        if (op == '-' && C.size() > 2) {
+            warn("Entrada invalida", "Atenciï¿½!", "No es pot crear una regio de tipus resta amb un nombre de cel.les diferent a 2.");
+            return;
+        } else if (op == '/' && C.size() > 2) {
+            warn("Entrada invalida", "Atenciï¿½!", "No es pot crear una regio de tipus divisio amb un nombre de cel.les diferent a 2.");
+            return;
+        } else if (!isPositiveInteger(ResultValueInput.getText())) {
+            warn("Entrada invalida", "Atenciï¿½!", "El resultat ha de ser un nombre natural.");
+            return;
+        } else if (C.size() < 1) {
+            warn("Entrada invalida", "Atenciï¿½!", "No has seleccionat cap cel.la.");
+            return;
+        } else {
+
+            // Get result
+            int opValue = Integer.parseInt(ResultValueInput.getText());
+
+            if (createRegionMode) {
+
+                if (!hbc.isContiguous(C)){
+                    warn("Entrada invï¿½lida", "Atenciï¿½!", "La regiï¿½ que has seleccionat tï¿½ parts no contigï¿½es. " +
+                            "No es pot crear una regiï¿½ amb aquesta forma.");
+                    return;
+                }
+
+                try {
+                    if (!hbc.createRegion(false, C, op, opValue)) {
+                        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Aquesta regio n'elimina altres ja creades."
+                                + "Estas segur que vols crear-la i eliminar les regions que es solapen?");
+                        a.setTitle("Confirmacio de l'eliminacio de regions");
+                        if (a.showAndWait().get() == ButtonType.OK) {
+                            hbc.createRegion(true, C, op, opValue);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ((KKPrinterMultipleSelect) printer).deselect();
+
+            } else {
+
+                // Modify region mode
+                if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
+                    hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
+                }
+                try {
+                    hbc.createRegion(false, C, op, opValue);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//                ((KKPrinterRegionSelect) printer).deselect();
+
+            }
+
+            printer.updateRegions();
+        }
+    }
+
+    public void deleteRegionButtonPressed(){
+        if (!createRegionMode){
+            if (((KKPrinterRegionSelect) printer).getSelectedKKRegion() != hbc.getDefaultRegion()) {
+                hbc.deleteRegion(((KKPrinterRegionSelect) printer).getSelectedKKRegion());
+            }
+            //((KKPrinterRegionSelect) printer).deselect();
+            printer.updateRegions();
+        } else {
+            warn("Acciï¿½ prohibida", "Atenciï¿½!", "No es poden eliminar regions en el mode de creaciï¿½ de regions.");
+        }
+    }
+
+    private static boolean isPositiveInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void fillWithRandomNumbersButtonPressed(){
+        hbc.removeDefaultRegion();
+        hbc.fillBoardWithRandomNumbers();
+        hbc.createDefaultRegion();
+        printer.updateCells();
+    }
+
+    public void clearBoardButtonPressed(){
+        hbc.clearBoard();
+        printer.updateCells();
+    }
+
+    public void hasSolutionButtonPressed(){
+        if (!hbc.isFinished()){
+            warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la soluciï¿½ d'un kenken " +
+                    "inacabat. Assigna una regiï¿½ a cada celï¿½la abans.");
+            return;
+        }
+        hbc.removeDefaultRegion();
+        if (hbc.getBoard().hasSolution()) {
+            inform("Solucionador de Kenkens", "El Kenken tï¿½ soluciï¿½!", "El solucionador ha trobat com a mï¿½nim una " +
+                    "soluciï¿½ al Kenken proposat.");
+        } else {
+            inform("Solucionador de Kenkens", "El Kenken no tï¿½ soluciï¿½!", "El solucionador no ha trobat cap " +
+                    "soluciï¿½ al Kenken proposat.");
+        }
+        hbc.createDefaultRegion();
+    }
+
+    public void solveButtonPressed(){
+        hbc.removeDefaultRegion();
+        if (! hbc.getBoard().hasSolution()){
+            warn("Solucionador de Kenkens", "El kenken no tï¿½ soluciï¿½!", "El solucionador no ha trobat cap " +
+                    "soluciï¿½ al kenken proposat.");
+        } else {
+            hbc.getBoard().solve();
+            printer.updateContent();
+        }
+        hbc.createDefaultRegion();
+    }
+
+    private void warn(String title, String header, String body){
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.setContentText(body);
+        a.showAndWait();
+    }
+    private void inform(String title, String header, String body) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.setContentText(body);
+        a.showAndWait();
     }
 
     @Override

@@ -18,7 +18,7 @@
                   <items>
                         <MenuItem mnemonicParsing="false" onAction="#cpuCreateBoardClicked" text="Crea un tauler utilitzant la CPU" />
                         <MenuItem mnemonicParsing="false" onAction="#humanCreateBoardClicked" text="Crea un tauler manualment" />
-                        <MenuItem mnemonicParsing="false" text="Edita un tauler" />
+                        <MenuItem mnemonicParsing="false" onAction="#editBoard" text="Edita un tauler" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#createMatch" text="Crea una partida" />
                         <MenuItem mnemonicParsing="false" onAction="#loadMatch" text="Carrega una partida" />
@@ -37,9 +37,9 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Estadístiques">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Millors puntuacions" />
-                        <MenuItem mnemonicParsing="false" text="Millors usuaris" />
-                        <MenuItem mnemonicParsing="false" text="Reinicia" />
+                        <MenuItem fx:id="Personal" mnemonicParsing="false" onAction="#showPersonal" text="Personals" />
+                        <MenuItem fx:id="Global" mnemonicParsing="false" onAction="#showGlobal" text="Globals" />
+                        <MenuItem mnemonicParsing="false" onAction="#showByboard" text="Per taulers" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ajuda">

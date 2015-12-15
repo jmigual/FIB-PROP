@@ -32,7 +32,8 @@ public class KKPrinterSingleSelect extends KKPrinter {
     protected void select(StackPane location, boolean dragged) {
         int i = GridPane.getRowIndex(location);
         int j = GridPane.getColumnIndex(location);
-        selectedCell=board.getCell(i,j);
+        if (board.getCell(i,j)==selectedCell)selectedCell=null;
+        else selectedCell=board.getCell(i,j);
         updateCells();
     }
 

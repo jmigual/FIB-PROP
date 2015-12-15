@@ -81,7 +81,7 @@ public class UserConfigController extends AnchorPane implements Controller {
 
     @Override
     public AnchorPane getRootLayout() {
-        return rootLayout;
+        return this;
     }
 
     @Override
