@@ -1,13 +1,8 @@
 package presentacio;
 
-import dades.KKDB;
-import dades.Table;
-import domini.Basic.Match;
-import domini.KKBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -15,18 +10,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import presentacio.CollectionView.CollectionViewEditorController;
-import javafx.stage.StageStyle;
 import presentacio.CollectionView.CollectionViewController;
-import presentacio.CollectionView.CollectionViewEditorController;
+import presentacio.LoginScreen.LoginBoxController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
 import presentacio.Stats.StatsPersonalController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * Created by Inigo on 04/12/2015.
