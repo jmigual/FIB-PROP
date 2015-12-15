@@ -11,6 +11,7 @@ import presentacio.CollectionView.CollectionViewController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
+import java.util.Stack;
 
 /**
  * Created by Inigo on 04/12/2015.
@@ -23,10 +24,11 @@ public class MainController extends AnchorPane implements Controller {
     private Stage shownStage;
     private MainWindow main;
     private Controller actualController;
-    private Controller previousController;
+    private Stack<Controller> previousController;
 
     public MainController(MainWindow main) {
         this.main = main;
+        this.previousController = new Stack<>();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -75,11 +77,18 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     private void switchController(Controller c) {
-        if (actualController != null) {
-            actualController.stop();
-            previousController = actualController;
+        if (c == null) {
+            leftArea.getChildren().clear();
+            previousController.push(actualController);
+            actualController = null;
+            return;
         }
+
+        if (actualController != null) actualController.stop();
         leftArea.getChildren().clear();
+
+
+
         AnchorPane newPane = c.getRootLayout();
         AnchorPane.setBottomAnchor(newPane, 0.);
         AnchorPane.setTopAnchor(newPane, 0.);
@@ -89,8 +98,21 @@ public class MainController extends AnchorPane implements Controller {
         actualController = c;
     }
 
+    private void switchPreviowsController() {
+        Controller c = previousController.pop();
+        leftArea.getChildren().clear();
+
+        if (c == null) {
+            actualController = null;
+            return;
+        }
+
+        if (actualController != null) actualController.stop();
+        
+    }
+
     public void dialogCancelled() {
-        switchController(previousController);
+        switchController(previousController.pop());
     }
 
     @FXML
