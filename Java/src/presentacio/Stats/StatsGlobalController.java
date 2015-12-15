@@ -8,10 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import presentacio.Controller;
 import presentacio.MainWindow;
 
 import java.io.IOException;
@@ -19,7 +21,8 @@ import java.io.IOException;
 /**
  * Created by Esteve on 14/12/2015.
  */
-public class StatsGlobalController extends AnchorPane {
+
+public class StatsGlobalController extends AnchorPane implements Controller {
 
     private KKStats mStats;
 
@@ -75,5 +78,20 @@ public class StatsGlobalController extends AnchorPane {
         info.add(new InfoRanking(1, "Pere Marc antoni", 15));
         info.add(new InfoRanking(2, "Maria", 123));*/
         return info;
+    }
+
+    @Override
+    public AnchorPane getRootLayout() {
+        return this;
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void setScene(Scene scene) {
+
     }
 }

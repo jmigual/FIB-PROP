@@ -8,6 +8,8 @@ public class InfoRanking {
     private String name;
     private Integer score;
 
+    // Comentari troll perquè no es canvii de nom
+
     public InfoRanking(){
         this.rank = -1;
         this.name = "";

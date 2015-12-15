@@ -7,16 +7,20 @@ import domini.KKBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import presentacio.CollectionView.CollectionViewEditorController;
+import javafx.stage.StageStyle;
+import presentacio.CollectionView.CollectionViewController;
+import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
 import presentacio.Stats.StatsPersonalController;
-import sun.applet.Main;
-import presentacio.CollectionView.CollectionViewController;
-import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
@@ -34,7 +38,6 @@ public class MainController extends AnchorPane implements Controller {
     private AnchorPane rootLayout;
     private MainWindow main;
     private ControllerSwitch contSwitch;
-    private Controller actualController;
 
     public MainController(MainWindow main) {
         this.main = main;
@@ -52,55 +55,31 @@ public class MainController extends AnchorPane implements Controller {
         contSwitch = new ControllerSwitch(leftArea);
     }
 
+    public void showLoginBox() {
+        Stage s = createNewWindow(new LoginBoxController(main), StageStyle.UTILITY);
+        s.setOnCloseRequest(event -> System.exit(0));
+        s.setTitle("Iniciar sessió");
+    }
+
     public AnchorPane getLeftArea() {
         return leftArea;
     }
 
     public void configureUser() {
-        Stage shownStage = new Stage();
-        UserConfigController config = new UserConfigController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config.getRootLayout()));
-        shownStage.sizeToScene();
-        shownStage.show();
+        createNewWindow(new UserConfigController(main));
     }
 
-    public void showGlobal(){
-        Stage shownStage = new Stage();
-        StatsGlobalController config = new StatsGlobalController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config));
-        shownStage.sizeToScene();
-        shownStage.show();
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats/Stats_Global.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
-        try {
-            leftArea.getChildren().clear();
-            leftArea.getChildren().add(loader.load());
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }*/
+    public void showGlobal() {
+        createNewWindow(new StatsGlobalController(main));
     }
 
-    public void showPersonal(){
-        Stage shownStage = new Stage();
-        StatsPersonalController config = new StatsPersonalController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config));
-        shownStage.sizeToScene();
-        shownStage.show();
+    public void showPersonal() {
+        createNewWindow(new StatsPersonalController(main));
     }
 
 
-    public void showByboard(){
-        Stage shownStage = new Stage();
-        StatsBoardController config = new StatsBoardController(main);
-        shownStage.initModality(Modality.APPLICATION_MODAL);
-        shownStage.setScene(new Scene(config.getRootLayout()));
-        shownStage.sizeToScene();
-        shownStage.show();
+    public void showByboard() {
+        createNewWindow(new StatsBoardController(main));
     }
 
 
@@ -108,7 +87,7 @@ public class MainController extends AnchorPane implements Controller {
         Platform.exit();
     }
 
-    public void humanCreateBoardClicked(){
+    public void humanCreateBoardClicked() {
         HBCController hbcc = new HBCController(main);
         contSwitch.add(hbcc);
     }
@@ -126,6 +105,7 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
+    @Override
     public AnchorPane getRootLayout() {
         return rootLayout;
     }
@@ -140,6 +120,21 @@ public class MainController extends AnchorPane implements Controller {
         contSwitch.setScene(scene);
     }
 
+    private Stage createNewWindow(Parent c) {
+        return createNewWindow(c, StageStyle.DECORATED);
+    }
+
+    private Stage createNewWindow(Parent c, StageStyle style) {
+        Stage shownStage = new Stage();
+        shownStage.initStyle(style);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(c));
+        shownStage.sizeToScene();
+        shownStage.getIcons().add(main.getIcon());
+        shownStage.show();
+        return shownStage;
+    }
+
     public void dialogCancelled() {
         contSwitch.switchController(null);
     }
@@ -149,5 +144,7 @@ public class MainController extends AnchorPane implements Controller {
         contSwitch.switchController(new CollectionViewEditorController(main));
     }
 
-    public ControllerSwitch getContSwitch() { return contSwitch; }
+    public ControllerSwitch getContSwitch() {
+        return contSwitch;
+    }
 }
