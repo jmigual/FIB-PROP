@@ -49,7 +49,6 @@ public class StatsPersonalController extends AnchorPane {
         loader.setRoot(this);
         loader.setController(this);
 
-        createDefault(main.actualPlayer);
 
         try {
             rootLayout = loader.load();
@@ -57,26 +56,22 @@ public class StatsPersonalController extends AnchorPane {
             e.printStackTrace();
         }
 
+        createDefault(main.actualPlayer);
 
 
     }
 
     private void createDefault(Player actual) {
-        puntuaciofm = new Label();
         Integer aux = mStats.score(actual);
         puntuaciofm.textProperty().setValue(aux.toString());
 
-        posiciofm = new Label();
         aux = mStats.rank(actual);
         posiciofm.textProperty().setValue(aux.toString());
 
-        boardsfm = new Label();
         aux = mStats.countMatches(actual);
         boardsfm.textProperty().setValue(aux.toString());
 
-        matchesfm = new Label();
         aux = mStats.countSolvedGames(actual);
-
         matchesfm.textProperty().setValue(aux.toString());
         
 

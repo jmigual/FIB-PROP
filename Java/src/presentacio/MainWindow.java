@@ -40,6 +40,16 @@ public class MainWindow extends Application {
     Thread thread;
     protected String mUsername;
 
+    public Table<KKBoard> getTaulers() {
+        return taulers;
+    }
+
+    public Player getActualPlayer() {
+        return actualPlayer;
+    }
+
+    protected Table<KKBoard> taulers;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -58,6 +68,7 @@ public class MainWindow extends Application {
         db.load();
         try {
             db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
+            taulers = db.getBoards();
 
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");
@@ -74,7 +85,7 @@ public class MainWindow extends Application {
         }
 
 
-        //Inicialització dels stats
+        //Inicialitzaciï¿½ dels stats
         this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
 
 

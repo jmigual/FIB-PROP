@@ -10,10 +10,9 @@
       <Label layoutX="63.0" layoutY="129.0" prefHeight="17.0" prefWidth="117.0" text="Nombre de partides:" />
       <Label layoutX="63.0" layoutY="92.0" prefHeight="17.0" prefWidth="117.0" text="Posició:" />
       <Label layoutX="63.0" layoutY="160.0" prefHeight="17.0" prefWidth="211.0" text="Nombre de taulers resolts:" />
-      <Label fx:id="puntuaciofm" layoutX="259.0" layoutY="58.0" text="0000" />
-      <Label fx:id="posiciofm" layoutX="259.0" layoutY="87.0" text="0000" />
-      <Label fx:id="boardsfm" layoutX="260.0" layoutY="157.0" text="0000" />
-      <Label fx:id="matchesfm" layoutX="260.0" layoutY="123.0" text="0000" />
-      <DatePicker />
+      <Label fx:id="puntuaciofm" layoutX="262.0" layoutY="60.0" text="0000" />
+      <Label fx:id="posiciofm" layoutX="262.0" layoutY="89.0" text="0000" />
+      <Label fx:id="boardsfm" layoutX="263.0" layoutY="159.0" text="0000" />
+      <Label fx:id="matchesfm" layoutX="263.0" layoutY="125.0" text="0000" />
    </children>
 </fx:root>

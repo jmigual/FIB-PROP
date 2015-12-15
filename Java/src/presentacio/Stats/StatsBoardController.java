@@ -4,6 +4,8 @@ import dades.KKDB;
 import dades.Table;
 import domini.KKBoard;
 import domini.stats.KKStats;
+import domini.stats.Playable;
+import exceptions.PlayerExistsException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,27 +44,25 @@ public class StatsBoardController extends AnchorPane {
         loader.setRoot(this);
         loader.setController(this);
 
-        showCombo();
-
-        createDefault();
 
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        showCombo(main.getTaulers());
+
+        createDefault(main.getTaulers());
     }
-    private void showCombo(){
-        KKDB db = new KKDB();
-        db.load();
-        Table<KKBoard> boards = db.getBoards();
+    private void showCombo(Table<KKBoard> boards){
         for(int i=0; i<boards.size(); ++i){
             combofm.getItems().add(boards.get(i).get_name());
         }
 
     }
 
-    private void createDefault() {
+    private void createDefault(Table<KKBoard> boards) {
         // rank column
         TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Position");
         rankColumn.setMinWidth(50);
@@ -78,8 +78,16 @@ public class StatsBoardController extends AnchorPane {
         scoreColumn.setMinWidth(50);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
+        //Select game
+
+        KKBoard Selected = null;
+        for (KKBoard board : boards) {
+            if(board.get_name() == combofm.getSelectionModel().toString()) Selected = board;
+
+        }
+
         table = new TableView<>();
-        table.setItems(getStubItems());
+        table.setItems(getStubItems(Selected));
         table.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
 
         this.getChildren().add(table);
@@ -98,11 +106,11 @@ public class StatsBoardController extends AnchorPane {
         return result;
     }
 
-    public ObservableList<InfoRanking> getStubItems() {
+    public ObservableList<InfoRanking> getStubItems(Playable game) {
         ObservableList<InfoRanking> info = FXCollections.observableArrayList();
-        for(int i=0; i<mStats.rankingGlobal().getSize(); ++i){
-            info.add(new InfoRanking(i,mStats.rankingGlobal().getPlayer(i).getName(),
-                    mStats.rankingGlobal().getValue(i)));
+        for(int i=0; i<mStats.recordsGame(game).getSize(); ++i){
+            info.add(new InfoRanking(i,mStats.recordsGame(game).getPlayer(i).getName(),
+                    mStats.recordsGame(game).getValue(i)));
         }
         return info;
     }

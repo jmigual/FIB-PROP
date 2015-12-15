@@ -87,6 +87,7 @@ public class MainController extends AnchorPane {
         shownStage.show();
     }
 
+
     public void showByboard(){
         shownStage = new Stage();
         StatsBoardController config = new StatsBoardController(main);
