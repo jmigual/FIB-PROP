@@ -199,5 +199,10 @@ public class HumanBoardCreator extends BoardCreator {
 
     public void addTroll(KKRegion troll){
         mBoard.getKkregions().add(0, troll);
+        for (Cell c : troll.getCells()){
+            if (c != mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos())){
+                c = mBoard.getCell(c.getRow().getPos(), c.getColumn().getPos());
+            }
+        }
     }
 }

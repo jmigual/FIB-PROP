@@ -187,12 +187,16 @@ public class HBCController extends AnchorPane implements Controller {
             ModeToggleButton.setVisible(true);
         }
 
+        checkConsistency();
+    }
+
+    public void checkConsistency(){
         KKRegion troll = hbc.removeTroll();
         if (!hbc.hasConsistentState()){
             warn("Estat inconsistent!", null, "");
+            System.out.println();
         }
         hbc.addTroll(troll);
-
     }
 
     public void create_modifyRegionButtonPressed() {
@@ -356,6 +360,8 @@ public class HBCController extends AnchorPane implements Controller {
             printer.updateContent();
         }
         hbc.addTroll(troll);
+
+        checkConsistency();
     }
 
     public void cancelButtonPressed(){
