@@ -1,5 +1,7 @@
 package presentacio;
 
+import dades.Table;
+import domini.KKBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +58,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void humanCreateBoardClicked(){
-        HBCController hbcc = new HBCController(9);
+        HBCController hbcc = new HBCController(new Table<KKBoard>()); // real table should be passed
         switchController(hbcc);
     }
 
