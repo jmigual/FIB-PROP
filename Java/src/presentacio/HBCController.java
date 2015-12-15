@@ -7,8 +7,10 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -16,7 +18,6 @@ import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterRegionSelect;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -66,6 +67,8 @@ public class HBCController extends AnchorPane implements Controller {
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
 
+        KenkenPane.maxWidthProperty().bind(rootLayout.widthProperty().multiply(2).divide(3));
+
         /* es pot fer sense -- de moment
         // Key events
         Scene scene = new Scene(rootLayout);
@@ -96,7 +99,7 @@ public class HBCController extends AnchorPane implements Controller {
     }
     */
 
-    public void createRegionbuttonPressed(){
+    public void createRegionButtonPressed(){
         ArrayList<Cell> C = new ArrayList<Cell>(hbc.getBoard().getSize() * hbc.getBoard().getSize());
 
         C.clear();
@@ -133,5 +136,10 @@ public class HBCController extends AnchorPane implements Controller {
     @Override
     public void stop() {
         
+    }
+
+    @Override
+    public void setScene(Scene scene) {
+
     }
 }

@@ -20,8 +20,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#humanCreateBoardClicked" text="Crea un tauler manualment" />
                         <MenuItem mnemonicParsing="false" text="Edita un tauler" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Crea una partida" />
-                        <MenuItem mnemonicParsing="false" text="Carrega una partida" />
+                        <MenuItem mnemonicParsing="false" onAction="#createMatch" text="Crea una partida" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadMatch" text="Carrega una partida" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Desa" />
                         <MenuItem mnemonicParsing="false" text="Anomena i desa" />

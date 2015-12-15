@@ -36,8 +36,7 @@ public class Match implements Matchable {
         _db = new KKDB();
         _db.load();
         _playersAdmin = _db.getPlayersAdmin();
-        DriverAdminPlayers _driverAP;
-        _driverAP = new DriverAdminPlayers(_playersAdmin);
+
         try {
             return _playersAdmin.getPlayer(_player);
         } catch (PlayerNotExistsExcepction e) {
@@ -134,7 +133,7 @@ public class Match implements Matchable {
         //CHECK ERROR
         if (!_board.getColumns().get(j-1).isCorrect() || !_board.getRows().get(i-1).isCorrect()){
             _penalty = _penalty + 10;                                                                   //PENALITZACIO PER FER ERROR
-            move.revertMove();
+            //move.revertMove();
             return false;
         }
 
@@ -148,6 +147,7 @@ public class Match implements Matchable {
 
     /** Undo, returns false if it can't be done*/
     public boolean back() {
+        //_penalty = _penalty + 10;                                                                     //PENALITZACIO PER FER RETURN
         if (_index == -1) return false;
         _moves.get(_index).revertMove();
         --_index;
@@ -195,7 +195,7 @@ public class Match implements Matchable {
         ArrayList<Cell> ret = new ArrayList<>();
         switch (num) {
             case 0:
-                _penalty = _penalty + 10;                                                             //PENALITZACIO PER COMPROVAR
+                _penalty = _penalty + 30;                                                             //PENALITZACIO PER COMPROVAR
                 for (int i=0; i<_board._size; ++i) {
                     for (int j = 0; j<_board._size; ++j){
                         Cell cell = _board.getCell(i,j);
@@ -206,7 +206,7 @@ public class Match implements Matchable {
                 break;
 
             case 1:
-                _penalty = _penalty + 20;                                                             //PENALITZACIO PER OBTENIR NUMERO
+                _penalty = _penalty + 60;                                                             //PENALITZACIO PER OBTENIR NUMERO
 
                 if (isComplete()) return null;
 

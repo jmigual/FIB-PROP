@@ -29,7 +29,7 @@ public class MainWindow extends Application {
     protected AnchorPane rootLayout;
     protected GridPane gridPane;
     protected StackPane stackLeftArea;
-    protected KKDB db;
+    public static KKDB db;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
@@ -51,6 +51,7 @@ public class MainWindow extends Application {
         db = new KKDB();
         db.load();
         try {
+            db.getPlayersAdmin().createPlayer("CPU", "CPU", "CPU");
             db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");

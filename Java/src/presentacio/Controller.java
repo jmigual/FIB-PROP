@@ -1,5 +1,6 @@
 package presentacio;
 
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -8,4 +9,5 @@ import javafx.scene.layout.AnchorPane;
 public interface Controller {
     AnchorPane getRootLayout();
     void stop();
+    void setScene(Scene scene);
 }
