@@ -52,7 +52,7 @@ public class BoardCreator {
             }
         }
         mBoard.createRegion(tot, KKRegion.OperationType.PRODUCT, 0);
-        defaultRegion = mBoard.get_kkregions().get(0);
+        defaultRegion = mBoard.getKkregions().get(0);
     }
 
     public void clearBoard() {
@@ -134,16 +134,16 @@ public class BoardCreator {
     }
 
     public void removeDefaultRegion(){
-        mBoard.get_kkregions().remove(mBoard.get_kkregions().indexOf(defaultRegion));
+        mBoard.getKkregions().remove(mBoard.getKkregions().indexOf(defaultRegion));
     }
 
     public void createDefaultRegion(){
         // Copy all regions to aux and then delete them
         ArrayList<KKRegion> aux = new ArrayList<>();
-        int n = mBoard.get_kkregions().size();
+        int n = mBoard.getKkregions().size();
         for (int i=0; i<n; ++i){
-            aux.add(mBoard.get_kkregions().get(0));
-            mBoard.get_kkregions().remove(0);
+            aux.add(mBoard.getKkregions().get(0));
+            mBoard.getKkregions().remove(0);
         }
         // Create a default region for the whole Board
         ArrayList<Cell> tot = new ArrayList<Cell>(mSize * mSize);
@@ -153,7 +153,7 @@ public class BoardCreator {
             }
         }
         mBoard.createRegion(tot, KKRegion.OperationType.PRODUCT, 0);
-        defaultRegion = mBoard.get_kkregions().get(0);
+        defaultRegion = mBoard.getKkregions().get(0);
         // Create copies of the regions in aux
         for (KKRegion r : aux){
             mBoard.createRegion(r.getCells(), r.getOperation(), r.getOperationValue());
