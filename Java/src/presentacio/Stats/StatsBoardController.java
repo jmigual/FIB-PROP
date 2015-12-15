@@ -58,7 +58,7 @@ public class StatsBoardController extends AnchorPane {
     private void showCombo(){
         ObservableList<String> options= FXCollections.observableArrayList();;
         for(int i=0; i<boards.size(); ++i){
-            options.add(boards.get(i).get_name());
+            options.add(boards.get(i).getName());
         }
 
         combofm.setItems(options);
@@ -92,7 +92,7 @@ public class StatsBoardController extends AnchorPane {
 
         KKBoard Selected = null;
         for (KKBoard board : boards) {
-            if(board.get_name() == combofm.getSelectionModel().getSelectedItem().toString()) Selected = board;
+            if(board.getName() == combofm.getSelectionModel().getSelectedItem().toString()) Selected = board;
 
         }
 
