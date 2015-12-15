@@ -78,10 +78,32 @@ public class CollectionViewController extends AnchorPane implements Controller {
         names.add("joan");
         names.add("anna");
         names.add("admin");
+        names.add("joan2");
+        names.add("pere");
+        names.add("joan3");
+        names.add("anna3");
+        names.add("admin3");
+        names.add("joan23");
+        names.add("pere4");
+        names.add("joan5");
+        names.add("anna5");
+        names.add("admi5n");
+        names.add("joan25");
+        names.add("pere6");
+        names.add("joan6");
+        names.add("anna6");
+        names.add("admin6");
+        names.add("joan26");
+        names.add("pere7");
+        names.add("joan7");
+        names.add("anna7");
+        names.add("admin7");
+        names.add("joan27");
 
 
-        if (mBoards.size() < 10) {
-            for (int i = 0; i < 10; ++i) {
+
+        if (mBoards.size() < 25) {
+            for (int i = 0; i < 25; ++i) {
                 try {
                     creator.createBoard();
                 } catch (Exception e) {
@@ -119,8 +141,8 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     public HBox createPane(KKBoard board) {
         HBox all = new HBox();
-        all.setMinHeight(50.0);
-        all.setPrefHeight(50.0);
+        all.setMinHeight(300.0);
+        all.setPrefHeight(300.0);
         VBox.setVgrow(all, Priority.SOMETIMES);
         
         VBox text = new VBox();
