@@ -18,20 +18,19 @@
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="changeModeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#changeMode" prefHeight="25.0" prefWidth="123.0" text="Canvia de mode" GridPane.rowIndex="1" />
-                  <Label fx:id="modeLabel" text="Mode de creació de regions" />
-                  <Button fx:id="CreateRegionButton" mnemonicParsing="false" onAction="#createRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="4" />
-                  <Button mnemonicParsing="false" text="Guarda" GridPane.rowIndex="6" />
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+                  <Button fx:id="Create_ModifyRegionButton" mnemonicParsing="false" onAction="#create_modifyRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="5" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
                      <children>
                         <RadioButton fx:id="AdditionRadioButton" mnemonicParsing="false" selected="true" text="Suma">
                            <toggleGroup>
@@ -42,7 +41,13 @@
                         <RadioButton fx:id="DivisionRadioButton" mnemonicParsing="false" text="Divisio" toggleGroup="$OperationRadioGroup" />
                      </children>
                   </VBox>
-                  <TextField fx:id="ResultValueInput" promptText="Resultat" GridPane.rowIndex="2" />
+                  <TextField fx:id="ResultValueInput" promptText="Resultat" GridPane.rowIndex="3" />
+                  <Button fx:id="DeleteRegionButton" mnemonicParsing="false" onAction="#deleteRegionButtonPressed" text="Elimina la regió" GridPane.rowIndex="6" />
+                  <Button fx:id="HasSolutionButton" mnemonicParsing="false" onAction="#hasSolutionButtonPressed" text="Té solució?" GridPane.rowIndex="7" />
+                  <Button fx:id="SolveButton" mnemonicParsing="false" onAction="#solveButtonPressed" text="Resoldre" GridPane.rowIndex="8" />
+                  <Button fx:id="FillWithRandomNumbersButton" mnemonicParsing="false" onAction="#fillWithRandomNumbersButtonPressed" text="Omple de números aleatoris" />
+                  <ToggleButton fx:id="ModeToggleButton" mnemonicParsing="false" onAction="#modeToggleButtonPressed" text="Mode d'edició de regions" GridPane.rowIndex="2" />
+                  <Button fx:id="ClearBoardButton" mnemonicParsing="false" onAction="#clearBoardButtonPressed" text="Buida el tauler de números" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>
