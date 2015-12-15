@@ -3,10 +3,14 @@ package presentacio;
 import domini.Basic.Cell;
 import domini.Basic.Match;
 import domini.BoardCreator.HumanBoardCreator;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +19,7 @@ import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
 
+import javafx.util.Duration;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +38,9 @@ public class MatchController extends AnchorPane implements Controller {
 
     @FXML
     private Button ann;
+
+    @FXML
+    private Label score;
 
     public Match getMatch(){
         return _match;
@@ -55,6 +63,16 @@ public class MatchController extends AnchorPane implements Controller {
 
         _match = match;
         printer = new KKPrinterSingleSelect(_match.getBoard(), kenken);
+        score.setText("0");
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),
+                ae -> periodic()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+
+    private void periodic (){
+        score.setText(Long.toString(_match.getScore()));
     }
 
     @Override

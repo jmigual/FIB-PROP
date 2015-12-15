@@ -1,6 +1,5 @@
-package presentacio;
+package presentacio.LoginScreen;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import dades.PlayersAdmin;
 import exceptions.PlayerExistsException;
 import javafx.fxml.FXML;
@@ -10,10 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import presentacio.Controller;
+import presentacio.MainWindow;
 
 import java.io.IOException;
 
