@@ -6,9 +6,8 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinterNoSelect;
@@ -29,15 +28,26 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     protected HashMap<String, CheckBox> mPlayers;
 
+    protected ArrayList<RadioButton> mSelBoard;
+
+    protected KKPrinterNoSelect mPrinter;
+
+    protected MainWindow mMain;
+
     @FXML
     protected VBox leftArea;
 
     @FXML
     protected VBox rightArea;
 
+    @FXML
+    protected StackPane kkPane;
+
     public CollectionViewController(MainWindow main) {
         mBoards = main.getBoards();
         mPlayers = new HashMap<>();
+        mSelBoard = new ArrayList<>();
+        mMain = main;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("CollectionView.fxml"));
         loader.setController(this);
@@ -57,6 +67,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
         stubCreaTaulers();
         loadPlayers();
+        createBoardsPane();
         applyFilters();
     }
 
@@ -101,7 +112,6 @@ public class CollectionViewController extends AnchorPane implements Controller {
         names.add("joan27");
 
 
-
         if (mBoards.size() < 25) {
             for (int i = 0; i < 25; ++i) {
                 try {
@@ -134,26 +144,36 @@ public class CollectionViewController extends AnchorPane implements Controller {
     }
 
     public void applyFilters() {
-        for (KKBoard board : mBoards) {
-            if (mPlayers.get(board.getCreator()).isSelected()) rightArea.getChildren().add(createPane(board));
-        } 
+        for (RadioButton but : mSelBoard) {
+            KKBoard board = (KKBoard) but.getUserData();
+            boolean view = mPlayers.get(board.getCreator()).isSelected();
+            but.setVisible(view);
+            but.setManaged(view);
+        }
     }
 
-    public HBox createPane(KKBoard board) {
-        HBox all = new HBox();
-        all.setMinHeight(300.0);
-        all.setPrefHeight(300.0);
-        VBox.setVgrow(all, Priority.SOMETIMES);
-        
-        VBox text = new VBox();
-        text.getChildren().add(new Label("Nom: " + board.getName()));
-        text.getChildren().add(new Label("Tamany: " + Integer.toString(board.getSize())));
-        StackPane pane = new StackPane();
-        HBox.setHgrow(pane, Priority.ALWAYS);
-        KKPrinterNoSelect printer = new KKPrinterNoSelect(board, pane);
-        all.getChildren().addAll(text, pane);
+    protected void createBoardsPane() {
 
-        return all;
+        ToggleGroup toggle = new ToggleGroup();
+        for (KKBoard board : mBoards) {
+            RadioButton radio = new RadioButton();
+            radio.setUserData(board);
+            radio.setToggleGroup(toggle);
+            radio.setText(board.getName() +
+                    " de tamany: " + Integer.toString(board.getSize()) +
+                    "  Creat per: " + board.getCreator());
+
+            radio.setOnAction(event -> {
+                if (mPrinter == null) mPrinter = new KKPrinterNoSelect((KKBoard)radio.getUserData(), kkPane);
+                else {
+                    mPrinter.setBoard((KKBoard)radio.getUserData());
+                    mPrinter.updateRegions();
+                }
+            });
+
+            rightArea.getChildren().add(radio);
+            mSelBoard.add(radio);
+        }
     }
 
     @FXML
@@ -163,6 +183,6 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     @FXML
     public void dialogReject() {
-
+        mMain.getMainController().dialogCancelled();
     }
 }

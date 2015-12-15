@@ -93,7 +93,7 @@ public class MainWindow extends Application {
         AnchorPane.setLeftAnchor(stackLeftArea, 0.);
         AnchorPane.setRightAnchor(stackLeftArea, 0.);
         anchorLeftArea.getChildren().add(stackLeftArea);
-        rootLayout = mainController.getRootlayout();
+        rootLayout = mainController.getRootLayout();
         createGrid();
 
         // Show the scene containing the root layout
@@ -156,8 +156,8 @@ public class MainWindow extends Application {
 
 
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
-
     }
 
     private void numEvent(KeyEvent event, int n) {

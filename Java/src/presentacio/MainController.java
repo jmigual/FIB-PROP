@@ -19,19 +19,20 @@ public class MainController extends AnchorPane implements Controller {
 
     @FXML
     private AnchorPane leftArea;
-    private AnchorPane rootlayout;
+    private AnchorPane rootLayout;
     private Stage shownStage;
     private MainWindow main;
     private Controller actualController;
+    private Controller previousController;
 
-    public MainController(MainWindow main){
-        this.main=main;
+    public MainController(MainWindow main) {
+        this.main = main;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
         try {
-            rootlayout = loader.load();
+            rootLayout = loader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
@@ -41,24 +42,13 @@ public class MainController extends AnchorPane implements Controller {
         return leftArea;
     }
 
-    public AnchorPane getRootlayout() {
-        return rootlayout;
-    }
-
     public void configureUser() {
-        boolean windowed=true;
-        if (!windowed) {
-            UserConfigController config = new UserConfigController(main);
-            switchController(config);
-        }
-        else {
-            shownStage = new Stage();
-            UserConfigController config = new UserConfigController(main);
-            shownStage.initModality(Modality.APPLICATION_MODAL);
-            shownStage.setScene(new Scene(config.getRootLayout()));
-            shownStage.sizeToScene();
-            shownStage.show();
-        }
+        shownStage = new Stage();
+        UserConfigController config = new UserConfigController(main);
+        shownStage.initModality(Modality.APPLICATION_MODAL);
+        shownStage.setScene(new Scene(config.getRootLayout()));
+        shownStage.sizeToScene();
+        shownStage.show();
     }
 
     public void exit() {
@@ -68,7 +58,7 @@ public class MainController extends AnchorPane implements Controller {
 
     @Override
     public AnchorPane getRootLayout() {
-        return rootlayout;
+        return rootLayout;
     }
 
     @Override
@@ -76,8 +66,11 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    private void switchController(Controller c){
-        if (actualController!=null)actualController.stop();
+    private void switchController(Controller c) {
+        if (actualController != null) {
+            actualController.stop();
+            previousController = actualController;
+        }
         leftArea.getChildren().clear();
         AnchorPane newPane = c.getRootLayout();
         AnchorPane.setBottomAnchor(newPane, 0.);
@@ -85,9 +78,13 @@ public class MainController extends AnchorPane implements Controller {
         AnchorPane.setLeftAnchor(newPane, 0.);
         AnchorPane.setRightAnchor(newPane, 0.);
         leftArea.getChildren().add(newPane);
-        actualController=c;
+        actualController = c;
     }
-    
+
+    public void dialogCancelled() {
+        switchController(previousController);
+    }
+
     @FXML
     private void editBoard() {
         CollectionViewController coll = new CollectionViewController(main);
