@@ -145,8 +145,7 @@ public class MainController extends AnchorPane {
     }
 
     public void loadMatch() {
-        KKDB db = new KKDB();
-        db.load();
+        KKDB db = MainWindow.db;
         PrintStream out = System.out;
         Scanner in = new Scanner(System.in);
 
