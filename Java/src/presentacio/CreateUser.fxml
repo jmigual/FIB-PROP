@@ -5,10 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="320.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="20.0" layoutY="20.0" prefHeight="280.0" prefWidth="483.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="10.0">
          <children>
             <GridPane vgap="15.0">
               <columnConstraints>
@@ -26,19 +25,19 @@
                   <Label text="Nom d'usuari" GridPane.rowIndex="1" />
                   <Label text="Contrasenya" GridPane.rowIndex="2" />
                   <Label text="Repeteix contrasenya" GridPane.rowIndex="3" />
-                  <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <PasswordField fx:id="passwordR" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="userName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="user" GridPane.columnIndex="1" />
+                  <TextField fx:id="user" onAction="#acceptPlayer" GridPane.columnIndex="1" />
+                  <TextField fx:id="userName" onAction="#acceptPlayer" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="password" onAction="#acceptPlayer" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <PasswordField fx:id="passwordR" onAction="#acceptPlayer" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </GridPane>
-            <Label fx:id="incorrect" text="Les dues contrasenyes no coincideixen" textFill="RED" visible="false" />
+            <Label fx:id="incorrect" textFill="RED" visible="false" />
             <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Aceptar" />
+                  <Button mnemonicParsing="false" onAction="#acceptPlayer" text="Aceptar" />
                </children>
             </HBox>
          </children>
