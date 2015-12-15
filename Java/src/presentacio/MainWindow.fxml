@@ -12,11 +12,12 @@
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MenuBar onMouseClicked="#trolla" prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <menus>
                 <Menu mnemonicParsing="false" text="KenKen">
                   <items>
-                        <MenuItem mnemonicParsing="false" text="Crea un tauler" />
+                        <MenuItem mnemonicParsing="false" onAction="#cpuCreateBoardClicked" text="Crea un tauler utilitzant la CPU" />
+                        <MenuItem mnemonicParsing="false" onAction="#humanCreateBoardClicked" text="Crea un tauler manualment" />
                         <MenuItem mnemonicParsing="false" text="Edita un tauler" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Crea una partida" />
@@ -49,7 +50,7 @@
                   </Menu>
               </menus>
             </MenuBar>
-            <StackPane fx:id="leftArea" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" VBox.vgrow="ALWAYS" />
+            <AnchorPane fx:id="leftArea" prefHeight="295.0" prefWidth="600.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

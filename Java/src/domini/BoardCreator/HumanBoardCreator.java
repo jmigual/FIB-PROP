@@ -18,7 +18,7 @@ public class HumanBoardCreator extends BoardCreator {
 
     public boolean loadBoard(String name, int size) {
         for (KKBoard b : mTableKKB){
-            if (b.get_name().equals(name) && b.getSize() == size){
+            if (b.getName().equals(name) && b.getSize() == size){
                 mBoard = b.getCopy();
                 return true;
             }
@@ -47,35 +47,40 @@ public class HumanBoardCreator extends BoardCreator {
                     return false;
                 }
             }
+        } else {
+            for (Cell c : cells) {
+                if (((KKRegion) c.getRegion()).getOperationValue() != 0) {
+
+                }
+            }
         }
 
         KKRegion.OperationType KKop;
-        switch (operation) {
-            case '+':
-                KKop = KKRegion.OperationType.ADDITION;
-                break;
-            case '-':
-                KKop = KKRegion.OperationType.SUBTRACTION;
-                break;
-            case '*':
-                KKop = KKRegion.OperationType.PRODUCT;
-                break;
-            case '/':
-                KKop = KKRegion.OperationType.DIVISION;
-                break;
-            default:
-                if (cells.size() > 1) {
-                    try {
-                        throw new Exception("HBC: createRegion(): invalid operation character");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+        if (cells.size() == 1) {
+            KKop = KKRegion.OperationType.NONE;
+        } else if (cells.size() > 1) {
+            switch (operation) {
+                case '+':
+                    KKop = KKRegion.OperationType.ADDITION;
+                    break;
+                case '-':
+                    KKop = KKRegion.OperationType.SUBTRACTION;
+                    break;
+                case '*':
+                    KKop = KKRegion.OperationType.PRODUCT;
+                    break;
+                case '/':
+                    KKop = KKRegion.OperationType.DIVISION;
+                    break;
+                default:
+                    Exception e = new Exception("HBC: createRegion(): invalid operation character");
+                    e.printStackTrace();
                     return false;
-                } else {
-                    KKop = KKRegion.OperationType.NONE;
-                }
-                break;
-
+            }
+        } else {
+            Exception e = new Exception("HBC: createRegion(): invalid cells array");
+            e.printStackTrace();
+            return false;
         }
         mBoard.createRegion(cells, KKop, result);
         return true;

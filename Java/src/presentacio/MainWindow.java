@@ -6,15 +6,15 @@ package presentacio;
 import dades.KKDB;
 import dades.Player;
 import dades.Table;
+import dades.PlayersAdmin;
 import domini.Basic.Cell;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import domini.stats.KKStats;
 import exceptions.PlayerNotExistsExcepction;
+import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.concurrent.Task;
-import dades.PlayersAdmin;
-import exceptions.PlayerExistsException;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -32,10 +32,11 @@ public class MainWindow extends Application {
     protected Stage primaryStage;
     protected AnchorPane rootLayout;
     protected GridPane gridPane;
-    protected StackPane leftArea;
+    protected StackPane stackLeftArea;
     protected KKDB db;
     protected KKStats mstats;
     public Player actualPlayer;
+    protected MainController mainController;
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
@@ -54,12 +55,20 @@ public class MainWindow extends Application {
         launch(args);
     }
 
+    public MainController getMainController() {
+        return mainController;
+    }
+
     public String getUsername() {
         return mUsername;
     }
 
     public void setUsername(String mUsername) {
         this.mUsername = mUsername;
+    }
+
+    public Table<KKBoard> getBoards() {
+        return db.getBoards();
     }
 
     @Override
@@ -78,6 +87,7 @@ public class MainWindow extends Application {
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
+        mainController = new MainController(this);
 
         try {
             actualPlayer = db.getPlayersAdmin().getPlayer(mUsername);
@@ -96,23 +106,23 @@ public class MainWindow extends Application {
 
     public void stop() {
         db.save();
-        Thread.getAllStackTraces().forEach((a,b)->{
-            System.out.println(a.getClass().toString());
-            System.out.println(b.getClass().toString());
-            System.out.println("----------------");
-        });
     }
 
     protected void initRootLayout() {
         // Load root layout from xml file
-        MainController mainController = new MainController(this);
-        leftArea = mainController.getLeftArea();
-        rootLayout = mainController.getRootlayout();
-        createGrid();
+        AnchorPane anchorLeftArea = mainController.getLeftArea();
+        stackLeftArea = new StackPane();
+        AnchorPane.setBottomAnchor(stackLeftArea, 0.);
+        AnchorPane.setTopAnchor(stackLeftArea, 0.);
+        AnchorPane.setLeftAnchor(stackLeftArea, 0.);
+        AnchorPane.setRightAnchor(stackLeftArea, 0.);
+        anchorLeftArea.getChildren().add(stackLeftArea);
+        rootLayout = mainController.getRootLayout();
+        //createGrid();
 
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
-        scene.setOnKeyPressed(event -> {
+        /*scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 if(event.isControlDown())printer.getBoard().preCalculate();
                 else if (event.isShiftDown()){
@@ -168,22 +178,24 @@ public class MainWindow extends Application {
             if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
         });
 
-
+*/
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
-
     }
-    private void numEvent(KeyEvent event, int n){
+
+    private void numEvent(KeyEvent event, int n) {
         if (printer instanceof KKPrinterSingleSelect) {
-            if (event.isControlDown()) ((KKPrinterSingleSelect)printer).getSelectedCell().switchAnnotation(n);
-            else ((KKPrinterSingleSelect)printer).getSelectedCell().setValue(n);
+            if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
+            else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();
             printer.updateAnnotations();
         }
     }
+
     protected void createGrid() {
         db.getBoards().clear();
-        int size=11;
+        int size = 11;
         CpuBoardCreator creator = new CpuBoardCreator(size, db.getBoards());
         try {
             creator.createBoard();
@@ -193,8 +205,8 @@ public class MainWindow extends Application {
         creator.saveBoard("test", "CPU");
         db.save();
 
-        printer = new KKPrinterSingleSelect(creator.getBoard(), leftArea);
-        //printer = new KKPrinterSingleSelect(db.getBoards().get(0), leftArea);
+        printer = new KKPrinterSingleSelect(creator.getBoard(), stackLeftArea);
+        //printer = new KKPrinterSingleSelect(db.getBoards().get(0), stackLeftArea);
     }
 
     public PlayersAdmin getPlayersAdmin() {

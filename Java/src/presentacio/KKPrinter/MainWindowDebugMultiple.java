@@ -1,8 +1,8 @@
-package presentacio.KKPrinter;
+/*package presentacio.KKPrinter;
 /**
  * Created by Joan on 03/12/2015.
  */
-
+/*
 import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.BoardCreator.HumanBoardCreator;
@@ -45,7 +45,7 @@ public class MainWindowDebugMultiple extends MainWindow {
         // Load root layout from xml file
         MainController mainController = new MainController(this);
         leftArea = mainController.getLeftArea();
-        rootLayout = mainController.getRootlayout();
+        rootLayout = mainController.getRootLayout();
         createGrid();
 
         // Show the scene containing the root layout
@@ -140,3 +140,4 @@ public class MainWindowDebugMultiple extends MainWindow {
         printer = new KKPrinterMultipleSelect(creator.getBoard(), leftArea);
     }
 }
+*/

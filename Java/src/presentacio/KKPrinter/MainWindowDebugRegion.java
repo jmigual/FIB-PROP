@@ -2,7 +2,7 @@ package presentacio.KKPrinter;
 /**
  * Created by Joan on 03/12/2015.
  */
-
+/*
 import dades.KKDB;
 import domini.BoardCreator.CpuBoardCreator;
 import javafx.application.Application;
@@ -45,7 +45,7 @@ public class MainWindowDebugRegion extends MainWindow {
         // Load root layout from xml file
         MainController mainController = new MainController(this);
         leftArea = mainController.getLeftArea();
-        rootLayout = mainController.getRootlayout();
+        rootLayout = mainController.getRootLayout();
         createGrid();
 
         // Show the scene containing the root layout
@@ -122,3 +122,4 @@ public class MainWindowDebugRegion extends MainWindow {
         printer = new KKPrinterRegionSelect(creator.getBoard(), leftArea);
     }
 }
+*/

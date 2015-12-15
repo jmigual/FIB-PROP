@@ -129,7 +129,7 @@ public abstract class Region extends ItemPossibilities implements Serializable {
         for (int j = 1; j <= c.getPossibilities().length; j++) {
             if (c.getAnnotation(j)) {
                 c.setValue(j);
-                if (this.isCorrect() && dfs(i + 1)) {
+                if (this.isCorrect() && c.getColumn().isCorrect() && c.getRow().isCorrect() && dfs(i + 1)) {
                     c.setPossibility(j, true);
                     ret = true;
                 }

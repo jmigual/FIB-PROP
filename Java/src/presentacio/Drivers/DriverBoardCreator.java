@@ -102,7 +102,7 @@ public class DriverBoardCreator {
                     out.print("Quin nom vols posar al taulell? ");
                     String s = in.next();
                     boolean found = false;
-                    for (KKBoard b : mTableKKB) if (b.get_name().equals(s)) found = true;
+                    for (KKBoard b : mTableKKB) if (b.getName().equals(s)) found = true;
 
                     if (found) out.println("Ja existeix un taulell amb aquest nom");
                     else {
@@ -278,7 +278,7 @@ public class DriverBoardCreator {
                     out.print("Posa un nom al tauler: ");
                     String s = in.next();
                     boolean found = false;
-                    for (KKBoard b : mTableKKB) if (b.get_name().equals(s)) found = true;
+                    for (KKBoard b : mTableKKB) if (b.getName().equals(s)) found = true;
 
                     if (found) out.println("Ja existeix un taulell amb aquest nom");
 
