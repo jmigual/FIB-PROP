@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -17,6 +20,8 @@ import presentacio.KKPrinter.KKPrinterRegionSelect;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by arnau_000 on 10/12/2015.
@@ -29,11 +34,11 @@ public class HBCController extends AnchorPane implements Controller {
     private FXMLLoader loader;
     private Scene scene;
     private boolean createRegionMode;
+
+    private static int MAX_SIZE = 9;
     
     @FXML
     private StackPane KenkenPane;
-    @FXML
-    private Label modeLabel;
     @FXML
     private HBox gridRow3;
     @FXML
@@ -50,8 +55,23 @@ public class HBCController extends AnchorPane implements Controller {
     private Button Create_ModifyRegionButton;
     @FXML
     private ToggleGroup OperationRadioGroup;
+    @FXML
+    private Button FillWithRandomNumbersButton;
+    @FXML
+    private Button HasSolutionButton;
+    @FXML
+    private Button SolveButton;
+    @FXML
+    private Button DeleteRegionButton;
+    @FXML
+    private ToggleButton ModeToggleButton;
+    @FXML
+    private Button ClearBoardButton;
 
-    public HBCController(int size){
+       public HBCController(Table<KKBoard> table){
+
+        int size = askSize();
+
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -62,31 +82,41 @@ public class HBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        hbc = new HumanBoardCreator(size, new Table<>()); // real table should be passed
+        hbc = new HumanBoardCreator(size, table);
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
-
-        /* es pot fer sense -- de moment
-        // Key events
-        Scene scene = new Scene(rootLayout);
-        scene.setOnKeyTyped(event -> {
-            if (event.getCode().isDigitKey()) {
-                numberPressed(Integer.parseInt(event.getCharacter()));
-            }
-        });
-        */
     }
 
-    public void changeMode(){
+    private int askSize(){
+        List<String> choices = new ArrayList<>();
+        for (int i=2; i<=MAX_SIZE; ++i){
+            choices.add(String.valueOf(i));
+        }
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("mida", choices);
+        dialog.setTitle("Mida del kenken");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quina mida vols que tingui el kenken?");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            return Integer.parseInt(result.get());
+        }
+        return -1;
+    }
+
+    public void modeToggleButtonPressed(){
         createRegionMode = !createRegionMode;
         if (createRegionMode) {
+//            ((KKPrinterRegionSelect) printer).deselect();
             printer = new KKPrinterMultipleSelect(printer);
             Create_ModifyRegionButton.setText("Crea la regió");
-            modeLabel.setText("Mode de creació de regions");
+            DeleteRegionButton.setVisible(false);
         } else {
+            ((KKPrinterMultipleSelect) printer).deselect();
             printer = new KKPrinterRegionSelect(printer);
             Create_ModifyRegionButton.setText("Modifica la regió");
-            modeLabel.setText("Mode d'edició de regions");
+            DeleteRegionButton.setVisible(true);
         }
     }
 
@@ -164,6 +194,7 @@ public class HBCController extends AnchorPane implements Controller {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                ((KKPrinterMultipleSelect) printer).deselect();
 
             } else {
 
@@ -176,11 +207,11 @@ public class HBCController extends AnchorPane implements Controller {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+//                ((KKPrinterRegionSelect) printer).deselect();
 
             }
 
             printer.updateRegions();
-            ((KKPrinterMultipleSelect) printer).deselect();
         }
     }
 
@@ -195,6 +226,7 @@ public class HBCController extends AnchorPane implements Controller {
             warn("Acció prohibida", "Atenció!", "No es poden eliminar regions en el mode de creació de regions.");
         }
     }
+
     private static boolean isPositiveInteger(String str) {
         if (str == null) {
             return false;
@@ -213,8 +245,56 @@ public class HBCController extends AnchorPane implements Controller {
         return true;
     }
 
+    public void fillWithRandomNumbersButtonPressed(){
+        hbc.removeDefaultRegion();
+        hbc.fillBoardWithRandomNumbers();
+        hbc.createDefaultRegion();
+        printer.updateCells();
+    }
+
+    public void clearBoardButtonPressed(){
+        hbc.clearBoard();
+        printer.updateCells();
+    }
+
+    public void hasSolutionButtonPressed(){
+        if (!hbc.isFinished()){
+            warn("Solucionador de Kenkens", "Kenken inacabat", "El solucionador no pot buscar la solució d'un kenken " +
+                    "inacabat. Assigna una regió a cada cel·la abans.");
+            return;
+        }
+        hbc.removeDefaultRegion();
+        if (hbc.getBoard().hasSolution()) {
+            inform("Solucionador de Kenkens", "El Kenken té solució!", "El solucionador ha trobat com a mínim una " +
+                    "solució al Kenken proposat.");
+        } else {
+            inform("Solucionador de Kenkens", "El Kenken no té solució!", "El solucionador no ha trobat cap " +
+                    "solució al Kenken proposat.");
+        }
+        hbc.createDefaultRegion();
+    }
+
+    public void solveButtonPressed(){
+        hbc.removeDefaultRegion();
+        if (! hbc.getBoard().hasSolution()){
+            warn("Solucionador de Kenkens", "El kenken no té solució!", "El solucionador no ha trobat cap " +
+                    "solució al kenken proposat.");
+        } else {
+            hbc.getBoard().solve();
+            printer.updateContent();
+        }
+        hbc.createDefaultRegion();
+    }
+
     private void warn(String title, String header, String body){
         Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.setContentText(body);
+        a.showAndWait();
+    }
+    private void inform(String title, String header, String body) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(title);
         a.setHeaderText(header);
         a.setContentText(body);
