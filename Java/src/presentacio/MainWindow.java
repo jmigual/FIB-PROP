@@ -16,6 +16,7 @@ import exceptions.PlayerExistsException;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +41,12 @@ public class MainWindow extends Application {
     private KKPrinter printer;
     Thread thread;
     protected String mUsername;
+
+    public Image getIcon() {
+        return mIcon;
+    }
+
+    private Image mIcon;
 
     public Table<KKBoard> getTaulers() {
         return taulers;
@@ -85,8 +92,12 @@ public class MainWindow extends Application {
         }
         this.mUsername = "admin";
 
+        mIcon = new Image(getClass().getResource("asterisk.png").toString());
+
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("App molt guai");
+        this.primaryStage.getIcons().add(mIcon);
+
         mainController = new MainController(this);
 
         try {
@@ -117,7 +128,7 @@ public class MainWindow extends Application {
         AnchorPane.setLeftAnchor(stackLeftArea, 0.);
         AnchorPane.setRightAnchor(stackLeftArea, 0.);
         anchorLeftArea.getChildren().add(stackLeftArea);
-        rootLayout = mainController.getRootLayout();;
+        rootLayout = mainController.getRootLayout();
 
         // Show the scene containing the root layout
         Scene scene = new Scene(rootLayout);
@@ -125,6 +136,8 @@ public class MainWindow extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
+
+        mainController.showLoginBox();
     }
 
     private void numEvent(KeyEvent event, int n) {
