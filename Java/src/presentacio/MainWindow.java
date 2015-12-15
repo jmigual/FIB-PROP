@@ -66,9 +66,10 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) {
         db = new KKDB();
         db.load();
+        taulers = db.getBoards();
         try {
             db.getPlayersAdmin().createPlayer("Admin", "admin", "admin");
-            taulers = db.getBoards();
+
 
         } catch (PlayerExistsException e) {
             System.err.println("This player already exists");

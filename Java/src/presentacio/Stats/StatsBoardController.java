@@ -29,8 +29,6 @@ public class StatsBoardController extends AnchorPane {
 
     private AnchorPane rootLayout;
 
-    private TableView<InfoRanking> table;
-
     private boolean result = false;
 
     @FXML
@@ -38,8 +36,11 @@ public class StatsBoardController extends AnchorPane {
     @FXML
     private ComboBox combofm;
 
+    private Table<KKBoard> boards;
+
     public StatsBoardController(MainWindow main) {
         mStats = main.getKKStats();
+        boards = main.getTaulers();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Board.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -51,26 +52,32 @@ public class StatsBoardController extends AnchorPane {
             e.printStackTrace();
         }
 
-        showCombo(main.getTaulers());
-
-        //createDefault(main.getTaulers());
+        showCombo();
+        tablefm.setVisible(false);
     }
-    private void showCombo(Table<KKBoard> boards){
+    private void showCombo(){
         ObservableList<String> options= FXCollections.observableArrayList();;
         for(int i=0; i<boards.size(); ++i){
             options.add(boards.get(i).get_name());
         }
 
         combofm.setItems(options);
+        combofm.setOnAction(event->{
+            change();
+        });
 
     }
 
-    private void createDefault(Table<KKBoard> boards) {
+    private void change(){
+        createDefault();
+    }
+
+    private void createDefault() {
         // rank column
         TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Position");
         rankColumn.setMinWidth(50);
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        
+
         // Name column
         TableColumn<InfoRanking, String> nameColumn = new TableColumn<>("Player");
         nameColumn.setMinWidth(50);
@@ -85,20 +92,16 @@ public class StatsBoardController extends AnchorPane {
 
         KKBoard Selected = null;
         for (KKBoard board : boards) {
-            if(board.get_name() == combofm.getSelectionModel().toString()) Selected = board;
+            if(board.get_name() == combofm.getSelectionModel().getSelectedItem().toString()) Selected = board;
 
         }
 
-        table = new TableView<>();
-        table.setItems(getStubItems(Selected));
-        table.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
+        tablefm.setItems(getStubItems(Selected));
+        tablefm.getColumns().clear();
+        tablefm.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
 
-        this.getChildren().add(table);
+        tablefm.setVisible(true);
 
-        AnchorPane.setTopAnchor(table, .0);
-        AnchorPane.setLeftAnchor(table, .0);
-        AnchorPane.setBottomAnchor(table, .0);
-        AnchorPane.setRightAnchor(table, .0);
     }
 
     public AnchorPane getRootLayout() {
