@@ -22,15 +22,11 @@ public class MainController extends AnchorPane implements Controller {
     @FXML
     private AnchorPane leftArea;
     private AnchorPane rootLayout;
-    private Stage shownStage;
     private MainWindow main;
-    private Controller actualController;
-    private Stack<Controller> previousController;
     private ControllerSwitch contSwitch;
 
     public MainController(MainWindow main) {
         this.main = main;
-        this.previousController = new Stack<>();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         loader.setRoot(this);
@@ -50,7 +46,7 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void configureUser() {
-        shownStage = new Stage();
+        Stage shownStage = new Stage();
         UserConfigController config = new UserConfigController(main);
         shownStage.initModality(Modality.APPLICATION_MODAL);
         shownStage.setScene(new Scene(config.getRootLayout()));
