@@ -34,7 +34,7 @@ public class StatsBoardController extends AnchorPane {
     private boolean result = false;
 
     @FXML
-    private javax.swing.text.TableView tablefm;
+    private TableView tablefm;
     @FXML
     private ComboBox combofm;
 
@@ -53,12 +53,15 @@ public class StatsBoardController extends AnchorPane {
 
         showCombo(main.getTaulers());
 
-        createDefault(main.getTaulers());
+        //createDefault(main.getTaulers());
     }
     private void showCombo(Table<KKBoard> boards){
+        ObservableList<String> options= FXCollections.observableArrayList();;
         for(int i=0; i<boards.size(); ++i){
-            combofm.getItems().add(boards.get(i).get_name());
+            options.add(boards.get(i).get_name());
         }
+
+        combofm.setItems(options);
 
     }
 
