@@ -102,6 +102,7 @@ public class MatchController extends AnchorPane implements Controller {
                 else if (_match.checkFinish()) {
                     //out.println("FELICITATS! Has completat aquest taulell amb una puntuacio de " + _match.getScore());
                    // finish = true;
+                    System.out.println("JA ESTA");
                 }
                 printer.updateContent();
             }

@@ -180,6 +180,8 @@ public class MainWindow extends Application {
         });
 
 */
+
+        mainController.setScene(scene);
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();

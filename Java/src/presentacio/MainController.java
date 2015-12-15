@@ -27,7 +27,7 @@ import java.util.Stack;
 /**
  * Created by Inigo on 04/12/2015.
  */
-public class MainController extends AnchorPane {
+public class MainController extends AnchorPane implements Controller {
 
     @FXML
     private AnchorPane leftArea;
@@ -114,66 +114,12 @@ public class MainController extends AnchorPane {
     }
 
     public void createMatch(){
-        KKDB db = new KKDB();
-        db.load();
-        PrintStream out = System.out;
-        Scanner in = new Scanner(System.in);
-
-        Table<KKBoard> taulaB = db.getBoards();
-        Table<Match> taula = db.getMatches();
-
-        if (taulaB.size() > 0) {
-            out.println("Hi ha aquests taulers: ");
-            for (int i = 0; i < taulaB.size(); i++) {
-                out.println(Integer.toString(i) + ": " + taulaB.get(i).getName() + " de tamany " +
-                        Integer.toString(taulaB.get(i).getSize())+ " fet per " + taulaB.get(i).getCreator());
-            }
-            out.println("Quin tauler vols? (si no vols cap posa -1)");
-
-            int aux = in.nextInt();
-
-            if (aux > -1 && aux < taulaB.size()) {
-                Match m = new Match(taulaB.get(aux), main.getUsername());
-                taula.add(m);
-                db.save();
-
-                MatchController mc = new MatchController(m);
-                switchController(mc);
-            }
-        } else out.println("No hi ha taulers a la Base de Dades");
-
+        CollectionViewController mc = new CollectionViewController(main);
+        contSwitch.switchController(mc);
     }
 
     public void loadMatch() {
-        KKDB db = new KKDB();
-        db.load();
-        PrintStream out = System.out;
-        Scanner in = new Scanner(System.in);
 
-        Table<Match> taula = db.getMatches();
-        if (taula.size() > 0) {
-            out.println("Hi ha aquestes partides: ");
-
-            String s;
-            KKBoard b;
-            String p;
-
-            for (int i = 0; i < taula.size(); i++) {
-                s = "No acabat";
-                if (taula.get(i).hasFinished()) s = "Acabat  Score : " + taula.get(i).getScore();
-                b = taula.get(i).getBoard();
-                p = taula.get(i).getPlayer().getUserName();
-
-                out.println(Integer.toString(i) + ": Board " + b.getName() + " Player " + p + "  " + s);
-            }
-            out.println("Quin match vols reanudar? ");
-
-            int n = in.nextInt();
-            MatchController mc = new MatchController(taula.get(n));
-            switchController(mc);
-        }
-
-        else out.println("No hi ha cap Match guardat");
     }
 
     public void cpuCreateBoardClicked(){
@@ -184,19 +130,14 @@ public class MainController extends AnchorPane {
         return rootLayout;
     }
 
+    @Override
+    public void stop() {
 
+    }
 
-    private void switchController(Controller c){
-        if (actualController!=null)actualController.stop();
-        leftArea.getChildren().clear();
-        AnchorPane newPane = c.getRootLayout();
-        AnchorPane.setBottomAnchor(newPane, 0.);
-        AnchorPane.setTopAnchor(newPane, 0.);
-        AnchorPane.setLeftAnchor(newPane, 0.);
-        AnchorPane.setRightAnchor(newPane, 0.);
-        leftArea.getChildren().add(newPane);
-        actualController=c;
-        c.setScene(this.getScene());
+    @Override
+    public void setScene(Scene scene) {
+        contSwitch.setScene(scene);
     }
 
     public void dialogCancelled() {

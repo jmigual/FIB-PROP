@@ -1,6 +1,7 @@
 package presentacio.CollectionView;
 
 import dades.Table;
+import domini.Basic.Match;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.layout.*;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
+import presentacio.MatchController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
     }
 
     private void stubCreaTaulers() {
-        CpuBoardCreator creator = new CpuBoardCreator(9, mBoards);
+        CpuBoardCreator creator = new CpuBoardCreator(2, mBoards);
 
         ArrayList<String> names = new ArrayList<>();
         names.add("pere");
@@ -184,7 +186,15 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     @FXML
     public void dialogAccept() {
-        //mMain.getMainController().getContSwitch()
+        KKBoard sel = null;
+        for (RadioButton r : mSelBoard) {
+            if (r.isSelected()) sel = (KKBoard) r.getUserData();
+        }
+        Table<Match> taula = mMain.db.getMatches();
+        Match m = new Match(sel, mMain.getUsername());
+        taula.add(m);
+        MatchController mc = new MatchController(m);
+        mMain.getMainController().getContSwitch().switchController(mc);
     }
 
     @FXML

@@ -14,12 +14,20 @@ public class ControllerSwitch {
 
     private Controller mCurrent;
     private AnchorPane mArea;
+
+    public Scene getScene() {
+        return mScene;
+    }
+
+    public void setScene(Scene mScene) {
+        this.mScene = mScene;
+    }
+
     private Scene mScene;
 
     public ControllerSwitch(AnchorPane area) {
         mPrevious = new Stack<>();
         mArea = area;
-        mScene = area.getScene();
     }
 
     public void add(Controller c) {
