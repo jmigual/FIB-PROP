@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
-import presentacio.MatchShiat.MatchController;
+import presentacio.Match.MatchController;
 
 import java.io.IOException;
 import java.util.ArrayList;

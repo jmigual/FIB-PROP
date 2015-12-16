@@ -31,7 +31,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </StackPane>
-                  <HBox alignment="TOP_CENTER" prefHeight="43.0" prefWidth="299.0">
+                  <HBox fx:id="hbox" alignment="TOP_CENTER" prefHeight="43.0" prefWidth="299.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#revertir" prefHeight="37.0" prefWidth="81.0" text="&lt;-">
                            <HBox.margin>
@@ -51,9 +51,9 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <VBox id="Ajudes" prefHeight="400.0" prefWidth="158.0">
+            <VBox id="Ajudes" fx:id="vbox" prefHeight="400.0" prefWidth="158.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <HBox fx:id="ajudesBox" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <MenuButton alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Ajudes" textAlignment="CENTER">
                           <items>
@@ -67,10 +67,11 @@
                         </MenuButton>
                      </children>
                   </HBox>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
+                  <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Button layoutX="22.0" layoutY="72.0" mnemonicParsing="false" onAction="#clearAnn" prefHeight="25.0" prefWidth="115.0" text="Borrar anot." />
                         <Button layoutX="22.0" layoutY="114.0" mnemonicParsing="false" onAction="#clearNum" prefHeight="25.0" prefWidth="115.0" text="Borrar numeros" />
+                        <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" onAction="#solve" prefHeight="25.0" prefWidth="132.0" text="Solucionar (score = 0)" />
                      </children></Pane>
                   <HBox maxHeight="115.0" maxWidth="158.0" minHeight="115.0" minWidth="158.0" prefHeight="115.0" prefWidth="158.0" VBox.vgrow="ALWAYS">
                      <children>
