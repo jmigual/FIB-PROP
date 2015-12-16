@@ -9,10 +9,13 @@ import domini.stats.Ranking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import presentacio.Controller;
 import presentacio.MainWindow;
 
@@ -25,7 +28,7 @@ public class StatsBoardController extends AnchorPane implements Controller {
 
     private AnchorPane rootLayout;
 
-    private boolean result = false;
+    private boolean result = true;
 
     private TableView tablefm;
 
@@ -40,37 +43,7 @@ public class StatsBoardController extends AnchorPane implements Controller {
         this.getChildren().add(tablefm);
 
         createDefault(board);
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Board.fxml"));
-        //loader.setRoot(this);
-        //loader.setController(this);
-
-
-        /*try {
-            rootLayout = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        //showCombo();
-        //tablefm.setVisible(false);
     }
-
-    /*private void showCombo() {
-        ObservableList<String> options = FXCollections.observableArrayList();
-        for (int i = 0; i < boards.size(); ++i) {
-            options.add(boards.get(i).getName());
-        }
-
-        combofm.setItems(options);
-        combofm.setOnAction(event -> {
-            change();
-        });
-
-    }*/
-
-/*    private void change() {
-        createDefault();
-    }*/
 
     private void createDefault(KKBoard board) {
         // rank column
@@ -93,10 +66,22 @@ public class StatsBoardController extends AnchorPane implements Controller {
         scoreColumn.setMinWidth(50);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
+
         //Select game
+        ObservableList<InfoRankings> info = getItems(board);
+        if (info.size() == 0) {
+            tablefm.setVisible(false);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Cap partida");
+            alert.setHeaderText(null);
+            alert.setContentText("No s'ha fet cap partida per aquest tauler");
+            alert.show();
+            result = false;
+            return;
+        }
         tablefm.setItems(getItems(board));
         tablefm.getColumns().clear();
-        tablefm.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
+        tablefm.getColumns().addAll(rankColumn, playerColumn, nameColumn, scoreColumn);
 
         tablefm.setVisible(true);
     }
