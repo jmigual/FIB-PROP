@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Joan on 14/12/2015.
  */
-public class CollectionViewController extends AnchorPane implements Controller {
+public class CollectionViewMatchController extends AnchorPane implements Controller {
 
     protected Table<KKBoard> mBoards;
 
@@ -33,7 +33,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     protected HashMap<String, CheckBox> mPlayers;
 
-    protected ArrayList<RadioButton> mSelBoard;
+    protected ArrayList<RadioButton> mSelMatch;
 
     protected KKPrinterNoSelect mPrinter;
 
@@ -48,11 +48,11 @@ public class CollectionViewController extends AnchorPane implements Controller {
     @FXML
     protected StackPane kkPane;
 
-    public CollectionViewController(MainWindow main) {
+    public CollectionViewMatchController(MainWindow main) {
         mBoards = main.getBoards();
         mMatch = main.getmMatch();
         mPlayers = new HashMap<>();
-        mSelBoard = new ArrayList<>();
+        mSelMatch = new ArrayList<>();
         mMain = main;
 
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("CollectionView.fxml"));
@@ -155,9 +155,9 @@ public class CollectionViewController extends AnchorPane implements Controller {
     }
 
     public void applyFilters() {
-        for (RadioButton but : mSelBoard) {
-            KKBoard board = (KKBoard) but.getUserData();
-            boolean view = mPlayers.get(board.getCreator()).isSelected();
+        for (RadioButton but : mSelMatch) {
+            Match match = (Match) but.getUserData();
+            boolean view = mPlayers.get(match.getPlayer().getUserName()).isSelected();
             but.setVisible(view);
             but.setManaged(view);
         }
@@ -166,31 +166,33 @@ public class CollectionViewController extends AnchorPane implements Controller {
     protected void createBoardsPane() {
 
         ToggleGroup toggle = new ToggleGroup();
-        for (KKBoard board : mBoards) {
-            RadioButton radio = new RadioButton();
-            radio.setUserData(board);
-            radio.setToggleGroup(toggle);
-            radio.setText(board.getName() +
-                    " de tamany: " + Integer.toString(board.getSize()) +
-                    "  Creat per: " + board.getCreator());
+        for (Match match : mMatch) {
+            if(! match.finished()) {
+                RadioButton radio = new RadioButton();
+                radio.setUserData(match);
+                radio.setToggleGroup(toggle);
+                radio.setText(match.getPlayer().getUserName() +
+                        " (" + match.getPlayer().getName() + ") del Tauler" + match.getBoard().getName() +
+                        "  Score " + match.getScore());
 
-            radio.setOnAction(event -> {
-                if (mPrinter == null) mPrinter = new KKPrinterNoSelect((KKBoard)radio.getUserData(), kkPane);
-                else {
-                    mPrinter.setBoard((KKBoard)radio.getUserData());
-                    mPrinter.updateRegions();
-                }
-            });
+                radio.setOnAction(event -> {
+                    if (mPrinter == null) mPrinter = new KKPrinterNoSelect(((Match) radio.getUserData()).getBoard(), kkPane);
+                    else {
+                        mPrinter.setBoard(((Match) radio.getUserData()).getBoard());
+                        mPrinter.updateRegions();
+                    }
+                });
 
-            rightArea.getChildren().add(radio);
-            mSelBoard.add(radio);
+                rightArea.getChildren().add(radio);
+                mSelMatch.add(radio);
+            }
         }
     }
 
     @FXML
     public void dialogAccept() {
         KKBoard sel = null;
-        for (RadioButton r : mSelBoard) {
+        for (RadioButton r : mSelMatch) {
             if (r.isSelected()) sel = (KKBoard) r.getUserData();
         }
         Table<Match> taula = mMain.db.getMatches();

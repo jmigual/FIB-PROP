@@ -2,15 +2,11 @@ package presentacio.Stats;
 
 import dades.Player;
 import domini.stats.KKStats;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import presentacio.Controller;
 import presentacio.MainWindow;
@@ -26,7 +22,9 @@ public class StatsPersonalController extends AnchorPane implements Controller {
 
     private AnchorPane rootLayout;
 
-    private TableView<InfoRanking> table;
+    private MainWindow mMain;
+
+    private TableView<InfoRankings> table;
 
     @FXML
     private Label puntuaciofm;
@@ -45,6 +43,7 @@ public class StatsPersonalController extends AnchorPane implements Controller {
     private boolean result = false;
 
     public StatsPersonalController(MainWindow main) {
+        mMain = main;
         mStats = main.getKKStats();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Personal.fxml"));
@@ -58,25 +57,16 @@ public class StatsPersonalController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        createDefault(main.actualPlayer);
-
-
+        createDefault();
     }
 
-    private void createDefault(Player actual) {
-        Integer aux = mStats.score(actual);
-        puntuaciofm.textProperty().setValue(aux.toString());
+    private void createDefault() {
+        Player actual = mMain.getPlayer();
 
-        aux = mStats.rank(actual);
-        posiciofm.textProperty().setValue(aux.toString());
-
-        aux = mStats.countMatches(actual);
-        boardsfm.textProperty().setValue(aux.toString());
-
-        aux = mStats.countSolvedGames(actual);
-        matchesfm.textProperty().setValue(aux.toString());
-        
-
+        puntuaciofm.textProperty().setValue(Integer.toString(mStats.score(actual)));
+        posiciofm.textProperty().setValue(Integer.toString(mStats.rank(actual)));
+        boardsfm.textProperty().setValue(Integer.toString(mStats.countSolvedGames(actual)));
+        matchesfm.textProperty().setValue(Integer.toString(mStats.countMatches(actual)));
     }
 
     public AnchorPane getRootLayout() {

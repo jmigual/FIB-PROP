@@ -1,11 +1,11 @@
 package presentacio.Stats;
 
-import dades.KKDB;
+import dades.Player;
 import dades.Table;
 import domini.KKBoard;
 import domini.stats.KKStats;
 import domini.stats.Playable;
-import exceptions.PlayerExistsException;
+import domini.stats.Ranking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import presentacio.Controller;
@@ -57,36 +56,42 @@ public class StatsBoardController extends AnchorPane implements Controller {
         showCombo();
         tablefm.setVisible(false);
     }
-    private void showCombo(){
-        ObservableList<String> options= FXCollections.observableArrayList();
-        for(int i=0; i<boards.size(); ++i){
+
+    private void showCombo() {
+        ObservableList<String> options = FXCollections.observableArrayList();
+        for (int i = 0; i < boards.size(); ++i) {
             options.add(boards.get(i).getName());
         }
 
         combofm.setItems(options);
-        combofm.setOnAction(event->{
+        combofm.setOnAction(event -> {
             change();
         });
 
     }
 
-    private void change(){
+    private void change() {
         createDefault();
     }
 
     private void createDefault() {
         // rank column
-        TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Position");
+        TableColumn<InfoRankings, Integer> rankColumn = new TableColumn<>("Posició");
         rankColumn.setMinWidth(50);
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
+        // Player column
+        TableColumn<InfoRankings, String> playerColumn = new TableColumn<>("Jugador");
+        playerColumn.setMinWidth(50);
+        playerColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+
         // Name column
-        TableColumn<InfoRanking, String> nameColumn = new TableColumn<>("Player");
+        TableColumn<InfoRankings, String> nameColumn = new TableColumn<>("Nom");
         nameColumn.setMinWidth(50);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         // Score column
-        TableColumn<InfoRanking, Integer> scoreColumn = new TableColumn<>("Score");
+        TableColumn<InfoRankings, Integer> scoreColumn = new TableColumn<>("Puntuació");
         scoreColumn.setMinWidth(50);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
@@ -94,8 +99,7 @@ public class StatsBoardController extends AnchorPane implements Controller {
 
         KKBoard Selected = null;
         for (KKBoard board : boards) {
-            if(board.getName() == combofm.getSelectionModel().getSelectedItem().toString()) Selected = board;
-
+            if (board.getName().equals(combofm.getSelectionModel().getSelectedItem().toString())) Selected = board;
         }
 
         tablefm.setItems(getStubItems(Selected));
@@ -124,11 +128,12 @@ public class StatsBoardController extends AnchorPane implements Controller {
         return result;
     }
 
-    public ObservableList<InfoRanking> getStubItems(Playable game) {
-        ObservableList<InfoRanking> info = FXCollections.observableArrayList();
-        for(int i=0; i<mStats.recordsGame(game).getSize(); ++i){
-            info.add(new InfoRanking(i,mStats.recordsGame(game).getPlayer(i).getName(),
-                    mStats.recordsGame(game).getValue(i)));
+    public ObservableList<InfoRankings> getStubItems(Playable game) {
+        ObservableList<InfoRankings> info = FXCollections.observableArrayList();
+        Ranking r = mStats.recordsGame(game);
+        for (int i = 0; i < mStats.recordsGame(game).getSize(); ++i) {
+            Player p = r.getPlayer(i);
+            info.add(new InfoRankings(i, p.getUserName(), p.getName(), r.getValue(i)));
         }
         return info;
     }

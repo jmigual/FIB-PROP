@@ -14,7 +14,9 @@ import presentacio.BoardCreator.CBCController;
 import presentacio.BoardCreator.HBCController;
 import presentacio.CollectionView.CollectionViewController;
 import presentacio.CollectionView.CollectionViewEditorController;
+import presentacio.CollectionView.CollectionViewMatchController;
 import presentacio.LoginScreen.LoginBoxController;
+import presentacio.MatchShiat.FactController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
 import presentacio.Stats.StatsPersonalController;
@@ -79,6 +81,12 @@ public class MainController extends AnchorPane implements Controller {
         Stage s = createNewWindow(new LoginBoxController(main), StageStyle.UTILITY);
         s.setOnCloseRequest(event -> System.exit(0));
         s.setTitle("Iniciar sessió");
+    }
+
+    public void showFactBox() {
+        Stage s = createNewWindow(new FactController(main), StageStyle.UTILITY);
+        //s.setOnCloseRequest(event -> System.exit(0));
+        s.setTitle("Factorització");
     }
 
     /**
@@ -151,7 +159,7 @@ public class MainController extends AnchorPane implements Controller {
      * Shows the dialog to select a match being played
      */
     public void loadMatch() {
-
+        contSwitch.switchController(new CollectionViewMatchController(main));
     }
 
 
@@ -229,6 +237,7 @@ public class MainController extends AnchorPane implements Controller {
     private void editBoard() {
         contSwitch.switchController(new CollectionViewEditorController(main));
     }
+
 
     /**
      * To get the current controller switch

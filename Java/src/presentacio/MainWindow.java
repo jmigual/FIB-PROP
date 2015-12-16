@@ -8,23 +8,21 @@ import dades.Player;
 import dades.Table;
 import dades.PlayersAdmin;
 import domini.Basic.Cell;
+import domini.Basic.Match;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import domini.stats.KKStats;
-import exceptions.PlayerNotExistsExcepction;
 import exceptions.PlayerExistsException;
+import exceptions.PlayerNotExistsExcepction;
 import javafx.application.Application;
-import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinter;
-import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
 
 
@@ -36,10 +34,8 @@ public class MainWindow extends Application {
     protected StackPane stackLeftArea;
     public static KKDB db;
     protected KKStats mstats;
-    public Player actualPlayer;
     protected MainController mainController;
     private KKPrinter printer;
-    Thread thread;
     protected String mUsername;
 
     public Image getIcon() {
@@ -52,11 +48,13 @@ public class MainWindow extends Application {
         return taulers;
     }
 
-    public Player getActualPlayer() {
-        return actualPlayer;
+    protected Table<KKBoard> taulers;
+
+    public Table<Match> getmMatch() {
+        return mMatch;
     }
 
-    protected Table<KKBoard> taulers;
+    protected Table<Match> mMatch;
 
     public static void main(String[] args) {
         launch(args);
@@ -101,19 +99,12 @@ public class MainWindow extends Application {
 
         mainController = new MainController(this);
 
-        try {
-            actualPlayer = db.getPlayersAdmin().getPlayer(mUsername);
-        } catch (PlayerNotExistsExcepction playerNotExistsExcepction) {
-            playerNotExistsExcepction.printStackTrace();
-        }
-
 
         //Inicialització dels stats
         this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
-
+        this.mMatch = db.getMatches();
 
         initRootLayout();
-
     }
 
     public void stop() {
@@ -140,6 +131,7 @@ public class MainWindow extends Application {
         primaryStage.setMaximized(true);
         primaryStage.show();
 
+        // TODO: Nota això s'ha de descomentar quan fem el release
         //mainController.showLoginBox();
     }
 
@@ -170,7 +162,17 @@ public class MainWindow extends Application {
     public PlayersAdmin getPlayersAdmin() {
         return db.getPlayersAdmin();
     }
+
     public KKStats getKKStats() {
         return mstats;
+    }
+
+    public Player getPlayer() {
+        try {
+            return db.getPlayersAdmin().getPlayer(mUsername);
+        } catch (PlayerNotExistsExcepction e) {
+            e.printStackTrace();
+            throw new RuntimeException("Player not exists");
+        }
     }
 }
