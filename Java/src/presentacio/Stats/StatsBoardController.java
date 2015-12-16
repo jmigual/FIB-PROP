@@ -8,18 +8,13 @@ import domini.stats.Playable;
 import domini.stats.Ranking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import presentacio.Controller;
 import presentacio.MainWindow;
-
-import java.io.IOException;
 
 /**
  * Created by Esteve on 14/12/2015.
@@ -32,32 +27,35 @@ public class StatsBoardController extends AnchorPane implements Controller {
 
     private boolean result = false;
 
-    @FXML
     private TableView tablefm;
-    @FXML
-    private ComboBox combofm;
 
     private Table<KKBoard> boards;
 
-    public StatsBoardController(MainWindow main) {
+    public StatsBoardController(MainWindow main, KKBoard board) {
         mStats = main.getKKStats();
         boards = main.getTaulers();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Board.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
 
 
-        try {
+        tablefm = new TableView();
+        this.getChildren().add(tablefm);
+
+        createDefault(board);
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("Stats_Board.fxml"));
+        //loader.setRoot(this);
+        //loader.setController(this);
+
+
+        /*try {
             rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        showCombo();
-        tablefm.setVisible(false);
+        //showCombo();
+        //tablefm.setVisible(false);
     }
 
-    private void showCombo() {
+    /*private void showCombo() {
         ObservableList<String> options = FXCollections.observableArrayList();
         for (int i = 0; i < boards.size(); ++i) {
             options.add(boards.get(i).getName());
@@ -68,13 +66,13 @@ public class StatsBoardController extends AnchorPane implements Controller {
             change();
         });
 
-    }
+    }*/
 
-    private void change() {
+/*    private void change() {
         createDefault();
-    }
+    }*/
 
-    private void createDefault() {
+    private void createDefault(KKBoard board) {
         // rank column
         TableColumn<InfoRankings, Integer> rankColumn = new TableColumn<>("Posició");
         rankColumn.setMinWidth(50);
@@ -96,18 +94,11 @@ public class StatsBoardController extends AnchorPane implements Controller {
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
         //Select game
-
-        KKBoard Selected = null;
-        for (KKBoard board : boards) {
-            if (board.getName().equals(combofm.getSelectionModel().getSelectedItem().toString())) Selected = board;
-        }
-
-        tablefm.setItems(getStubItems(Selected));
+        tablefm.setItems(getItems(board));
         tablefm.getColumns().clear();
         tablefm.getColumns().addAll(rankColumn, nameColumn, scoreColumn);
 
         tablefm.setVisible(true);
-
     }
 
     public AnchorPane getRootLayout() {
@@ -128,7 +119,7 @@ public class StatsBoardController extends AnchorPane implements Controller {
         return result;
     }
 
-    public ObservableList<InfoRankings> getStubItems(Playable game) {
+    public ObservableList<InfoRankings> getItems(Playable game) {
         ObservableList<InfoRankings> info = FXCollections.observableArrayList();
         Ranking r = mStats.recordsGame(game);
         for (int i = 0; i < mStats.recordsGame(game).getSize(); ++i) {

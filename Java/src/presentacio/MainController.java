@@ -14,6 +14,7 @@ import presentacio.BoardCreator.CBCController;
 import presentacio.BoardCreator.HBCController;
 import presentacio.CollectionView.CollectionViewController;
 import presentacio.CollectionView.CollectionViewEditorController;
+import presentacio.CollectionView.CollectionViewStatsController;
 import presentacio.LoginScreen.LoginBoxController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
@@ -114,7 +115,7 @@ public class MainController extends AnchorPane implements Controller {
      * Shows the stats by board
      */
     public void showByBoard() {
-        createNewWindow(new StatsBoardController(main));
+        contSwitch.switchController(new CollectionViewStatsController(main));
     }
 
     /**
@@ -186,7 +187,7 @@ public class MainController extends AnchorPane implements Controller {
      * @param c Parent element
      * @return Stage with the new window
      */
-    private Stage createNewWindow(Parent c) {
+    public Stage createNewWindow(Parent c) {
         return createNewWindow(c, StageStyle.DECORATED);
     }
 
@@ -196,7 +197,7 @@ public class MainController extends AnchorPane implements Controller {
      * @param style Selected style for the stage
      * @return Stage with the new window
      */
-    private Stage createNewWindow(Parent c, StageStyle style) {
+    public Stage createNewWindow(Parent c, StageStyle style) {
         Stage shownStage = new Stage();
         shownStage.initStyle(style);
         shownStage.initModality(Modality.APPLICATION_MODAL);
