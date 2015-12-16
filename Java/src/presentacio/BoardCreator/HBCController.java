@@ -215,6 +215,8 @@ public class HBCController extends AnchorPane implements Controller {
                 op = '/';
                 break;
         }
+        String resultValueText=ResultValueInput.getText();
+        if (resultValueText.length()==0)resultValueText=tryToCalculateResult(op, C);
 
         if (op == '-' && C.size() > 2) {
             warn("Entrada invàlida", "Atenció!", "No es pot crear una regió de tipus resta amb un nombre de cel·les diferent a 2.");
@@ -222,7 +224,7 @@ public class HBCController extends AnchorPane implements Controller {
         } else if (op == '/' && C.size() > 2) {
             warn("Entrada invàlida", "Atenció!", "No es pot crear una regió de tipus divisió amb un nombre de cel·les diferent a 2.");
             return;
-        } else if (!isPositiveInteger(ResultValueInput.getText())) {
+        } else if (!isPositiveInteger(resultValueText)) {
             warn("Entrada invàlida", "Atenció!", "El resultat ha de ser un nombre natural.");
             return;
         } else if (C.size() < 1) {
@@ -231,7 +233,7 @@ public class HBCController extends AnchorPane implements Controller {
         } else {
 
             // Get result
-            int opValue = Integer.parseInt(ResultValueInput.getText());
+            int opValue = Integer.parseInt(resultValueText);
 
             if (createRegionMode) {
 
@@ -240,7 +242,6 @@ public class HBCController extends AnchorPane implements Controller {
                             "No es pot crear una regió amb aquesta forma.");
                     return;
                 }
-
                 try {
                     if (!hbc.createRegion(false, C, op, opValue)) {
                         Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Aquesta regio n'elimina altres ja creades."
@@ -274,6 +275,40 @@ public class HBCController extends AnchorPane implements Controller {
             printer.updateCells();
         }
     }
+    private String tryToCalculateResult(char op,ArrayList<Cell> cells){
+        for (Cell c: cells){
+            if (c.getValue()==0)return "";
+        }
+        if(op=='+'){
+            int i=0;
+            for (Cell c: cells)i+=c.getValue();
+            return Integer.toString(i);
+        }
+        if(op=='*'){
+            int i=1;
+            for (Cell c: cells)i*=c.getValue();
+            return Integer.toString(i);
+        }
+        if(op=='/'){
+            int a=cells.get(0).getValue();
+            int b=cells.get(1).getValue();
+            if (a<b){
+                int c=a;
+                a=b;
+                b=c;
+            }
+            if (a%b!=0)return "";
+            return Integer.toString(a/b);
+        }
+        int a=cells.get(0).getValue();
+        int b=cells.get(1).getValue();
+        if (a<b){
+            int c=a;
+            a=b;
+            b=c;
+        }
+        return Integer.toString(a-b);
+    };
 
     public void deleteRegionButtonPressed(){
         if (!createRegionMode){
