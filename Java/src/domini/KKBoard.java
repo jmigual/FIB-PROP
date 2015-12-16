@@ -114,7 +114,7 @@ public class KKBoard extends Board implements Playable {
     @Override
     public void solve() {
         boolean b = preCalculate();
-        if (b) b = recursiveSolve(0, 0, this);
+        if (b) b = recursiveSolve(0, 0, this.getCopy());
         _hasSolution = b;
         System.out.println(b);
     }
@@ -179,7 +179,7 @@ public class KKBoard extends Board implements Playable {
             if (r.size() == 1) r.getCell(0).setValue(r.getOperationValue());
         }
         boolean changed = true;
-        //while (changed) {
+        while (changed) {
             changed = false;
 
             if (!calculateIndividualPossibilities()) return false;
@@ -204,7 +204,7 @@ public class KKBoard extends Board implements Playable {
                     }
                 }
             }
-        //}
+        }
         return true;
     }
 
@@ -218,7 +218,6 @@ public class KKBoard extends Board implements Playable {
             }
             return true;
         }
-
 
         int j_f, i_f;
         i_f = i + 1;
@@ -240,7 +239,6 @@ public class KKBoard extends Board implements Playable {
         //boolean b=calculateIndividualPossibilities();
         boolean[] possibilities = kkboard.getCell(i, j).getPossibilities().clone();
 
-
         if (kkboard.getCell(i, j).getValue() != 0) {
             return recursiveSolve(i_f, j_f, kkboard);
         }
@@ -260,57 +258,17 @@ public class KKBoard extends Board implements Playable {
     }
 
     public boolean calculateIndividualPossibilities() {
-
-/*
         for (int i = 0; i < _kkregions.size(); i++) {
-            if (!_kkregions.get(i).isCorrect()) return false;
+            if (!_kkregions.get(i).isCorrect())return false;
             _kkregions.get(i).calculatePossibilities();
         }
-*/
-
-        int res;
-
-
-        res = _kkregions.parallelStream().mapToInt(e -> {
-            if (! e.isCorrect()) return 1;
-            e.calculatePossibilities();
-            return 0;
-        }).sum();
-        if (res > 0) return false;
-
-
-        res = _columns.parallelStream().mapToInt(e -> {
-            e.calculatePossibilities();
-            if (e.isCorrect()) return 0;
-            return 1;
-        }).sum();
-        if (res > 0) return false;
-
-        res = _rows.parallelStream().mapToInt(e -> {
-            e.calculatePossibilities();
-            if (e.isCorrect()) return 0;
-            return 1;
-        }).sum();
-        if (res > 0) return false;
-        _boardInfo.parallelStream().flatMap(Collection::stream).forEach(c -> {
-            if (c.getValue() == 0) c.calculatePossibilities();
-        });
-
-                /*forEach(b -> {
-            b.parallelStream().forEach(c -> {
-                if (c.getValue() == 0) c.calculatePossibilities();
-            });
-        });*/
-
-        /*
         for (Column _column : _columns) {
             _column.calculatePossibilities();
-            if (!_column.isCorrect()) return false;
+            if (!_column.isCorrect())return false;
         }
-        *
         for (Row _row : _rows) {
             _row.calculatePossibilities();
-            if (!_row.isCorrect()) return false;
+            if (!_row.isCorrect())return false;
         }
         for (int i = 0; i < _size; i++) {
             for (int j = 0; j < _size; j++) {
@@ -320,24 +278,7 @@ public class KKBoard extends Board implements Playable {
                 }
             }
         }
-        */
 
-        for (int i = 0; i < 3; ++i) {
-            _columns.stream().forEach(Column::calculateIndividualPossibilities);
-            _rows.stream().forEach(Row::calculateIndividualPossibilities);
-            _kkregions.stream().forEach(KKRegion::calculateIndividualPossibilities);
-        }
-
-
-        /*for (Column _column : _columns) {
-            _column.calculateIndividualPossibilities();
-        }
-        for (Row _row : _rows) {
-            _row.calculateIndividualPossibilities();
-        }
-        for (KKRegion _kkregion : _kkregions) {
-            _kkregion.calculateIndividualPossibilities();
-        }
         for (Column _column : _columns) {
             _column.calculateIndividualPossibilities();
         }
@@ -355,7 +296,16 @@ public class KKBoard extends Board implements Playable {
         }
         for (KKRegion _kkregion : _kkregions) {
             _kkregion.calculateIndividualPossibilities();
-        }*/
+        }
+        for (Column _column : _columns) {
+            _column.calculateIndividualPossibilities();
+        }
+        for (Row _row : _rows) {
+            _row.calculateIndividualPossibilities();
+        }
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculateIndividualPossibilities();
+        }
 
         for (int i = 0; i < _size; i++) {
             for (int j = 0; j < _size; j++) {
@@ -433,5 +383,23 @@ public class KKBoard extends Board implements Playable {
 
         Scanner in = new Scanner(System.in);
         in.next();
+    }
+
+    public boolean isCorrect (){
+        for (KKRegion r: _kkregions)if(!r.isCorrect())return false;
+        for (Column c: _columns)if(!c.isCorrect())return false;
+        for (Row r: _rows)if(!r.isCorrect())return false;
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof KKBoard)) return false;
+
+        KKBoard board = (KKBoard) o;
+
+        return mID.equals(board.mID);
+
     }
 }

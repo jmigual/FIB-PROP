@@ -16,12 +16,20 @@ Disposeu dues formes de crear un tauler:
 	
 	3.1 Mitjançant la CPU
 	Kenken -> Crear un tauler utilitzant la CPU.
-	La CPU ús generarà un taulell de la mida indicada.
-	Podeu modificar els pesos de cada mida i de cada regió.
-	Això produïra un increment d'aquest tipus de regions ens el tauler final.
+	La CPU ús generarà un taulell  automaticament.
+	Heu d'intruduïr el la mida del taulell i la mida maxima que tindran les
+	regions.
+	Podeu modificar els pesos de cada mida i de cada tipus per que les
+	regions generades estiguin en consonancia amb les vostres preferencies.
+	
 	3.2 Manualment
 	Kenken -> Crear un tauler manualment.
-	Teniu la opció d'omplir-lo de anotacions perquè us sigui més facil completar-lo.
+	Primer introduiu la mida del tauler.
+	Després podeu anar creant regions seleccionant les caselles, o bé 
+	individualment o bé fent clic i llistant per totes les cel·les de la regió.
+	Teniu la opció d'omplir-lo el tauler de nombres aleatoris correctes fent 
+	clic sobre el boto omple el tauler de nunmeros aleatoris que apareix fent
+	clic sobre el boto Mode anotacions.
 	
 	
 

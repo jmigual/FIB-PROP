@@ -86,6 +86,9 @@ public class KKRegionDivision extends KKRegion implements Serializable {
         }
         if (isEmpty) return true;
         if (!isFull) return ret;
-        return (cells.get(0).getValue() * cells.get(1).getValue()) == operationValue;
+
+        if (cells.get(0).getValue()*operationValue==cells.get(1).getValue())return true;
+        if (cells.get(1).getValue()*operationValue==cells.get(0).getValue())return true;
+        return false;
     }
 }

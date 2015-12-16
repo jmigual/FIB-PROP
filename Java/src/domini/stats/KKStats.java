@@ -40,4 +40,16 @@ public class KKStats extends Stats {
         for (Matchable m : _matches) set.add(m.getGame().getID());
         return set.size();
     }
+
+    @Override
+    public int bestTime(Player player, Playable game) {
+        int time = -1;
+        for (Matchable m : _matches) {
+            if (m.getPlayer().equals(player) && m.getGame().equals(game)) {
+                int aux = m.computeTime();
+                if (time < aux) time = aux;
+            }
+        }
+        return time;
+    }
 }
