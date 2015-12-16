@@ -1,4 +1,4 @@
-package presentacio.MatchShiat;
+package presentacio.Match;
 
 import domini.Basic.Cell;
 import domini.Basic.Match;
@@ -15,8 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinter;
@@ -25,7 +24,6 @@ import presentacio.KKPrinter.KKPrinterSingleSelect;
 
 import javafx.util.Duration;
 import presentacio.MainWindow;
-import sun.audio.AudioPlayer;
 
 import java.util.ArrayList;
 
@@ -60,6 +58,18 @@ public class MatchController extends AnchorPane implements Controller {
 
     @FXML
     private MenuItem h3;
+
+    @FXML
+    private VBox vbox;
+
+    @FXML
+    private HBox hbox;
+
+    @FXML
+    private Pane pane;
+
+    @FXML
+    private HBox ajudesBox;
 
     public Match getMatch(){
         return _match;
@@ -269,6 +279,24 @@ public class MatchController extends AnchorPane implements Controller {
         }
     }
 
+    public void solve(){
+        _match.getBoard().clear();
+        _match.getBoard().solve();
+
+        printer.updateContent();
+        try {
+            _match.hint(3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scene.setOnKeyPressed(event -> {
+        });
+
+        ajudesBox.setDisable(true);
+        hbox.setDisable(true);
+        pane.setDisable(true);
+    }
 
     private void warn(String title, String header, String body){
         Alert a = new Alert(Alert.AlertType.WARNING);

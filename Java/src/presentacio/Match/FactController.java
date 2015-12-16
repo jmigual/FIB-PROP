@@ -1,4 +1,4 @@
-package presentacio.MatchShiat;
+package presentacio.Match;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import presentacio.Controller;
 import presentacio.MainWindow;
-
-import java.util.ArrayList;
 
 
 /**
