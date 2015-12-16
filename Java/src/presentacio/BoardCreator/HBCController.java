@@ -1,16 +1,13 @@
-package presentacio;
+package presentacio.BoardCreator;
 
-import dades.Table;
 import domini.Basic.Cell;
 import domini.BoardCreator.HumanBoardCreator;
-import domini.KKBoard;
 import domini.KKRegion.KKRegion;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -19,13 +16,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterRegionSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
+import presentacio.MainWindow;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +40,7 @@ public class HBCController extends AnchorPane implements Controller {
     private boolean createRegionMode;
     private boolean annotationsMode;
 
-    private static int MAX_SIZE = 9;
+    private static int MAX_SIZE = 12;
 
     @FXML
     private StackPane KenkenPane;
@@ -98,7 +95,7 @@ public class HBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        hbc = new HumanBoardCreator(size, mainWindow.db.getBoards());
+        hbc = new HumanBoardCreator(size, MainWindow.db.getBoards());
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
         createRegionMode = true;
         DeleteRegionButton.setVisible(false);
@@ -410,8 +407,11 @@ public class HBCController extends AnchorPane implements Controller {
             if (event.getCode() == KeyCode.DIGIT7 || event.getCode() == KeyCode.NUMPAD7) numEvent(event,7);
             if (event.getCode() == KeyCode.DIGIT8 || event.getCode() == KeyCode.NUMPAD8) numEvent(event,8);
             if (event.getCode() == KeyCode.DIGIT9 || event.getCode() == KeyCode.NUMPAD9) numEvent(event,9);
+            if (event.getCode() == KeyCode.A) numEvent(event,10);
+            if (event.getCode() == KeyCode.B) numEvent(event,11);
+            if (event.getCode() == KeyCode.C) numEvent(event,12);
 
-            if (event.getCode()==KeyCode.A && event.isControlDown()){
+            if (event.getCode()==KeyCode.S && event.isControlDown()){
                 if (printer instanceof KKPrinterMultipleSelect){
                     ((KKPrinterMultipleSelect) printer).selectAll();
                 }

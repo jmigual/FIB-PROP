@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * Created by arnau_000 on 08/11/2015.
  */
-public class DriverBoardCreator {
+public class    DriverBoardCreator {
     private static KKDB db;
     private static String player;
     private static PrintStream out = System.out;

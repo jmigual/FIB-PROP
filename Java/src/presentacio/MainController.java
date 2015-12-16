@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import presentacio.BoardCreator.CBCController;
+import presentacio.BoardCreator.HBCController;
 import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.CollectionView.CollectionViewController;
 import presentacio.LoginScreen.LoginBoxController;
@@ -83,6 +85,11 @@ public class MainController extends AnchorPane implements Controller {
         contSwitch.add(hbcc);
     }
 
+    public void cpuCreateBoardClicked(){
+        CBCController cbcc = new CBCController(main);
+        contSwitch.add(cbcc);
+    }
+
     public void createMatch(){
         CollectionViewController mc = new CollectionViewController(main);
         contSwitch.switchController(mc);
@@ -92,9 +99,7 @@ public class MainController extends AnchorPane implements Controller {
 
     }
 
-    public void cpuCreateBoardClicked(){
 
-    }
 
     @Override
     public AnchorPane getRootLayout() {
