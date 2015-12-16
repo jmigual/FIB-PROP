@@ -1,0 +1,77 @@
+Manual d'Usuari: Kenken Grup C15G3
+
+1. Connectar-se o Registrar-se
+Només iniciar l'aplicació us demana un nom d'usuari i una contrasenya, en cas
+de tenir usuari feu clic sobre el boto Connectar-se. Altrament haureu de fer 
+clic sobre el boto registrar-se i acabar d'omplir les dades.
+
+
+2. Canviar la configuració de l'usuari
+Usuari -> Configuració de l'usuari
+Aquest menú us permet modificar la configuració de l'usuari: nom i contrasenya.
+
+
+3. Crear tauler
+Disposeu dues formes de crear un tauler:
+	
+	3.1 Mitjançant la CPU
+	Kenken -> Crear un tauler utilitzant la CPU.
+	La CPU ús generarà un taulell de la mida indicada.
+	Podeu modificar els pesos de cada mida i de cada regió.
+	Això produïra un increment d'aquest tipus de regions ens el tauler final.
+	3.2 Manualment
+	Kenken -> Crear un tauler manualment.
+	Teniu la opció d'omplir-lo de anotacions perquè us sigui més facil completar-lo.
+	
+	
+
+4.Jugar partida
+	
+	4.1 Crear una partida
+	Kenken -> Crear un tauler manualment
+	L'usuari comença una partida nova a partir d'un taulell ja creat.
+	
+	4.2 Carregar una partida
+	Kenken -> Carregar una partida
+	Permet rependre una partida abans començada pel mateix jugador.
+
+
+Un cop iniciada la partida l'usuari de l'opció de demanar pistes si ho 
+desitja a canvi d'una penalització en la puntuació.
+Hi ha 3 tipus de pista, la primera permet comprovar si els nombres 
+introduïts són correctes, la segona permet obtenir un nombre del tauler i
+la tercera permet factoritzar un nombre.
+
+Durant la partida l'usuari pot introduir anotacions utilitzant CONTROL + Nombre.
+
+També pot desfer l'últim moviment a canvi d'una petita penalització.
+
+La puntuació final es calcula de la següent manera:
+P = 10 * (mida del tauler) ^3 - t - penalitzacions
+on:
+P és puntuació final
+t el temps
+i les penalitzacions estan indicades al costat de la pista.
+
+
+
+5.Estadístiques
+Aquesta secció permet consultar les estadístiques.
+	
+	5.1 Personals
+	Estadístiques -> Personals
+	Mostra la puntuació, la posició, el nombre de partides jugades i el nombre de
+	taulers resolts de l'usuari loguejat.
+	
+	5.2 Globals
+	Estadístiques -> Globals
+	Permet veure el ranking de tots els usuaris amb la seva corresponent posició
+	
+	5.3 Per taulers
+	Estadístiques -> Per Taulers
+	Permet seleccionar un tauler i posteriorment mostra les millors puntuacions 
+	obtingudes per cada usuari
+	
+6.Ajuda
+	Ajuda->Ajuda
+	Mostra el manual d'usuari.

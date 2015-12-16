@@ -5,12 +5,14 @@ import domini.Basic.Match;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -49,6 +51,12 @@ public class MatchController extends AnchorPane implements Controller {
 
     @FXML
     private Button sortir;
+
+    @FXML
+    private MenuItem h1;
+
+    @FXML
+    private MenuItem h2;
 
     public Match getMatch(){
         return _match;
@@ -177,6 +185,7 @@ public class MatchController extends AnchorPane implements Controller {
         AudioClip claps = null;
         switch(i) {
             case 0://No pots clicar
+                claps= new AudioClip(getClass().getResource("click.mp3").toString());
                 break;
             case 1://error
                 claps= new AudioClip(getClass().getResource("error.mp3").toString());
@@ -206,6 +215,32 @@ public class MatchController extends AnchorPane implements Controller {
             for (int j = 0; j< _match.getBoard().getSize(); ++j) _match.getBoard().getCell(i,j).setValue(0);
         printer.updateContent();
     }
+
+    public void hints(ActionEvent event) {
+        MenuItem mi = (MenuItem)event.getSource();
+        ArrayList<Cell> cells;
+        if (mi.equals(h1)) {
+            cells = _match.hint(0);
+            for (Cell c: cells) printer.marker(c, "Red");
+        }
+
+        if (mi.equals(h2)) {
+            cells = _match.hint(1);
+            if (cells == null) warn("Error", "No queden espais lliures!", "Borra el contingut d'alguna casella");
+            else {
+                printer.updateContent();
+                printer.marker(cells.get(0), "Green");
+                if (_match.checkFinish()) {
+                    playsound(2);
+                    printer.updateContent();
+                    inform("", "FELICITATS! HAS ACABAT EL KENKEN!", "Has aconseguit una puntuació de " + Long.toString(_match.getScore()));
+
+                    close();
+                }
+            }
+        }
+    }
+
 
     private void warn(String title, String header, String body){
         Alert a = new Alert(Alert.AlertType.WARNING);

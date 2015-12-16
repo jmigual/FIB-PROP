@@ -325,6 +325,21 @@ public abstract class KKPrinter {
         }
     }
 
+    public void marker(Cell c, String color){
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getRowIndex(node) != null) {
+                int i = GridPane.getRowIndex(node);
+                int j = GridPane.getColumnIndex(node);
+                if (c == board.getCell(i, j)){
+                    String s = node.getStyle();
+                    s = s.split("-fx-background-color")[0];
+                    s += "-fx-background-color: " + color + ";";
+                    node.setStyle(s);
+                }
+            }
+        }
+    }
+
     protected abstract String calculateColor(Cell c);
 
 
