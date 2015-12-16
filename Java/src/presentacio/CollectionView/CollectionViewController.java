@@ -70,7 +70,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         loadPlayers();
         createBoardsPane();
         applyFilters();
