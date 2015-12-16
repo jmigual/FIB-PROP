@@ -6,20 +6,29 @@ package presentacio.Stats;
 public class InfoRanking {
     private Integer rank;
     private String name;
+    private String userName;
     private Integer score;
-
-    // Comentari troll perquè no es canvii de nom
 
     public InfoRanking(){
         this.rank = -1;
         this.name = "";
         this.score = 0;
     }
-
-    public InfoRanking(int rank, String name, int score){
+    public InfoRanking(int rank, String userName, String name, int score){
         this.rank = rank;
+        this.userName = userName;
         this.name = name;
         this.score = score;
+    }
+
+    // Comentari troll perquè no es canvii de nom
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Integer getRank() {
