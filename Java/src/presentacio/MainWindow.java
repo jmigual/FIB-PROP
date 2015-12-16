@@ -96,7 +96,7 @@ public class MainWindow extends Application {
         mIcon = new Image(getClass().getResource("asterisk.png").toString());
 
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("App molt guai");
+        this.primaryStage.setTitle("KanKun");
         this.primaryStage.getIcons().add(mIcon);
 
         mainController = new MainController(this);

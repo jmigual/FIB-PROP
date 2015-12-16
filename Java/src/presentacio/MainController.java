@@ -131,6 +131,11 @@ public class MainController extends AnchorPane implements Controller {
         return shownStage;
     }
 
+    public void closeSession() {
+        contSwitch.switchController(null);
+        showLoginBox();
+    }
+
     public void dialogCancelled() {
         contSwitch.switchController(null);
     }
