@@ -5,16 +5,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinter;
-import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -23,42 +24,19 @@ import java.util.Optional;
 public class CBCController extends AnchorPane implements Controller {
 
     private AnchorPane rootLayout;
-    private KKPrinter printer;
     private CpuBoardCreator cbc;
     private FXMLLoader loader;
     private MainWindow mMain;
 
+    private int maxCreatedRegionSize = 6;
 
     private static int MAX_SIZE = 12;
+    private static ArrayList<Integer> DEFAULT_SIZES_WEIGHTS = new ArrayList<Integer>(
+            Arrays.asList(10, 50, 30, 20, 20, 10, 0, 0, 0, 0, 0, 0));
 
 
-    @FXML
-    private StackPane KenkenPane;
-    private ArrayList<Slider> sliderSizes;
-    @FXML
-    private Slider SliderSize1;
-    @FXML
-    private Slider SliderSize2;
-    @FXML
-    private Slider SliderSize3;
-    @FXML
-    private Slider SliderSize4;
-    @FXML
-    private Slider SliderSize5;
-    @FXML
-    private Slider SliderSize6;
-    @FXML
-    private Slider SliderSize7;
-    @FXML
-    private Slider SliderSize8;
-    @FXML
-    private Slider SliderSize9;
-    @FXML
-    private Slider SliderSize10;
-    @FXML
-    private Slider SliderSize11;
-    @FXML
-    private Slider SliderSize12;
+    private ArrayList<Slider> sizeSliders;
+    private ArrayList<Label> sizeSlidersLabels;
     @FXML
     private Slider SliderAddition;
     @FXML
@@ -68,17 +46,13 @@ public class CBCController extends AnchorPane implements Controller {
     @FXML
     private Slider SliderDivision;
     @FXML
-    private Label LabelPlus4;
-    @FXML
-    private Label LabelPlus8;
-    @FXML
-    private TextField MaxSizeInput;
-    @FXML
-    private Button MaxSizeButton;
+    private TextField BoardSizeInput;
     @FXML
     private Button GenerateKenkenButton;
     @FXML
     private Button CancelButton;
+    @FXML
+    private GridPane WeightsGridPane;
 
 
     public CBCController(MainWindow mainWindow){
@@ -96,40 +70,53 @@ public class CBCController extends AnchorPane implements Controller {
         }
 
         cbc = new CpuBoardCreator(MAX_SIZE, MainWindow.db.getBoards());
-        //printer = new KKPrinterNoSelect(cbc.getBoard(), KenkenPane);
 
-        sliderSizes = new ArrayList<>(13);
-        sliderSizes.add(0, null);
-        sliderSizes.add(1, SliderSize1);
-        sliderSizes.add(2, SliderSize2);
-        sliderSizes.add(3, SliderSize3);
-        sliderSizes.add(4, SliderSize4);
-        sliderSizes.add(5, SliderSize5);
-        sliderSizes.add(6, SliderSize6);
-        sliderSizes.add(7, SliderSize7);
-        sliderSizes.add(8, SliderSize8);
-        sliderSizes.add(9, SliderSize9);
-        sliderSizes.add(10, SliderSize10);
-        sliderSizes.add(11, SliderSize11);
-        sliderSizes.add(12, SliderSize12);
+        generateSizeSliders();
     }
 
-    public void maxSizeButtonPressed(){
-        if (!isPositiveInteger(MaxSizeInput.getText())) {
+    private void generateSizeSliders(){
+        sizeSliders = new ArrayList<>(MAX_SIZE);
+        sizeSlidersLabels = new ArrayList<>(MAX_SIZE);
+        for (int i=0; i<MAX_SIZE; ++i){
+            sizeSliders.add(i, new Slider(0, 100, DEFAULT_SIZES_WEIGHTS.get(i)));
+            sizeSlidersLabels.add(i, new Label(String.valueOf(i + 1) + ": "));
+
+            WeightsGridPane.add(sizeSlidersLabels.get(i), 0, i);
+            WeightsGridPane.add(sizeSliders.get(i), 1, i);
+        }
+
+        updateSizeSliders();
+    }
+
+    private void updateSizeSliders(){
+        int i=0;
+        for (; i<maxCreatedRegionSize; ++i){
+            sizeSliders.get(i).setVisible(true);
+            sizeSlidersLabels.get(i).setVisible(true);
+        }
+        for (; i<MAX_SIZE; ++i){
+            sizeSliders.get(i).setVisible(false);
+            sizeSlidersLabels.get(i).setVisible(false);
+        }
+    }
+
+    public void changeBoardSizeButtonPressed(){
+        if (!isPositiveInteger(BoardSizeInput.getText())) {
             warn("Entrada invàlida", "No s'ha llegit cap nombre enter positiu.", "La mida màxima ha de ser un nombre" +
                     " enter entre 1 i 12.");
             return;
         }
-        int m = Integer.parseInt(MaxSizeInput.getText());
-        if (m < 1){
+        maxCreatedRegionSize = Integer.parseInt(BoardSizeInput.getText());
+        if (maxCreatedRegionSize < 1){
             warn("Entrada invalida", "Nombre massa petit.", "La mida màxima ha de ser un número enter entre 1 i 12.");
             return;
-        } else if (m > 12) {
+        } else if (maxCreatedRegionSize > 12) {
             warn("Entrada invalida", "Nombre massa gran.", "La mida màxima ha de ser un número enter entre 1 i 12.");
             return;
         }
 
-        cbc.setMaxRegionSize(m);
+        cbc.setMaxRegionSize(maxCreatedRegionSize);
+        updateSizeSliders();
     }
 
     public void generateKenkenButtonPressed(){
@@ -142,19 +129,55 @@ public class CBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
+        seeBoardButtonPressed();
+    }
+
+    public void seeBoardButtonPressed(){
+    /*    ButtonType okButtonType = new ButtonType("OK", ButtonData.OK_DONE);
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.getDialogPane().getButtonTypes().add(okButtonType);
+        boolean disabled = false; // computed based on content of text fields, for example
+        dialog.getDialogPane().lookupButton(okButtonType).setDisable(disabled);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            warn("OK",null,"OK");
+        }*/
+
+        Dialog d = new Dialog();
+        d.getDialogPane().getButtonTypes().add(new ButtonType("OK", ButtonData.OK_DONE));
+        StackPane kenkenPane = new StackPane();
+        KKPrinter printer = new KKPrinterNoSelect(cbc.getBoard(), kenkenPane);
+        d.setTitle("Kenken creat");
+        d.getDialogPane().getChildren().add(kenkenPane);
+        printer.updateContent();
+        Optional res = d.showAndWait();
+    }
+
+    public void saveButtonPressed(){
+        TextInputDialog dialog = new TextInputDialog("myKenken");
+        dialog.setTitle("Guardar un tauler");
+        //dialog.setHeaderText("Look, a Text Input Dialog");
+        dialog.setContentText("Quin nom vols donar al tauler?");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            cbc.saveBoard(result.get(), mMain.getUsername());
+        }
+
     }
 
     private boolean updateWeights() {
 
         // Get Size Weights
         double d = 0;
-        for (int i=1; i<=cbc.getMaxRegionSize(); ++i){
+        for (int i=0; i<maxCreatedRegionSize; ++i){
             try {
-                cbc.setSizeWeight(i, (int) sliderSizes.get(i).getValue());
+                cbc.setSizeWeight(i+1, (int) sizeSliders.get(i).getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            d += sliderSizes.get(i).getValue();
+            d += sizeSliders.get(i).getValue();
         }
         if (d==0){
             warn("Entrada invàlida", null, "No pots posar tots els pesos de les mides a zero.");
@@ -172,6 +195,8 @@ public class CBCController extends AnchorPane implements Controller {
             return false;
         }
 
+        //inform("DBG", null, d + ", +" + cbc.getAddWeight() + ", *" + cbc.getProdWeight() + ", -" +
+        //        cbc.getSubsWeight() + ", /" + cbc.getDivWeight());
         return true;
     }
 
@@ -211,6 +236,25 @@ public class CBCController extends AnchorPane implements Controller {
         a.setContentText(body);
         a.showAndWait();
     }
+/*
+    private void prompt(){
+        List<String> choices = new ArrayList<>();
+        for (int i = 2; i <= MAX_SIZE; ++i) {
+            choices.add(String.valueOf(i));
+        }
+
+        String defValue = "Mida";
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(defValue, choices);
+        dialog.setTitle("Mida del kenken");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quina mida vols que tingui el kenken?");
+
+        dialog.showAndWait();
+        if (!dialog.getSelectedItem().equals(defValue)) {
+            //return Integer.parseInt(dialog.getSelectedItem());
+        }
+    }*/
 
     @Override
     public AnchorPane getRootLayout() {

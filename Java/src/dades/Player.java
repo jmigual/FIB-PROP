@@ -81,12 +81,7 @@ public class Player implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Player player = (Player) o;
-
-        return mUserName.equals(player.mUserName);
+        return this == o || !(o == null || getClass() != o.getClass()) && mUserName.equals(((Player) o).mUserName);
     }
 
     /**

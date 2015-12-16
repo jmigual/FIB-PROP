@@ -3,8 +3,6 @@ package domini.stats;
 import dades.Player;
 import dades.Table;
 
-
-
 import java.util.ArrayList;
 
 public abstract class Stats {
