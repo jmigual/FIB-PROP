@@ -1,5 +1,6 @@
 package presentacio;
 
+import domini.KKBoard;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import presentacio.BoardCreator.BoardViewerController;
 import presentacio.BoardCreator.CBCController;
 import presentacio.BoardCreator.HBCController;
 import presentacio.CollectionView.CollectionViewController;
@@ -87,6 +89,11 @@ public class MainController extends AnchorPane implements Controller {
         Stage s = createNewWindow(new FactController(main), StageStyle.UTILITY);
         //s.setOnCloseRequest(event -> System.exit(0));
         s.setTitle("Factorització");
+    }
+
+    public void showKenken(KKBoard kkBoard) {
+        Stage s = createNewWindow(new BoardViewerController(kkBoard), StageStyle.UTILITY);
+        s.setTitle("Kenken generat");
     }
 
     /**

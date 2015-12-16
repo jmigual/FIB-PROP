@@ -9,14 +9,14 @@
    <children>
       <GridPane alignment="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="447.0" prefWidth="179.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.columnIndex="7" GridPane.rowIndex="1" />
             <TextField fx:id="BoardSizeInput" text="6" />
             <Label text="PESOS PER MIDA" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-            <Label text="PESOS PER OPERACIÓ" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+            <Label text="PESOS PER OPERACIÓ" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="2" />
             <Label GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="GenerateKenkenButton" mnemonicParsing="false" onAction="#generateKenkenButtonPressed" text="Genera Kenken!" GridPane.columnIndex="3" GridPane.columnSpan="2" />
-            <Button fx:id="ChangeBoardSizeButton" mnemonicParsing="false" onAction="#changeBoardSizeButtonPressed" text="Canvia la mida del tauler" GridPane.columnIndex="1" />
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="4">
+            <Button fx:id="GenerateKenkenButton" mnemonicParsing="false" onAction="#generateKenkenButtonPressed" text="Genera el Kenken!" GridPane.columnIndex="4" GridPane.columnSpan="2" />
+            <Button fx:id="ChangeBoardSizeButton" mnemonicParsing="false" onAction="#changeBoardSizeButtonPressed" text="Canvia la mida del tauler" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="4">
                <content>
                   <GridPane hgap="10.0">
                     <columnConstraints>
@@ -66,12 +66,13 @@
                   </GridPane>
                </content>
             </ScrollPane>
-            <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Desa" GridPane.columnIndex="6" />
-            <Button fx:id="SeeBoardButton" mnemonicParsing="false" onAction="#seeBoardButtonPressed" text="Mira el tauler" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Desa" GridPane.columnIndex="7" />
+            <Button fx:id="SeeBoardButton" mnemonicParsing="false" onAction="#seeBoardButtonPressed" text="Ensenya'm el tauler" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1" />
             <TextField fx:id="MaxRegionSizeInput" text="5" GridPane.rowIndex="1" />
-            <Button fx:id="ChangeMaxRegionSizeButton" mnemonicParsing="false" onAction="#changeMaxRegionSizeButtonPressed" text="Canvia la mida màxima de les regions" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="ChangeMaxRegionSizeButton" mnemonicParsing="false" onAction="#changeMaxRegionSizeButtonPressed" text="Canvia la mida màxima de les regions" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
          </children>
          <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

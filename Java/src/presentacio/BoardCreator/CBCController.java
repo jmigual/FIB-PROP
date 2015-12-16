@@ -28,7 +28,7 @@ public class CBCController extends AnchorPane implements Controller {
     private FXMLLoader loader;
     private MainWindow mMain;
 
-    private int maxCreatedRegionSize = 6;
+    private int maxCreatedRegionSize = 5;
 
     private static int MAX_SIZE = 12;
     private static ArrayList<Integer> DEFAULT_SIZES_WEIGHTS = new ArrayList<Integer>(
@@ -103,23 +103,25 @@ public class CBCController extends AnchorPane implements Controller {
     }
 
     public void changeBoardSizeButtonPressed(){
-        cbc = new CpuBoardCreator(Integer.valueOf(MaxRegionSizeInput.getText()), MainWindow.db.getBoards());
+        cbc = new CpuBoardCreator(Integer.valueOf(BoardSizeInput.getText()), MainWindow.db.getBoards());
     }
 
     public void changeMaxRegionSizeButtonPressed(){
-        if (!isPositiveInteger(BoardSizeInput.getText())) {
+        if (!isPositiveInteger(MaxRegionSizeInput.getText())) {
             warn("Entrada invàlida", "No s'ha llegit cap nombre enter positiu.", "La mida màxima ha de ser un nombre" +
                     " enter entre 1 i 12.");
             return;
         }
-        maxCreatedRegionSize = Integer.parseInt(BoardSizeInput.getText());
-        if (maxCreatedRegionSize < 1){
+
+        int temp = Integer.parseInt(MaxRegionSizeInput.getText());
+        if (temp < 1){
             warn("Entrada invalida", "Nombre massa petit.", "La mida màxima ha de ser un número enter entre 1 i 12.");
             return;
-        } else if (maxCreatedRegionSize > 12) {
+        } else if (temp > 12) {
             warn("Entrada invalida", "Nombre massa gran.", "La mida màxima ha de ser un número enter entre 1 i 12.");
             return;
         }
+        maxCreatedRegionSize = temp;
 
         cbc.setMaxRegionSize(maxCreatedRegionSize);
         updateSizeSliders();
@@ -150,14 +152,19 @@ public class CBCController extends AnchorPane implements Controller {
             warn("OK",null,"OK");
         }*/
 
+
         Dialog d = new Dialog();
         d.getDialogPane().getButtonTypes().add(new ButtonType("OK", ButtonData.OK_DONE));
         StackPane kenkenPane = new StackPane();
         KKPrinter printer = new KKPrinterNoSelect(cbc.getBoard(), kenkenPane);
         d.setTitle("Kenken creat");
         d.getDialogPane().getChildren().add(kenkenPane);
+        d.setResizable(true);
+        kenkenPane.resize(400,400);
         printer.updateContent();
         Optional res = d.showAndWait();
+
+        //mMain.getMainController().showKenken(cbc.getBoard());
     }
 
     private boolean updateWeights() {
