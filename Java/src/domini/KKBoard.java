@@ -211,7 +211,11 @@ public class KKBoard extends Board implements Playable {
     private boolean recursiveSolve(int i, int j, KKBoard kkboard) {
         if (j == this.getSize()) {
 
-            this._boardInfo = kkboard._boardInfo;
+            for (int ii=0; ii<_size; ii++){
+                for (int jj=0; jj<_size; jj++){
+                    getCell(ii,jj).setValue(kkboard.getCell(ii,jj).getValue());
+                }
+            }
             return true;
         }
 
@@ -291,6 +295,7 @@ public class KKBoard extends Board implements Playable {
         _boardInfo.parallelStream().flatMap(Collection::stream).forEach(c -> {
             if (c.getValue() == 0) c.calculatePossibilities();
         });
+
                 /*forEach(b -> {
             b.parallelStream().forEach(c -> {
                 if (c.getValue() == 0) c.calculatePossibilities();
