@@ -24,7 +24,7 @@ public class StatsPersonalController extends AnchorPane implements Controller {
 
     private MainWindow mMain;
 
-    private TableView<InfoRanking> table;
+    private TableView<InfoRankings> table;
 
     @FXML
     private Label puntuaciofm;

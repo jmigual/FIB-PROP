@@ -76,22 +76,22 @@ public class StatsBoardController extends AnchorPane implements Controller {
 
     private void createDefault() {
         // rank column
-        TableColumn<InfoRanking, Integer> rankColumn = new TableColumn<>("Posició");
+        TableColumn<InfoRankings, Integer> rankColumn = new TableColumn<>("Posició");
         rankColumn.setMinWidth(50);
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
         // Player column
-        TableColumn<InfoRanking, String> playerColumn = new TableColumn<>("Jugador");
+        TableColumn<InfoRankings, String> playerColumn = new TableColumn<>("Jugador");
         playerColumn.setMinWidth(50);
         playerColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
 
         // Name column
-        TableColumn<InfoRanking, String> nameColumn = new TableColumn<>("Nom");
+        TableColumn<InfoRankings, String> nameColumn = new TableColumn<>("Nom");
         nameColumn.setMinWidth(50);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         // Score column
-        TableColumn<InfoRanking, Integer> scoreColumn = new TableColumn<>("Puntuació");
+        TableColumn<InfoRankings, Integer> scoreColumn = new TableColumn<>("Puntuació");
         scoreColumn.setMinWidth(50);
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
@@ -128,12 +128,12 @@ public class StatsBoardController extends AnchorPane implements Controller {
         return result;
     }
 
-    public ObservableList<InfoRanking> getStubItems(Playable game) {
-        ObservableList<InfoRanking> info = FXCollections.observableArrayList();
+    public ObservableList<InfoRankings> getStubItems(Playable game) {
+        ObservableList<InfoRankings> info = FXCollections.observableArrayList();
         Ranking r = mStats.recordsGame(game);
         for (int i = 0; i < mStats.recordsGame(game).getSize(); ++i) {
             Player p = r.getPlayer(i);
-            info.add(new InfoRanking(i, p.getUserName(), p.getName(), r.getValue(i)));
+            info.add(new InfoRankings(i, p.getUserName(), p.getName(), r.getValue(i)));
         }
         return info;
     }
