@@ -4,6 +4,7 @@ import dades.Player;
 import dades.Table;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class KKStats extends Stats {
 
@@ -19,15 +20,24 @@ public class KKStats extends Stats {
         return aux;
     }
 
+    @Override
     public int rank(Player player) {
         int score = score(player), rank = 1;
         for (Player p : _players) if (score > score(p)) ++rank;
         return rank;
     }
 
+    @Override
     public int countMatches(Player player) {
         int count = 0;
         for (Matchable m : _matches) if (m.getPlayer().equals(player)) ++count;
         return count;
+    }
+
+    @Override
+    public int countSolvedGames(Player player) {
+        HashSet<Integer> set = new HashSet<>();
+        for (Matchable m : _matches) set.add(m.getGame().getID());
+        return set.size();
     }
 }

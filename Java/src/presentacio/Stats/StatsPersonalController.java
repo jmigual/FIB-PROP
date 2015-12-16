@@ -65,8 +65,8 @@ public class StatsPersonalController extends AnchorPane implements Controller {
 
         puntuaciofm.textProperty().setValue(Integer.toString(mStats.score(actual)));
         posiciofm.textProperty().setValue(Integer.toString(mStats.rank(actual)));
-        boardsfm.textProperty().setValue(Integer.toString(mStats.countMatches(actual)));
-        matchesfm.textProperty().setValue(Integer.toString(mStats.countSolvedGames(actual)));
+        boardsfm.textProperty().setValue(Integer.toString(mStats.countSolvedGames(actual)));
+        matchesfm.textProperty().setValue(Integer.toString(mStats.countMatches(actual)));
     }
 
     public AnchorPane getRootLayout() {
