@@ -108,7 +108,7 @@ public class MainWindow extends Application {
         }
 
 
-        //Inicialitzaci� dels stats
+        //Inicialització dels stats
         this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
 
 
@@ -140,7 +140,7 @@ public class MainWindow extends Application {
         primaryStage.setMaximized(true);
         primaryStage.show();
 
-        mainController.showLoginBox();
+        //mainController.showLoginBox();
     }
 
     private void numEvent(KeyEvent event, int n) {
