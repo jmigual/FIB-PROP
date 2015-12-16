@@ -57,8 +57,9 @@
                      <children>
                         <MenuButton alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Ajudes" textAlignment="CENTER">
                           <items>
-                            <MenuItem fx:id="h1" mnemonicParsing="false" onAction="#hints" text="Comprovar errors (30)" />
+                            <MenuItem fx:id="h1" mnemonicParsing="false" onAction="#hints" text="Comprovar errors (50)" />
                             <MenuItem fx:id="h2" mnemonicParsing="false" onAction="#hints" text="Obtenir número (60)" />
+                              <MenuItem fx:id="h3" mnemonicParsing="false" onAction="#hints" text="Factoritzar un nombre (20)" />
                           </items>
                            <HBox.margin>
                               <Insets top="20.0" />

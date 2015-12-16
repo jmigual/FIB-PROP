@@ -138,4 +138,9 @@ public abstract class Region extends ItemPossibilities implements Serializable {
         }
         return ret;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return this == o;
+    }
 }

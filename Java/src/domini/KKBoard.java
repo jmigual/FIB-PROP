@@ -11,6 +11,8 @@ import presentacio.KKPrinter.KKPrinter;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -24,10 +26,15 @@ public class KKBoard extends Board implements Playable {
     private ArrayList<KKRegion> _kkregions;
     private String _name;
     private String _creator;
+    private String mID;
+
 
     public KKBoard(int size) {
         super(size);
         _kkregions = new ArrayList<>(_size * _size);
+
+        Random rand = new Random();
+        mID = Double.toString(rand.nextDouble()) + Long.toString(System.currentTimeMillis());
     }
 
     private int getHash(String s) {
@@ -43,9 +50,14 @@ public class KKBoard extends Board implements Playable {
         return getHash(_name);
     }
 
+    @Override
+    public int hashCode() {
+        return getHash(mID);
+    }
+
     /*
-    * Make a copy of the implicit parameter by Serializing and Deserializing
-     */
+        * Make a copy of the implicit parameter by Serializing and Deserializing
+         */
     public KKBoard getCopy() {
 
         KKBoard ret = null;
@@ -167,7 +179,7 @@ public class KKBoard extends Board implements Playable {
             if (r.size() == 1) r.getCell(0).setValue(r.getOperationValue());
         }
         boolean changed = true;
-        while (changed) {
+        //while (changed) {
             changed = false;
 
             if (!calculateIndividualPossibilities()) return false;
@@ -192,14 +204,18 @@ public class KKBoard extends Board implements Playable {
                     }
                 }
             }
-        }
+        //}
         return true;
     }
 
     private boolean recursiveSolve(int i, int j, KKBoard kkboard) {
         if (j == this.getSize()) {
 
-            this._boardInfo = kkboard._boardInfo;
+            for (int ii=0; ii<_size; ii++){
+                for (int jj=0; jj<_size; jj++){
+                    getCell(ii,jj).setValue(kkboard.getCell(ii,jj).getValue());
+                }
+            }
             return true;
         }
 
@@ -243,68 +259,55 @@ public class KKBoard extends Board implements Playable {
         return false;
     }
 
-   /* public int getNumSolutions(int max){
-        KKBoard aux = this.getCopy();
-        aux.recursive_solve_until(0,0,max);
-        return aux._numSolution;
-    }*/
-
-    /*private boolean recursive_solve_until(int i, int j, int max) {
-        if(_numSolution == max) return true;
-        if (j == this.getSize()) {
-            ++_numSolution;
-            return true;
-        }
-
-        int j_f, i_f;
-        i_f = i + 1;
-        j_f = j;
-        if (i_f == this.getSize()) {
-            i_f = 0;
-            j_f = j + 1;
-        }
-
-        if (this.getCell(i, j).getValue() != 0) {
-            return recursiveSolve(i_f, j_f);
-        }
-
-        this.getCell(i, j).getColumn().calculatePossibilities();
-        this.getCell(i, j).getRow().calculatePossibilities();
-        this.getCell(i, j).getRegion().calculatePossibilities();
-        this.getCell(i, j).calculatePossibilities();
-
-
-        //preCalculate();
-
-        //calculateIndividualPossibilities();
-
-
-        if (this.getCell(i, j).getValue() != 0) {
-            return recursiveSolve(i_f, j_f);
-        }
-
-        if (getCell(i, j).getPossibilities().length == 0) return false;
-        boolean ret = false;
-        for (int a = 1; a <= this.getSize(); ++a) {
-            if (this.getCell(i, j).getPossibility(a)) {
-                this.getCell(i, j).setValue(a);
-                ret = ret || recursiveSolve(i_f, j_f);
-                if (!ret) this.getCell(i, j).setValue(0);
-                //if (ret) return ret;
-            }
-        }
-        return false;
-    }*/
-
     public boolean calculateIndividualPossibilities() {
+
+/*
         for (int i = 0; i < _kkregions.size(); i++) {
             if (!_kkregions.get(i).isCorrect()) return false;
             _kkregions.get(i).calculatePossibilities();
         }
+*/
+
+        int res;
+
+
+        res = _kkregions.parallelStream().mapToInt(e -> {
+            if (! e.isCorrect()) return 1;
+            e.calculatePossibilities();
+            return 0;
+        }).sum();
+        if (res > 0) return false;
+
+
+        res = _columns.parallelStream().mapToInt(e -> {
+            e.calculatePossibilities();
+            if (e.isCorrect()) return 0;
+            return 1;
+        }).sum();
+        if (res > 0) return false;
+
+        res = _rows.parallelStream().mapToInt(e -> {
+            e.calculatePossibilities();
+            if (e.isCorrect()) return 0;
+            return 1;
+        }).sum();
+        if (res > 0) return false;
+        _boardInfo.parallelStream().flatMap(Collection::stream).forEach(c -> {
+            if (c.getValue() == 0) c.calculatePossibilities();
+        });
+
+                /*forEach(b -> {
+            b.parallelStream().forEach(c -> {
+                if (c.getValue() == 0) c.calculatePossibilities();
+            });
+        });*/
+
+        /*
         for (Column _column : _columns) {
             _column.calculatePossibilities();
             if (!_column.isCorrect()) return false;
         }
+        *
         for (Row _row : _rows) {
             _row.calculatePossibilities();
             if (!_row.isCorrect()) return false;
@@ -317,8 +320,16 @@ public class KKBoard extends Board implements Playable {
                 }
             }
         }
+        */
 
-        for (Column _column : _columns) {
+        for (int i = 0; i < 3; ++i) {
+            _columns.stream().forEach(Column::calculateIndividualPossibilities);
+            _rows.stream().forEach(Row::calculateIndividualPossibilities);
+            _kkregions.stream().forEach(KKRegion::calculateIndividualPossibilities);
+        }
+
+
+        /*for (Column _column : _columns) {
             _column.calculateIndividualPossibilities();
         }
         for (Row _row : _rows) {
@@ -344,7 +355,7 @@ public class KKBoard extends Board implements Playable {
         }
         for (KKRegion _kkregion : _kkregions) {
             _kkregion.calculateIndividualPossibilities();
-        }
+        }*/
 
         for (int i = 0; i < _size; i++) {
             for (int j = 0; j < _size; j++) {
