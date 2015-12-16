@@ -6,6 +6,7 @@ import domini.BoardCreator.HumanBoardCreator;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
 import presentacio.KKPrinter.KKPrinterSingleSelect;
@@ -41,6 +43,9 @@ public class MatchController extends AnchorPane implements Controller {
 
     @FXML
     private Label score;
+
+    @FXML
+    private Button sortir;
 
     public Match getMatch(){
         return _match;
@@ -156,7 +161,13 @@ public class MatchController extends AnchorPane implements Controller {
             printer = new KKPrinterSingleSelect(printer);
             ann.setText("Anotació");
         }
+        printer.updateContent();
     }
 
     void playsound(){}
+
+    public void close(){
+        Platform.exit();
+    }
+
 }
