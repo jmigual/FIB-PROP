@@ -58,6 +58,9 @@ public class MatchController extends AnchorPane implements Controller {
     @FXML
     private MenuItem h2;
 
+    @FXML
+    private MenuItem h3;
+
     public Match getMatch(){
         return _match;
     }
@@ -238,6 +241,11 @@ public class MatchController extends AnchorPane implements Controller {
                     close();
                 }
             }
+        }
+
+        if (mi.equals(h3)){
+            _match.hint(2);
+            _main.getMainController().showFactBox();
         }
     }
 
