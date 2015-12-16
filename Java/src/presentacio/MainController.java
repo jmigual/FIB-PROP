@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import presentacio.BoardCreator.CBCController;
 import presentacio.BoardCreator.HBCController;
-import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.CollectionView.CollectionViewController;
+import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.LoginScreen.LoginBoxController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
@@ -74,8 +74,7 @@ public class MainController extends AnchorPane implements Controller {
     public void showPersonal() {
         createNewWindow(new StatsPersonalController(main));
     }
-
-
+    
     public void showByboard() {
         createNewWindow(new StatsBoardController(main));
     }
@@ -91,18 +90,17 @@ public class MainController extends AnchorPane implements Controller {
         contSwitch.add(new HBCController(main, size));
     }
 
-    public void cpuCreateBoardClicked(){
+    public void cpuCreateBoardClicked() {
         contSwitch.add(new CBCController(main));
     }
 
-    public void createMatch(){
+    public void createMatch() {
         contSwitch.switchController(new CollectionViewController(main));
     }
 
     public void loadMatch() {
 
     }
-
 
 
     @Override
@@ -153,9 +151,9 @@ public class MainController extends AnchorPane implements Controller {
         return contSwitch;
     }
 
-    private int askSize(){
+    private int askSize() {
         List<String> choices = new ArrayList<>();
-        for (int i=2; i<=MAX_SIZE; ++i){
+        for (int i = 2; i <= MAX_SIZE; ++i) {
             choices.add(String.valueOf(i));
         }
 
@@ -167,7 +165,7 @@ public class MainController extends AnchorPane implements Controller {
         dialog.setContentText("Quina mida vols que tingui el kenken?");
 
         dialog.showAndWait();
-        if (! dialog.getSelectedItem().equals(defValue)){
+        if (!dialog.getSelectedItem().equals(defValue)) {
             return Integer.parseInt(dialog.getSelectedItem());
         }
         return -1;
