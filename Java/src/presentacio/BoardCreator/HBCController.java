@@ -484,7 +484,7 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     private void numEvent(KeyEvent event, int n) {
-        if (printer instanceof KKPrinterSingleSelect && n <= size) {
+        if (printer instanceof KKPrinterSingleSelect && n <= hbc.getBoard().getSize()) {
             if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
             else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();

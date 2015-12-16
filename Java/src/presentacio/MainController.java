@@ -20,8 +20,7 @@ import presentacio.CollectionView.CollectionViewEditorController;
 import presentacio.CollectionView.CollectionViewMatchController;
 import presentacio.CollectionView.CollectionViewStatsController;
 import presentacio.LoginScreen.LoginBoxController;
-import presentacio.MatchShiat.FactController;
-import presentacio.Stats.StatsBoardController;
+import presentacio.Match.FactController;
 import presentacio.Stats.StatsGlobalController;
 import presentacio.Stats.StatsPersonalController;
 import presentacio.UserConfig.UserConfigController;
@@ -29,6 +28,7 @@ import presentacio.UserConfig.UserConfigController;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controls all menus and the current shown Scene
@@ -272,8 +272,9 @@ public class MainController extends AnchorPane implements Controller {
         dialog.setHeaderText(null);
         dialog.setContentText("Quina mida vols que tingui el kenken?");
 
-        dialog.showAndWait();
-        if (!dialog.getSelectedItem().equals(defValue)) {
+        Optional<String> response = dialog.showAndWait();
+
+        if (!dialog.getSelectedItem().equals(defValue) && response.isPresent()) {
             return Integer.parseInt(dialog.getSelectedItem());
         }
         return -1;

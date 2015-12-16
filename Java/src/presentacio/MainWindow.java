@@ -132,7 +132,7 @@ public class MainWindow extends Application {
         primaryStage.show();
 
         // TODO: Nota això s'ha de descomentar quan fem el release
-        //mainController.showLoginBox();
+        mainController.showLoginBox();
     }
 
     private void numEvent(KeyEvent event, int n) {

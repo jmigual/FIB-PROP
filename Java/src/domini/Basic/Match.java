@@ -243,6 +243,11 @@ public class Match implements Matchable {
             case 2:
                 _penalty = _penalty + 20;                                                           //PENALITZACIo FACT
                 return null;
+
+            case 3:
+                _score = 0;
+                _finished = true;
+                return null;
         }
 
         return ret;
