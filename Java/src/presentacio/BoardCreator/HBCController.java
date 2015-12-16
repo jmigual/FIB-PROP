@@ -390,7 +390,9 @@ public class HBCController extends AnchorPane implements Controller {
             return;
         }
 
+        KKRegion troll = hbc.removeTroll();
         hbc.getBoard().solve();
+        hbc.addTroll(troll);
         printer.updateContent();
 
         checkConsistency();
