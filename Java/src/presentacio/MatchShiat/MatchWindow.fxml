@@ -18,7 +18,10 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score" alignment="TOP_CENTER" prefHeight="33.0" prefWidth="105.0" style="-fx-background-color: lightCyan;" text="over 9000" />
+                  <Label fx:id="score" alignment="TOP_CENTER" prefHeight="33.0" prefWidth="105.0" style="-fx-background-color: lightCyan;" text="over 9000">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -54,8 +57,8 @@
                      <children>
                         <MenuButton alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Ajudes" textAlignment="CENTER">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Comprovar errors (30)" />
-                            <MenuItem mnemonicParsing="false" text="Obtenir número (60)" />
+                            <MenuItem fx:id="h1" mnemonicParsing="false" onAction="#hints" text="Comprovar errors (30)" />
+                            <MenuItem fx:id="h2" mnemonicParsing="false" onAction="#hints" text="Obtenir número (60)" />
                           </items>
                            <HBox.margin>
                               <Insets top="20.0" />
