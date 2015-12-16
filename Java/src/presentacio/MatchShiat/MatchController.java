@@ -137,14 +137,17 @@ public class MatchController extends AnchorPane implements Controller {
                 } else { //FER MOVIMENT
 
                     if (!_match.makeMove(cell.getRow().getPos() + 1, cell.getColumn().getPos() + 1, n)) playsound(1);
-                    else if (_match.checkFinish()) {
-                        //out.println("FELICITATS! Has completat aquest taulell amb una puntuacio de " + _match.getScore());
-                        // finish = true;
-                        playsound(2);
-                        printer.updateContent();
-                        inform("", "FELICITATS! HAS ACABAT EL KENKEN!", "Has aconseguit una puntuació de " + Long.toString(_match.getScore()));
+                    if (_match.isComplete()) {
+                        if (_match.checkFinish()) {
+                            //out.println("FELICITATS! Has completat aquest taulell amb una puntuacio de " + _match.getScore());
+                            // finish = true;
+                            playsound(2);
+                            printer.updateContent();
+                            inform("", "FELICITATS! HAS ACABAT EL KENKEN!", "Has aconseguit una puntuació de " + Long.toString(_match.getScore()));
 
-                        close();
+                            close();
+                        }
+                        else inform("", "QUINA PENA!", "La solució no és correcte");
                     }
                     printer.updateContent();
                 }
@@ -264,4 +267,5 @@ public class MatchController extends AnchorPane implements Controller {
         a.setContentText(body);
         a.showAndWait();
     }
+
 }

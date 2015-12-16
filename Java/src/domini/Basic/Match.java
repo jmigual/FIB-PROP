@@ -169,8 +169,7 @@ public class Match implements Matchable {
     /**Checks if the game is finished */
 
     public boolean checkFinish () {
-        for (int i=0; i<_board.getSize(); ++i) for (int j=0; j<_board.getSize(); ++j)
-            if (_board.getCell(i,j).getValue() != _solution.getCell(i,j).getValue()) return false;
+        if (!_board.isCorrect())return false;
         _finished = true;
         _time = System.currentTimeMillis();
         return true;
@@ -237,7 +236,7 @@ public class Match implements Matchable {
         return ret;
     }
 
-    private boolean isComplete() {
+    public boolean isComplete() {
         for (int i=0; i<_board.getSize(); ++i) for (int j=0; j<_board.getSize(); ++j)
             if (_board.getCell(i,j).getValue() ==0) return false;
         return true;
