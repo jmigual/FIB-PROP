@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="449.0" prefWidth="614.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+                <StackPane fx:id="KenkenPane" prefHeight="491.0" prefWidth="435.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin></StackPane>
+            <GridPane alignment="CENTER" prefHeight="447.0" prefWidth="179.0" HBox.hgrow="NEVER">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="Create_ModifyRegionButton" mnemonicParsing="false" onAction="#create_modifyRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="4" />
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="AdditionRadioButton" mnemonicParsing="false" selected="true" text="Suma">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="OperationRadioGroup" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="ProductRadioButton" mnemonicParsing="false" text="Multiplicacio" toggleGroup="$OperationRadioGroup" />
+                        <RadioButton fx:id="SubstractionRadioButton" mnemonicParsing="false" text="Resta" toggleGroup="$OperationRadioGroup" />
+                        <RadioButton fx:id="DivisionRadioButton" mnemonicParsing="false" text="Divisio" toggleGroup="$OperationRadioGroup" />
+                     </children>
+                  </VBox>
+                  <TextField fx:id="ResultValueInput" promptText="Resultat" GridPane.rowIndex="2" />
+                  <Button fx:id="DeleteRegionButton" mnemonicParsing="false" onAction="#deleteRegionButtonPressed" text="Elimina la regió" GridPane.rowIndex="5" />
+                  <Button fx:id="HasSolutionButton" mnemonicParsing="false" onAction="#hasSolutionButtonPressed" text="Té solució?" GridPane.rowIndex="6" />
+                  <Button fx:id="SolveButton" mnemonicParsing="false" onAction="#solveButtonPressed" text="Resol" GridPane.rowIndex="7" />
+                  <Button fx:id="FillWithRandomNumbersButton" mnemonicParsing="false" onAction="#fillWithRandomNumbersButtonPressed" text="Omple de números aleatoris" GridPane.rowIndex="1" />
+                  <ToggleButton fx:id="ModeToggleButton" mnemonicParsing="false" onAction="#modeToggleButtonPressed" text="Mode d'edició de regions" GridPane.rowIndex="1" />
+                  <Button fx:id="ClearBoardButton" mnemonicParsing="false" onAction="#clearBoardButtonPressed" text="Buida el tauler de números" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="AnnotacionsModeToggleButton" mnemonicParsing="false" onAction="#annotacionsModeToggleButtonPressed" text="Mode anotacions" />
+                  <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.rowIndex="9" />
+                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Guarda" GridPane.rowIndex="8" />
+               </children>
+            </GridPane>
+         </children>
+      </HBox>
+    </children>
+</fx:root>
