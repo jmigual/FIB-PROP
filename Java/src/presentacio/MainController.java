@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,11 +21,15 @@ import presentacio.Stats.StatsPersonalController;
 import presentacio.UserConfig.UserConfigController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Inigo on 04/12/2015.
  */
 public class MainController extends AnchorPane implements Controller {
+
+    private static final int MAX_SIZE = 12;
 
     @FXML
     private AnchorPane leftArea;
@@ -81,18 +86,17 @@ public class MainController extends AnchorPane implements Controller {
     }
 
     public void humanCreateBoardClicked() {
-        HBCController hbcc = new HBCController(main);
-        contSwitch.add(hbcc);
+        int size = askSize();
+        if (size < 0) return;
+        contSwitch.add(new HBCController(main, size));
     }
 
     public void cpuCreateBoardClicked(){
-        CBCController cbcc = new CBCController(main);
-        contSwitch.add(cbcc);
+        contSwitch.add(new CBCController(main));
     }
 
     public void createMatch(){
-        CollectionViewController mc = new CollectionViewController(main);
-        contSwitch.switchController(mc);
+        contSwitch.switchController(new CollectionViewController(main));
     }
 
     public void loadMatch() {
@@ -147,5 +151,25 @@ public class MainController extends AnchorPane implements Controller {
 
     public ControllerSwitch getContSwitch() {
         return contSwitch;
+    }
+
+    private int askSize(){
+        List<String> choices = new ArrayList<>();
+        for (int i=2; i<=MAX_SIZE; ++i){
+            choices.add(String.valueOf(i));
+        }
+
+        String defValue = "Mida";
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(defValue, choices);
+        dialog.setTitle("Mida del kenken");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quina mida vols que tingui el kenken?");
+
+        dialog.showAndWait();
+        if (! dialog.getSelectedItem().equals(defValue)){
+            return Integer.parseInt(dialog.getSelectedItem());
+        }
+        return -1;
     }
 }
