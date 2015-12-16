@@ -10,7 +10,10 @@ import javafx.application.Platform;
 import presentacio.KKPrinter.KKPrinter;
 
 import java.io.*;
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -24,10 +27,15 @@ public class KKBoard extends Board implements Playable {
     private ArrayList<KKRegion> _kkregions;
     private String _name;
     private String _creator;
+    private String mID;
+
 
     public KKBoard(int size) {
         super(size);
         _kkregions = new ArrayList<>(_size * _size);
+
+        Random rand = new Random();
+        mID = Double.toString(rand.nextDouble()) + Long.toString(System.currentTimeMillis());
     }
 
     private int getHash(String s) {
@@ -43,9 +51,14 @@ public class KKBoard extends Board implements Playable {
         return getHash(_name);
     }
 
+    @Override
+    public int hashCode() {
+        return getHash(mID);
+    }
+
     /*
-    * Make a copy of the implicit parameter by Serializing and Deserializing
-     */
+        * Make a copy of the implicit parameter by Serializing and Deserializing
+         */
     public KKBoard getCopy() {
 
         KKBoard ret = null;

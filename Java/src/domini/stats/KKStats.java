@@ -12,15 +12,22 @@ public class KKStats extends Stats {
         super(players,games,matches);
     }
 
-    /////// PLAYER STATS ////////////////////////////////////////////////////////////////////
+    /////// PLAYER STATS ///////
     public int score(Player player){
-        int aux =0;
-        for(int i=0; i<_matches.size(); ++i){
-            i=i;
-            if(_matches.get(i).getPlayer().getName().equals(player.getName()) && _matches.get(i).finished()){
-                aux+=_matches.get(i).computeTime();
-            }
-        }
+        int aux = 0;
+        for (Matchable m : _matches) if (m.getPlayer().equals(player) && m.finished()) aux += m.computeTime();
         return aux;
+    }
+
+    public int rank(Player player) {
+        int score = score(player), rank = 1;
+        for (Player p : _players) if (score > score(p)) ++rank;
+        return rank;
+    }
+
+    public int countMatches(Player player) {
+        int count = 0;
+        for (Matchable m : _matches) if (m.getPlayer().equals(player)) ++count;
+        return count;
     }
 }
