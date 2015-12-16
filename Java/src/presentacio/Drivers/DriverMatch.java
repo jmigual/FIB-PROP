@@ -184,7 +184,12 @@ public class DriverMatch {
 
                     switch (in.nextInt()) {
                         case 1:
-                            cells = _match.hint(0);
+                            cells = null;
+                            try {
+                                cells = _match.hint(0);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             int c, f;
                             out.print("Caselles erronies : ");
                             for (int i = 0; i<cells.size(); ++i) {
@@ -196,7 +201,12 @@ public class DriverMatch {
                             break;
 
                         case 2:
-                            cells = _match.hint(1);
+                            cells = null;
+                            try {
+                                cells = _match.hint(1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             if (cells == null) out.println ("No queden espais lliures!");
                             else {
                                 f = cells.get(0).getRow().getPos() + 1;

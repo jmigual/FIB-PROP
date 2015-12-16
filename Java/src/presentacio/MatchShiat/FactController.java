@@ -56,6 +56,7 @@ public class FactController extends AnchorPane implements Controller {
         }
         fLabel.setText(F);
 
+        fact.setDisable(true);
         ok.setDisable(true);
     }
 
