@@ -14,6 +14,7 @@ import presentacio.BoardCreator.CBCController;
 import presentacio.BoardCreator.HBCController;
 import presentacio.CollectionView.CollectionViewController;
 import presentacio.CollectionView.CollectionViewEditorController;
+import presentacio.CollectionView.CollectionViewMatchController;
 import presentacio.LoginScreen.LoginBoxController;
 import presentacio.Stats.StatsBoardController;
 import presentacio.Stats.StatsGlobalController;
@@ -151,7 +152,7 @@ public class MainController extends AnchorPane implements Controller {
      * Shows the dialog to select a match being played
      */
     public void loadMatch() {
-        contSwitch.switchController(new CollectionViewEditorController(main));
+        contSwitch.switchController(new CollectionViewMatchController(main));
     }
 
 

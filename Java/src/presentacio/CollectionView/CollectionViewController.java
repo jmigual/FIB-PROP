@@ -28,6 +28,9 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     protected Table<KKBoard> mBoards;
 
+
+    protected Table<Match> mMatch;
+
     protected HashMap<String, CheckBox> mPlayers;
 
     protected ArrayList<RadioButton> mSelBoard;
@@ -47,6 +50,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
 
     public CollectionViewController(MainWindow main) {
         mBoards = main.getBoards();
+        mMatch = main.getmMatch();
         mPlayers = new HashMap<>();
         mSelBoard = new ArrayList<>();
         mMain = main;
