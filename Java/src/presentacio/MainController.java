@@ -270,4 +270,8 @@ public class MainController extends AnchorPane implements Controller {
         }
         return -1;
     }
+
+    public void showHelp(){
+
+    }
 }
