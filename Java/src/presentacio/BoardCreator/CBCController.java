@@ -26,6 +26,8 @@ public class CBCController extends AnchorPane implements Controller {
     private KKPrinter printer;
     private CpuBoardCreator cbc;
     private FXMLLoader loader;
+    private MainWindow mMain;
+
 
     private static int MAX_SIZE = 12;
 
@@ -81,6 +83,8 @@ public class CBCController extends AnchorPane implements Controller {
 
     public CBCController(MainWindow mainWindow){
 
+        mMain = mainWindow;
+
         loader = new FXMLLoader(getClass().getResource("CBCWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -94,19 +98,20 @@ public class CBCController extends AnchorPane implements Controller {
         cbc = new CpuBoardCreator(MAX_SIZE, MainWindow.db.getBoards());
         //printer = new KKPrinterNoSelect(cbc.getBoard(), KenkenPane);
 
-        sliderSizes.set(0, null);
-        sliderSizes.set(1, SliderSize1);
-        sliderSizes.set(2, SliderSize2);
-        sliderSizes.set(3, SliderSize3);
-        sliderSizes.set(4, SliderSize4);
-        sliderSizes.set(5, SliderSize5);
-        sliderSizes.set(6, SliderSize6);
-        sliderSizes.set(7, SliderSize7);
-        sliderSizes.set(8, SliderSize8);
-        sliderSizes.set(9, SliderSize9);
-        sliderSizes.set(10, SliderSize10);
-        sliderSizes.set(11, SliderSize11);
-        sliderSizes.set(12, SliderSize12);
+        sliderSizes = new ArrayList<>(13);
+        sliderSizes.add(0, null);
+        sliderSizes.add(1, SliderSize1);
+        sliderSizes.add(2, SliderSize2);
+        sliderSizes.add(3, SliderSize3);
+        sliderSizes.add(4, SliderSize4);
+        sliderSizes.add(5, SliderSize5);
+        sliderSizes.add(6, SliderSize6);
+        sliderSizes.add(7, SliderSize7);
+        sliderSizes.add(8, SliderSize8);
+        sliderSizes.add(9, SliderSize9);
+        sliderSizes.add(10, SliderSize10);
+        sliderSizes.add(11, SliderSize11);
+        sliderSizes.add(12, SliderSize12);
     }
 
     public void maxSizeButtonPressed(){
@@ -139,15 +144,21 @@ public class CBCController extends AnchorPane implements Controller {
 
     }
 
-    private void updateWeights() {
+    private boolean updateWeights() {
 
         // Get Size Weights
-        for (int i=0; i<cbc.getMaxRegionSize(); ++i){
+        double d = 0;
+        for (int i=1; i<=cbc.getMaxRegionSize(); ++i){
             try {
                 cbc.setSizeWeight(i, (int) sliderSizes.get(i).getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            d += sliderSizes.get(i).getValue();
+        }
+        if (d==0){
+            warn("Entrada invàlida", null, "No pots posar tots els pesos de les mides a zero.");
+            return false;
         }
 
         // Get Operations Weights
@@ -155,10 +166,17 @@ public class CBCController extends AnchorPane implements Controller {
         cbc.setProdWeight((int) SliderProduct.getValue());
         cbc.setSubsWeight((int) SliderSubtraction.getValue());
         cbc.setDivWeight((int) SliderDivision.getValue());
+        if (SliderAddition.getValue() + SliderProduct.getValue() + SliderSubtraction.getValue()
+                + SliderDivision.getValue() == 0){
+            warn("Entrada invàlida", null, "No pots posar tots els pesos de les operacions a zero.");
+            return false;
+        }
+
+        return true;
     }
 
     public void cancelButtonPressed(){
-
+        mMain.getMainController().dialogCancelled();
     }
 
     private static boolean isPositiveInteger(String str) {

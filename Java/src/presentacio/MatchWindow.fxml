@@ -50,15 +50,32 @@
             </VBox>
             <VBox id="Ajudes" prefHeight="400.0" prefWidth="158.0">
                <children>
-                  <MenuButton alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Ajudes" textAlignment="CENTER">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Comprovar errors (30)" />
-                      <MenuItem mnemonicParsing="false" text="Obtenir número (60)" />
-                    </items>
+                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <MenuButton alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="144.0" text="Ajudes" textAlignment="CENTER">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Comprovar errors (30)" />
+                            <MenuItem mnemonicParsing="false" text="Obtenir número (60)" />
+                          </items>
+                           <HBox.margin>
+                              <Insets top="20.0" />
+                           </HBox.margin>
+                        </MenuButton>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
+                  <HBox maxHeight="115.0" maxWidth="158.0" minHeight="115.0" minWidth="158.0" prefHeight="115.0" prefWidth="158.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="sortir" alignment="CENTER" mnemonicParsing="false" onAction="#close" prefHeight="0.0" prefWidth="115.0" text="Sortir">
+                           <HBox.margin>
+                              <Insets left="20.0" top="50.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                      <VBox.margin>
-                        <Insets left="5.0" top="20.0" />
+                        <Insets />
                      </VBox.margin>
-                  </MenuButton>
+                  </HBox>
                </children>
                <HBox.margin>
                   <Insets />

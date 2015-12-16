@@ -130,17 +130,17 @@ public class Match implements Matchable {
 
         move.applyMove();
 
+        for (int it = _moves.size() - 1; it > _index; --it) _moves.remove(it);
+
+        _moves.add(move);
+        _index = _moves.size() - 1;
+
         //CHECK ERROR
         if (!_board.getColumns().get(j-1).isCorrect() || !_board.getRows().get(i-1).isCorrect()){
             _penalty = _penalty + 10;                                                                   //PENALITZACIO PER FER ERROR
             //move.revertMove();
             return false;
         }
-
-        for (int it = _moves.size() - 1; it > _index; --it) _moves.remove(it);
-
-        _moves.add(move);
-        _index = _moves.size() - 1;
 
         return true;
     }

@@ -14,6 +14,7 @@ public class KKPrinterRegionSelect extends KKPrinter {
     public KKPrinterRegionSelect(KKBoard board, StackPane stackPane) {
         super(board, stackPane);
     }
+
     public KKPrinterRegionSelect(KKPrinter kkPrinter) {
         super(kkPrinter);
     }
@@ -40,7 +41,7 @@ public class KKPrinterRegionSelect extends KKPrinter {
     protected String calculateColor(Cell c) {
         boolean error = (!c.getColumn().isCorrect() || !c.getRegion().isCorrect() || !c.getRow().isCorrect());
         boolean selected = false;
-        if (selectedKKRegion!=null)selected= selectedKKRegion.getCells().contains(c);
+        if (selectedKKRegion!=null)selected= c.getRegion()==selectedKKRegion;
         if (((KKRegion)c.getRegion()).getOperationValue()==0)error=false;
         if (error && selected)return selectedErrorColor;
         if (error) return errorColor;
