@@ -94,7 +94,9 @@ public class Match implements Matchable {
 
     public long getScore() {
         if (_finished) return _score;
-        _score = _penalty + (System.currentTimeMillis() - _time)/1000;
+        _score = 10 * _board.getSize() * _board.getSize() * _board.getSize()
+                - (_penalty + (System.currentTimeMillis() - _time)/1000);
+        if (_score<0) _score =0;
         return _score;
     }
 
