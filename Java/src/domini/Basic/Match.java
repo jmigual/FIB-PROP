@@ -94,7 +94,9 @@ public class Match implements Matchable {
 
     public long getScore() {
         if (_finished) return _score;
-        _score = _penalty + (System.currentTimeMillis() - _time)/1000;
+        _score = 10 * _board.getSize() * _board.getSize() * _board.getSize()
+                - (_penalty + (System.currentTimeMillis() - _time)/1000);
+        if (_score<0) _score =0;
         return _score;
     }
 
@@ -137,7 +139,7 @@ public class Match implements Matchable {
 
         //CHECK ERROR
         if (!_board.getColumns().get(j-1).isCorrect() || !_board.getRows().get(i-1).isCorrect()){
-            _penalty = _penalty + 10;                                                                   //PENALITZACIO PER FER ERROR
+            _penalty = _penalty + 20;                                                                   //PENALITZACIO PER FER ERROR
             //move.revertMove();
             return false;
         }
@@ -147,7 +149,7 @@ public class Match implements Matchable {
 
     /** Undo, returns false if it can't be done*/
     public boolean back() {
-        //_penalty = _penalty + 10;                                                                     //PENALITZACIO PER FER RETURN
+        _penalty = _penalty + 5;                                                                     //PENALITZACIO PER FER RETURN
         if (_index == -1) return false;
         _moves.get(_index).revertMove();
         --_index;
@@ -195,7 +197,7 @@ public class Match implements Matchable {
         ArrayList<Cell> ret = new ArrayList<>();
         switch (num) {
             case 0:
-                _penalty = _penalty + 30;                                                             //PENALITZACIO PER COMPROVAR
+                _penalty = _penalty + 50;                                                             //PENALITZACIO PER COMPROVAR
                 for (int i=0; i<_board._size; ++i) {
                     for (int j = 0; j<_board._size; ++j){
                         Cell cell = _board.getCell(i,j);
@@ -226,6 +228,10 @@ public class Match implements Matchable {
                         return ret;
                     }
                 }
+
+            case 2:
+                _penalty = _penalty + 20;                                                           //PENALITZACIo FACT
+                return null;
         }
 
         return ret;

@@ -30,6 +30,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button fx:id="Create_ModifyRegionButton" mnemonicParsing="false" onAction="#create_modifyRegionButtonPressed" text="Crea la regió" GridPane.rowIndex="4" />
@@ -52,7 +53,8 @@
                   <ToggleButton fx:id="ModeToggleButton" mnemonicParsing="false" onAction="#modeToggleButtonPressed" text="Mode d'edició de regions" GridPane.rowIndex="1" />
                   <Button fx:id="ClearBoardButton" mnemonicParsing="false" onAction="#clearBoardButtonPressed" text="Buida el tauler de números" GridPane.rowIndex="2" />
                   <ToggleButton fx:id="AnnotacionsModeToggleButton" mnemonicParsing="false" onAction="#annotacionsModeToggleButtonPressed" text="Mode anotacions" />
-                  <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.rowIndex="8" />
+                  <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.rowIndex="9" />
+                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Guarda" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children>

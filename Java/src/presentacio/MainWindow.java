@@ -5,8 +5,10 @@ package presentacio;
 
 import dades.KKDB;
 import dades.Player;
-import dades.PlayersAdmin;
 import dades.Table;
+import dades.PlayersAdmin;
+import domini.Basic.Cell;
+import domini.Basic.Match;
 import domini.BoardCreator.CpuBoardCreator;
 import domini.KKBoard;
 import domini.stats.KKStats;
@@ -47,6 +49,12 @@ public class MainWindow extends Application {
     }
 
     protected Table<KKBoard> taulers;
+
+    public Table<Match> getmMatch() {
+        return mMatch;
+    }
+
+    protected Table<Match> mMatch;
 
     public static void main(String[] args) {
         launch(args);
@@ -93,7 +101,8 @@ public class MainWindow extends Application {
 
 
         //Inicialització dels stats
-        this.mstats = new KKStats(db.getPlayers(), db.getBoards(), db.getMatches());
+        this.mstats = new KKStats(db.getPlayers(),db.getBoards(),db.getMatches());
+        this.mMatch = db.getMatches();
 
         initRootLayout();
     }
