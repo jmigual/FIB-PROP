@@ -2,6 +2,7 @@ package presentacio.CollectionView;
 
 import domini.KKBoard;
 import javafx.scene.control.RadioButton;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import presentacio.MainWindow;
 import presentacio.Stats.StatsBoardController;
@@ -23,6 +24,10 @@ public class CollectionViewStatsController extends CollectionViewController {
             if (r.isSelected()) sel = (KKBoard) r.getUserData();
         }
 
-        mMain.getMainController().createNewWindow(new StatsBoardController(mMain, sel), StageStyle.UTILITY);
+        StatsBoardController stats = new StatsBoardController(mMain, sel);
+        if (stats.getResult()) {
+            Stage s = mMain.getMainController().createNewWindow(stats, StageStyle.UTILITY);
+            s.setTitle("Estadística del tauler");
+        }
     }
 }
