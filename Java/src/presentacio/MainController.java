@@ -151,7 +151,7 @@ public class MainController extends AnchorPane implements Controller {
      * Shows the dialog to select a match being played
      */
     public void loadMatch() {
-
+        contSwitch.switchController(new CollectionViewEditorController(main));
     }
 
 
@@ -229,6 +229,7 @@ public class MainController extends AnchorPane implements Controller {
     private void editBoard() {
         contSwitch.switchController(new CollectionViewEditorController(main));
     }
+
 
     /**
      * To get the current controller switch
