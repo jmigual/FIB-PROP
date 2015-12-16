@@ -192,11 +192,17 @@ public class Match implements Matchable {
      * Returns the cell(s) that have been modified
      */
 
-    public ArrayList<Cell>  hint(int num) {
+    public ArrayList<Cell>  hint(int num) throws Exception {
         ArrayList<Cell> ret = new ArrayList<>();
         switch (num) {
             case 0:
                 _penalty = _penalty + 50;                                                             //PENALITZACIO PER COMPROVAR
+
+                if (_board.hasSolution()) _solution = _board.getSolution();
+                /*else {
+                    throw new Exception ("vasMalament");
+                }*/
+
                 for (int i=0; i<_board._size; ++i) {
                     for (int j = 0; j<_board._size; ++j){
                         Cell cell = _board.getCell(i,j);
@@ -208,6 +214,12 @@ public class Match implements Matchable {
 
             case 1:
                 _penalty = _penalty + 60;                                                             //PENALITZACIO PER OBTENIR NUMERO
+
+                if (_board.hasSolution()) _solution = _board.getSolution();
+                else {
+                    throw new Exception ("vasMalament");
+               }
+
 
                 if (isComplete()) return null;
 
