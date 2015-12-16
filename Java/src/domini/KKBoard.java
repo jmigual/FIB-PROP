@@ -114,7 +114,7 @@ public class KKBoard extends Board implements Playable {
     @Override
     public void solve() {
         boolean b = preCalculate();
-        if (b) b = recursiveSolve(0, 0, this);
+        if (b) b = recursiveSolve(0, 0, this.getCopy());
         _hasSolution = b;
         System.out.println(b);
     }
@@ -433,5 +433,12 @@ public class KKBoard extends Board implements Playable {
 
         Scanner in = new Scanner(System.in);
         in.next();
+    }
+
+    public boolean isCorrect (){
+        for (KKRegion r: _kkregions)if(!r.isCorrect())return false;
+        for (Column c: _columns)if(!c.isCorrect())return false;
+        for (Row r: _rows)if(!r.isCorrect())return false;
+        return true;
     }
 }
