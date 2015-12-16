@@ -82,12 +82,12 @@ public class MainController extends AnchorPane implements Controller {
 
     public void humanCreateBoardClicked() {
         HBCController hbcc = new HBCController(main);
-        contSwitch.add(hbcc);
+        contSwitch.switchController(hbcc);
     }
 
     public void cpuCreateBoardClicked(){
         CBCController cbcc = new CBCController(main);
-        contSwitch.add(cbcc);
+        contSwitch.switchController(cbcc);
     }
 
     public void createMatch(){

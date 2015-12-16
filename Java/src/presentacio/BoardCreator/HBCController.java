@@ -42,6 +42,12 @@ public class HBCController extends AnchorPane implements Controller {
 
     private static int MAX_SIZE = 12;
 
+    public int getSize() {
+        return size;
+    }
+
+    private int size;
+
     @FXML
     private StackPane KenkenPane;
     @FXML
@@ -79,7 +85,7 @@ public class HBCController extends AnchorPane implements Controller {
 
     public HBCController(MainWindow mainWindow){
 
-        int size = askSize();
+        size = askSize();
 
            if (size < 0){
                size = 3;
@@ -137,6 +143,7 @@ public class HBCController extends AnchorPane implements Controller {
 
             DeleteRegionButton.setVisible(true);
         }
+        printer.updateCells();
     }
 
     public void annotacionsModeToggleButtonPressed(){
@@ -183,6 +190,8 @@ public class HBCController extends AnchorPane implements Controller {
             DeleteRegionButton.setVisible(true);
             ModeToggleButton.setVisible(true);
         }
+
+        printer.updateCells();
 
         checkConsistency();
     }
@@ -280,6 +289,7 @@ public class HBCController extends AnchorPane implements Controller {
             }
 
             printer.updateRegions();
+            printer.updateCells();
         }
     }
 
@@ -425,7 +435,7 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     private void numEvent(KeyEvent event, int n) {
-        if (printer instanceof KKPrinterSingleSelect) {
+        if (printer instanceof KKPrinterSingleSelect && n <= size) {
             if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
             else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();
