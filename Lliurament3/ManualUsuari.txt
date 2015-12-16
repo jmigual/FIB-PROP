@@ -86,4 +86,4 @@ Aquesta secció permet consultar les estadístiques.
 	Mostra el manual d'usuari.
 	
 7.Solucionar
-	Per solucionar un tauler jugueu una partida i dongueu al boto solucionar
+	Per solucionar un tauler jugueu una partida i cliqueu boto solucionar
