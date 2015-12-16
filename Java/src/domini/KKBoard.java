@@ -179,7 +179,7 @@ public class KKBoard extends Board implements Playable {
             if (r.size() == 1) r.getCell(0).setValue(r.getOperationValue());
         }
         boolean changed = true;
-        //while (changed) {
+        while (changed) {
             changed = false;
 
             if (!calculateIndividualPossibilities()) return false;
@@ -204,7 +204,7 @@ public class KKBoard extends Board implements Playable {
                     }
                 }
             }
-        //}
+        }
         return true;
     }
 
@@ -258,35 +258,53 @@ public class KKBoard extends Board implements Playable {
     }
 
     public boolean calculateIndividualPossibilities() {
-        int res;
-        res = _kkregions.parallelStream().mapToInt(e -> {
-            if (! e.isCorrect()) return 1;
-            e.calculatePossibilities();
-            return 0;
-        }).sum();
-        if (res > 0) return false;
+        for (int i = 0; i < _kkregions.size(); i++) {
+            if (!_kkregions.get(i).isCorrect())return false;
+            _kkregions.get(i).calculatePossibilities();
+        }
+        for (Column _column : _columns) {
+            _column.calculatePossibilities();
+            if (!_column.isCorrect())return false;
+        }
+        for (Row _row : _rows) {
+            _row.calculatePossibilities();
+            if (!_row.isCorrect())return false;
+        }
+        for (int i = 0; i < _size; i++) {
+            for (int j = 0; j < _size; j++) {
+                Cell c = _boardInfo.get(i).get(j);
+                if (c.getValue() == 0) {
+                    c.calculatePossibilities();
+                }
+            }
+        }
 
-        res = _columns.parallelStream().mapToInt(e -> {
-            e.calculatePossibilities();
-            if (e.isCorrect()) return 0;
-            return 1;
-        }).sum();
-        if (res > 0) return false;
-
-        res = _rows.parallelStream().mapToInt(e -> {
-            e.calculatePossibilities();
-            if (e.isCorrect()) return 0;
-            return 1;
-        }).sum();
-        if (res > 0) return false;
-        _boardInfo.parallelStream().flatMap(Collection::stream).forEach(c -> {
-            if (c.getValue() == 0) c.calculatePossibilities();
-        });
-
-        for (int i = 0; i < 3; ++i) {
-            _columns.stream().forEach(Column::calculateIndividualPossibilities);
-            _rows.stream().forEach(Row::calculateIndividualPossibilities);
-            _kkregions.stream().forEach(KKRegion::calculateIndividualPossibilities);
+        for (Column _column : _columns) {
+            _column.calculateIndividualPossibilities();
+        }
+        for (Row _row : _rows) {
+            _row.calculateIndividualPossibilities();
+        }
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculateIndividualPossibilities();
+        }
+        for (Column _column : _columns) {
+            _column.calculateIndividualPossibilities();
+        }
+        for (Row _row : _rows) {
+            _row.calculateIndividualPossibilities();
+        }
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculateIndividualPossibilities();
+        }
+        for (Column _column : _columns) {
+            _column.calculateIndividualPossibilities();
+        }
+        for (Row _row : _rows) {
+            _row.calculateIndividualPossibilities();
+        }
+        for (KKRegion _kkregion : _kkregions) {
+            _kkregion.calculateIndividualPossibilities();
         }
 
         for (int i = 0; i < _size; i++) {
