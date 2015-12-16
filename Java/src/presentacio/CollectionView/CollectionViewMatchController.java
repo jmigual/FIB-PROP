@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -71,9 +72,17 @@ public class CollectionViewMatchController extends AnchorPane implements Control
             e.printStackTrace();
         }
 
+
         stubCreaTaulers();
         loadPlayers();
         createBoardsPane();
+        applyFilters();
+
+        String username = main.getUsername();
+        for (Map.Entry<String, CheckBox> e : mPlayers.entrySet()) {
+            e.getValue().setSelected(e.getKey().equals(username));
+            e.getValue().setDisable(true);
+        }
         applyFilters();
     }
 
@@ -191,14 +200,11 @@ public class CollectionViewMatchController extends AnchorPane implements Control
 
     @FXML
     public void dialogAccept() {
-        KKBoard sel = null;
+        Match sel = null;
         for (RadioButton r : mSelMatch) {
-            if (r.isSelected()) sel = (KKBoard) r.getUserData();
+            if (r.isSelected()) sel = (Match) r.getUserData();
         }
-        Table<Match> taula = mMain.db.getMatches();
-        Match m = new Match(sel, mMain.getUsername());
-        taula.add(m);
-        MatchController mc = new MatchController(m, mMain);
+        MatchController mc = new MatchController(sel, mMain);
         mMain.getMainController().getContSwitch().switchController(mc);
     }
 
