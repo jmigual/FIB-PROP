@@ -50,6 +50,7 @@ Hi ha 3 tipus de pista, la primera permet comprovar si els nombres
 introduïts són correctes, la segona permet obtenir un nombre del tauler i
 la tercera permet factoritzar un nombre.
 
+Per borrar nombres introduïr un 0.
 Durant la partida l'usuari pot introduir anotacions utilitzant CONTROL + Nombre.
 
 També pot desfer l'últim moviment a canvi d'una petita penalització.
@@ -83,3 +84,6 @@ Aquesta secció permet consultar les estadístiques.
 6.Ajuda
 	Ajuda->Ajuda
 	Mostra el manual d'usuari.
+	
+7.Solucionar
+	Per solucionar un tauler jugueu una partida i cliqueu boto solucionar

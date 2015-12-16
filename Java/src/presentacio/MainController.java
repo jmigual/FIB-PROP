@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -280,5 +281,10 @@ public class MainController extends AnchorPane implements Controller {
 
     public void showHelp(){
 
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle("Ajuda");
+        a.setHeaderText("");
+        a.setContentText("No implementat, veure el ManualUsuari.txt");
+        a.showAndWait();
     }
 }

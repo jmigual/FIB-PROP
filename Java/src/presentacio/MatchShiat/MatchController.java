@@ -224,19 +224,32 @@ public class MatchController extends AnchorPane implements Controller {
 
     public void hints(ActionEvent event) {
         MenuItem mi = (MenuItem)event.getSource();
-        ArrayList<Cell> cells;
+        ArrayList<Cell> cells = null;
         if (mi.equals(h1)) {
-            cells = _match.hint(0);
+            try {
+                cells = _match.hint(0);
+            }
+            catch (Exception e){
+                warn("Error!","NO S'HA TROBAT CAP SOLUCIÓ!","No hi ha cap solució a partir dels valors insertats");
+                return;
+            }
+
             for (Cell c: cells) printer.marker(c, "Red");
         }
 
         if (mi.equals(h2)) {
-            cells = _match.hint(1);
+            try {
+                cells = _match.hint(1);
+            }
+            catch (Exception e){
+                warn("Error!","NO S'HA TROBAT CAP SOLUCIÓ!","No hi ha cap solució a partir dels valors insertats");
+                return;
+            }
             if (cells == null) warn("Error", "No queden espais lliures!", "Borra el contingut d'alguna casella");
             else {
                 printer.updateContent();
                 printer.marker(cells.get(0), "Green");
-                if (_match.checkFinish()) {
+                if (_match.checkFinish() && _match.isComplete()) {
                     playsound(2);
                     printer.updateContent();
                     inform("", "FELICITATS! HAS ACABAT EL KENKEN!", "Has aconseguit una puntuació de " + Long.toString(_match.getScore()));
@@ -247,7 +260,11 @@ public class MatchController extends AnchorPane implements Controller {
         }
 
         if (mi.equals(h3)){
-            _match.hint(2);
+            try {
+                _match.hint(2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             _main.getMainController().showFactBox();
         }
     }
