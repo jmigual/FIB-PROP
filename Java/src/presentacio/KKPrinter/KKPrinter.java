@@ -34,6 +34,7 @@ public abstract class KKPrinter {
     protected int borderWidth = 5;
     protected String cellDividerColor = "gray";
     protected String regionDividerColor = "black";
+    protected String annotationColor = "darkGray";
     protected int dividerWidth=2;
     boolean opcio = false;
 
@@ -272,7 +273,7 @@ public abstract class KKPrinter {
             int j=n-i*gridSize;
             Label l = new Label (Integer.toString(n+1));
             l.setId("OperationLabel#"+Integer.toString(n+1));
-            l.styleProperty().bind(Bindings.concat("-fx-font-size: ", stackPane.widthProperty().divide(gridSize * 1.2 * (n >= 9 ? 2 : 1)).asString(), "px;"));
+            l.styleProperty().bind(Bindings.concat("-fx-text-fill: "+annotationColor+"; -fx-font-size: ", stackPane.widthProperty().divide(gridSize * 1.2 * (n >= 9 ? 2 : 1)).asString(), "px;"));
             annotationGrid.add(l,j,i);
         }
     }
