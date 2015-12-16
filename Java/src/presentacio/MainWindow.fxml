@@ -26,7 +26,7 @@
                         <MenuItem mnemonicParsing="false" text="Desa" />
                         <MenuItem mnemonicParsing="false" text="Anomena i desa" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Tanca la sessió" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeSession" text="Tanca la sessió" />
                     <MenuItem fx:id="hola" mnemonicParsing="false" onAction="#exit" text="Surt" />
                   </items>
                 </Menu>
