@@ -468,7 +468,7 @@ public class HBCController extends AnchorPane implements Controller {
             if (event.getCode() == KeyCode.B) numEvent(event,11);
             if (event.getCode() == KeyCode.C) numEvent(event,12);
 
-            if (event.getCode()==KeyCode.S && event.isControlDown()){
+            if (event.getCode()==KeyCode.A && event.isControlDown()){
                 if (printer instanceof KKPrinterMultipleSelect){
                     ((KKPrinterMultipleSelect) printer).selectAll();
                 }
