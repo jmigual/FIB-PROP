@@ -43,6 +43,12 @@ public class HBCController extends AnchorPane implements Controller {
 
     private static int MAX_SIZE = 12;
 
+    public int getSize() {
+        return size;
+    }
+
+    private int size;
+
     @FXML
     private StackPane KenkenPane;
     @FXML
@@ -78,12 +84,12 @@ public class HBCController extends AnchorPane implements Controller {
     @FXML
     private Button CancelButton;
 
+    /**
+     * Initializes controller
+     * @pre size > 0 && size <= 12
+     */
     public HBCController(MainWindow mainWindow, int size) {
         mMain = mainWindow;
-
-           if (size < 0){
-               size = 3;
-           }
 
         loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
         loader.setRoot(this);
@@ -97,6 +103,7 @@ public class HBCController extends AnchorPane implements Controller {
 
         hbc = new HumanBoardCreator(size, MainWindow.db.getBoards());
         printer = new KKPrinterMultipleSelect(hbc.getBoard(), KenkenPane);
+
         createRegionMode = true;
         DeleteRegionButton.setVisible(false);
         annotationsMode = false;
@@ -107,7 +114,6 @@ public class HBCController extends AnchorPane implements Controller {
     public void modeToggleButtonPressed(){
         createRegionMode = !createRegionMode;
         if (createRegionMode) {
-//            ((KKPrinterRegionSelect) printer).deselect();
             printer = new KKPrinterMultipleSelect(printer);
             Create_ModifyRegionButton.setText("Crea la regió");
 
@@ -119,6 +125,7 @@ public class HBCController extends AnchorPane implements Controller {
 
             DeleteRegionButton.setVisible(true);
         }
+        printer.updateCells();
     }
 
     public void annotacionsModeToggleButtonPressed(){
@@ -165,6 +172,8 @@ public class HBCController extends AnchorPane implements Controller {
             DeleteRegionButton.setVisible(true);
             ModeToggleButton.setVisible(true);
         }
+
+        printer.updateCells();
 
         checkConsistency();
     }
@@ -262,6 +271,7 @@ public class HBCController extends AnchorPane implements Controller {
             }
 
             printer.updateRegions();
+            printer.updateCells();
         }
     }
 
@@ -406,7 +416,7 @@ public class HBCController extends AnchorPane implements Controller {
     }
 
     private void numEvent(KeyEvent event, int n) {
-        if (printer instanceof KKPrinterSingleSelect) {
+        if (printer instanceof KKPrinterSingleSelect && n <= size) {
             if (event.isControlDown()) ((KKPrinterSingleSelect) printer).getSelectedCell().switchAnnotation(n);
             else ((KKPrinterSingleSelect) printer).getSelectedCell().setValue(n);
             printer.updateCells();

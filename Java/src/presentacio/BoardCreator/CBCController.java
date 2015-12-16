@@ -1,22 +1,18 @@
 package presentacio.BoardCreator;
 
 import domini.BoardCreator.CpuBoardCreator;
-import domini.BoardCreator.HumanBoardCreator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinter;
 import presentacio.KKPrinter.KKPrinterMultipleSelect;
+import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,12 +26,15 @@ public class CBCController extends AnchorPane implements Controller {
     private KKPrinter printer;
     private CpuBoardCreator cbc;
     private FXMLLoader loader;
+    private MainWindow mMain;
+
 
     private static int MAX_SIZE = 12;
 
 
     @FXML
     private StackPane KenkenPane;
+    private ArrayList<Slider> sliderSizes;
     @FXML
     private Slider SliderSize1;
     @FXML
@@ -84,7 +83,9 @@ public class CBCController extends AnchorPane implements Controller {
 
     public CBCController(MainWindow mainWindow){
 
-        loader = new FXMLLoader(getClass().getResource("HBCWindow.fxml"));
+        mMain = mainWindow;
+
+        loader = new FXMLLoader(getClass().getResource("CBCWindow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
@@ -94,26 +95,88 @@ public class CBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        cbc = new CpuBoardCreator(12, MainWindow.db.getBoards());
-        printer = new KKPrinterMultipleSelect(cbc.getBoard(), KenkenPane);
+        cbc = new CpuBoardCreator(MAX_SIZE, MainWindow.db.getBoards());
+        //printer = new KKPrinterNoSelect(cbc.getBoard(), KenkenPane);
 
+        sliderSizes = new ArrayList<>(13);
+        sliderSizes.add(0, null);
+        sliderSizes.add(1, SliderSize1);
+        sliderSizes.add(2, SliderSize2);
+        sliderSizes.add(3, SliderSize3);
+        sliderSizes.add(4, SliderSize4);
+        sliderSizes.add(5, SliderSize5);
+        sliderSizes.add(6, SliderSize6);
+        sliderSizes.add(7, SliderSize7);
+        sliderSizes.add(8, SliderSize8);
+        sliderSizes.add(9, SliderSize9);
+        sliderSizes.add(10, SliderSize10);
+        sliderSizes.add(11, SliderSize11);
+        sliderSizes.add(12, SliderSize12);
     }
 
     public void maxSizeButtonPressed(){
         if (!isPositiveInteger(MaxSizeInput.getText())) {
-            warn("Entrada invalida", "Atenci?!", "El resultat ha de ser un nombre natural.");
+            warn("Entrada invàlida", "No s'ha llegit cap nombre enter positiu.", "La mida màxima ha de ser un nombre" +
+                    " enter entre 1 i 12.");
+            return;
+        }
+        int m = Integer.parseInt(MaxSizeInput.getText());
+        if (m < 1){
+            warn("Entrada invalida", "Nombre massa petit.", "La mida màxima ha de ser un número enter entre 1 i 12.");
+            return;
+        } else if (m > 12) {
+            warn("Entrada invalida", "Nombre massa gran.", "La mida màxima ha de ser un número enter entre 1 i 12.");
             return;
         }
 
-        cbc.setMaxRegionSize(Integer.parseInt(MaxSizeInput.getText()));
+        cbc.setMaxRegionSize(m);
     }
 
     public void generateKenkenButtonPressed(){
-        inform("Not implemented yet.", null, "poz ezo... demà a currar :(");
+
+        updateWeights();
+
+        try {
+            cbc.createBoard();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean updateWeights() {
+
+        // Get Size Weights
+        double d = 0;
+        for (int i=1; i<=cbc.getMaxRegionSize(); ++i){
+            try {
+                cbc.setSizeWeight(i, (int) sliderSizes.get(i).getValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            d += sliderSizes.get(i).getValue();
+        }
+        if (d==0){
+            warn("Entrada invàlida", null, "No pots posar tots els pesos de les mides a zero.");
+            return false;
+        }
+
+        // Get Operations Weights
+        cbc.setAddWeight((int) SliderAddition.getValue());
+        cbc.setProdWeight((int) SliderProduct.getValue());
+        cbc.setSubsWeight((int) SliderSubtraction.getValue());
+        cbc.setDivWeight((int) SliderDivision.getValue());
+        if (SliderAddition.getValue() + SliderProduct.getValue() + SliderSubtraction.getValue()
+                + SliderDivision.getValue() == 0){
+            warn("Entrada invàlida", null, "No pots posar tots els pesos de les operacions a zero.");
+            return false;
+        }
+
+        return true;
     }
 
     public void cancelButtonPressed(){
-
+        mMain.getMainController().dialogCancelled();
     }
 
     private static boolean isPositiveInteger(String str) {

@@ -7,14 +7,13 @@ import domini.KKBoard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import presentacio.Controller;
 import presentacio.KKPrinter.KKPrinterNoSelect;
 import presentacio.MainWindow;
-import presentacio.MatchController;
+import presentacio.MatchShiat.MatchController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -193,7 +192,7 @@ public class CollectionViewController extends AnchorPane implements Controller {
         Table<Match> taula = mMain.db.getMatches();
         Match m = new Match(sel, mMain.getUsername());
         taula.add(m);
-        MatchController mc = new MatchController(m);
+        MatchController mc = new MatchController(m, mMain);
         mMain.getMainController().getContSwitch().switchController(mc);
     }
 
