@@ -48,6 +48,8 @@ public class CBCController extends AnchorPane implements Controller {
     @FXML
     private TextField BoardSizeInput;
     @FXML
+    private TextField MaxRegionSizeInput;
+    @FXML
     private Button GenerateKenkenButton;
     @FXML
     private Button CancelButton;
@@ -69,7 +71,7 @@ public class CBCController extends AnchorPane implements Controller {
             e.printStackTrace();
         }
 
-        cbc = new CpuBoardCreator(MAX_SIZE, MainWindow.db.getBoards());
+        cbc = new CpuBoardCreator(6, MainWindow.db.getBoards());
 
         generateSizeSliders();
     }
@@ -101,6 +103,10 @@ public class CBCController extends AnchorPane implements Controller {
     }
 
     public void changeBoardSizeButtonPressed(){
+        cbc = new CpuBoardCreator(Integer.valueOf(MaxRegionSizeInput.getText()), MainWindow.db.getBoards());
+    }
+
+    public void changeMaxRegionSizeButtonPressed(){
         if (!isPositiveInteger(BoardSizeInput.getText())) {
             warn("Entrada invàlida", "No s'ha llegit cap nombre enter positiu.", "La mida màxima ha de ser un nombre" +
                     " enter entre 1 i 12.");
@@ -154,19 +160,6 @@ public class CBCController extends AnchorPane implements Controller {
         Optional res = d.showAndWait();
     }
 
-    public void saveButtonPressed(){
-        TextInputDialog dialog = new TextInputDialog("myKenken");
-        dialog.setTitle("Guardar un tauler");
-        //dialog.setHeaderText("Look, a Text Input Dialog");
-        dialog.setContentText("Quin nom vols donar al tauler?");
-
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
-            cbc.saveBoard(result.get(), mMain.getUsername());
-        }
-
-    }
-
     private boolean updateWeights() {
 
         // Get Size Weights
@@ -202,6 +195,18 @@ public class CBCController extends AnchorPane implements Controller {
 
     public void cancelButtonPressed(){
         mMain.getMainController().dialogCancelled();
+    }
+
+    public void saveButtonPressed(){
+        TextInputDialog dialog = new TextInputDialog("myKenken");
+        dialog.setTitle("Guardar un tauler");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quin nom vols donar al tauler?");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            cbc.saveBoard(result.get(), mMain.getUsername());
+        }
     }
 
     private static boolean isPositiveInteger(String str) {

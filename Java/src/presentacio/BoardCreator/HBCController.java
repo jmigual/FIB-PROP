@@ -323,15 +323,24 @@ public class HBCController extends AnchorPane implements Controller {
                     "inacabat. Assigna una regió a cada cel·la abans.");
             return;
         }
-        KKRegion troll = hbc.removeTroll();
-        if (hbc.getBoard().hasSolution()) {
-            inform("Solucionador de Kenkens", "El Kenken té solució!", "El solucionador ha trobat com a mínim una " +
-                    "solució al Kenken proposat.");
-        } else {
+
+        if (!hasSolution()) {
             inform("Solucionador de Kenkens", "El Kenken no té solució!", "El solucionador no ha trobat cap " +
                     "solució al Kenken proposat.");
+
+        } else {
+            inform("Solucionador de Kenkens", "El Kenken té solució!", "El solucionador ha trobat com a mínim una " +
+                    "solució al Kenken proposat.");
         }
+
+        checkConsistency();
+    }
+
+    private boolean hasSolution(){
+        KKRegion troll = hbc.removeTroll();
+        boolean ret = hbc.getBoard().hasSolution();
         hbc.addTroll(troll);
+        return ret;
     }
 
     public void solveButtonPressed(){
@@ -340,21 +349,43 @@ public class HBCController extends AnchorPane implements Controller {
                     "inacabat. Assigna una regió a cada cel·la abans.");
             return;
         }
-        KKRegion troll = hbc.removeTroll();
-        if (! hbc.getBoard().hasSolution()){
+        if (!hasSolution()){
             warn("Solucionador de Kenkens", "El kenken no té solució!", "El solucionador no ha trobat cap " +
                     "solució al kenken proposat.");
-        } else {
-            hbc.getBoard().solve();
-            printer.updateContent();
+            return;
         }
-        hbc.addTroll(troll);
+
+        hbc.getBoard().solve();
+        printer.updateContent();
 
         checkConsistency();
     }
 
     public void cancelButtonPressed(){
         mMain.getMainController().dialogCancelled();
+    }
+
+    public void saveButtonPressed(){
+        if (!hbc.isFinished()){
+            warn("Error al guardar el tauler", "Kenken inacabat", "El solucionador no pot buscar la solució d'un kenken " +
+                    "inacabat. Assigna una regió a cada cel·la abans.");
+            return;
+        }
+        if (!hasSolution()){
+            warn("Error al guardar el tauler", "El kenken no té solució!", "El solucionador no ha trobat cap " +
+                    "solució al kenken proposat.");
+            return;
+        }
+
+        TextInputDialog dialog = new TextInputDialog("el meu tauler");
+        dialog.setTitle("Guardar un tauler");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Quin nom vols donar al tauler?");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            hbc.saveBoard(result.get(), mMain.getUsername());
+        }
     }
 
     private void warn(String title, String header, String body){
