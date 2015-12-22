@@ -54,7 +54,7 @@
                   <Button fx:id="ClearBoardButton" mnemonicParsing="false" onAction="#clearBoardButtonPressed" text="Buida el tauler de números" GridPane.rowIndex="2" />
                   <ToggleButton fx:id="AnnotacionsModeToggleButton" mnemonicParsing="false" onAction="#annotacionsModeToggleButtonPressed" text="Mode anotacions" />
                   <Button fx:id="CancelButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel·la" GridPane.rowIndex="9" />
-                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Guarda" GridPane.rowIndex="8" />
+                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveButtonPressed" text="Desa i surt" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children>

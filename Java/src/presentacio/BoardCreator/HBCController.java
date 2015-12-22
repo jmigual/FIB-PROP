@@ -421,7 +421,9 @@ public class HBCController extends AnchorPane implements Controller {
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
+            hbc.removeTroll();
             hbc.saveBoard(result.get(), mMain.getUsername());
+            mMain.getMainController().dialogCancelled();
         }
     }
 
